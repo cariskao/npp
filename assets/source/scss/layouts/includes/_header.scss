@@ -1,0 +1,215 @@
+$nav-link-color: black; // 導航項目文字顏色
+$npp-bg-color: #ffc107;
+
+.container-content_padding {
+	@include media-breakpoint-up(lg) {
+		padding-top: 93px;
+	}
+
+	@include media-breakpoint-up(xl) {
+		padding-top: 100px;
+	}
+}
+
+.fixed-top.fixed-top_mobile {
+	position: static;
+
+	@include media-breakpoint-up(lg) {
+		position: fixed;
+	}
+}
+
+.logo {
+	img {
+		width: 180px;
+
+		@include media-breakpoint-up(md) {
+			width: 250px;
+		}
+
+		@include media-breakpoint-up(xl) {
+			width: 280px;
+		}
+	}
+}
+
+.form-inline {
+	.form-control,
+	.btn[type='submit'] {
+		height: 30px;
+		font-size: 14px;
+		line-height: 14px;
+	}
+
+	.form-control {
+		@include media-breakpoint-up(lg) {
+			width: 230px;
+		}
+	}
+
+	.btn[type='submit'] {
+		padding: 5px;
+		border: 1px solid black;
+		width: 100%;
+
+		img {
+			width: 20px;
+		}
+
+		@include media-breakpoint-up(sm) {
+			border: none;
+			width: 20px;
+		}
+	}
+
+	@include media-breakpoint-up(lg) {
+		margin-bottom: -30px;
+	}
+}
+
+.nav-icons {
+	position: absolute;
+	top: 4.5px;
+	right: 80px;
+	width: 40px;
+
+	a,
+	img {
+		width: 30px;
+		height: 30px;
+	}
+
+	@include media-breakpoint-up(sm) {
+		width: 110px;
+		top: 13.5px;
+
+		a,
+		img {
+			width: 50px;
+			height: 50px;
+		}
+	}
+
+	@include media-breakpoint-up(md) {
+		top: 21px;
+	}
+
+	@include media-breakpoint-up(lg) {
+		top: 0;
+		right: 8px;
+		width: 70px;
+
+		a,
+		img {
+			width: 30px;
+			height: 30px;
+		}
+	}
+}
+
+.navbar-dark {
+	.navbar-nav a.nav-link {
+		color: $nav-link-color;
+		font-size: 16px;
+	}
+}
+
+.navbar {
+	box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+	.dropdown {
+		@include media-breakpoint-up(lg) {
+			// makes the dropdown full width
+			position: static;
+		}
+	}
+
+	.dropdown-menu {
+		border: none;
+		background-color: $npp-bg-color;
+		@include media-breakpoint-down(md) {
+			padding: 0;
+			// margin: -5px 0 0;
+			margin: 0;
+		}
+
+		// breakpoint and up - mega dropdown styles
+		@include media-breakpoint-up(md) {
+			border-radius: 0;
+			width: 100%;
+			left: 0;
+			right: 0;
+			top: 83px;
+		}
+	}
+}
+
+.dropdownMenu-news_center {
+	@include media-breakpoint-up(lg) {
+		text-align: center;
+
+		.itemHover1:hover,
+		.itemHover2:hover {
+			background-color: darken($npp-bg-color, 5%);
+		}
+	}
+}
+
+.flex-gallery {
+	display: flex;
+	// height: 300px;
+	padding: 15px;
+	// 修改以下值試試看 wrap | nowrap | wrap | wrap-reverse
+	flex-wrap: wrap;
+
+	@include media-breakpoint-down(md) {
+		display: none;
+	}
+
+	.flex-item {
+		flex: 0 0 30%;
+		margin: 5px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 16px;
+
+		a {
+			color: gray;
+
+			&:hover {
+				color: white;
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.desktop-hide {
+	@include media-breakpoint-up(lg) {
+		display: none;
+	}
+}
+
+.mobile-hide {
+	@include media-breakpoint-down(sm) {
+		display: none;
+	}
+}
+
+.flex-item_title {
+	@include media-breakpoint-up(md) {
+		display: none;
+	}
+
+	a {
+		font-weight: bolder;
+	}
+}
+
+.nav.flex-column.desktop-hide li:not(.flex-item_title) a {
+	color: gray;
+
+	@include media-breakpoint-down(sm) {
+		padding-left: 15px;
+	}
+}

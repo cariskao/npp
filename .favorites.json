@@ -1,0 +1,20 @@
+[
+    {
+        "type": "Directory",
+        "name": "g:\\XAMPP\\htdocs\\npp_ci\\application\\views",
+        "parent_id": null,
+        "fsPath": "g:\\XAMPP\\htdocs\\npp_ci\\application\\views",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "3YTvZoHKkO0f2eBn"
+    },
+    {
+        "type": "Directory",
+        "name": "g:\\XAMPP\\htdocs\\npp_ci\\assets",
+        "parent_id": null,
+        "fsPath": "g:\\XAMPP\\htdocs\\npp_ci\\assets",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "HrFQ76iZBEuOgmCf"
+    }
+]

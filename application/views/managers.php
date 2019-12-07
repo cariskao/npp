@@ -1,0 +1,99 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-users"></i> 人員管理(管理員)
+            <small>新增, 編輯, 移除</small>
+        </h1>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12 text-right">
+                <div class="form-group">
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>user/addManager"><i class="fa fa-plus"></i> 新增</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title"></h3>
+                        <div class="box-tools">
+                            <!-- 送出時送到指定位置userListing -->
+                            <form action="<?php echo base_url() ?>managerListing" method="POST" id="searchList">
+                                <div class="input-group">
+                                    <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋名稱、mail、手機" />
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tr>
+                                <th>人員名稱</th>
+                                <th>Email</th>
+                                <th>手機</th>
+                                <th>層級</th>
+                                <th>建立日期</th>
+                                <th class="text-center">可執行動作</th>
+                            </tr>
+                            <?php
+                            if (!empty($userRecords)) {
+                                foreach ($userRecords as $record) {
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $record->name ?></td>
+                                        <td><?php echo $record->email ?></td>
+                                        <td><?php echo $record->mobile ?></td>
+                                        <td><?php echo $record->role ?></td>
+                                        <td><?php echo date("Y-d-m", strtotime($record->createdDtm)) ?></td>
+                                        <td class="text-center">
+                                            <!-- <a class="btn btn-sm btn-primary" href="<?= base_url() . 'login-history/' . $record->userId; ?>" title="歷史記錄"><i class="fa fa-history"></i></a> | -->
+                                            <a class="btn btn-sm btn-info" href="<?php echo base_url() . 'user/managerOld/' . $record->userId; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
+                                            <a class="btn btn-sm btn-danger deleteManager" href="#" data-userid="<?php echo $record->userId; ?>" title="移除"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                <?php
+                                    }
+                                } else {
+                                    ?>
+                                <div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
+                                    無相關資料!
+                                </div>
+                            <?php } ?>
+                        </table>
+
+                    </div><!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <?php echo $this->pagination->create_links(); ?>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </section>
+</div>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js" charset="utf-8"></script>
+<script type="text/javascript">
+    // alert(baseURL);
+    jQuery(document).ready(function() {
+        jQuery('ul.pagination li a').click(function(e) {
+            e.preventDefault();
+            // alert(jQuery(this)); // 物件
+            var link = jQuery(this).get(0).href; //http://localhost/npp_ci/userListing/10
+            // link爲獲取被點擊的連結,這裡指第一項,所以沒有get(1)
+
+            // var test = link.lastIndexOf('/'); //最後一個「/」的位置爲35
+            // alert(test);
+            var value = link.substring(link.lastIndexOf('/') + 1); //獲取「/」的全部字串
+            // alert(link);
+            // alert(value);
+            jQuery("#searchList").attr("action", baseURL + "user/managerListing/" + value);
+            // attr,更改form中的action連結
+            jQuery("#searchList").submit(); //更改後送出搜尋
+        });
+    });
+</script>
