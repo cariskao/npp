@@ -1,20 +1,29 @@
 [
     {
         "type": "Directory",
-        "name": "g:\\XAMPP\\htdocs\\npp_ci\\application\\views",
+        "name": "g:\\XAMPP\\htdocs\\npp\\application\\controllers",
         "parent_id": null,
-        "fsPath": "g:\\XAMPP\\htdocs\\npp_ci\\application\\views",
+        "fsPath": "g:\\XAMPP\\htdocs\\npp\\application\\controllers",
         "workspaceRoot": null,
         "workspacePath": null,
-        "id": "3YTvZoHKkO0f2eBn"
+        "id": "MRGfosn13Ugz0HNO"
     },
     {
         "type": "Directory",
-        "name": "g:\\XAMPP\\htdocs\\npp_ci\\assets",
+        "name": "g:\\XAMPP\\htdocs\\npp\\application\\models",
         "parent_id": null,
-        "fsPath": "g:\\XAMPP\\htdocs\\npp_ci\\assets",
+        "fsPath": "g:\\XAMPP\\htdocs\\npp\\application\\models",
         "workspaceRoot": null,
         "workspacePath": null,
-        "id": "HrFQ76iZBEuOgmCf"
+        "id": "RSXf31lNb0Hw45cn"
+    },
+    {
+        "type": "Directory",
+        "name": "g:\\XAMPP\\htdocs\\npp\\application\\views",
+        "parent_id": null,
+        "fsPath": "g:\\XAMPP\\htdocs\\npp\\application\\views",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "gNOdkuXCil0ATVKQ"
     }
 ]

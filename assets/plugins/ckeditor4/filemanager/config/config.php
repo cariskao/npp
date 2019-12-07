@@ -76,7 +76,7 @@ $config = array(
     | with start and final /
     |
     */
-    'upload_dir' => '/npp_ci/assets/plugins/ckeditor4/uploads/',
+    'upload_dir' => '/npp/assets/plugins/ckeditor4/uploads/',
     /*
     |--------------------------------------------------------------------------
     | relative path from filemanager folder to upload folder
