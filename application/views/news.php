@@ -21,7 +21,7 @@
 						<div class="box-tools">
 							<form action="<?php echo base_url() ?>news" method="POST" id="searchList">
 								<div class="input-group">
-									<input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋大標、次標、日期、標籤" />
+									<input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋大標、次標" />
 									<div class="input-group-btn">
 										<button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
 									</div>
@@ -35,95 +35,36 @@
 								<th>大圖</th>
 								<th>大標</th>
 								<th>次標</th>
-								<th>建立日期</th>
-								<th>更新日期</th>
-								<th>內文</th>
-								<th>社群分享</th>
+								<th style="width:100px">建立日期</th>
+								<th style="width:100px">更新日期</th>
+								<th style="width:300px">內文</th>
 								<th>標籤</th>
-								<th class="text-center">可執行動作</th>
+								<th class="text-center" style="width:100px">可執行動作</th>
 							</tr>
 							<?php
 							if (!empty($newsRecords)) {
 								foreach ($newsRecords as $record) {
 									?>
-							<tr>
-								<td><img style="width:50px;height:50px;" src="<?php echo base_url('assets/uploads/news_upload/news/' . $record->news_img); ?>"></td>
-								<td><?php echo $record->news_main_title ?></td>
-								<td><?php echo $record->news_sub_title ?></td>
-								<td><?php echo $record->date_start ?></td>
-								<td><?php echo $record->date_update ?></td>
-								<td><?php echo mb_strimwidth(htmlspecialchars($record->news_editor), 0, 100, '...') ?></td>
-								<td>
-									<?php
-											if ($record->news_share_fb !== '') {
-												echo '<b>臉書：</b>';
-												echo $record->news_share_fb . '<br>';
-											}
-											if ($record->news_share_line !== '') {
-												echo '<b>Line：</b>';
-												echo $record->news_share_line . '<br>';
-											}
-											if ($record->news_share_twitter !== '') {
-												echo '<b>推特：</b>';
-												echo $record->news_share_twitter . '<br>';
-											}
-											if ($record->news_share_mail !== '') {
-												echo '<b>信箱：</b>';
-												echo $record->news_share_mail . '<br>';
-											}
-											?>
-								</td>
-								<td>
-									<?php
-											if ($record->tag1 != '') {
-												foreach ($tagsInfo as $list) {
-													if ($record->tag1 == $list->name) {
-														echo $record->tag1 . '<br>';
-													}
-												}
-											}
-											if ($record->tag2 != '') {
-												foreach ($tagsInfo as $list) {
-													if ($record->tag2 == $list->name) {
-														echo $record->tag2 . '<br>';
-													}
-												}
-											}
-											if ($record->tag3 != '') {
-												foreach ($tagsInfo as $list) {
-													if ($record->tag3 == $list->name) {
-														echo $record->tag3 . '<br>';
-													}
-												}
-											}
-											if ($record->tag4 != '') {
-												foreach ($tagsInfo as $list) {
-													if ($record->tag4 == $list->name) {
-														echo $record->tag4 . '<br>';
-													}
-												}
-											}
-											if ($record->tag5 != '') {
-												foreach ($tagsInfo as $list) {
-													if ($record->tag5 == $list->name) {
-														echo $record->tag5 . '<br>';
-													}
-												}
-											}
-											?>
-								</td>
-								<td class="text-center">
-									<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/newsOld/' . $record->newsid; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-									<a class="btn btn-sm btn-danger deleteNews" href="#" data-newsid="<?php echo $record->newsid; ?>" title="移除"><i class="fa fa-trash"></i></a>
-								</td>
-							</tr>
-							<?php
-								}
-							} else {
-								?>
-							<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
-								無相關資料!
-							</div>
+									<tr>
+										<td><img style="width:50px;height:50px;" src="<?php echo base_url('assets/uploads/news_upload/news/' . $record->img); ?>"></td>
+										<td><?php echo $record->main_title ?></td>
+										<td><?php echo $record->sub_title ?></td>
+										<td><?php echo $record->date_start ?></td>
+										<td><?php echo $record->date_update ?></td>
+										<td><?php echo mb_strimwidth(htmlspecialchars($record->editor), 0, 100, '...') ?></td>
+										<td></td>
+										<td class="text-center">
+											<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/newsOld/' . $record->pr_id; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
+											<a class="btn btn-sm btn-danger deleteNews" href="#" data-prid="<?php echo $record->pr_id; ?>" title="移除"><i class="fa fa-trash"></i></a>
+										</td>
+									</tr>
+								<?php
+									}
+								} else {
+									?>
+								<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
+									無相關資料!
+								</div>
 							<?php } ?>
 						</table>
 

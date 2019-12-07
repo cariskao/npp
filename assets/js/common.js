@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-06-11 21:16:17
- * @LastEditTime: 2019-09-14 12:18:01
+ * @LastEditTime: 2019-12-07 15:30:58
  * @LastEditors: Please set LastEditors
  */
 /**
@@ -60,7 +60,7 @@ jQuery(document).ready(function () {
 	})
 
 	jQuery(document).on('click', '.deleteNews', function () {
-		var newsId = $(this).data('newsid'),
+		var pr_id = $(this).data('prid'),
 			hitURL = baseURL + 'news/deleteNews',
 			currentRow = $(this),
 			link = jQuery(this).get(0).href,
@@ -89,7 +89,7 @@ jQuery(document).ready(function () {
 					dataType: 'json',
 					url: hitURL,
 					data: {
-						newsid: newsId,
+						pr_id: pr_id,
 					},
 				})
 				.done(function (data) {
@@ -102,7 +102,7 @@ jQuery(document).ready(function () {
 	})
 
 	jQuery(document).on('click', '.deleteMessage', function () {
-		var newsId = $(this).data('mesid'),
+		var pr_id = $(this).data('prid'),
 			hitURL = baseURL + 'news/deleteMessage',
 			currentRow = $(this),
 			link = jQuery(this).get(0).href,
@@ -131,7 +131,7 @@ jQuery(document).ready(function () {
 					dataType: 'json',
 					url: hitURL,
 					data: {
-						mesid: newsId,
+						pr_id: pr_id,
 					},
 				})
 				.done(function (data) {
@@ -144,7 +144,7 @@ jQuery(document).ready(function () {
 	})
 
 	jQuery(document).on('click', '.deleteRecords', function () {
-		var newsId = $(this).data('recordid'),
+		var pr_id = $(this).data('prid'),
 			hitURL = baseURL + 'news/deleteRecords',
 			currentRow = $(this),
 			link = jQuery(this).get(0).href,
@@ -173,7 +173,7 @@ jQuery(document).ready(function () {
 					dataType: 'json',
 					url: hitURL,
 					data: {
-						recordid: newsId,
+						pr_id: pr_id,
 					},
 				})
 				.done(function (data) {

@@ -11,19 +11,19 @@ class News_model extends CI_Model
     {
         // log_message('error', 'News_model userListingCount 有錯誤!');
 
-        // $this->db->select('BaseTbl.newsid, BaseTbl.news_main_title, BaseTbl.news_sub_title,BaseTbl.news_date, BaseTbl.news_editor');
+        // $this->db->select('SELECT * FROM press_release BaseTbl WHERE BaseTbl.pr_type_id=1');
         $this->db->select('*');
-        $this->db->from('press_release_news as BaseTbl');
+        $this->db->from('press_release as BaseTbl');
         // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
+
         if (!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.news_main_title  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.news_sub_title  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.news_date  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.news_tag  LIKE '%" . $searchText . "%')";
+            $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
+            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
             $this->db->where($likeCriteria);
         }
         // $this->db->where('BaseTbl.isDeleted', 0);
         // $this->db->where('BaseTbl.roleId !=', 1);
+        $this->db->where('BaseTbl.pr_type_id', 1);
 
         $query = $this->db->get();
 
@@ -43,18 +43,18 @@ class News_model extends CI_Model
 
         // $this->db->select('BaseTbl.newsid, BaseTbl.news_main_title, BaseTbl.news_sub_title,BaseTbl.news_date, BaseTbl.news_editor');
         $this->db->select('*');
-        $this->db->from('press_release_news as BaseTbl');
+        $this->db->from('press_release as BaseTbl');
         // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
         if (!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.news_main_title  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.news_sub_title  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.news_date  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.news_tag  LIKE '%" . $searchText . "%')";
+            $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
+            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
             $this->db->where($likeCriteria);
         }
         // $this->db->where('BaseTbl.isDeleted', 0);
         // $this->db->where('BaseTbl.roleId !=', 1);
-        $this->db->order_by('BaseTbl.newsid', 'DESC');
+        $this->db->where('BaseTbl.pr_type_id', 1);
+
+        $this->db->order_by('BaseTbl.pr_id', 'DESC');
         $this->db->limit($page, $segment);
         $query = $this->db->get();
 
@@ -215,19 +215,17 @@ class News_model extends CI_Model
     // 以下爲公告訊息
     function messageListingCount($searchText = '')
     {
-        // $this->db->select('BaseTbl.newsid, BaseTbl.news_main_title, BaseTbl.news_sub_title,BaseTbl.news_date, BaseTbl.news_editor');
         $this->db->select('*');
-        $this->db->from('press_release_message as BaseTbl');
+        $this->db->from('press_release as BaseTbl');
         // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
         if (!empty($searchText)) {
             $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.date  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.tag  LIKE '%" . $searchText . "%')";
+            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
             $this->db->where($likeCriteria);
         }
         // $this->db->where('BaseTbl.isDeleted', 0);
         // $this->db->where('BaseTbl.roleId !=', 1);
+        $this->db->where('BaseTbl.pr_type_id', 2);
 
         $query = $this->db->get();
 
@@ -236,20 +234,18 @@ class News_model extends CI_Model
 
     function messageListing($searchText = '', $page, $segment)
     {
-        // $this->db->select('BaseTbl.newsid, BaseTbl.news_main_title, BaseTbl.news_sub_title,BaseTbl.news_date, BaseTbl.news_editor');
         $this->db->select('*');
-        $this->db->from('press_release_message as BaseTbl');
+        $this->db->from('press_release as BaseTbl');
         // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
         if (!empty($searchText)) {
             $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.date  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.tag  LIKE '%" . $searchText . "%')";
+            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
             $this->db->where($likeCriteria);
         }
         // $this->db->where('BaseTbl.isDeleted', 0);
         // $this->db->where('BaseTbl.roleId !=', 1);
-        $this->db->order_by('BaseTbl.mesid', 'DESC');
+        $this->db->where('BaseTbl.pr_type_id', 2);
+        $this->db->order_by('BaseTbl.pr_id', 'DESC');
         $this->db->limit($page, $segment);
         $query = $this->db->get();
 
@@ -335,19 +331,18 @@ class News_model extends CI_Model
     // 以下爲活動記錄
     function recordsListingCount($searchText = '')
     {
-        // $this->db->select('BaseTbl.newsid, BaseTbl.news_main_title, BaseTbl.news_sub_title,BaseTbl.news_date, BaseTbl.news_editor');
         $this->db->select('*');
-        $this->db->from('press_release_records as BaseTbl');
+        $this->db->from('press_release as BaseTbl');
         // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
+
         if (!empty($searchText)) {
             $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.date  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.tag  LIKE '%" . $searchText . "%')";
+            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
             $this->db->where($likeCriteria);
         }
         // $this->db->where('BaseTbl.isDeleted', 0);
         // $this->db->where('BaseTbl.roleId !=', 1);
+        $this->db->where('BaseTbl.pr_type_id', 3);
 
         $query = $this->db->get();
 
@@ -356,20 +351,19 @@ class News_model extends CI_Model
 
     function recordsListing($searchText = '', $page, $segment)
     {
-        // $this->db->select('BaseTbl.newsid, BaseTbl.news_main_title, BaseTbl.news_sub_title,BaseTbl.news_date, BaseTbl.news_editor');
         $this->db->select('*');
-        $this->db->from('press_release_records as BaseTbl');
+        $this->db->from('press_release as BaseTbl');
         // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
+
         if (!empty($searchText)) {
             $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.date  LIKE '%" . $searchText . "%'
-                            OR  BaseTbl.tag  LIKE '%" . $searchText . "%')";
+            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
             $this->db->where($likeCriteria);
         }
         // $this->db->where('BaseTbl.isDeleted', 0);
         // $this->db->where('BaseTbl.roleId !=', 1);
-        $this->db->order_by('BaseTbl.recordid', 'DESC');
+        $this->db->where('BaseTbl.pr_type_id', 3);
+        $this->db->order_by('BaseTbl.pr_id', 'DESC');
         $this->db->limit($page, $segment);
         $query = $this->db->get();
 
