@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-globe"></i> 新增新聞
+            <i class="fa fa-globe"></i> 新增最新新聞資料
         </h1>
     </section>
 
@@ -56,107 +56,6 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="fb">臉書</label>
-                                        <input type="text" class="form-control" id="fb" name="fb" value="">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="line">Line</label>
-                                        <input type="text" class="form-control" id="line" name="line" value="">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="twitter">推特</label>
-                                        <input type="text" class="form-control" id="twitter" name="twitter" value="">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="mail">信箱</label>
-                                        <input type="text" class="form-control" id="mail" name="mail" value="">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="tag1">標籤1</label>
-                                        <select name="tag1" id="tag1" class="form-control">
-                                            <option value="0">不選擇</option>
-                                            <?php
-                                            if (!empty($tagsInfo)) {
-                                                foreach ($tagsInfo as $record) {
-                                                    ?>
-                                            <option value="<?php echo $record->name; ?>"><?php echo $record->name; ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tag2">標籤2</label>
-                                        <select name="tag2" id="tag2" class="form-control">
-                                            <option value="0">不選擇</option>
-                                            <?php
-                                            if (!empty($tagsInfo)) {
-                                                foreach ($tagsInfo as $record) {
-                                                    ?>
-                                            <option value="<?php echo $record->name; ?>"><?php echo $record->name; ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tag3">標籤3</label>
-                                        <select name="tag3" id="tag3" class="form-control">
-                                            <option value="0">不選擇</option>
-                                            <?php
-                                            if (!empty($tagsInfo)) {
-                                                foreach ($tagsInfo as $record) {
-                                                    ?>
-                                            <option value="<?php echo $record->name; ?>"><?php echo $record->name; ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tag4">標籤4</label>
-                                        <select name="tag4" id="tag4" class="form-control">
-                                            <option value="0">不選擇</option>
-                                            <?php
-                                            if (!empty($tagsInfo)) {
-                                                foreach ($tagsInfo as $record) {
-                                                    ?>
-                                            <option value="<?php echo $record->name; ?>"><?php echo $record->name; ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tag5">標籤5</label>
-                                        <select name="tag5" id="tag5" class="form-control">
-                                            <option value="0">不選擇</option>
-                                            <?php
-                                            if (!empty($tagsInfo)) {
-                                                foreach ($tagsInfo as $record) {
-                                                    ?>
-                                            <option value="<?php echo $record->name; ?>"><?php echo $record->name; ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
                                     <textarea name="editor1" id="editor1"></textarea>
                                     <script>
                                         CKEDITOR.replace("editor1", {
@@ -194,19 +93,19 @@
             $error = $this->session->flashdata('error');
             if ($error) {
                 ?>
-            <div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo $this->session->flashdata('error'); ?>
-            </div>
+                <div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <?php echo $this->session->flashdata('error'); ?>
+                </div>
             <?php } ?>
             <?php
             $success = $this->session->flashdata('success');
             if ($success) {
                 ?>
-            <div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo $this->session->flashdata('success'); ?>
-            </div>
+                <div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <?php echo $this->session->flashdata('success'); ?>
+                </div>
             <?php } ?>
 
             <style>

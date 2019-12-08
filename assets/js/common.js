@@ -1,10 +1,3 @@
-/*
- * @Description: In User Settings Edit
- * @Author: your name
- * @Date: 2019-06-11 21:16:17
- * @LastEditTime: 2019-12-07 15:30:58
- * @LastEditors: Please set LastEditors
- */
 /**
  * @author Kishor Mali
  */

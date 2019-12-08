@@ -7,6 +7,18 @@ class News_model extends CI_Model
      * @param string $searchText : This is optional search text
      * @return number $count : This is row count
      */
+
+    /*
+##       ####  ######  ########
+##        ##  ##    ##    ##
+##        ##  ##          ##
+##        ##   ######     ##
+##        ##        ##    ##
+##        ##  ##    ##    ##
+######## ####  ######     ##
+*/
+
+    // 最新新聞-算頁數
     function userListingCount($searchText = '')
     {
         // log_message('error', 'News_model userListingCount 有錯誤!');
@@ -36,12 +48,12 @@ class News_model extends CI_Model
      * @param number $page : This is pagination offset
      * @param number $segment : This is pagination limit
      * @return array $result : This is result
+     * 最新新聞-算總項目
      */
     function userListing($searchText = '', $page, $segment)
     {
         // log_message('error', 'News_model userListing 有錯誤!');
 
-        // $this->db->select('BaseTbl.newsid, BaseTbl.news_main_title, BaseTbl.news_sub_title,BaseTbl.news_date, BaseTbl.news_editor');
         $this->db->select('*');
         $this->db->from('press_release as BaseTbl');
         // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
@@ -62,45 +74,115 @@ class News_model extends CI_Model
         return $result;
     }
 
-    /**
-     * This function is used to add new user to system
-     * @return number $insert_id : This is last inserted id
-     */
-    function addNewUser($userInfo)
+    // 公告訊息-算頁數
+    function messageListingCount($searchText = '')
     {
-        $this->db->trans_start();
-        $this->db->insert('press_release_news', $userInfo);
+        $this->db->select('*');
+        $this->db->from('press_release as BaseTbl');
+        // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
+        if (!empty($searchText)) {
+            $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
+            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
+            $this->db->where($likeCriteria);
+        }
+        // $this->db->where('BaseTbl.isDeleted', 0);
+        // $this->db->where('BaseTbl.roleId !=', 1);
+        $this->db->where('BaseTbl.pr_type_id', 2);
 
-        $insert_id = $this->db->insert_id();
+        $query = $this->db->get();
 
-        $this->db->trans_complete();
-
-        return $insert_id;
+        return $query->num_rows();
     }
 
-    function addNewsCheck($name)
+    // 公告訊息-算總項目
+    function messageListing($searchText = '', $page, $segment)
     {
-        $this->db->trans_start();
+        $this->db->select('*');
+        $this->db->from('press_release as BaseTbl');
+        // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
+        if (!empty($searchText)) {
+            $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
+            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
+            $this->db->where($likeCriteria);
+        }
+        // $this->db->where('BaseTbl.isDeleted', 0);
+        // $this->db->where('BaseTbl.roleId !=', 1);
+        $this->db->where('BaseTbl.pr_type_id', 2);
+        $this->db->order_by('BaseTbl.pr_id', 'DESC');
+        $this->db->limit($page, $segment);
+        $query = $this->db->get();
 
-        $query = $this->db->query('SELECT `news_img` FROM `press_release_news` WHERE `news_img`="' . $name . '"');
-
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
+        $result = $query->result();
+        return $result;
     }
+
+    // 活動記錄-算頁數
+    function recordsListingCount($searchText = '')
+    {
+        $this->db->select('*');
+        $this->db->from('press_release as BaseTbl');
+        // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
+
+        if (!empty($searchText)) {
+            $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
+            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
+            $this->db->where($likeCriteria);
+        }
+        // $this->db->where('BaseTbl.isDeleted', 0);
+        // $this->db->where('BaseTbl.roleId !=', 1);
+        $this->db->where('BaseTbl.pr_type_id', 3);
+
+        $query = $this->db->get();
+
+        return $query->num_rows();
+    }
+
+    // 活動記錄-算總項目
+    function recordsListing($searchText = '', $page, $segment)
+    {
+        $this->db->select('*');
+        $this->db->from('press_release as BaseTbl');
+        // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
+
+        if (!empty($searchText)) {
+            $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
+            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
+            $this->db->where($likeCriteria);
+        }
+        // $this->db->where('BaseTbl.isDeleted', 0);
+        // $this->db->where('BaseTbl.roleId !=', 1);
+        $this->db->where('BaseTbl.pr_type_id', 3);
+        $this->db->order_by('BaseTbl.pr_id', 'DESC');
+        $this->db->limit($page, $segment);
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
+
+    /*
+.########.########..####.########
+.##.......##.....##..##.....##...
+.##.......##.....##..##.....##...
+.######...##.....##..##.....##...
+.##.......##.....##..##.....##...
+.##.......##.....##..##.....##...
+.########.########..####....##...
+*/
 
     /**
      * This function used to get user information by id
      * @param number $userId : This is user id
      * @return array $result : This is user information
+     * get news info
      */
     function getUserInfo($userId)
     {
         $this->db->select('*');
-        $this->db->from('press_release_news');
+        $this->db->from('press_release');
         // $this->db->where('isDeleted', 0);
         // $this->db->where('roleId !=', 1);
-        $this->db->where('newsid', $userId);
+        $this->db->where('pr_id', $userId);
         $query = $this->db->get();
 
         return $query->row();
@@ -110,21 +192,74 @@ class News_model extends CI_Model
      * This function is used to update the user information
      * @param array $userInfo : This is users updated information
      * @param number $userId : This is user id
+     * update news data
      */
     function editUser($userInfo, $userId)
     {
-        $this->db->where('newsid', $userId);
-        $this->db->update('press_release_news', $userInfo);
+        $this->db->where('pr_id', $userId);
+        $this->db->update('press_release', $userInfo);
 
         return TRUE;
     }
 
-    function editUserCheck($name)
+    function getMessageInfo($userId)
+    {
+        $this->db->select('*');
+        $this->db->from('press_release');
+        // $this->db->where('isDeleted', 0);
+        // $this->db->where('roleId !=', 1);
+        $this->db->where('pr_id', $userId);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
+    function editMessage($userInfo, $userId)
+    {
+        $this->db->where('pr_id', $userId);
+        $this->db->update('press_release', $userInfo);
+
+        return TRUE;
+    }
+
+    function getRecordsInfo($userId)
+    {
+        $this->db->select(); // 代表*
+        $this->db->from('press_release');
+        // $this->db->where('isDeleted', 0);
+        // $this->db->where('roleId !=', 1);
+        $this->db->where('pr_id', $userId);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
+    function editRecords($userInfo, $userId)
+    {
+        $this->db->where('recordid', $userId);
+        $this->db->update('press_release_records', $userInfo);
+
+        return TRUE;
+    }
+
+    /*
+ ######  ##     ## ########  ######  ##    ##
+##    ## ##     ## ##       ##    ## ##   ##
+##       ##     ## ##       ##       ##  ##
+##       ######### ######   ##       #####
+##       ##     ## ##       ##       ##  ##
+##    ## ##     ## ##       ##    ## ##   ##
+ ######  ##     ## ########  ######  ##    ##
+*/
+
+    // check add 最新新聞圖片名稱有無重複
+    function addNewsCheck($name)
     {
         $this->db->trans_start();
-        $this->db->select('*');
-        $this->db->from('press_release_news');
-        $this->db->where('news_img', $name);
+        $this->db->select('img');
+        $this->db->from('press_release');
+        $this->db->where('img', $name);
+        $this->db->where('pr_type_id', 1);
 
         $query = $this->db->get();
 
@@ -133,15 +268,33 @@ class News_model extends CI_Model
         return  $query->num_rows();
     }
 
+    // check edit 最新新聞圖片名稱有無重複
+    function editUserCheck($name)
+    {
+        $this->db->trans_start();
+        $this->db->select('img');
+        $this->db->from('press_release');
+        $this->db->where('img', $name);
+        $this->db->where('pr_type_id', 1);
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return  $query->num_rows();
+    }
+
+    // check最新新聞的大標名稱有無重複
     function newsname_check($name, $id = null, $isEdit)
     {
         $this->db->trans_start();
-        $this->db->select('*');
-        $this->db->from('press_release_news');
-        $this->db->where('news_main_title', $name);
+        $this->db->select('main_title');
+        $this->db->from('press_release');
+        $this->db->where('main_title', $name);
+        $this->db->where('pr_type_id', 1);
 
         if ($isEdit) {
-            $this->db->where('newsid !=', $id);
+            $this->db->where('pr_id !=', $id);
         }
 
         $query = $this->db->get();
@@ -151,15 +304,17 @@ class News_model extends CI_Model
         return  $query->num_rows();
     }
 
+    // check訊息公告的大標名稱有無重複
     function messagename_check($name, $id = null, $isEdit)
     {
         $this->db->trans_start();
-        $this->db->select('*');
-        $this->db->from('press_release_message');
+        $this->db->select('main_title');
+        $this->db->from('press_release');
         $this->db->where('main_title', $name);
+        $this->db->where('pr_type_id', 2);
 
         if ($isEdit) {
-            $this->db->where('mesid !=', $id);
+            $this->db->where('pr_id !=', $id);
         }
 
         $query = $this->db->get();
@@ -172,12 +327,13 @@ class News_model extends CI_Model
     function recordname_check($name, $id = null, $isEdit)
     {
         $this->db->trans_start();
-        $this->db->select('*');
-        $this->db->from('press_release_records');
+        $this->db->select('main_title');
+        $this->db->from('press_release');
         $this->db->where('main_title', $name);
+        $this->db->where('pr_type_id', 3);
 
         if ($isEdit) {
-            $this->db->where('recordid !=', $id);
+            $this->db->where('pr_id !=', $id);
         }
 
         $query = $this->db->get();
@@ -186,6 +342,128 @@ class News_model extends CI_Model
 
         return  $query->num_rows();
     }
+
+    // check edit 訊息公告圖片名稱有無重複
+    function editMessageCheck($name)
+    {
+        $this->db->trans_start();
+        $this->db->select('img');
+        $this->db->from('press_release');
+        $this->db->where('img', $name);
+        $this->db->where('pr_type_id', 2);
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return  $query->num_rows();
+    }
+
+    // check訊息公告的圖片名稱有無重複
+    function addMessageCheck($name)
+    {
+        $this->db->trans_start();
+        $this->db->select('img');
+        $this->db->from('press_release');
+        $this->db->where('img', $name);
+        $this->db->where('pr_type_id', 2);
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return  $query->num_rows();
+    }
+
+    function addRecordCheck($name)
+    {
+        $this->db->trans_start();
+        $this->db->select('img');
+        $this->db->from('press_release');
+        $this->db->where('img', $name);
+        $this->db->where('pr_type_id', 3);
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return  $query->num_rows();
+    }
+
+    function editRecordsCheck($name)
+    {
+        $this->db->trans_start();
+        $this->db->select('img');
+        $this->db->from('press_release');
+        $this->db->where('img', $name);
+        $this->db->where('pr_type_id', 3);
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return  $query->num_rows();
+    }
+
+    /*
+   ###    ########  ########
+  ## ##   ##     ## ##     ##
+ ##   ##  ##     ## ##     ##
+##     ## ##     ## ##     ##
+######### ##     ## ##     ##
+##     ## ##     ## ##     ##
+##     ## ########  ########
+*/
+
+    /**
+     * This function is used to add new user to system
+     * @return number $insert_id : This is last inserted id
+     */
+    function addNewUser($userInfo)
+    {
+        $this->db->trans_start();
+        $this->db->insert('press_release', $userInfo);
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
+    function addNewMessage($userInfo)
+    {
+        $this->db->trans_start();
+        $this->db->insert('press_release', $userInfo);
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
+    function addNewRecords($userInfo)
+    {
+        $this->db->trans_start();
+        $this->db->insert('press_release', $userInfo);
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
+    /*
+########  ######## ##       ######## ######## ########
+##     ## ##       ##       ##          ##    ##
+##     ## ##       ##       ##          ##    ##
+##     ## ######   ##       ######      ##    ######
+##     ## ##       ##       ##          ##    ##
+##     ## ##       ##       ##          ##    ##
+########  ######## ######## ########    ##    ########
+*/
 
     function editUserDelete($userId)
     {
@@ -212,73 +490,6 @@ class News_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    // 以下爲公告訊息
-    function messageListingCount($searchText = '')
-    {
-        $this->db->select('*');
-        $this->db->from('press_release as BaseTbl');
-        // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
-        if (!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
-            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
-            $this->db->where($likeCriteria);
-        }
-        // $this->db->where('BaseTbl.isDeleted', 0);
-        // $this->db->where('BaseTbl.roleId !=', 1);
-        $this->db->where('BaseTbl.pr_type_id', 2);
-
-        $query = $this->db->get();
-
-        return $query->num_rows();
-    }
-
-    function messageListing($searchText = '', $page, $segment)
-    {
-        $this->db->select('*');
-        $this->db->from('press_release as BaseTbl');
-        // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
-        if (!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
-            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
-            $this->db->where($likeCriteria);
-        }
-        // $this->db->where('BaseTbl.isDeleted', 0);
-        // $this->db->where('BaseTbl.roleId !=', 1);
-        $this->db->where('BaseTbl.pr_type_id', 2);
-        $this->db->order_by('BaseTbl.pr_id', 'DESC');
-        $this->db->limit($page, $segment);
-        $query = $this->db->get();
-
-        $result = $query->result();
-        return $result;
-    }
-
-    function getMessageInfo($userId)
-    {
-        $this->db->select('*');
-        $this->db->from('press_release_message');
-        // $this->db->where('isDeleted', 0);
-        // $this->db->where('roleId !=', 1);
-        $this->db->where('mesid', $userId);
-        $query = $this->db->get();
-
-        return $query->row();
-    }
-
-    function editMessageCheck($name)
-    {
-        $this->db->trans_start();
-        $this->db->select('*');
-        $this->db->from('press_release_message');
-        $this->db->where('img', $name);
-
-        $query = $this->db->get();
-
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
-    }
-
     function editMessageDelete($userId)
     {
         $this->db->select('*');
@@ -295,103 +506,6 @@ class News_model extends CI_Model
         $this->db->delete('press_release_message');
 
         return $this->db->affected_rows();
-    }
-
-    function addNewMessage($userInfo)
-    {
-        $this->db->trans_start();
-        $this->db->insert('press_release_message', $userInfo);
-
-        $insert_id = $this->db->insert_id();
-
-        $this->db->trans_complete();
-
-        return $insert_id;
-    }
-
-    function addMessageCheck($name)
-    {
-        $this->db->trans_start();
-
-        $query = $this->db->query('SELECT `img` FROM `press_release_message` WHERE `img`="' . $name . '"');
-
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
-    }
-
-    function editMessage($userInfo, $userId)
-    {
-        $this->db->where('mesid', $userId);
-        $this->db->update('press_release_message', $userInfo);
-
-        return TRUE;
-    }
-
-    // 以下爲活動記錄
-    function recordsListingCount($searchText = '')
-    {
-        $this->db->select('*');
-        $this->db->from('press_release as BaseTbl');
-        // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
-
-        if (!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
-            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
-            $this->db->where($likeCriteria);
-        }
-        // $this->db->where('BaseTbl.isDeleted', 0);
-        // $this->db->where('BaseTbl.roleId !=', 1);
-        $this->db->where('BaseTbl.pr_type_id', 3);
-
-        $query = $this->db->get();
-
-        return $query->num_rows();
-    }
-
-    function recordsListing($searchText = '', $page, $segment)
-    {
-        $this->db->select('*');
-        $this->db->from('press_release as BaseTbl');
-        // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
-
-        if (!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
-            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
-            $this->db->where($likeCriteria);
-        }
-        // $this->db->where('BaseTbl.isDeleted', 0);
-        // $this->db->where('BaseTbl.roleId !=', 1);
-        $this->db->where('BaseTbl.pr_type_id', 3);
-        $this->db->order_by('BaseTbl.pr_id', 'DESC');
-        $this->db->limit($page, $segment);
-        $query = $this->db->get();
-
-        $result = $query->result();
-        return $result;
-    }
-
-    function addNewRecords($userInfo)
-    {
-        $this->db->trans_start();
-        $this->db->insert('press_release_records', $userInfo);
-
-        $insert_id = $this->db->insert_id();
-
-        $this->db->trans_complete();
-
-        return $insert_id;
-    }
-
-    function addRecordCheck($name)
-    {
-        $this->db->trans_start();
-
-        $query = $this->db->query('SELECT `img` FROM `press_release_records` WHERE `img`="' . $name . '"');
-
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
     }
 
     function editRecordsDelete($userId)
@@ -412,43 +526,16 @@ class News_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    function getRecordsInfo($userId)
-    {
-        $this->db->select('*');
-        $this->db->from('press_release_records');
-        // $this->db->where('isDeleted', 0);
-        // $this->db->where('roleId !=', 1);
-        $this->db->where('recordid', $userId);
-        $query = $this->db->get();
 
-        return $query->row();
-    }
-
-    function editRecords($userInfo, $userId)
-    {
-        $this->db->where('recordid', $userId);
-        $this->db->update('press_release_records', $userInfo);
-
-        return TRUE;
-    }
-
-    function editRecordsCheck($name)
-    {
-        $this->db->trans_start();
-        $this->db->select('*');
-        $this->db->from('press_release_records');
-        $this->db->where('img', $name);
-
-        $query = $this->db->get();
-
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
-    }
-
-    /**
-     * 新聞訊息的標籤
-     */
+    /*
+########    ###     ######
+    ##      ## ##   ##    ##
+    ##     ##   ##  ##
+    ##    ##     ## ##   ####
+    ##    ######### ##    ##
+    ##    ##     ## ##    ##
+    ##    ##     ##  ######
+*/
     function tagsCheck($name, $id)
     {
         $this->db->trans_start();

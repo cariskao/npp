@@ -1,20 +1,11 @@
 <?php
-$newsId = $userInfo->newsid;
-$img = $userInfo->news_img;
-$m_title = $userInfo->news_main_title;
-$s_title = $userInfo->news_sub_title;
+$pr_id = $userInfo->pr_id;
+$img = $userInfo->img;
+$m_title = $userInfo->main_title;
+$s_title = $userInfo->sub_title;
 $date_start = $userInfo->date_start;
 $date_update = $userInfo->date_update;
-$editor = $userInfo->news_editor;
-$fb = $userInfo->news_share_fb;
-$line = $userInfo->news_share_line;
-$twitter = $userInfo->news_share_twitter;
-$mail = $userInfo->news_share_mail;
-$tag1 = $userInfo->tag1;
-$tag2 = $userInfo->tag2;
-$tag3 = $userInfo->tag3;
-$tag4 = $userInfo->tag4;
-$tag5 = $userInfo->tag5;
+$editor = $userInfo->editor;
 ?>
 
 <div class="content-wrapper">
@@ -60,7 +51,7 @@ $tag5 = $userInfo->tag5;
                                         <label for="m_title">大標</label>
                                         <input type="text" class="form-control" id="m_title" name="m_title" value="<?php echo $m_title; ?>">
                                         <?php echo form_error('m_title'); ?>
-                                        <input type="hidden" value="<?php echo $newsId; ?>" name="newsId" id="newsId" />
+                                        <input type="hidden" value="<?php echo $pr_id; ?>" name="prid" id="prid" />
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -79,107 +70,6 @@ $tag5 = $userInfo->tag5;
                                     <div class="form-group">
                                         <label for="date_update">更新日期</label>
                                         <input type="date" class="form-control" id="date_update" name="date_update" value="<?php echo $date_update; ?>">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="fb">臉書</label>
-                                        <input type="text" class="form-control" id="fb" name="fb" value="<?php echo $fb; ?>">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="line">Line</label>
-                                        <input type="text" class="form-control" id="line" name="line" value="<?php echo $line; ?>">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="twitter">推特</label>
-                                        <input type="text" class="form-control" id="twitter" name="twitter" value="<?php echo $twitter; ?>">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="mail">信箱</label>
-                                        <input type="text" class="form-control" id="mail" name="mail" value="<?php echo $mail; ?>">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="tag1">標籤1</label>
-                                        <select name="tag1" id="tag1" class="form-control">
-                                            <option value="0">不選擇</option>
-                                            <?php
-                                            if (!empty($tagsInfo)) {
-                                                foreach ($tagsInfo as $record) {
-                                                    ?>
-                                            <option value="<?php echo $record->name; ?>" <?php if ($record->name == $tag1) echo "selected=selected"; ?>><?php echo $record->name; ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tag2">標籤2</label>
-                                        <select name="tag2" id="tag2" class="form-control">
-                                            <option value="0">不選擇</option>
-                                            <?php
-                                            if (!empty($tagsInfo)) {
-                                                foreach ($tagsInfo as $record) {
-                                                    ?>
-                                            <option value="<?php echo $record->name; ?>" <?php if ($record->name == $tag2) echo "selected=selected"; ?>><?php echo $record->name; ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tag3">標籤3</label>
-                                        <select name="tag3" id="tag3" class="form-control">
-                                            <option value="0">不選擇</option>
-                                            <?php
-                                            if (!empty($tagsInfo)) {
-                                                foreach ($tagsInfo as $record) {
-                                                    ?>
-                                            <option value="<?php echo $record->name; ?>" <?php if ($record->name == $tag3) echo "selected=selected"; ?>><?php echo $record->name; ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tag4">標籤4</label>
-                                        <select name="tag4" id="tag4" class="form-control">
-                                            <option value="0">不選擇</option>
-                                            <?php
-                                            if (!empty($tagsInfo)) {
-                                                foreach ($tagsInfo as $record) {
-                                                    ?>
-                                            <option value="<?php echo $record->name; ?>" <?php if ($record->name == $tag4) echo "selected=selected"; ?>><?php echo $record->name; ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tag5">標籤5</label>
-                                        <select name="tag5" id="tag5" class="form-control">
-                                            <option value="0">不選擇</option>
-                                            <?php
-                                            if (!empty($tagsInfo)) {
-                                                foreach ($tagsInfo as $record) {
-                                                    ?>
-                                            <option value="<?php echo $record->name; ?>" <?php if ($record->name == $tag5) echo "selected=selected"; ?>><?php echo $record->name; ?></option>
-                                            <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -220,10 +110,10 @@ $tag5 = $userInfo->tag5;
             $error = $this->session->flashdata('error');
             if ($error) {
                 ?>
-            <div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo $this->session->flashdata('error'); ?>
-            </div>
+                <div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <?php echo $this->session->flashdata('error'); ?>
+                </div>
             <?php } ?>
             <?php
             $success = $this->session->flashdata('success');
@@ -231,10 +121,10 @@ $tag5 = $userInfo->tag5;
             $check = $this->session->flashdata('check');
             if ($success && $check == '驗證成功') {
                 ?>
-            <div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo $this->session->flashdata('success'); ?>
-            </div>
+                <div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <?php echo $this->session->flashdata('success'); ?>
+                </div>
             <?php } ?>
 
             <style>
