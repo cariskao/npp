@@ -12,7 +12,7 @@ $editor = $userInfo->editor;
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-globe"></i> 編輯新聞
+            <i class="fa fa-globe"></i> 編輯最新新聞資料
         </h1>
     </section>
 
@@ -31,7 +31,7 @@ $editor = $userInfo->editor;
 
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">編輯新聞稿資料</h3>
+                        <h3 class="box-title">編輯最新新聞資料</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <!--  enctype="multipart/form-data"記得加 -->

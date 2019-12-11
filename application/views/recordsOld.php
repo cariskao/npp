@@ -12,7 +12,7 @@ $editor = $userInfo->editor;
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            <i class="fa fa-globe"></i> 編輯活動記錄
+            <i class="fa fa-globe"></i> 編輯活動記錄資料
         </h1>
     </section>
 

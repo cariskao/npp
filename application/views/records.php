@@ -52,7 +52,7 @@
 										<td><?php echo $record->date_start ?></td>
 										<td><?php echo $record->date_update ?></td>
 										<td><?php echo mb_strimwidth(htmlspecialchars($record->editor), 0, 100, '...') ?></td>
-										<td><?php echo $record->pr_id; ?></td>
+										<td></td>
 										<td class="text-center">
 											<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/recordsOld/' . $record->pr_id; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
 											<a class="btn btn-sm btn-danger deleteRecords" href="#" data-prid="<?php echo $record->pr_id; ?>" title="移除"><i class="fa fa-trash"></i></a>

@@ -170,74 +170,22 @@ class News_model extends CI_Model
 .########.########..####....##...
 */
 
-    /**
-     * This function used to get user information by id
-     * @param number $userId : This is user id
-     * @return array $result : This is user information
-     * get news info
-     */
-    function getUserInfo($userId)
+    function getPressReleaseInfo($id)
     {
-        $this->db->select('*');
+        $this->db->select();
         $this->db->from('press_release');
         // $this->db->where('isDeleted', 0);
         // $this->db->where('roleId !=', 1);
-        $this->db->where('pr_id', $userId);
+        $this->db->where('pr_id', $id);
         $query = $this->db->get();
 
         return $query->row();
     }
 
-    /**
-     * This function is used to update the user information
-     * @param array $userInfo : This is users updated information
-     * @param number $userId : This is user id
-     * update news data
-     */
-    function editUser($userInfo, $userId)
+    function pressReleaseUpdate($userInfo, $id)
     {
-        $this->db->where('pr_id', $userId);
+        $this->db->where('pr_id', $id);
         $this->db->update('press_release', $userInfo);
-
-        return TRUE;
-    }
-
-    function getMessageInfo($userId)
-    {
-        $this->db->select('*');
-        $this->db->from('press_release');
-        // $this->db->where('isDeleted', 0);
-        // $this->db->where('roleId !=', 1);
-        $this->db->where('pr_id', $userId);
-        $query = $this->db->get();
-
-        return $query->row();
-    }
-
-    function editMessage($userInfo, $userId)
-    {
-        $this->db->where('pr_id', $userId);
-        $this->db->update('press_release', $userInfo);
-
-        return TRUE;
-    }
-
-    function getRecordsInfo($userId)
-    {
-        $this->db->select(); // 代表*
-        $this->db->from('press_release');
-        // $this->db->where('isDeleted', 0);
-        // $this->db->where('roleId !=', 1);
-        $this->db->where('pr_id', $userId);
-        $query = $this->db->get();
-
-        return $query->row();
-    }
-
-    function editRecords($userInfo, $userId)
-    {
-        $this->db->where('recordid', $userId);
-        $this->db->update('press_release_records', $userInfo);
 
         return TRUE;
     }
@@ -252,30 +200,17 @@ class News_model extends CI_Model
  ######  ##     ## ########  ######  ##    ##
 */
 
-    // check add 最新新聞圖片名稱有無重複
-    function addNewsCheck($name)
+    function imgNameCheck($imgName, $type = 1)
     {
         $this->db->trans_start();
         $this->db->select('img');
         $this->db->from('press_release');
-        $this->db->where('img', $name);
-        $this->db->where('pr_type_id', 1);
+        $this->db->where('img', $imgName);
+        $this->db->where('pr_type_id', $type);
 
-        $query = $this->db->get();
-
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
-    }
-
-    // check edit 最新新聞圖片名稱有無重複
-    function editUserCheck($name)
-    {
-        $this->db->trans_start();
-        $this->db->select('img');
-        $this->db->from('press_release');
-        $this->db->where('img', $name);
-        $this->db->where('pr_type_id', 1);
+        // if ($pr_id != "") {
+        //     $this->db->where('pr_id !=', $pr_id);
+        // }
 
         $query = $this->db->get();
 
@@ -343,68 +278,6 @@ class News_model extends CI_Model
         return  $query->num_rows();
     }
 
-    // check edit 訊息公告圖片名稱有無重複
-    function editMessageCheck($name)
-    {
-        $this->db->trans_start();
-        $this->db->select('img');
-        $this->db->from('press_release');
-        $this->db->where('img', $name);
-        $this->db->where('pr_type_id', 2);
-
-        $query = $this->db->get();
-
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
-    }
-
-    // check訊息公告的圖片名稱有無重複
-    function addMessageCheck($name)
-    {
-        $this->db->trans_start();
-        $this->db->select('img');
-        $this->db->from('press_release');
-        $this->db->where('img', $name);
-        $this->db->where('pr_type_id', 2);
-
-        $query = $this->db->get();
-
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
-    }
-
-    function addRecordCheck($name)
-    {
-        $this->db->trans_start();
-        $this->db->select('img');
-        $this->db->from('press_release');
-        $this->db->where('img', $name);
-        $this->db->where('pr_type_id', 3);
-
-        $query = $this->db->get();
-
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
-    }
-
-    function editRecordsCheck($name)
-    {
-        $this->db->trans_start();
-        $this->db->select('img');
-        $this->db->from('press_release');
-        $this->db->where('img', $name);
-        $this->db->where('pr_type_id', 3);
-
-        $query = $this->db->get();
-
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
-    }
-
     /*
    ###    ########  ########
   ## ##   ##     ## ##     ##
@@ -415,35 +288,7 @@ class News_model extends CI_Model
 ##     ## ########  ########
 */
 
-    /**
-     * This function is used to add new user to system
-     * @return number $insert_id : This is last inserted id
-     */
-    function addNewUser($userInfo)
-    {
-        $this->db->trans_start();
-        $this->db->insert('press_release', $userInfo);
-
-        $insert_id = $this->db->insert_id();
-
-        $this->db->trans_complete();
-
-        return $insert_id;
-    }
-
-    function addNewMessage($userInfo)
-    {
-        $this->db->trans_start();
-        $this->db->insert('press_release', $userInfo);
-
-        $insert_id = $this->db->insert_id();
-
-        $this->db->trans_complete();
-
-        return $insert_id;
-    }
-
-    function addNewRecords($userInfo)
+    function pressReleaseAdd($userInfo)
     {
         $this->db->trans_start();
         $this->db->insert('press_release', $userInfo);
@@ -465,11 +310,12 @@ class News_model extends CI_Model
 ########  ######## ######## ########    ##    ########
 */
 
-    function editUserDelete($userId)
+    // 先從id獲取圖片名稱
+    function imgNameRepeatDel($id)
     {
-        $this->db->select('*');
-        $this->db->from('press_release_news');
-        $this->db->where('newsid', $userId);
+        $this->db->select();
+        $this->db->from('press_release');
+        $this->db->where('pr_id', $id);
         $query = $this->db->get();
 
         return $query->row();
@@ -490,32 +336,12 @@ class News_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    function editMessageDelete($userId)
-    {
-        $this->db->select('*');
-        $this->db->from('press_release_message');
-        $this->db->where('mesid', $userId);
-        $query = $this->db->get();
-
-        return $query->row();
-    }
-
     function deleteMessage($newsid)
     {
         $this->db->where('mesid', $newsid);
         $this->db->delete('press_release_message');
 
         return $this->db->affected_rows();
-    }
-
-    function editRecordsDelete($userId)
-    {
-        $this->db->select('*');
-        $this->db->from('press_release_records');
-        $this->db->where('recordid', $userId);
-        $query = $this->db->get();
-
-        return $query->row();
     }
 
     function deleteRecords($newsid)

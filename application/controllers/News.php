@@ -122,7 +122,7 @@ class News extends BaseController
 
         // $data['roles'] = $this->news_model->getUserRoles();
         $data = array(
-            'userInfo' => $this->news_model->getUserInfo($userId),
+            'userInfo' => $this->news_model->getPressReleaseInfo($userId),
             'tagsInfo' => $this->news_model->getTagsInfo(),
             // 'error' => '',
         );
@@ -138,7 +138,8 @@ class News extends BaseController
 
         $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_newsname_check[true]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-        $this->form_validation->set_rules('file', '圖片', 'callback_newsOld_check');
+        // $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[1,2,' . $newsId . ']');
+        $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[1,2]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         if ($this->form_validation->run() == FALSE) {
@@ -181,8 +182,8 @@ class News extends BaseController
             } else {
 
                 // 否則在上傳完新圖片後,就先刪除舊的圖片
-                $imgDelete = $this->news_model->editUserDelete($newsId);
-                $imgDelName = $imgDelete->news_img;
+                $imgDelete = $this->news_model->imgNameRepeatDel($newsId);
+                $imgDelName = $imgDelete->img;
                 unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/news/' . $imgDelName);
                 // https://blog.longwin.com.tw/2009/01/php-get-directory-file-path-dirname-2008/
                 // https://www.awaimai.com/408.html
@@ -195,16 +196,16 @@ class News extends BaseController
 
                 // 再把欄位的資料寫入資料庫
                 $userInfo = array(
-                    'news_img' => $uploadData,
-                    'news_main_title' => $m_title,
-                    'news_sub_title' => $s_title,
+                    'img' => $uploadData,
+                    'main_title' => $m_title,
+                    'sub_title' => $s_title,
                     'date_start' => $date_start,
                     'date_update' => $date_update,
-                    'news_editor' => $editor,
+                    'editor' => $editor,
                 );
             }
 
-            $result = $this->news_model->editUser($userInfo, $newsId);
+            $result = $this->news_model->pressReleaseUpdate($userInfo, $newsId);
 
             if ($result) {
                 $this->session->set_flashdata('success', '儲存成功!');
@@ -237,7 +238,7 @@ class News extends BaseController
 
         // $data['roles'] = $this->news_model->getUserRoles();
         $data = array(
-            'userInfo' => $this->news_model->getMessageInfo($userId),
+            'userInfo' => $this->news_model->getPressReleaseInfo($userId),
             'tagsInfo' => $this->news_model->getTagsInfo(),
         );
 
@@ -251,9 +252,9 @@ class News extends BaseController
     {
         $newsId = $this->input->post('prid');
 
-        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_messagename_check[true]');
+        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_messagename_check[true,false]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-        $this->form_validation->set_rules('file', '圖片', 'callback_message_check');
+        $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[2,2]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         if ($this->form_validation->run() == FALSE) {
@@ -296,7 +297,7 @@ class News extends BaseController
                 );
             } else {
                 // 否則在上傳完新圖片後,就先刪除舊的圖片
-                $imgDelete = $this->news_model->editMessageDelete($newsId);
+                $imgDelete = $this->news_model->imgNameRepeatDel($newsId);
                 $imgDelName = $imgDelete->img;
                 unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/message/' . $imgDelName);
                 // https://blog.longwin.com.tw/2009/01/php-get-directory-file-path-dirname-2008/
@@ -312,7 +313,7 @@ class News extends BaseController
                     'editor' => $editor,
                 );
             }
-            $result = $this->news_model->editMessage($userInfo, $newsId);
+            $result = $this->news_model->pressReleaseUpdate($userInfo, $newsId);
 
             if ($result == true) {
                 $this->session->set_flashdata('success', '儲存成功!');
@@ -344,7 +345,7 @@ class News extends BaseController
 
         // $data['roles'] = $this->news_model->getUserRoles();
         $data = array(
-            'userInfo' => $this->news_model->getRecordsInfo($userId),
+            'userInfo' => $this->news_model->getPressReleaseInfo($userId),
             'tagsInfo' => $this->news_model->getTagsInfo(),
         );
 
@@ -356,11 +357,11 @@ class News extends BaseController
     // edit records send
     function editRecords()
     {
-        $newsId = $this->input->post('recordId');
+        $newsId = $this->input->post('prid');
 
         $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_recordname_check[true]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-        $this->form_validation->set_rules('file', '圖片', 'callback_records_check');
+        $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[3,2]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         if ($this->form_validation->run() == FALSE) {
@@ -403,7 +404,7 @@ class News extends BaseController
                 );
             } else {
                 // 否則在上傳完新圖片後,就先刪除舊的圖片
-                $imgDelete = $this->news_model->editRecordsDelete($newsId);
+                $imgDelete = $this->news_model->imgNameRepeatDel($newsId);
                 $imgDelName = $imgDelete->img;
                 unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/records/' . $imgDelName);
                 // https://blog.longwin.com.tw/2009/01/php-get-directory-file-path-dirname-2008/
@@ -419,7 +420,7 @@ class News extends BaseController
                     'editor' => $editor,
                 );
             }
-            $result = $this->news_model->editRecords($userInfo, $newsId);
+            $result = $this->news_model->pressReleaseUpdate($userInfo, $newsId);
 
             if ($result == true) {
                 $this->session->set_flashdata('success', '儲存成功!');
@@ -462,7 +463,7 @@ class News extends BaseController
     {
         $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_newsname_check');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-        $this->form_validation->set_rules('file', '圖片', 'callback_addnews_check');
+        $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[1,1]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         if ($this->form_validation->run() == FALSE) {
@@ -500,7 +501,7 @@ class News extends BaseController
                     'editor' => $editor,
                 );
 
-                $result = $this->news_model->addNewUser($userInfo);
+                $result = $this->news_model->pressReleaseAdd($userInfo);
 
                 if ($result > 0) {
                     $this->session->set_flashdata('success', '新增成功!');
@@ -520,7 +521,7 @@ class News extends BaseController
     {
         $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_messagename_check');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-        $this->form_validation->set_rules('file', '圖片', 'callback_addmessage_check');
+        $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[2,1]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         $this->global['pageTitle'] = '新增公告';
@@ -561,7 +562,7 @@ class News extends BaseController
                     'editor' => $editor,
                 );
 
-                $result = $this->news_model->addNewMessage($userInfo);
+                $result = $this->news_model->pressReleaseAdd($userInfo);
 
                 if ($result > 0) {
                     $this->session->set_flashdata('success', '新增成功!');
@@ -580,7 +581,7 @@ class News extends BaseController
     {
         $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_recordname_check');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-        $this->form_validation->set_rules('file', '圖片', 'callback_addrecord_check');
+        $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[3,1]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         $this->global['pageTitle'] = '新增活動記錄';
@@ -621,7 +622,7 @@ class News extends BaseController
                     'editor' => $editor,
                 );
 
-                $result = $this->news_model->addNewRecords($userInfo);
+                $result = $this->news_model->pressReleaseAdd($userInfo);
 
                 if ($result > 0) {
                     $this->session->set_flashdata('success', '新增成功!');
@@ -645,27 +646,43 @@ class News extends BaseController
  ######  ##     ## ########  ######  ##    ##
 */
 
-    function newsOld_check($str)
+    function imgNameCheck($str, $param)
     {
-        $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'image/svg+xml');
+        $param = preg_split('/,/', $param);
+        $type = $param[0]; // 1.最新新聞 2.訊息公告 3.活動記錄
+        $mode = $param[1]; // 1.add 2.edit
+        // $pr_id = $param[2]; // edit所需pr_id
+        // echo $str . '<br>' . $type . '<br>' . $mode . '<br>' . $pr_id;
+        $imgName = $_FILES['file']['name'];
 
-        if (isset($_FILES['file']['name'])) {
-            $mime = get_mime_by_extension($_FILES['file']['name']);
-            $nameRepeat = $this->news_model->editUserCheck($_FILES['file']['name']);
-            // check edit 最新新聞的圖片名稱有無重複
-        }
-
-        if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != '') {
-            if ($nameRepeat > 0) {
-                $this->form_validation->set_message('newsOld_check', '已有同名的圖片名稱');
+        // 若爲新增功能又沒有選擇圖片或圖片名稱爲空就報錯後離開
+        if ($mode == 1) {
+            if (!isset($imgName) || $imgName == '') {
+                $this->form_validation->set_message('imgNameCheck', '請選擇要上傳的圖片');
                 $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
                 return false;
-            } else {
+            }
+        }
+
+        $nameRepeat = $this->news_model->imgNameCheck($imgName, $type);
+
+        if ($nameRepeat > 0) {
+            $this->form_validation->set_message('imgNameCheck', '已有同名的圖片名稱');
+            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+            return false;
+        } else {
+
+            if (!($mode == 2 && $imgName == '')) {
+
+                $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'image/svg+xml');
+                $mime = get_mime_by_extension($imgName);
+
+                // 若圖片名稱沒有重複就檢查圖片格式是否正確。
                 // in_array() 函数搜索数组中是否存在指定的值。
                 if (in_array($mime, $allowed_mime_type_arr)) {
                     return true;
                 } else {
-                    $this->form_validation->set_message('newsOld_check', '圖片格式不正確!請選擇gif/jpg/jpeg/png/svg');
+                    $this->form_validation->set_message('imgNameCheck', '圖片格式不正確!<br>請選擇gif/jpg/jpeg/png/svg');
                     $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
                     return false;
                 }
@@ -691,38 +708,10 @@ class News extends BaseController
         }
     }
 
-    function addnews_check($str)
-    {
-        $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'image/svg+xml');
-        $mime = get_mime_by_extension($_FILES['file']['name']);
-        // $nameRepeat = $this->news_model->addNameCheck($str);
-        $nameRepeat = $this->news_model->addNewsCheck($_FILES['file']['name']);
-        // check add 最新新聞的圖片名稱有無重複
-
-        if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != '') {
-            if ($nameRepeat > 0) {
-                $this->form_validation->set_message('addnews_check', '已有同名的圖片名稱');
-                $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                return false;
-            } else {
-                // in_array() 函数搜索数组中是否存在指定的值。
-                if (in_array($mime, $allowed_mime_type_arr)) {
-                    return true;
-                } else {
-                    $this->form_validation->set_message('addnews_check', '圖片格式不正確!請選擇gif/jpg/jpeg/png/svg');
-                    $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                    return false;
-                }
-            }
-        } else {
-            $this->form_validation->set_message('addnews_check', '請選擇要上傳的圖片');
-            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-            return false;
-        }
-    }
-
     function messagename_check($str, $isEdit = false)
     {
+        // echo $str;
+
         $id = $isEdit ? $this->input->post('prid') : null;
         $name = $this->input->post('m_title');
         $nameRepeat = $this->news_model->messagename_check($name, $id, $isEdit);
@@ -736,64 +725,6 @@ class News extends BaseController
             } else {
                 return true;
             }
-        }
-    }
-
-    function message_check($str)
-    {
-        $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'image/svg+xml');
-
-        if (isset($_FILES['file']['name'])) {
-            $mime = get_mime_by_extension($_FILES['file']['name']);
-            $nameRepeat = $this->news_model->editMessageCheck($_FILES['file']['name']);
-            // check edit 訊息公告圖片名稱有無重複
-        }
-
-        if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != '') {
-            if ($nameRepeat > 0) {
-                $this->form_validation->set_message('message_check', '已有同名的圖片名稱');
-                $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                return false;
-            } else {
-                // in_array() 函数搜索数组中是否存在指定的值。
-                if (in_array($mime, $allowed_mime_type_arr)) {
-                    return true;
-                } else {
-                    $this->form_validation->set_message('message_check', '圖片格式不正確!請選擇gif/jpg/jpeg/png/svg');
-                    $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                    return false;
-                }
-            }
-        }
-    }
-
-    function addmessage_check($str)
-    {
-        $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'image/svg+xml');
-        $mime = get_mime_by_extension($_FILES['file']['name']);
-        // $nameRepeat = $this->news_model->addNameCheck($str);
-        $nameRepeat = $this->news_model->addMessageCheck($_FILES['file']['name']);
-        // check add 訊息公告圖片名稱有無重複
-
-        if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != '') {
-            if ($nameRepeat > 0) {
-                $this->form_validation->set_message('addmessage_check', '已有同名的圖片名稱');
-                $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                return false;
-            } else {
-                // in_array() 函数搜索数组中是否存在指定的值。
-                if (in_array($mime, $allowed_mime_type_arr)) {
-                    return true;
-                } else {
-                    $this->form_validation->set_message('addmessage_check', '圖片格式不正確!請選擇gif/jpg/jpeg/png/svg');
-                    $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                    return false;
-                }
-            }
-        } else {
-            $this->form_validation->set_message('addmessage_check', '請選擇要上傳的圖片');
-            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-            return false;
         }
     }
 
@@ -816,64 +747,6 @@ class News extends BaseController
         }
     }
 
-    function records_check($str)
-    {
-        $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'image/svg+xml');
-
-        if (isset($_FILES['file']['name'])) {
-            $mime = get_mime_by_extension($_FILES['file']['name']);
-            $nameRepeat = $this->news_model->editRecordsCheck($_FILES['file']['name']);
-            // check edit 活動記錄圖片名稱有無重複
-        }
-
-        if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != '') {
-            if ($nameRepeat > 0) {
-                $this->form_validation->set_message('records_check', '已有同名的圖片名稱');
-                $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                return false;
-            } else {
-                // in_array() 函数搜索数组中是否存在指定的值。
-                if (in_array($mime, $allowed_mime_type_arr)) {
-                    return true;
-                } else {
-                    $this->form_validation->set_message('records_check', '圖片格式不正確!請選擇gif/jpg/jpeg/png/svg');
-                    $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                    return false;
-                }
-            }
-        }
-    }
-
-    function addrecord_check($str)
-    {
-        $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'image/svg+xml');
-        $mime = get_mime_by_extension($_FILES['file']['name']);
-        // $nameRepeat = $this->news_model->addNameCheck($str);
-        $nameRepeat = $this->news_model->addRecordCheck($_FILES['file']['name']);
-        // check add 活動記錄圖片名稱有無重複
-
-        if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != '') {
-            if ($nameRepeat > 0) {
-                $this->form_validation->set_message('addrecord_check', '已有同名的圖片名稱');
-                $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                return false;
-            } else {
-                // in_array() 函数搜索数组中是否存在指定的值。
-                if (in_array($mime, $allowed_mime_type_arr)) {
-                    return true;
-                } else {
-                    $this->form_validation->set_message('addrecord_check', '圖片格式不正確!請選擇gif/jpg/jpeg/png/svg');
-                    $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                    return false;
-                }
-            }
-        } else {
-            $this->form_validation->set_message('addrecord_check', '請選擇要上傳的圖片');
-            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-            return false;
-        }
-    }
-
     /*
 ########  ######## ##       ######## ######## ########
 ##     ## ##       ##       ##          ##    ##
@@ -890,7 +763,7 @@ class News extends BaseController
     function deleteNews()
     {
         $newsid = $this->input->post('newsid');
-        $imgDelete = $this->news_model->editUserDelete($newsid);
+        $imgDelete = $this->news_model->editUserDelete($newsid); //重寫model
         $imgDelName = $imgDelete->news_img;
         unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/news/' . $imgDelName);
 
@@ -908,7 +781,7 @@ class News extends BaseController
     function deleteMessage()
     {
         $newsid = $this->input->post('mesid');
-        $imgDelete = $this->news_model->editMessageDelete($newsid);
+        $imgDelete = $this->news_model->editMessageDelete($newsid); //重寫model
         $imgDelName = $imgDelete->img;
         unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/message/' . $imgDelName);
 
@@ -924,7 +797,7 @@ class News extends BaseController
     function deleteRecords()
     {
         $newsid = $this->input->post('recordid');
-        $imgDelete = $this->news_model->editRecordsDelete($newsid);
+        $imgDelete = $this->news_model->editRecordsDelete($newsid); //重寫model
         $imgDelName = $imgDelete->img;
         unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/records/' . $imgDelName);
 

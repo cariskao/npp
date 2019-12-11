@@ -21,7 +21,7 @@
 
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">新增新聞資料</h3>
+                        <h3 class="box-title">新增最新新聞資料</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
 
