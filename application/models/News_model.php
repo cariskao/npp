@@ -219,55 +219,15 @@ class News_model extends CI_Model
         return  $query->num_rows();
     }
 
-    // check最新新聞的大標名稱有無重複
-    function newsname_check($name, $id = null, $isEdit)
+    function mainTitleCheck($name, $type, $mode, $id)
     {
         $this->db->trans_start();
         $this->db->select('main_title');
         $this->db->from('press_release');
         $this->db->where('main_title', $name);
-        $this->db->where('pr_type_id', 1);
+        $this->db->where('pr_type_id', $type);
 
-        if ($isEdit) {
-            $this->db->where('pr_id !=', $id);
-        }
-
-        $query = $this->db->get();
-
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
-    }
-
-    // check訊息公告的大標名稱有無重複
-    function messagename_check($name, $id = null, $isEdit)
-    {
-        $this->db->trans_start();
-        $this->db->select('main_title');
-        $this->db->from('press_release');
-        $this->db->where('main_title', $name);
-        $this->db->where('pr_type_id', 2);
-
-        if ($isEdit) {
-            $this->db->where('pr_id !=', $id);
-        }
-
-        $query = $this->db->get();
-
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
-    }
-
-    function recordname_check($name, $id = null, $isEdit)
-    {
-        $this->db->trans_start();
-        $this->db->select('main_title');
-        $this->db->from('press_release');
-        $this->db->where('main_title', $name);
-        $this->db->where('pr_type_id', 3);
-
-        if ($isEdit) {
+        if ($mode == 2) {
             $this->db->where('pr_id !=', $id);
         }
 

@@ -86,23 +86,26 @@
                     setTimeout(function() {
                         $("#alert-success").hide();
                     }, 3000);
+                    setTimeout(function() {
+                        $("#alert-error").hide();
+                    }, 3000);
                 })
             </script>
             <?php
             $this->load->helper('form');
-            $error = $this->session->flashdata('error');
-            if ($error) {
+            $check = $this->session->flashdata('check');
+            if ($check == '驗證失敗') {
                 ?>
-                <div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
+                <div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo $this->session->flashdata('error'); ?>
+                    <?php echo $this->session->flashdata('check') . '!<br>請修正以下提示錯誤!'; ?>
                 </div>
             <?php } ?>
             <?php
             $success = $this->session->flashdata('success');
             if ($success) {
                 ?>
-                <div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
+                <div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <?php echo $this->session->flashdata('success'); ?>
                 </div>
@@ -114,8 +117,15 @@
                     margin: 0 40px;
                 }
 
-                .alert-absoulte {
+                .success-width {
                     width: 150px;
+                }
+
+                .error-width {
+                    width: 250px;
+                }
+
+                .alert-absoulte {
                     text-align: center;
                     position: absolute;
                     margin: auto;

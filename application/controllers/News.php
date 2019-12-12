@@ -126,7 +126,7 @@ class News extends BaseController
             'tagsInfo' => $this->news_model->getTagsInfo(),
             // 'error' => '',
         );
-        $this->global['pageTitle'] = '編輯新聞';
+        $this->global['pageTitle'] = '編輯最新新聞資料';
 
         $this->loadViews("newsOld", $this->global, $data, NULL);
     }
@@ -136,9 +136,8 @@ class News extends BaseController
     {
         $newsId = $this->input->post('prid');
 
-        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_newsname_check[true]');
+        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[1,2,' . $newsId . ']');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-        // $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[1,2,' . $newsId . ']');
         $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[1,2]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
@@ -242,7 +241,7 @@ class News extends BaseController
             'tagsInfo' => $this->news_model->getTagsInfo(),
         );
 
-        $this->global['pageTitle'] = '編輯訊息公告';
+        $this->global['pageTitle'] = '編輯訊息公告資料';
 
         $this->loadViews("messageOld", $this->global, $data, NULL);
     }
@@ -252,7 +251,7 @@ class News extends BaseController
     {
         $newsId = $this->input->post('prid');
 
-        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_messagename_check[true,false]');
+        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[2,2,' . $newsId . ']');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
         $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[2,2]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
@@ -349,7 +348,7 @@ class News extends BaseController
             'tagsInfo' => $this->news_model->getTagsInfo(),
         );
 
-        $this->global['pageTitle'] = '編輯活動記錄';
+        $this->global['pageTitle'] = '編輯活動記錄資料';
 
         $this->loadViews("recordsOld", $this->global, $data, NULL);
     }
@@ -359,7 +358,7 @@ class News extends BaseController
     {
         $newsId = $this->input->post('prid');
 
-        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_recordname_check[true]');
+        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[3,2,' . $newsId . ']');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
         $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[3,2]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
@@ -451,7 +450,7 @@ class News extends BaseController
     {
         $data['tagsInfo'] = $this->news_model->getTagsInfo();
 
-        $this->global['pageTitle'] = '新增新聞';
+        $this->global['pageTitle'] = '新增最新新聞資料';
 
         $this->loadViews("addPressReleaseNews", $this->global, $data, NULL);
     }
@@ -461,12 +460,13 @@ class News extends BaseController
      */
     function addNewUser()
     {
-        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_newsname_check');
+        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[1,1,""]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
         $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[1,1]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('check', '驗證失敗');
             $this->addNew();
         } else {
             $m_title = $this->security->xss_clean($this->input->post('m_title'));
@@ -517,18 +517,24 @@ class News extends BaseController
         }
     }
 
+    function addMessage()
+    {
+        $this->global['pageTitle'] = '新增訊息公告資料';
+        $data['tagsInfo'] = $this->news_model->getTagsInfo();
+
+        $this->loadViews("addPressReleaseMessage", $this->global, $data, NULL);
+    }
+
     function addNewMessage()
     {
-        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_messagename_check');
+        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[2,1,""]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
         $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[2,1]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
-        $this->global['pageTitle'] = '新增公告';
-        $data['tagsInfo'] = $this->news_model->getTagsInfo();
-
         if ($this->form_validation->run() == FALSE) {
-            $this->loadViews("addPressReleaseMessage", $this->global, $data, NULL);
+            $this->session->set_flashdata('check', '驗證失敗');
+            $this->addMessage();
         } else {
             $m_title = $this->security->xss_clean($this->input->post('m_title'));
             $s_title = $this->security->xss_clean($this->input->post('s_title'));
@@ -573,22 +579,29 @@ class News extends BaseController
                 $data['error_msg'] = $this->upload->display_errors();
             }
 
-            redirect('news/addNewMessage');
+            redirect('news/addMessage');
         }
+    }
+
+    function addRecords()
+    {
+        $this->global['pageTitle'] = '新增活動記錄資料';
+        $data['tagsInfo'] = $this->news_model->getTagsInfo();
+
+        $this->loadViews("addPressReleaseRecords", $this->global, $data, NULL);
     }
 
     function addNewRecords()
     {
-        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_recordname_check');
+        $this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[3,1,""]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
         $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[3,1]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
-        $this->global['pageTitle'] = '新增活動記錄';
-        $data['tagsInfo'] = $this->news_model->getTagsInfo();
-
         if ($this->form_validation->run() == FALSE) {
-            $this->loadViews("addPressReleaseRecords", $this->global, $data, NULL);
+            $this->session->set_flashdata('check', '驗證失敗');
+            // redirect('news/addNewRecords');
+            $this->addMessage();
         } else {
             $m_title = $this->security->xss_clean($this->input->post('m_title'));
             $s_title = $this->security->xss_clean($this->input->post('s_title'));
@@ -653,7 +666,7 @@ class News extends BaseController
         $mode = $param[1]; // 1.add 2.edit
         // $pr_id = $param[2]; // edit所需pr_id
         // echo $str . '<br>' . $type . '<br>' . $mode . '<br>' . $pr_id;
-        $imgName = $_FILES['file']['name'];
+        $imgName = $_FILES['file']['name']; //圖片好像不能直接用$str來做
 
         // 若爲新增功能又沒有選擇圖片或圖片名稱爲空就報錯後離開
         if ($mode == 1) {
@@ -664,10 +677,20 @@ class News extends BaseController
             }
         }
 
+        // 如果圖片檔名有空白字元就報錯後離開
+        // \s: 任何空白字元(空白,換行,tab)。\S: 任何非空白字元(空白,換行,tab)。
+        $pattern = "/\s/";
+        if (preg_match($pattern, $imgName)) {
+            // echo 'match';
+            $this->form_validation->set_message('imgNameCheck', '圖片名稱不可有空白字元');
+            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+            return false;
+        }
+
         $nameRepeat = $this->news_model->imgNameCheck($imgName, $type);
 
         if ($nameRepeat > 0) {
-            $this->form_validation->set_message('imgNameCheck', '已有同名的圖片名稱');
+            $this->form_validation->set_message('imgNameCheck', '已有同名的圖片名稱：「' . $imgName . '」!');
             $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
             return false;
         } else {
@@ -690,60 +713,22 @@ class News extends BaseController
         }
     }
 
-    function newsname_check($str, $isEdit = false)
+    function mainTitleCheck($str, $param)
     {
-        $id = $isEdit ? $this->input->post('prid') : null;
-        $name = $this->input->post('m_title');
-        $nameRepeat = $this->news_model->newsname_check($name, $id, $isEdit);
-        // check edit 最新新聞的大標名稱有無重複
+        $param = preg_split('/,/', $param);
+        $type = $param[0]; // 1.最新新聞 2.訊息公告 3.活動記錄
+        $mode = $param[1]; // 1.add 2.edit
+        $pr_id = $param[2]; // edit所需pr_id
+        // echo $str . '<br>' . $type . '<br>' . $mode . '<br>' . $pr_id;
 
-        if (isset($name) && $name != '') {
-            if ($nameRepeat > 0) {
-                $this->form_validation->set_message('newsname_check', '已有相同標題名稱!');
-                $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                return false;
-            } else {
-                return true;
-            }
-        }
-    }
+        $nameRepeat = $this->news_model->mainTitleCheck($str, $type, $mode, $pr_id);
 
-    function messagename_check($str, $isEdit = false)
-    {
-        // echo $str;
-
-        $id = $isEdit ? $this->input->post('prid') : null;
-        $name = $this->input->post('m_title');
-        $nameRepeat = $this->news_model->messagename_check($name, $id, $isEdit);
-        // check edit 訊息公告的大標名稱有無重複
-
-        if (isset($name) && $name != '') {
-            if ($nameRepeat > 0) {
-                $this->form_validation->set_message('messagename_check', '已有相同標題名稱!');
-                $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                return false;
-            } else {
-                return true;
-            }
-        }
-    }
-
-    function recordname_check($str, $isEdit = false)
-    {
-        $id = $isEdit ? $this->input->post('prid') : null;
-        // $id = $this->input->post('newsId');
-        $name = $this->input->post('m_title');
-        $nameRepeat = $this->news_model->recordname_check($name, $id, $isEdit);
-        // check edit 活動記錄的大標名稱有無重複
-
-        if (isset($name) && $name != '') {
-            if ($nameRepeat > 0) {
-                $this->form_validation->set_message('recordname_check', '已有相同標題名稱!');
-                $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-                return false;
-            } else {
-                return true;
-            }
+        if ($nameRepeat > 0) {
+            $this->form_validation->set_message('mainTitleCheck', '已有相同標題名稱：「' . $str . '」!');
+            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+            return false;
+        } else {
+            return true;
         }
     }
 
