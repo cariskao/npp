@@ -392,6 +392,7 @@ class User extends BaseController
         if ($this->isAdmin() == TRUE) {
             echo (json_encode(array('status' => 'access')));
         } else {
+            //這裏的post('userId')是common.js的jQuery.ajax.data
             $userId = $this->input->post('userId');
             $userInfo = array('isDeleted' => 1, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
 

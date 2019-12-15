@@ -54,13 +54,13 @@
                                         <td class="text-center">
                                             <!-- <a class="btn btn-sm btn-primary" href="<?= base_url() . 'login-history/' . $record->userId; ?>" title="歷史記錄"><i class="fa fa-history"></i></a> | -->
                                             <a class="btn btn-sm btn-info" href="<?php echo base_url() . 'editOld/' . $record->userId; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="<?php echo $record->userId; ?>" title="移除"><i class="fa fa-trash"></i></a>
+                                            <a class="btn btn-sm btn-danger deleteUser" href="#" data-delid="<?php echo $record->userId; ?>" title="移除"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <?php
-                                }
-                            } else {
-                                ?>
+                                    }
+                                } else {
+                                    ?>
                                 <div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
                                     無相關資料!
                                 </div>

@@ -4,7 +4,7 @@
 
 jQuery(document).ready(function () {
 	jQuery(document).on('click', '.deleteUser', function () {
-		var userId = $(this).data('userid'),
+		var userId = $(this).data('delid'),
 			hitURL = baseURL + 'deleteUser',
 			currentRow = $(this),
 			link = jQuery(this).get(0).href,
@@ -52,9 +52,11 @@ jQuery(document).ready(function () {
 		}
 	})
 
-	jQuery(document).on('click', '.deleteNews', function () {
-		var pr_id = $(this).data('prid'),
-			hitURL = baseURL + 'news/deleteNews',
+	jQuery(document).on('click', '.newsListDel', function () {
+		var pr_id = $(this).data('delid'),
+			type_id = $(this).data('typeid'),
+			img = $(this).data('img'),
+			hitURL = baseURL + 'news/deleteList',
 			currentRow = $(this),
 			link = jQuery(this).get(0).href,
 			value = link.substring(
@@ -63,17 +65,64 @@ jQuery(document).ready(function () {
 			),
 			_isNotNum = isNaN(value)
 
+		console.log('pr_id', pr_id)
+		console.log('type_id', type_id)
 		console.log('link', link)
+		console.log('hitURL', hitURL)
 		console.log('value', value)
 		console.log('isNotNum', _isNotNum)
 
+		var reDirect = ''
+
+		// 若url最後不爲數字
 		if (_isNotNum) {
-			var reDirect = baseURL + 'news'
+			switch (type_id) {
+				case 1:
+					reDirect = baseURL + 'news'
+					break
+				case 2:
+					reDirect = baseURL + 'news/message'
+					break
+				case 3:
+					reDirect = baseURL + 'news/records'
+					break
+
+				default:
+					// console.log('_isNotNum-true')
+					break
+			}
 		} else {
-			var reDirect = baseURL + 'news/index/' + value
+			switch (type_id) {
+				case 1:
+					reDirect = baseURL + 'news/index/' + value
+					break
+				case 2:
+					reDirect = baseURL + 'news/message/' + value
+					break
+				case 3:
+					reDirect = baseURL + 'news/records/' + value
+					break
+
+				default:
+					// console.log('_isNotNum-false')
+					break
+			}
 		}
 
-		var confirmation = confirm('確認刪除此新聞 ?')
+		switch (type_id) {
+			case 1:
+				var confirmation = confirm('確認刪除此新聞 ?')
+				break
+			case 2:
+				var confirmation = confirm('確認刪除此訊息公告 ?')
+				break
+			case 3:
+				var confirmation = confirm('確認刪除此活動記錄 ?')
+				break
+
+			default:
+				break
+		}
 
 		if (confirmation) {
 			jQuery
@@ -83,90 +132,8 @@ jQuery(document).ready(function () {
 					url: hitURL,
 					data: {
 						pr_id: pr_id,
-					},
-				})
-				.done(function (data) {
-					console.log(data)
-					currentRow.parents('tr').remove()
-				})
-
-			window.location.href = reDirect
-		}
-	})
-
-	jQuery(document).on('click', '.deleteMessage', function () {
-		var pr_id = $(this).data('prid'),
-			hitURL = baseURL + 'news/deleteMessage',
-			currentRow = $(this),
-			link = jQuery(this).get(0).href,
-			value = link.substring(
-				link.lastIndexOf('/') + 1,
-				link.lastIndexOf('/') + 3,
-			),
-			_isNotNum = isNaN(value)
-
-		console.log('link', link)
-		console.log('value', value)
-		console.log('isNotNum', _isNotNum)
-
-		if (_isNotNum) {
-			var reDirect = baseURL + 'news/message'
-		} else {
-			var reDirect = baseURL + 'news/message/' + value
-		}
-
-		var confirmation = confirm('確認刪除此公告 ?')
-
-		if (confirmation) {
-			jQuery
-				.ajax({
-					type: 'POST',
-					dataType: 'json',
-					url: hitURL,
-					data: {
-						pr_id: pr_id,
-					},
-				})
-				.done(function (data) {
-					console.log(data)
-					currentRow.parents('tr').remove()
-				})
-
-			window.location.href = reDirect
-		}
-	})
-
-	jQuery(document).on('click', '.deleteRecords', function () {
-		var pr_id = $(this).data('prid'),
-			hitURL = baseURL + 'news/deleteRecords',
-			currentRow = $(this),
-			link = jQuery(this).get(0).href,
-			value = link.substring(
-				link.lastIndexOf('/') + 1,
-				link.lastIndexOf('/') + 3,
-			),
-			_isNotNum = isNaN(value)
-
-		console.log('link', link)
-		console.log('value', value)
-		console.log('isNotNum', _isNotNum)
-
-		if (_isNotNum) {
-			var reDirect = baseURL + 'news/records'
-		} else {
-			var reDirect = baseURL + 'news/records/' + value
-		}
-
-		var confirmation = confirm('確認刪除此活動記錄 ?')
-
-		if (confirmation) {
-			jQuery
-				.ajax({
-					type: 'POST',
-					dataType: 'json',
-					url: hitURL,
-					data: {
-						pr_id: pr_id,
+						type_id: type_id,
+						img: img,
 					},
 				})
 				.done(function (data) {

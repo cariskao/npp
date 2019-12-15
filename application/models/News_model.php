@@ -270,7 +270,7 @@ class News_model extends CI_Model
 ########  ######## ######## ########    ##    ########
 */
 
-    // 先從id獲取圖片名稱
+    // 新聞訊息update時將舊的圖片刪除,先獲取圖片名稱
     function imgNameRepeatDel($id)
     {
         $this->db->select();
@@ -286,32 +286,13 @@ class News_model extends CI_Model
      * @param number $userId : This is user id
      * @return boolean $result : TRUE / FALSE
      */
-    function deleteUser($newsid)
+    function deleteList($id)
     {
-        $this->db->where('newsid', $newsid);
-        $this->db->delete('press_release_news');
-
-        // $this->db->update('press_release_news', $userInfo);
+        $this->db->where('pr_id', $id);
+        $this->db->delete('press_release');
 
         return $this->db->affected_rows();
     }
-
-    function deleteMessage($newsid)
-    {
-        $this->db->where('mesid', $newsid);
-        $this->db->delete('press_release_message');
-
-        return $this->db->affected_rows();
-    }
-
-    function deleteRecords($newsid)
-    {
-        $this->db->where('recordid', $newsid);
-        $this->db->delete('press_release_records');
-
-        return $this->db->affected_rows();
-    }
-
 
     /*
 ########    ###     ######
