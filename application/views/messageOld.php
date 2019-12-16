@@ -40,7 +40,11 @@ $editor = $userInfo->editor;
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <div><img src="<?php echo base_url('assets/uploads/news_upload/message/' . $img); ?>"></div>
+                                        <div class="hvcenter-flexbox">
+                                            <main>
+                                                <img style="max-width:1000px;" src="<?php echo base_url('assets/uploads/news_upload/message/' . $img); ?>">
+                                            </main>
+                                        </div>
                                         <label for="img">更換圖片</label>
                                         <input id="img" type="file" name="file" size="20" />
                                         <?php echo form_error('file'); ?>
@@ -130,6 +134,18 @@ $editor = $userInfo->editor;
             <?php } ?>
 
             <style>
+                .hvcenter-flexbox {
+                    display: flex;
+                    min-height: 50vh;
+                    margin: 0;
+                }
+
+                .hvcenter-flexbox main {
+                    padding: 1em 2em;
+                    margin: auto;
+                    text-align: center;
+                }
+
                 .seat input {
                     width: 100px;
                     margin: 0 40px;

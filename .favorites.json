@@ -25,5 +25,14 @@
         "workspaceRoot": null,
         "workspacePath": null,
         "id": "gNOdkuXCil0ATVKQ"
+    },
+    {
+        "type": "Directory",
+        "name": "g:\\XAMPP\\htdocs\\npp\\assets",
+        "parent_id": null,
+        "fsPath": "g:\\XAMPP\\htdocs\\npp\\assets",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "DbqH4xncJ6mXBroV"
     }
 ]

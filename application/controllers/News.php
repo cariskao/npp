@@ -645,7 +645,7 @@ class News extends BaseController
 			} else {
 				$data['error_msg'] = $this->upload->display_errors();
 			}
-			redirect('news/addNewRecords');
+			redirect('news/addRecords');
 		}
 	}
 
