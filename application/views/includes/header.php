@@ -23,7 +23,7 @@
 			font-weight: normal;
 		}
 	</style>
-	<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.js"></script>
 	<script src="<?php echo base_url(); ?>assets/plugins/ckeditor4/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript">
 		var baseURL = "<?php echo base_url(); ?>";
@@ -117,7 +117,7 @@
 						</a>
 						<ul class="treeview-menu">
 							<li>
-								<a href="<?php echo base_url(); ?>news">
+								<a href="<?php echo base_url(); ?>news/index">
 									<i class="fa fa-circle-o"></i> 最新新聞
 								</a>
 							</li>
@@ -196,7 +196,7 @@
 					</li>
 					<?php
 					if ($role == ROLE_ADMIN) {
-						?>
+					?>
 						<li>
 							<a href="<?php echo base_url(); ?>userListing">
 								<i class="fa fa-user-plus"></i>
@@ -206,7 +206,7 @@
 					<?php } ?>
 					<?php
 					if ($role == ROLE_MANAGER) {
-						?>
+					?>
 						<li>
 							<a href="<?php echo base_url(); ?>user/managerListing">
 								<i class="fa fa-user-plus"></i>

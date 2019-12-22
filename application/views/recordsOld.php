@@ -7,7 +7,8 @@ $date_start = $userInfo->date_start;
 $date_update = $userInfo->date_update;
 $editor = $userInfo->editor;
 ?>
-
+<script src="<?php echo base_url(); ?>assets/plugins/selectizejs/dist/js/standalone/selectize.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/selectizejs/js/index.js"></script>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -64,16 +65,34 @@ $editor = $userInfo->editor;
                                         <input type="text" class="form-control" id="s_title" name="s_title" value="<?php echo $s_title; ?>">
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="date_start">建立日期</label>
-                                        <input type="date" class="form-control" id="date_start" name="date_start" value="<?php echo $date_start; ?>">
+                                        <label for="select-tools">標籤:</label>
+                                        <select id="select-tools" placeholder="請選取標籤"></select>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="date_update">更新日期</label>
-                                        <input type="date" class="form-control" id="date_update" name="date_update" value="<?php echo $date_update; ?>">
+                                        <label for="date_start">建立日期</label>
+                                        <input type="date" class="form-control" id="date_start" name="date_start" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="time_start">建立時間</label>
+                                        <input type="time" class="form-control" id="time_start" name="time_start" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">顯示狀態</label>
+                                        <div class="input-group">
+                                            <div id="radioBtn" class="btn-group">
+                                                <a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Y">顯示</a>
+                                                <a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="N">隱藏</a>
+                                            </div>
+                                            <input type="hidden" name="happy" id="happy">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -111,12 +130,51 @@ $editor = $userInfo->editor;
                         $("#alert-error").hide();
                     }, 3000);
                 })
+
+                // 顯示狀態
+                $('#radioBtn a').on('click', function() {
+                    var sel = $(this).data('title');
+                    var tog = $(this).data('toggle');
+                    console.log('sel', sel);
+                    console.log('tog', tog);
+                    $('#' + tog).prop('value', sel); //將該被點擊的data-title值寫入到id="happy"的value中。
+
+                    // 當點擊爲Y,就把不爲Y的元素移除active並加上notActive
+                    $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
+                    // 當點擊爲Y,就把爲Y的元素移除notActive並加上active
+                    $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+                })
+
+                // 標籤
+                $('#select-tools').selectize({
+                    maxItems: null,
+                    valueField: 'id',
+                    labelField: 'title',
+                    searchField: 'title',
+                    options: [{
+                            id: 1,
+                            title: 'Spectrometer',
+                            url: 'http://en.wikipedia.org/wiki/Spectrometers'
+                        },
+                        {
+                            id: 2,
+                            title: 'Star Chart',
+                            url: 'http://en.wikipedia.org/wiki/Star_chart'
+                        },
+                        {
+                            id: 3,
+                            title: 'Electrical Tape',
+                            url: 'http://en.wikipedia.org/wiki/Electrical_tape'
+                        }
+                    ],
+                    create: false
+                });
             </script>
             <?php
             $this->load->helper('form');
             $check = $this->session->flashdata('check');
             if ($check == '驗證失敗') {
-                ?>
+            ?>
                 <div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <?php echo $this->session->flashdata('check') . '!<br>請修正以下提示錯誤!'; ?>
@@ -126,7 +184,7 @@ $editor = $userInfo->editor;
             <?php
             $success = $this->session->flashdata('success');
             if ($success && $check == '驗證成功') {
-                ?>
+            ?>
                 <div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <?php echo $this->session->flashdata('success'); ?>
@@ -134,6 +192,11 @@ $editor = $userInfo->editor;
             <?php } ?>
 
             <style>
+                #radioBtn .notActive {
+                    color: #3276b1;
+                    background-color: #fff;
+                }
+
                 .hvcenter-flexbox {
                     display: flex;
                     min-height: 50vh;
