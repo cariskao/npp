@@ -19,7 +19,7 @@
 					<div class="box-header">
 						<h3 class="box-title"></h3>
 						<div class="box-tools">
-							<form action="<?php echo base_url() ?>news" method="POST" id="searchList">
+							<form action="<?php echo base_url() ?>news/index" method="POST" id="searchList">
 								<div class="input-group">
 									<input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋大標、次標" />
 									<div class="input-group-btn">
@@ -44,7 +44,7 @@
 							<?php
 							if (!empty($newsRecords)) {
 								foreach ($newsRecords as $record) {
-									?>
+							?>
 									<tr>
 										<td><img style="width:50px;height:50px;" src="<?php echo base_url('assets/uploads/news_upload/news/' . $record->img); ?>"></td>
 										<td><?php echo $record->main_title ?></td>
@@ -59,9 +59,9 @@
 										</td>
 									</tr>
 								<?php
-									}
-								} else {
-									?>
+								}
+							} else {
+								?>
 								<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
 									無相關資料!
 								</div>
