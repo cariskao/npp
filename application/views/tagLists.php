@@ -32,27 +32,35 @@
 					<div class="box-body table-responsive no-padding">
 						<table class="table table-hover title-center">
 							<tr class="title-center">
-								<th>標籤名稱 </th>
+								<th>標籤名稱</th>
+								<th>狀態</th>
 								<th class="text-center">可執行動作</th>
 							</tr>
 							<?php
 							if (!empty($newsTags)) {
 								foreach ($newsTags as $record) {
-									?>
-							<tr>
-								<td><?php echo $record->name; ?></td>
-								<td class=" text-center" style="width:30%">
-									<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/tagsEdit/' . $record->tagsid; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-									<a class="btn btn-sm btn-danger deleteNewsTag" href="#" data-tagsid="<?php echo $record->tagsid; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
-								</td>
-							</tr>
-							<?php
+							?>
+									<tr>
+										<td><?php echo $record->name; ?></td>
+										<td>
+											<?php if ($record->showup == 1) { ?>
+												<img style="background-color:green" src="<?php echo base_url(); ?>assets/images/show.png" alt="">
+											<?php } else { ?>
+												<img style="background-color:red" src="<?php echo base_url(); ?>assets/images/hide.png" alt="">
+											<?php } ?>
+										</td>
+										<td class=" text-center" style="width:30%">
+											<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/tagsEdit/' . $record->tagsid; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
+											<a class="btn btn-sm btn-danger deleteNewsTag" href="#" data-tagsid="<?php echo $record->tagsid; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
+										</td>
+									</tr>
+								<?php
 								}
 							} else {
 								?>
-							<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
-								無相關資料!
-							</div>
+								<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
+									無相關資料!
+								</div>
 							<?php } ?>
 						</table>
 
@@ -110,18 +118,18 @@
 $this->load->helper('form');
 $error = $this->session->flashdata('error');
 if ($error) {
-	?>
-<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-	<?php echo $this->session->flashdata('error'); ?>
-</div>
+?>
+	<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<?php echo $this->session->flashdata('error'); ?>
+	</div>
 <?php } ?>
 <?php
 $success = $this->session->flashdata('success');
 if ($success) {
-	?>
-<div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-	<?php echo $this->session->flashdata('success'); ?>
-</div>
+?>
+	<div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<?php echo $this->session->flashdata('success'); ?>
+	</div>
 <?php } ?>

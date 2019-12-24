@@ -50,7 +50,6 @@ class News extends BaseController
 		// echo ' segment-News: ' . $returns['segment'];
 
 		$data['newsRecords'] = $this->news_model->userListing($searchText, $returns["page"], $returns["segment"]);
-		$data['tagsInfo'] = $this->news_model->getTagsInfo();
 
 		$this->global['pageTitle'] = '最新新聞管理';
 
@@ -70,7 +69,6 @@ class News extends BaseController
 		$returns = $this->paginationCompress("news/message/", $count, 10, 3);
 
 		$data['userRecords'] = $this->news_model->messageListing($searchText, $returns["page"], $returns["segment"]);
-		$data['tagsInfo'] = $this->news_model->getTagsInfo();
 
 		$this->global['pageTitle'] = '訊息公告管理';
 
@@ -92,11 +90,27 @@ class News extends BaseController
 		// echo ' segment: ' . $returns['segment'];
 
 		$data['Records'] = $this->news_model->recordsListing($searchText, $returns["page"], $returns["segment"]);
-		$data['tagsInfo'] = $this->news_model->getTagsInfo();
 
 		$this->global['pageTitle'] = '活動記錄管理';
 
 		$this->loadViews("records", $this->global, $data, NULL);
+	}
+
+	// 標籤
+	function tagLists()
+	{
+		$searchText = $this->security->xss_clean($this->input->post('searchText'));
+		$data['searchText'] = $searchText;
+
+		$this->load->library('pagination');
+		$count = $this->news_model->tagsListingCount($searchText); //算出總筆數
+
+		$returns = $this->paginationCompress("news/tagLists/", $count, 10, 3);
+
+		$data['newsTags'] = $this->news_model->tagsListing($searchText, $returns["page"], $returns["segment"]);
+		$this->global['pageTitle'] = '標籤管理';
+
+		$this->loadViews("tagLists", $this->global, $data, NULL);
 	}
 
 	/*
@@ -123,7 +137,7 @@ class News extends BaseController
 		// $data['roles'] = $this->news_model->getUserRoles();
 		$data = array(
 			'userInfo' => $this->news_model->getPressReleaseInfo($userId),
-			'tagsInfo' => $this->news_model->getTagsInfo(),
+			'getTagsList' => $this->news_model->getTagsList(),
 			// 'error' => '',
 		);
 		$this->global['pageTitle'] = '編輯最新新聞資料';
@@ -238,7 +252,7 @@ class News extends BaseController
 		// $data['roles'] = $this->news_model->getUserRoles();
 		$data = array(
 			'userInfo' => $this->news_model->getPressReleaseInfo($userId),
-			'tagsInfo' => $this->news_model->getTagsInfo(),
+			'getTagsList' => $this->news_model->getTagsList(),
 		);
 
 		$this->global['pageTitle'] = '編輯訊息公告資料';
@@ -345,7 +359,7 @@ class News extends BaseController
 		// $data['roles'] = $this->news_model->getUserRoles();
 		$data = array(
 			'userInfo' => $this->news_model->getPressReleaseInfo($userId),
-			'tagsInfo' => $this->news_model->getTagsInfo(),
+			'getTagsList' => $this->news_model->getTagsList(),
 		);
 
 		$this->global['pageTitle'] = '編輯活動記錄資料';
@@ -448,7 +462,7 @@ class News extends BaseController
 	 */
 	function addNew()
 	{
-		$data['tagsInfo'] = $this->news_model->getTagsInfo();
+		$data['getTagsList'] = $this->news_model->getTagsList();
 
 		$this->global['pageTitle'] = '新增最新新聞資料';
 
@@ -520,7 +534,7 @@ class News extends BaseController
 	function addMessage()
 	{
 		$this->global['pageTitle'] = '新增訊息公告資料';
-		$data['tagsInfo'] = $this->news_model->getTagsInfo();
+		$data['getTagsList'] = $this->news_model->getTagsList();
 
 		$this->loadViews("addPressReleaseMessage", $this->global, $data, NULL);
 	}
@@ -586,7 +600,7 @@ class News extends BaseController
 	function addRecords()
 	{
 		$this->global['pageTitle'] = '新增活動記錄資料';
-		$data['tagsInfo'] = $this->news_model->getTagsInfo();
+		$data['getTagsList'] = $this->news_model->getTagsList();
 
 		$this->loadViews("addPressReleaseRecords", $this->global, $data, NULL);
 	}
@@ -732,6 +746,20 @@ class News extends BaseController
 		}
 	}
 
+	function tags_check($str, $id = '')
+	{
+		$name = $this->security->xss_clean($this->input->post('title'));
+		$nameRepeat = $this->news_model->tagsCheck($name, $id);
+
+		if ($nameRepeat > 0) {
+			$this->form_validation->set_message('tags_check', '已有同名的標籤名稱：「' . $str . '」!');
+			$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	/*
 ########  ######## ##       ######## ######## ########
 ##     ## ##       ##       ##          ##    ##
@@ -786,50 +814,12 @@ class News extends BaseController
    ##    ##     ## ##    ##
    ##    ##     ##  ######
 */
-	function tags_check($str, $id = '')
-	{
-		$name = $this->security->xss_clean($this->input->post('title'));
-		$nameRepeat = $this->news_model->tagsCheck($name, $id);
-
-		if ($nameRepeat > 0) {
-			$this->form_validation->set_message('tags_check', '已有此標籤名稱!');
-			$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	function tagLists()
-	{
-		$searchText = $this->security->xss_clean($this->input->post('searchText'));
-		$data['searchText'] = $searchText;
-
-		$this->load->library('pagination');
-		$count = $this->news_model->tagsListingCount($searchText); //算出總筆數
-
-		$returns = $this->paginationCompress("news/tagLists/", $count, 10, 3);
-
-		$data['newsTags'] = $this->news_model->tagsListing($searchText, $returns["page"], $returns["segment"]);
-		$this->global['pageTitle'] = '標籤管理';
-
-		$this->loadViews("tagLists", $this->global, $data, NULL);
-	}
 
 	function tagsAdd()
 	{
 		$this->global['pageTitle'] = '新增標籤';
 
 		$this->loadViews("tagsAdd", $this->global, NULL);
-	}
-
-	function tagsEdit($id)
-	{
-		$this->global['pageTitle'] = '編輯標籤';
-
-		$data['getTagsEditInfo'] = $this->news_model->getTagsEditInfo($id);
-
-		$this->loadViews("tagsEdit", $this->global, $data, NULL);
 	}
 
 	function tagsAddSend()
@@ -853,6 +843,15 @@ class News extends BaseController
 
 			redirect('news/tagLists');
 		}
+	}
+
+	function tagsEdit($id)
+	{
+		$this->global['pageTitle'] = '編輯標籤';
+
+		$data['getTagsEditInfo'] = $this->news_model->getTagsEditInfo($id);
+
+		$this->loadViews("tagsEdit", $this->global, $data, NULL);
 	}
 
 	function tagsEditSend()

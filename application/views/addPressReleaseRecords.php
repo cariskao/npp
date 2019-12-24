@@ -54,7 +54,18 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="select-tools">標籤:</label>
-										<select id="select-tools" placeholder="請選取標籤"></select>
+										<select id="select-tools" placeholder="請選取標籤">
+											<option value="">請選取標籤</option>
+											<?php
+											if (!empty($getTagsList)) {
+												foreach ($getTagsList as $record) {
+											?>
+													<option value="<?php echo $record->tagsid; ?>"><?php echo $record->name; ?></option>
+											<?php
+												}
+											}
+											?>
+										</select>
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -134,26 +145,7 @@
 				// 標籤
 				$('#select-tools').selectize({
 					maxItems: null,
-					valueField: 'id',
-					labelField: 'title',
-					searchField: 'title',
-					options: [{
-							id: 1,
-							title: 'Spectrometer',
-							url: 'http://en.wikipedia.org/wiki/Spectrometers'
-						},
-						{
-							id: 2,
-							title: 'Star Chart',
-							url: 'http://en.wikipedia.org/wiki/Star_chart'
-						},
-						{
-							id: 3,
-							title: 'Electrical Tape',
-							url: 'http://en.wikipedia.org/wiki/Electrical_tape'
-						}
-					],
-					create: false
+					dropdownParent: 'body'
 				});
 			</script>
 			<?php

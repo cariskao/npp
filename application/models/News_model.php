@@ -160,6 +160,39 @@ class News_model extends CI_Model
         return $result;
     }
 
+    // 標籤
+    function tagsListingCount($searchText = '')
+    {
+        $this->db->select('*');
+        $this->db->from('tags as BaseTbl');
+        if (!empty($searchText)) {
+            // $likeCriteria = "(BaseTbl.title LIKE '%" . $searchText . "%' OR BaseTbl.date  LIKE '%" . $searchText . "%')";
+            $likeCriteria = "(BaseTbl.name LIKE '%" . $searchText . "%')";
+            $this->db->where($likeCriteria);
+        }
+
+        $query = $this->db->get();
+
+        return $query->num_rows();
+    }
+
+    function tagsListing($searchText = '', $page, $segment)
+    {
+        $this->db->select('*');
+        $this->db->from('tags as BaseTbl');
+        if (!empty($searchText)) {
+            // $likeCriteria = "(BaseTbl.title LIKE '%" . $searchText . "%' OR  BaseTbl.date  LIKE '%" . $searchText . "%')";
+            $likeCriteria = "(BaseTbl.name LIKE '%" . $searchText . "%')";
+            $this->db->where($likeCriteria);
+        }
+        $this->db->order_by('BaseTbl.tagsid', 'DESC');
+        $this->db->limit($page, $segment);
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
+
     /*
 .########.########..####.########
 .##.......##.....##..##.....##...
@@ -238,6 +271,23 @@ class News_model extends CI_Model
         return  $query->num_rows();
     }
 
+    function tagsCheck($name, $id)
+    {
+        $this->db->trans_start();
+        $this->db->select(); // 空白預設爲*
+        $this->db->from('tags');
+        $this->db->where('name', $name);
+        if ($id != '') {
+            $this->db->where('tagsid !=', $id);
+        }
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return  $query->num_rows();
+    }
+
     /*
    ###    ########  ########
   ## ##   ##     ## ##     ##
@@ -295,57 +345,33 @@ class News_model extends CI_Model
     }
 
     /*
-########    ###     ######
-    ##      ## ##   ##    ##
-    ##     ##   ##  ##
-    ##    ##     ## ##   ####
-    ##    ######### ##    ##
-    ##    ##     ## ##    ##
-    ##    ##     ##  ######
+########    ###     ######           ########  ##       ##     ##  ######   #### ##    ##
+    ##      ## ##   ##    ##          ##     ## ##       ##     ## ##    ##   ##  ###   ##
+    ##     ##   ##  ##                ##     ## ##       ##     ## ##         ##  ####  ##
+    ##    ##     ## ##   #### ####### ########  ##       ##     ## ##   ####  ##  ## ## ##
+    ##    ######### ##    ##          ##        ##       ##     ## ##    ##   ##  ##  ####
+    ##    ##     ## ##    ##          ##        ##       ##     ## ##    ##   ##  ##   ###
+    ##    ##     ##  ######           ##        ########  #######   ######   #### ##    ##
 */
-    function tagsCheck($name, $id)
+
+    function getTagsEditInfo($id)
     {
-        $this->db->trans_start();
-        $this->db->select(); // 空白預設爲*
+        $this->db->select('*');
         $this->db->from('tags');
-        $this->db->where('name', $name);
-        if ($id != '') {
-            $this->db->where('tagsid !=', $id);
-        }
+        $this->db->where('tagsid', $id);
 
         $query = $this->db->get();
 
-        $this->db->trans_complete();
-
-        return  $query->num_rows();
+        return $query->row();
     }
 
-    function tagsListingCount($searchText = '')
+    function getTagsList()
     {
         $this->db->select('*');
         $this->db->from('tags as BaseTbl');
-        if (!empty($searchText)) {
-            // $likeCriteria = "(BaseTbl.title LIKE '%" . $searchText . "%' OR BaseTbl.date  LIKE '%" . $searchText . "%')";
-            $likeCriteria = "(BaseTbl.name LIKE '%" . $searchText . "%')";
-            $this->db->where($likeCriteria);
-        }
+        $this->db->where('showup', 1);
 
-        $query = $this->db->get();
-
-        return $query->num_rows();
-    }
-
-    function tagsListing($searchText = '', $page, $segment)
-    {
-        $this->db->select('*');
-        $this->db->from('tags as BaseTbl');
-        if (!empty($searchText)) {
-            // $likeCriteria = "(BaseTbl.title LIKE '%" . $searchText . "%' OR  BaseTbl.date  LIKE '%" . $searchText . "%')";
-            $likeCriteria = "(BaseTbl.name LIKE '%" . $searchText . "%')";
-            $this->db->where($likeCriteria);
-        }
-        $this->db->order_by('BaseTbl.tagsid', 'DESC');
-        $this->db->limit($page, $segment);
+        // $this->db->order_by('BaseTbl.tagsid', 'DESC');
         $query = $this->db->get();
 
         $result = $query->result();
@@ -372,33 +398,11 @@ class News_model extends CI_Model
         return TRUE;
     }
 
-    function getTagsEditInfo($id)
-    {
-        $this->db->select('*');
-        $this->db->from('tags');
-        $this->db->where('tagsid', $id);
-
-        $query = $this->db->get();
-
-        return $query->row();
-    }
-
     function deleteNewsTag($newsid)
     {
         $this->db->where('tagsid', $newsid);
         $this->db->delete('tags');
 
         return $this->db->affected_rows();
-    }
-
-    function getTagsInfo()
-    {
-        $this->db->select('*');
-        $this->db->from('tags as BaseTbl');
-        // $this->db->order_by('BaseTbl.tagsid', 'DESC');
-        $query = $this->db->get();
-
-        $result = $query->result();
-        return $result;
     }
 }
