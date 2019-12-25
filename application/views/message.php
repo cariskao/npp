@@ -32,36 +32,40 @@
 					<div class="box-body table-responsive no-padding">
 						<table class="table table-hover">
 							<tr>
-								<th>大圖</th>
-								<th>大標</th>
-								<th>次標</th>
-								<th style="width:100px">建立日期</th>
-								<th style="width:100px">更新日期</th>
+								<th style="width:50px" class="text-center">大圖</th>
+								<th>大標 & 次標</th>
+								<th style=" width:120px" class="text-center">建立日期時間</th>
 								<th style="width:300px">內文</th>
 								<th>標籤</th>
-								<th class="text-center" style="width:100px">可執行動作</th>
+								<th class="text-center">狀態</th>
+								<th style="width:100px" class="text-center">可執行動作</th>
 							</tr>
 							<?php
 							if (!empty($userRecords)) {
 								foreach ($userRecords as $record) {
-									?>
+							?>
 									<tr>
 										<td><img style="width:50px;height:50px" src="<?php echo base_url('assets/uploads/news_upload/message/' . $record->img); ?>"></td>
-										<td><?php echo $record->main_title ?></td>
-										<td><?php echo $record->sub_title ?></td>
-										<td><?php echo $record->date_start ?></td>
-										<td><?php echo $record->date_update ?></td>
+										<td><?php echo '<b>' . $record->main_title . '</b>' . '<br>' . $record->sub_title; ?></td>
+										<td class="text-center"><?php echo $record->date_start . '<br>' . $record->time_start ?></td>
 										<td><?php echo mb_strimwidth(htmlspecialchars($record->editor), 0, 100, '...') ?></td>
 										<td></td>
+										<td class="text-center">
+											<?php if ($record->showup == 1) { ?>
+												<img style="background-color:green" src="<?php echo base_url(); ?>assets/images/show.png" alt="">
+											<?php } else { ?>
+												<img style="background-color:red" src="<?php echo base_url(); ?>assets/images/hide.png" alt="">
+											<?php } ?>
+										</td>
 										<td class="text-center">
 											<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/messageOld/' . $record->pr_id; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
 											<a class="btn btn-sm btn-danger newsListDel" href="#" data-delid="<?php echo $record->pr_id; ?>" data-typeid="2" data-img="<?php echo $record->img; ?>" title="移除"><i class="fa fa-trash"></i></a>
 										</td>
 									</tr>
 								<?php
-									}
-								} else {
-									?>
+								}
+							} else {
+								?>
 								<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
 									無相關資料!
 								</div>

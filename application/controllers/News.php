@@ -162,8 +162,9 @@ class News extends BaseController
 			$m_title = $this->security->xss_clean($this->input->post('m_title'));
 			$s_title = $this->security->xss_clean($this->input->post('s_title'));
 			$date_start = $this->security->xss_clean($this->input->post('date_start'));
-			$date_update = $this->security->xss_clean($this->input->post('date_update'));
+			$time_start = $this->security->xss_clean($this->input->post('time_start'));
 			$editor = $this->input->post('editor1');
+			$showStatusCheck = $this->input->post('happy');
 
 			// File upload configuration
 			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/news/';
@@ -182,19 +183,22 @@ class News extends BaseController
 				$uploadData = $fileData['file_name'];
 			}
 
-			// 檢查若沒有選擇圖片時,就不要上傳img
-			if (empty($uploadData)) {
-				// Insert files data into the database
-				$userInfo = array(
-					'main_title' => $m_title,
-					'sub_title' => $s_title,
-					'date_start' => $date_start,
-					'date_update' => $date_update,
-					'editor' => $editor,
-				);
-			} else {
+			$userInfo = array(
+				'main_title' => $m_title,
+				'sub_title' => $s_title,
+				'date_start' => $date_start,
+				'time_start' => $time_start,
+				'editor' => $editor,
+			);
 
-				// 否則在上傳完新圖片後,就先刪除舊的圖片
+			if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
+				$showStatus = $showStatusCheck == 'Y' ? 1 : 0;
+				$userInfo['showup'] = $showStatus;
+			}
+
+			// 當有選擇圖片時
+			if (!empty($uploadData)) {
+				// 就上傳新圖片並馬上刪除舊圖片
 				$imgDelete = $this->news_model->imgNameRepeatDel($newsId);
 				$imgDelName = $imgDelete->img;
 				unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/news/' . $imgDelName);
@@ -208,14 +212,7 @@ class News extends BaseController
             echo ' 1 層dirname + DIR: ' . dirname(__DIR__);*/
 
 				// 再把欄位的資料寫入資料庫
-				$userInfo = array(
-					'img' => $uploadData,
-					'main_title' => $m_title,
-					'sub_title' => $s_title,
-					'date_start' => $date_start,
-					'date_update' => $date_update,
-					'editor' => $editor,
-				);
+				$userInfo['img'] = $uploadData;
 			}
 
 			$result = $this->news_model->pressReleaseUpdate($userInfo, $newsId);
@@ -277,9 +274,11 @@ class News extends BaseController
 			$m_title = $this->security->xss_clean($this->input->post('m_title'));
 			$s_title = $this->security->xss_clean($this->input->post('s_title'));
 			$date_start = $this->security->xss_clean($this->input->post('date_start'));
-			$date_update = $this->security->xss_clean($this->input->post('date_update'));
+			$time_start = $this->security->xss_clean($this->input->post('time_start'));
 			$editor = $this->input->post('editor1');
+			$showStatusCheck = $this->input->post('happy');
 
+			$showStatus = $showStatusCheck == 'Y' ? 1 : 0;
 			// File upload configuration
 			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/message/';
 			$uploadPath = 'assets/uploads/news_upload/message/';
@@ -297,19 +296,22 @@ class News extends BaseController
 				$uploadData = $fileData['file_name'];
 			}
 
-			// 檢查若沒有選擇圖片時,就不要上傳img
-			if (empty($uploadData)) {
+			$userInfo = array(
+				'main_title' => $m_title,
+				'sub_title' => $s_title,
+				'date_start' => $date_start,
+				'time_start' => $time_start,
+				'editor' => $editor,
+			);
 
-				// Insert files data into the database
-				$userInfo = array(
-					'main_title' => $m_title,
-					'sub_title' => $s_title,
-					'date_start' => $date_start,
-					'date_update' => $date_update,
-					'editor' => $editor,
-				);
-			} else {
-				// 否則在上傳完新圖片後,就先刪除舊的圖片
+			if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
+				$showStatus = $showStatusCheck == 'Y' ? 1 : 0;
+				$userInfo['showup'] = $showStatus;
+			}
+
+			// 當有選擇圖片時
+			if (!empty($uploadData)) {
+				// 就上傳新圖片並馬上刪除舊圖片
 				$imgDelete = $this->news_model->imgNameRepeatDel($newsId);
 				$imgDelName = $imgDelete->img;
 				unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/message/' . $imgDelName);
@@ -317,15 +319,9 @@ class News extends BaseController
 				// https://www.awaimai.com/408.html
 
 				// 再把欄位的資料寫入資料庫
-				$userInfo = array(
-					'img' => $uploadData,
-					'main_title' => $m_title,
-					'sub_title' => $s_title,
-					'date_start' => $date_start,
-					'date_update' => $date_update,
-					'editor' => $editor,
-				);
+				$userInfo['img'] = $uploadData;
 			}
+
 			$result = $this->news_model->pressReleaseUpdate($userInfo, $newsId);
 
 			if ($result == true) {
@@ -384,9 +380,11 @@ class News extends BaseController
 			$m_title = $this->security->xss_clean($this->input->post('m_title'));
 			$s_title = $this->security->xss_clean($this->input->post('s_title'));
 			$date_start = $this->security->xss_clean($this->input->post('date_start'));
-			$date_update = $this->security->xss_clean($this->input->post('date_update'));
+			$time_start = $this->security->xss_clean($this->input->post('time_start'));
 			$editor = $this->input->post('editor1');
+			$showStatusCheck = $this->input->post('happy');
 
+			$showStatus = $showStatusCheck == 'Y' ? 1 : 0;
 			// File upload configuration
 			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/records/';
 			$uploadPath = 'assets/uploads/news_upload/records/';
@@ -404,19 +402,22 @@ class News extends BaseController
 				$uploadData = $fileData['file_name'];
 			}
 
-			// 檢查若沒有選擇圖片時,就不要上傳img
-			if (empty($uploadData)) {
+			$userInfo = array(
+				'main_title' => $m_title,
+				'sub_title' => $s_title,
+				'date_start' => $date_start,
+				'time_start' => $time_start,
+				'editor' => $editor,
+			);
 
-				// Insert files data into the database
-				$userInfo = array(
-					'main_title' => $m_title,
-					'sub_title' => $s_title,
-					'date_start' => $date_start,
-					'date_update' => $date_update,
-					'editor' => $editor,
-				);
-			} else {
-				// 否則在上傳完新圖片後,就先刪除舊的圖片
+			if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
+				$showStatus = $showStatusCheck == 'Y' ? 1 : 0;
+				$userInfo['showup'] = $showStatus;
+			}
+
+			// 當有選擇圖片時
+			if (!empty($uploadData)) {
+				// 就上傳新圖片並馬上刪除舊圖片
 				$imgDelete = $this->news_model->imgNameRepeatDel($newsId);
 				$imgDelName = $imgDelete->img;
 				unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/records/' . $imgDelName);
@@ -424,14 +425,7 @@ class News extends BaseController
 				// https://www.awaimai.com/408.html
 
 				// 再把欄位的資料寫入資料庫
-				$userInfo = array(
-					'img' => $uploadData,
-					'main_title' => $m_title,
-					'sub_title' => $s_title,
-					'date_start' => $date_start,
-					'date_update' => $date_update,
-					'editor' => $editor,
-				);
+				$userInfo['img'] = $uploadData;
 			}
 			$result = $this->news_model->pressReleaseUpdate($userInfo, $newsId);
 
@@ -443,6 +437,60 @@ class News extends BaseController
 			}
 			$this->recordsOld($newsId);
 			// redirect('news/newsOld');
+		}
+	}
+
+	/*
+######## ########  #### ########         ########    ###     ######    ######
+##       ##     ##  ##     ##               ##      ## ##   ##    ##  ##    ##
+##       ##     ##  ##     ##               ##     ##   ##  ##        ##
+######   ##     ##  ##     ##    #######    ##    ##     ## ##   ####  ######
+##       ##     ##  ##     ##               ##    ######### ##    ##        ##
+##       ##     ##  ##     ##               ##    ##     ## ##    ##  ##    ##
+######## ########  ####    ##               ##    ##     ##  ######    ######
+*/
+
+	function tagsEdit($id)
+	{
+		$this->global['pageTitle'] = '編輯標籤';
+
+		$data['getTagsEditInfo'] = $this->news_model->getTagsEditInfo($id);
+
+		$this->loadViews("tagsEdit", $this->global, $data, NULL);
+	}
+
+	function tagsEditSend()
+	{
+		$id = $this->input->post('tagsid');
+
+		$this->form_validation->set_rules('title', '名稱', 'trim|required|max_length[128]|callback_tags_check[' . $id . ']');
+		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->tagsEdit($id);
+		} else {
+			$name = $this->security->xss_clean($this->input->post('title'));
+			$showStatusCheck = $this->input->post('happy');
+
+			$userInfo = array(
+				'name' => $name,
+			);
+
+			if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
+
+				$showStatus = $showStatusCheck == 'Y' ? '1' : '0';
+				$userInfo['showup'] = $showStatus;
+			}
+
+			$result = $this->news_model->tagsEditSend($userInfo, $id);
+
+			if ($result > 0) {
+				$this->session->set_flashdata('success', '新增成功!');
+			} else {
+				$this->session->set_flashdata('error', '新增失敗!');
+			}
+
+			redirect('news/tagLists');
 		}
 	}
 
@@ -834,40 +882,6 @@ class News extends BaseController
 			$userInfo = array('name' => $name);
 
 			$result = $this->news_model->tagsAddSend($userInfo);
-
-			if ($result > 0) {
-				$this->session->set_flashdata('success', '新增成功!');
-			} else {
-				$this->session->set_flashdata('error', '新增失敗!');
-			}
-
-			redirect('news/tagLists');
-		}
-	}
-
-	function tagsEdit($id)
-	{
-		$this->global['pageTitle'] = '編輯標籤';
-
-		$data['getTagsEditInfo'] = $this->news_model->getTagsEditInfo($id);
-
-		$this->loadViews("tagsEdit", $this->global, $data, NULL);
-	}
-
-	function tagsEditSend()
-	{
-		$id = $this->input->post('tagsid');
-
-		$this->form_validation->set_rules('title', '名稱', 'trim|required|max_length[128]|callback_tags_check[' . $id . ']');
-		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->tagsEdit($id);
-		} else {
-			$name = $this->security->xss_clean($this->input->post('title'));
-			$userInfo = array('name' => $name);
-
-			$result = $this->news_model->tagsEditSend($userInfo, $id);
 
 			if ($result > 0) {
 				$this->session->set_flashdata('success', '新增成功!');

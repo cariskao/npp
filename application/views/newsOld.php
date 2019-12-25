@@ -4,7 +4,7 @@ $img = $userInfo->img;
 $m_title = $userInfo->main_title;
 $s_title = $userInfo->sub_title;
 $date_start = $userInfo->date_start;
-$date_update = $userInfo->date_update;
+$time_start = $userInfo->time_start;
 $editor = $userInfo->editor;
 ?>
 <script src="<?php echo base_url(); ?>assets/plugins/selectizejs/dist/js/standalone/selectize.js"></script>
@@ -85,13 +85,13 @@ $editor = $userInfo->editor;
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="date_start">建立日期</label>
-										<input type="date" class="form-control" id="date_start" name="date_start" value="">
+										<input type="date" class="form-control" id="date_start" name="date_start" value="<?php echo $date_start; ?>">
 									</div>
 								</div>
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="time_start">建立時間</label>
-										<input type="time" class="form-control" id="time_start" name="time_start" value="">
+										<input type="time" class="form-control" id="time_start" name="time_start" value="<?php echo $time_start; ?>">
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -99,8 +99,12 @@ $editor = $userInfo->editor;
 										<label for="">顯示狀態</label>
 										<div class="input-group">
 											<div id="radioBtn" class="btn-group">
-												<a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Y">顯示</a>
-												<a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="N">隱藏</a>
+												<?php
+												$active = $userInfo->showup == 1 ? 'active' : 'notActive';
+												$notActive = $userInfo->showup == 0 ? 'active' : 'notActive';
+												?>
+												<a class="btn btn-primary btn-sm <?php echo $active; ?>" data-toggle="happy" data-title="Y">顯示</a>
+												<a class="btn btn-primary btn-sm <?php echo $notActive; ?>" data-toggle="happy" data-title="N">隱藏</a>
 											</div>
 											<input type="hidden" name="happy" id="happy">
 										</div>
