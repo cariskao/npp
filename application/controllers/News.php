@@ -478,7 +478,7 @@ class News extends BaseController
 
 			if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
 
-				$showStatus = $showStatusCheck == 'Y' ? '1' : '0';
+				$showStatus = $showStatusCheck == 'Y' ? 1 : 0;
 				$userInfo['showup'] = $showStatus;
 			}
 
@@ -535,6 +535,9 @@ class News extends BaseController
 			$s_title = $this->security->xss_clean($this->input->post('s_title'));
 			$date_start = $this->security->xss_clean($this->input->post('date_start'));
 			$editor = $this->input->post('editor1');
+			$showStatusCheck = $this->input->post('happy');
+
+			$showStatus = $showStatusCheck != 'N' ? 1 : 0;
 
 			// File upload configuration
 			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/news/';
@@ -556,6 +559,7 @@ class News extends BaseController
 				// Insert files data into the database
 				$userInfo = array(
 					'pr_type_id' => 1,
+					'showup' => $showStatus,
 					'img' => $uploadedFile,
 					'main_title' => $m_title,
 					'sub_title' => $s_title,
@@ -602,6 +606,9 @@ class News extends BaseController
 			$s_title = $this->security->xss_clean($this->input->post('s_title'));
 			$date_start = $this->security->xss_clean($this->input->post('date_start'));
 			$editor = $this->input->post('editor1');
+			$showStatusCheck = $this->input->post('happy');
+
+			$showStatus = $showStatusCheck != 'N' ? 1 : 0;
 
 			// // File upload configuration
 			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/message/';
@@ -623,6 +630,7 @@ class News extends BaseController
 				// Insert files data
 				$userInfo = array(
 					'pr_type_id' => 2,
+					'showup' => $showStatus,
 					'img' => $uploadedFile,
 					'main_title' => $m_title,
 					'sub_title' => $s_title,
@@ -669,6 +677,9 @@ class News extends BaseController
 			$s_title = $this->security->xss_clean($this->input->post('s_title'));
 			$date_start = $this->security->xss_clean($this->input->post('date_start'));
 			$editor = $this->input->post('editor1');
+			$showStatusCheck = $this->input->post('happy');
+
+			$showStatus = $showStatusCheck != 'N' ? 1 : 0;
 
 			// // File upload configuration
 			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/records/';
@@ -690,6 +701,7 @@ class News extends BaseController
 				// Insert files data
 				$userInfo = array(
 					'pr_type_id' => 3,
+					'showup' => $showStatus,
 					'img' => $uploadedFile,
 					'main_title' => $m_title,
 					'sub_title' => $s_title,
@@ -708,6 +720,44 @@ class News extends BaseController
 				$data['error_msg'] = $this->upload->display_errors();
 			}
 			redirect('news/addRecords');
+		}
+	}
+
+	// 標籤
+	function tagsAdd()
+	{
+		$this->global['pageTitle'] = '新增標籤';
+
+		$this->loadViews("tagsAdd", $this->global, NULL);
+	}
+
+	function tagsAddSend()
+	{
+		$this->form_validation->set_rules('title', '名稱', 'trim|required|max_length[128]|callback_tags_check');
+		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->tagsAdd();
+		} else {
+			$name = $this->security->xss_clean($this->input->post('title'));
+			$showStatusCheck = $this->input->post('happy');
+
+			$showStatus = $showStatusCheck != 'N' ? 1 : 0;
+
+			$userInfo = array(
+				'name' => $name,
+				'showup' => $showStatus
+			);
+
+			$result = $this->news_model->tagsAddSend($userInfo);
+
+			if ($result > 0) {
+				$this->session->set_flashdata('success', '新增成功!');
+			} else {
+				$this->session->set_flashdata('error', '新增失敗!');
+			}
+
+			redirect('news/tagLists');
 		}
 	}
 
@@ -820,6 +870,7 @@ class News extends BaseController
 	/**
 	 * This function is used to delete the user using userId
 	 * @return boolean $result : TRUE / FALSE
+	 * 刪除 新聞訊息裡項目的列表
 	 */
 	function deleteList()
 	{
@@ -853,50 +904,11 @@ class News extends BaseController
 		}
 	}
 
-	/*
-########    ###     ######
-   ##      ## ##   ##    ##
-   ##     ##   ##  ##
-   ##    ##     ## ##   ####
-   ##    ######### ##    ##
-   ##    ##     ## ##    ##
-   ##    ##     ##  ######
-*/
-
-	function tagsAdd()
-	{
-		$this->global['pageTitle'] = '新增標籤';
-
-		$this->loadViews("tagsAdd", $this->global, NULL);
-	}
-
-	function tagsAddSend()
-	{
-		$this->form_validation->set_rules('title', '名稱', 'trim|required|max_length[128]|callback_tags_check');
-		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->tagsAdd();
-		} else {
-			$name = $this->security->xss_clean($this->input->post('title'));
-			$userInfo = array('name' => $name);
-
-			$result = $this->news_model->tagsAddSend($userInfo);
-
-			if ($result > 0) {
-				$this->session->set_flashdata('success', '新增成功!');
-			} else {
-				$this->session->set_flashdata('error', '新增失敗!');
-			}
-
-			redirect('news/tagLists');
-		}
-	}
-
+	// 刪除標籤列表
 	function deleteNewsTag()
 	{
-		$newsid = $this->input->post('tagsid');
-		$result = $this->news_model->deleteNewsTag($newsid);
+		$id = $this->input->post('tagsid');
+		$result = $this->news_model->deleteNewsTag($id);
 
 		if ($result > 0) {
 			echo (json_encode(array('status' => TRUE)));

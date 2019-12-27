@@ -180,11 +180,13 @@ class News_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tags as BaseTbl');
+
         if (!empty($searchText)) {
             // $likeCriteria = "(BaseTbl.title LIKE '%" . $searchText . "%' OR  BaseTbl.date  LIKE '%" . $searchText . "%')";
             $likeCriteria = "(BaseTbl.name LIKE '%" . $searchText . "%')";
             $this->db->where($likeCriteria);
         }
+
         $this->db->order_by('BaseTbl.tagsid', 'DESC');
         $this->db->limit($page, $segment);
         $query = $this->db->get();
@@ -219,6 +221,14 @@ class News_model extends CI_Model
     {
         $this->db->where('pr_id', $id);
         $this->db->update('press_release', $userInfo);
+
+        return TRUE;
+    }
+
+    function tagsEditSend($userInfo, $userId)
+    {
+        $this->db->where('tagsid', $userId);
+        $this->db->update('tags', $userInfo);
 
         return TRUE;
     }
@@ -310,6 +320,18 @@ class News_model extends CI_Model
         return $insert_id;
     }
 
+    function tagsAddSend($userInfo)
+    {
+        $this->db->trans_start();
+        $this->db->insert('tags', $userInfo);
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
     /*
 ########  ######## ##       ######## ######## ########
 ##     ## ##       ##       ##          ##    ##
@@ -335,11 +357,21 @@ class News_model extends CI_Model
      * This function is used to delete the user information
      * @param number $userId : This is user id
      * @return boolean $result : TRUE / FALSE
+     * 刪除新聞訊息列表
      */
     function deleteList($id)
     {
         $this->db->where('pr_id', $id);
         $this->db->delete('press_release');
+
+        return $this->db->affected_rows();
+    }
+
+    // 刪除標籤列表
+    function deleteNewsTag($id)
+    {
+        $this->db->where('tagsid', $id);
+        $this->db->delete('tags');
 
         return $this->db->affected_rows();
     }
@@ -376,33 +408,5 @@ class News_model extends CI_Model
 
         $result = $query->result();
         return $result;
-    }
-
-    function tagsAddSend($userInfo)
-    {
-        $this->db->trans_start();
-        $this->db->insert('tags', $userInfo);
-
-        $insert_id = $this->db->insert_id();
-
-        $this->db->trans_complete();
-
-        return $insert_id;
-    }
-
-    function tagsEditSend($userInfo, $userId)
-    {
-        $this->db->where('tagsid', $userId);
-        $this->db->update('tags', $userInfo);
-
-        return TRUE;
-    }
-
-    function deleteNewsTag($newsid)
-    {
-        $this->db->where('tagsid', $newsid);
-        $this->db->delete('tags');
-
-        return $this->db->affected_rows();
     }
 }

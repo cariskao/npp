@@ -27,14 +27,14 @@
                     <form role="form" action="<?php echo base_url() ?>news/tagsAddSend" method="post" id="addYearSend" role="form">
                         <div class="box-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title">標籤名稱</label>
                                         <input type="text" class="form-control" id="title" name="title" value="">
                                         <?php echo form_error('title'); ?>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">顯示狀態</label>
                                         <div class="input-group">

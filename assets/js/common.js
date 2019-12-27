@@ -14,9 +14,9 @@ jQuery(document).ready(function () {
 			),
 			_isNotNum = isNaN(value)
 
-		console.log('link', link)
-		console.log('value', value)
-		console.log('isNotNum', _isNotNum)
+		// console.log('link', link)
+		// console.log('value', value)
+		// console.log('isNotNum', _isNotNum)
 
 		if (_isNotNum) {
 			var reDirect = baseURL + 'user/userListing'
@@ -37,7 +37,7 @@ jQuery(document).ready(function () {
 					},
 				})
 				.done(function (data) {
-					console.log(data)
+					// console.log(data)
 					currentRow.parents('tr').remove()
 					// if (data.status = true) {
 					// 	alert("人員成功刪除");
@@ -65,26 +65,26 @@ jQuery(document).ready(function () {
 			),
 			_isNotNum = isNaN(value)
 
-		console.log('pr_id', pr_id)
-		console.log('type_id', type_id)
-		console.log('link', link)
-		console.log('hitURL', hitURL)
-		console.log('value', value)
-		console.log('isNotNum', _isNotNum)
+		// console.log('pr_id', pr_id)
+		// console.log('type_id', type_id)
+		// console.log('link', link)
+		// console.log('hitURL', hitURL)
+		// console.log('value', value)
+		// console.log('isNotNum', _isNotNum)
 
-		var reDirect = ''
+		var reDirect = baseURL;
 
 		// 若url最後不爲數字
 		if (_isNotNum) {
 			switch (type_id) {
 				case 1:
-					reDirect = baseURL + 'news'
+					reDirect += 'news/index'
 					break
 				case 2:
-					reDirect = baseURL + 'news/message'
+					reDirect += 'news/message'
 					break
 				case 3:
-					reDirect = baseURL + 'news/records'
+					reDirect += 'news/records'
 					break
 
 				default:
@@ -94,13 +94,13 @@ jQuery(document).ready(function () {
 		} else {
 			switch (type_id) {
 				case 1:
-					reDirect = baseURL + 'news/index/' + value
+					reDirect += 'news/index/' + value
 					break
 				case 2:
-					reDirect = baseURL + 'news/message/' + value
+					reDirect += 'news/message/' + value
 					break
 				case 3:
-					reDirect = baseURL + 'news/records/' + value
+					reDirect += 'news/records/' + value
 					break
 
 				default:
@@ -137,7 +137,50 @@ jQuery(document).ready(function () {
 					},
 				})
 				.done(function (data) {
-					console.log(data)
+					// console.log(data)
+					currentRow.parents('tr').remove()
+				})
+
+			window.location.href = reDirect
+		}
+	})
+
+	jQuery(document).on('click', '.deleteNewsTag', function () {
+		var tagid = $(this).data('tagsid'),
+			hitURL = baseURL + 'news/deleteNewsTag',
+			currentRow = $(this),
+			reDirect = baseURL,
+			link = jQuery(this).get(0).href,
+			value = link.substring(
+				link.lastIndexOf('/') + 1,
+				link.lastIndexOf('/') + 3,
+			),
+			_isNotNum = isNaN(value)
+
+		// console.log('link', link)
+		// console.log('value', value)
+		// console.log('isNotNum', _isNotNum)
+
+		if (_isNotNum) {
+			reDirect += 'news/tagLists'
+		} else {
+			reDirect += 'news/tagLists' + value
+		}
+
+		var confirmation = confirm('確認刪除此標籤 ?')
+
+		if (confirmation) {
+			jQuery
+				.ajax({
+					type: 'POST',
+					dataType: 'json',
+					url: hitURL,
+					data: {
+						tagsid: tagid,
+					},
+				})
+				.done(function (data) {
+					// console.log(data)
 					currentRow.parents('tr').remove()
 				})
 
@@ -156,9 +199,9 @@ jQuery(document).ready(function () {
 			),
 			_isNotNum = isNaN(value)
 
-		console.log('link', link)
-		console.log('value', value)
-		console.log('isNotNum', _isNotNum)
+		// console.log('link', link)
+		// console.log('value', value)
+		// console.log('isNotNum', _isNotNum)
 
 		if (_isNotNum) {
 			var reDirect = baseURL + 'user/userListing'
@@ -179,7 +222,7 @@ jQuery(document).ready(function () {
 					},
 				})
 				.done(function (data) {
-					console.log(data)
+					// console.log(data)
 					currentRow.parents('tr').remove()
 				})
 
@@ -210,9 +253,9 @@ jQuery(document).ready(function () {
 		// var site = url.lastIndexOf("\/"); //获取最后一个/的位置
 		// var _last2Value = url.substring(0, site); //截取最后一个/前的值
 
-		console.log('_lastValue', _lastValue)
-		console.log('length', ary.length)
-		console.log('ary1Last', arySplit[0])
+		// console.log('_lastValue', _lastValue)
+		// console.log('length', ary.length)
+		// console.log('ary1Last', arySplit[0])
 
 		if (ary.length === 8 && _lastValue != '#') {
 			//本機端爲8,伺服端爲7
@@ -237,7 +280,7 @@ jQuery(document).ready(function () {
 					},
 				})
 				.done(function (data) {
-					console.log(data)
+					// console.log(data)
 					currentRow.parents('tr').remove()
 				})
 
@@ -257,9 +300,9 @@ jQuery(document).ready(function () {
 			),
 			_isNotNum = isNaN(value)
 
-		console.log('link', link)
-		console.log('value', value)
-		console.log('isNotNum', _isNotNum)
+		// console.log('link', link)
+		// console.log('value', value)
+		// console.log('isNotNum', _isNotNum)
 
 		if (_isNotNum) {
 			var reDirect = baseURL + 'legislator'
@@ -281,50 +324,7 @@ jQuery(document).ready(function () {
 					},
 				})
 				.done(function (data) {
-					console.log(data)
-					currentRow.parents('tr').remove()
-				})
-
-			window.location.href = reDirect
-		}
-	})
-
-	jQuery(document).on('click', '.deleteNewsTag', function () {
-		var userId = $(this).data('tagsid'),
-			hitURL = baseURL + 'news/deleteNewsTag',
-			currentRow = $(this),
-			reDirect = baseURL + 'legislator',
-			link = jQuery(this).get(0).href,
-			value = link.substring(
-				link.lastIndexOf('/') + 1,
-				link.lastIndexOf('/') + 3,
-			),
-			_isNotNum = isNaN(value)
-
-		console.log('link', link)
-		console.log('value', value)
-		console.log('isNotNum', _isNotNum)
-
-		if (_isNotNum) {
-			var reDirect = baseURL + 'legislator'
-		} else {
-			var reDirect = baseURL + 'legislator/' + value
-		}
-
-		var confirmation = confirm('確認刪除此標籤 ?')
-
-		if (confirmation) {
-			jQuery
-				.ajax({
-					type: 'POST',
-					dataType: 'json',
-					url: hitURL,
-					data: {
-						tagsid: userId,
-					},
-				})
-				.done(function (data) {
-					console.log(data)
+					// console.log(data)
 					currentRow.parents('tr').remove()
 				})
 
@@ -343,9 +343,9 @@ jQuery(document).ready(function () {
 			),
 			_isNotNum = isNaN(value)
 
-		console.log('link', link)
-		console.log('value', value)
-		console.log('isNotNum', _isNotNum)
+		// console.log('link', link)
+		// console.log('value', value)
+		// console.log('isNotNum', _isNotNum)
 
 		if (_isNotNum) {
 			var reDirect = baseURL + 'partymember'
@@ -366,7 +366,7 @@ jQuery(document).ready(function () {
 					},
 				})
 				.done(function (data) {
-					console.log(data)
+					// console.log(data)
 					currentRow.parents('tr').remove()
 				})
 
