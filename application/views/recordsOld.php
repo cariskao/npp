@@ -51,7 +51,7 @@ $editor = $userInfo->editor;
                                         <?php echo form_error('file'); ?>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="m_title">大標</label>
                                         <input type="text" class="form-control" id="m_title" name="m_title" value="<?php echo $m_title; ?>">
@@ -59,7 +59,7 @@ $editor = $userInfo->editor;
                                         <input type="hidden" value="<?php echo $pr_id; ?>" name="prid" id="prid" />
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="s_title">次標</label>
                                         <input type="text" class="form-control" id="s_title" name="s_title" value="<?php echo $s_title; ?>">

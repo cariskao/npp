@@ -38,14 +38,14 @@
 										<?php echo form_error('file'); ?>
 									</div>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-12">
 									<div class="form-group">
 										<label for="m_title">大標</label>
 										<input type="text" class="form-control" id="m_title" name="m_title" value="">
 										<?php echo form_error('m_title'); ?>
 									</div>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-12">
 									<div class="form-group">
 										<label for="s_title">次標</label>
 										<input type="text" class="form-control" id="s_title" name="s_title" value="">
@@ -66,6 +66,7 @@
 											}
 											?>
 										</select>
+										<!-- <div><button id="btn">获取值</button></div> -->
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -133,8 +134,8 @@
 				$('#radioBtn a').on('click', function() {
 					var sel = $(this).data('title');
 					var tog = $(this).data('toggle');
-					console.log('sel', sel);
-					console.log('tog', tog);
+					// console.log('sel', sel);
+					// console.log('tog', tog);
 					$('#' + tog).prop('value', sel); //將該被點擊的data-title值寫入到id="happy"的value中。
 
 					// 當點擊爲Y,就把不爲Y的元素移除active並加上notActive
@@ -146,6 +147,7 @@
 				// 標籤
 				$('#select-tools').selectize({
 					maxItems: null,
+					plugins: ['remove_button'],
 					// valueField: 'id',
 					// labelField: 'title',
 					// searchField: 'title',
@@ -165,8 +167,15 @@
 					// 		url: 'http://en.wikipedia.org/wiki/Electrical_tape'
 					// 	}
 					// ],
-					dropdownParent: 'body'
 				});
+
+				var selectize = $('#select-tools')[0].selectize;
+
+				// $("#btn").click(function() {
+				// 	console.log('selectize', selectize.getValue().join(","));
+				// });
+
+				// 插件產生的link,在ci無法使用下列語法獲取到最後一個<link>來做改寫,所以先在error的路徑直接放入該檔案解決
 				// console.log($('link:last-of-type').attr('href'));
 				// console.log($('link:last-child').attr('href'));
 				// console.log($('link:last').attr('href'));

@@ -510,7 +510,9 @@ class News extends BaseController
 	 */
 	function addNew()
 	{
-		$data['getTagsList'] = $this->news_model->getTagsList();
+		$data = array(
+			'getTagsList' => $this->news_model->getTagsList(),
+		);
 
 		$this->global['pageTitle'] = '新增最新新聞資料';
 
