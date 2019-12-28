@@ -12,9 +12,7 @@ $editor = $userInfo->editor;
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
-		<h1>
-			<i class="fa fa-globe"></i> 編輯訊息公告資料
-		</h1>
+		<h1>新聞訊息 - 懶人包及議題追追追 - 編輯</h1>
 	</section>
 
 	<section class="content">
@@ -31,9 +29,6 @@ $editor = $userInfo->editor;
 				<!-- general form elements -->
 
 				<div class="box box-primary">
-					<div class="box-header">
-						<h3 class="box-title">編輯訊息公告資料</h3>
-					</div><!-- /.box-header -->
 					<!-- form start -->
 					<!--  enctype="multipart/form-data"記得加 -->
 					<form role="form" action="<?php echo base_url() ?>news/editMessage" method="post" id="" role="form" enctype="multipart/form-data">

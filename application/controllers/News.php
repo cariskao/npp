@@ -13,6 +13,7 @@ class News extends BaseController
 		// $this->load->library('session');
 		$this->load->model('news_model');
 		$this->isLoggedIn();
+		$this->global['pageTitle'] = '時代力量後台管理';
 	}
 
 	/**
@@ -51,7 +52,7 @@ class News extends BaseController
 
 		$data['newsRecords'] = $this->news_model->userListing($searchText, $returns["page"], $returns["segment"]);
 
-		$this->global['pageTitle'] = '最新新聞管理';
+		// $this->global['pageTitle'] = '最新新聞管理';
 
 		$this->loadViews("news", $this->global, $data, NULL);
 	}
@@ -70,7 +71,7 @@ class News extends BaseController
 
 		$data['userRecords'] = $this->news_model->messageListing($searchText, $returns["page"], $returns["segment"]);
 
-		$this->global['pageTitle'] = '訊息公告管理';
+		// $this->global['pageTitle'] = '訊息公告管理';
 
 		$this->loadViews("message", $this->global, $data, NULL);
 	}
@@ -91,7 +92,7 @@ class News extends BaseController
 
 		$data['Records'] = $this->news_model->recordsListing($searchText, $returns["page"], $returns["segment"]);
 
-		$this->global['pageTitle'] = '活動記錄管理';
+		// $this->global['pageTitle'] = '活動記錄管理';
 
 		$this->loadViews("records", $this->global, $data, NULL);
 	}
@@ -108,7 +109,7 @@ class News extends BaseController
 		$returns = $this->paginationCompress("news/tagLists/", $count, 10, 3);
 
 		$data['newsTags'] = $this->news_model->tagsListing($searchText, $returns["page"], $returns["segment"]);
-		$this->global['pageTitle'] = '標籤管理';
+		// $this->global['pageTitle'] = '標籤管理';
 
 		$this->loadViews("tagLists", $this->global, $data, NULL);
 	}
@@ -140,7 +141,7 @@ class News extends BaseController
 			'getTagsList' => $this->news_model->getTagsList(),
 			// 'error' => '',
 		);
-		$this->global['pageTitle'] = '編輯最新新聞資料';
+		// $this->global['pageTitle'] = '編輯最新新聞資料';
 
 		$this->loadViews("newsOld", $this->global, $data, NULL);
 	}
@@ -252,7 +253,7 @@ class News extends BaseController
 			'getTagsList' => $this->news_model->getTagsList(),
 		);
 
-		$this->global['pageTitle'] = '編輯訊息公告資料';
+		// $this->global['pageTitle'] = '編輯訊息公告資料';
 
 		$this->loadViews("messageOld", $this->global, $data, NULL);
 	}
@@ -358,7 +359,7 @@ class News extends BaseController
 			'getTagsList' => $this->news_model->getTagsList(),
 		);
 
-		$this->global['pageTitle'] = '編輯活動記錄資料';
+		// $this->global['pageTitle'] = '編輯活動記錄資料';
 
 		$this->loadViews("recordsOld", $this->global, $data, NULL);
 	}
@@ -452,7 +453,7 @@ class News extends BaseController
 
 	function tagsEdit($id)
 	{
-		$this->global['pageTitle'] = '編輯標籤';
+		// $this->global['pageTitle'] = '編輯標籤';
 
 		$data['getTagsEditInfo'] = $this->news_model->getTagsEditInfo($id);
 
@@ -514,7 +515,7 @@ class News extends BaseController
 			'getTagsList' => $this->news_model->getTagsList(),
 		);
 
-		$this->global['pageTitle'] = '新增最新新聞資料';
+		// $this->global['pageTitle'] = '新增最新新聞資料';
 
 		$this->loadViews("addPressReleaseNews", $this->global, $data, NULL);
 	}
@@ -600,7 +601,7 @@ class News extends BaseController
 
 	function addMessage()
 	{
-		$this->global['pageTitle'] = '新增訊息公告資料';
+		// $this->global['pageTitle'] = '新增訊息公告資料';
 		$data['getTagsList'] = $this->news_model->getTagsList();
 
 		$this->loadViews("addPressReleaseMessage", $this->global, $data, NULL);
@@ -684,7 +685,7 @@ class News extends BaseController
 
 	function addRecords()
 	{
-		$this->global['pageTitle'] = '新增活動記錄資料';
+		// $this->global['pageTitle'] = '新增活動記錄資料';
 		$data['getTagsList'] = $this->news_model->getTagsList();
 
 		$this->loadViews("addPressReleaseRecords", $this->global, $data, NULL);
@@ -770,7 +771,7 @@ class News extends BaseController
 	// 標籤
 	function tagsAdd()
 	{
-		$this->global['pageTitle'] = '新增標籤';
+		// $this->global['pageTitle'] = '新增標籤';
 
 		$this->loadViews("tagsAdd", $this->global, NULL);
 	}

@@ -12,9 +12,7 @@ $editor = $userInfo->editor;
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
-		<h1>
-			<i class="fa fa-globe"></i> 編輯最新新聞資料
-		</h1>
+		<h1>新聞訊息 - 法案及議事說明列表 - 編輯</h1>
 	</section>
 
 	<section class="content">

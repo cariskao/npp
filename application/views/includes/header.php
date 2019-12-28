@@ -116,84 +116,51 @@
 							</span>
 						</a>
 						<ul class="treeview-menu">
-							<li>
-								<a href="<?php echo base_url(); ?>news/index">
-									<i class="fa fa-circle-o"></i> 最新新聞
-								</a>
-							</li>
-							<li>
-								<a href="<?php echo base_url(); ?>news/message"><i class="fa fa-circle-o"></i> 訊息公告</a>
-							</li>
-							<li><a href="<?php echo base_url(); ?>news/records"><i class="fa fa-circle-o"></i> 活動記錄</a></li>
-							<li><a href="<?php echo base_url(); ?>news/tagLists"><i class="fa fa-circle-o"></i> 標籤管理</a></li>
+							<li><a href="<?php echo base_url(); ?>news/index">法案及議事說明</a></li>
+							<li><a href="<?php echo base_url(); ?>news/message">懶人包及議題追追追</a></li>
+							<li><a href="<?php echo base_url(); ?>news/records">行動紀實</a></li>
+							<li><a href="<?php echo base_url(); ?>news/tagLists">標籤管理</a></li>
 						</ul>
 					</li>
 					<li class="treeview">
 						<a href="#">
-							<i class="fa fa-briefcase"></i> <span>法案議題</span>
+							<i class="fa fa-briefcase"></i> <span>法案管理</span>
 							<span class="pull-right-container">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
 						</a>
 						<ul class="treeview-menu">
-							<li>
-								<a href="#">
-									<i class="fa fa-circle-o"></i> 重點法案
-								</a>
-							</li>
-							<li>
-								<a href="#"><i class="fa fa-circle-o"></i> 關注議題</a>
-							</li>
+							<li><a href="#">法案狀態</a></li>
+							<li><a href="#">分類管理</a></li>
+							<li><a href="#">草案管理</a></li>
 						</ul>
 					</li>
-					<li>
-						<a href="<?php echo base_url(); ?>legislator">
+					<li class="treeview">
+						<a href="#">
 							<i class="fa fa-user"></i> <span>本黨立委</span>
-						</a>
-					</li>
-					<li>
-						<a href="<?php echo base_url(); ?>partymember">
-							<i class="fa fa-users"></i> <span>黨員管理</span>
-						</a>
-					</li>
-					<li class="treeview">
-						<a href="#">
-							<i class="fa fa-envelope"></i> <span>聯絡陳情</span>
 							<span class="pull-right-container">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
 						</a>
 						<ul class="treeview-menu">
-							<li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-							<li class="treeview">
-								<a href="#"><i class="fa fa-circle-o"></i> Level One
-									<span class="pull-right-container">
-										<i class="fa fa-angle-left pull-right"></i>
-									</span>
-								</a>
-								<ul class="treeview-menu">
-									<li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-									<li class="treeview">
-										<a href="#"><i class="fa fa-circle-o"></i> Level Two
-											<span class="pull-right-container">
-												<i class="fa fa-angle-left pull-right"></i>
-											</span>
-										</a>
-										<ul class="treeview-menu">
-											<li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-											<li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+							<li><a href="<?php echo base_url(); ?>legislator">立委管理</a></li>
+							<li><a href="<?php echo base_url(); ?>partymember">屆期管理</a></li>
 						</ul>
 					</li>
-					<li>
-						<a href="<?php echo base_url(); ?>headerfooter">
-							<i class="fa fa-header" aria-hidden="true"></i> <span>Header & Footer</span>
+					<li class="treeview">
+						<a href="#">
+							<i class="fa fa-cog"></i> <span>網站管理</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
 						</a>
+						<ul class="treeview-menu">
+							<li><a href="#">輪播管理</a></li>
+							<li><a href="#">陳情須知內容編輯</a></li>
+							<li><a href="#">其它設定</a></li>
+						</ul>
 					</li>
+
 					<?php
 					if ($role == ROLE_ADMIN) {
 					?>
@@ -218,3 +185,8 @@
 			</section>
 			<!-- /.sidebar -->
 		</aside>
+		<style>
+			.treeview-menu li {
+				padding-left: 30px;
+			}
+		</style>

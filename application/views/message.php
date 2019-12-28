@@ -1,9 +1,6 @@
 <div class="content-wrapper">
 	<section class="content-header">
-		<h1>
-			<i class="fa fa-globe"></i> 訊息公告管理
-			<small>新增, 編輯, 移除</small>
-		</h1>
+		<h1>新聞訊息 - 懶人包及議題追追追列表</h1>
 	</section>
 	<section class="content">
 		<div class="row">

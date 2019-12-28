@@ -1,9 +1,6 @@
 <div class="content-wrapper">
 	<section class="content-header">
-		<h1>
-			<i class="fa fa-globe"></i> 活動記錄管理
-			<small>新增, 編輯, 移除</small>
-		</h1>
+		<h1>新聞訊息 - 行動紀實列表</h1>
 	</section>
 	<section class="content">
 		<div class="row">

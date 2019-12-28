@@ -12,9 +12,7 @@ $editor = $userInfo->editor;
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>
-            <i class="fa fa-globe"></i> 編輯活動記錄資料
-        </h1>
+        <h1>新聞訊息 - 行動紀實 - 編輯</h1>
     </section>
 
     <section class="content">
@@ -31,11 +29,7 @@ $editor = $userInfo->editor;
                 <!-- general form elements -->
 
                 <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">編輯活動記錄資料</h3>
-                    </div><!-- /.box-header -->
                     <!-- form start -->
-
                     <form role="form" action="<?php echo base_url() ?>news/editRecords" method="post" id="" role="form" enctype="multipart/form-data">
                         <div class="box-body">
                             <div class="row">

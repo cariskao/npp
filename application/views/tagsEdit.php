@@ -1,9 +1,7 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>
-            <i class="fa fa-globe"></i> 編輯標籤
-        </h1>
+        <h1>新聞訊息 - 編輯標籤</h1>
     </section>
 
     <section class="content">
@@ -20,9 +18,6 @@
                 <!-- general form elements -->
 
                 <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">編輯標籤資料</h3>
-                    </div><!-- /.box-header -->
                     <!-- form start -->
                     <form role="form" action="<?php echo base_url() ?>news/tagsEditSend" method="post" id="addYearSend" role="form">
                         <div class="box-body">
