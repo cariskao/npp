@@ -54,7 +54,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="select-tools">標籤:</label>
-										<select id="select-tools" placeholder="請選取標籤">
+										<select id="select-tools" name="tags[]" placeholder="請選取標籤">
 											<option value="">請選取標籤</option>
 											<?php
 											if (!empty($getTagsList)) {
@@ -145,7 +145,7 @@
 				// 標籤
 				$('#select-tools').selectize({
 					maxItems: null,
-					dropdownParent: 'body'
+					plugins: ['remove_button'],
 				});
 			</script>
 			<?php

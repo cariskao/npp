@@ -537,6 +537,7 @@ class News extends BaseController
 			$s_title = $this->security->xss_clean($this->input->post('s_title'));
 			$date_start = $this->security->xss_clean($this->input->post('date_start'));
 			$editor = $this->input->post('editor1');
+			$tags = $this->security->xss_clean($this->input->post('tags'));
 			$showStatusCheck = $this->input->post('happy');
 
 			$showStatus = $showStatusCheck != 'N' ? 1 : 0;
@@ -559,7 +560,7 @@ class News extends BaseController
 				$uploadedFile = $uploadData['file_name'];
 
 				// Insert files data into the database
-				$userInfo = array(
+				$press_release_info = array(
 					'pr_type_id' => 1,
 					'showup' => $showStatus,
 					'img' => $uploadedFile,
@@ -569,14 +570,26 @@ class News extends BaseController
 					'editor' => $editor,
 				);
 
-				$result = $this->news_model->pressReleaseAdd($userInfo);
+				$result_press_release = $this->news_model->pressReleaseAdd($press_release_info);
 
-				if ($result > 0) {
+				if ($result_press_release > 0) {
+					$pr_tags_info = array();
+
+					foreach ($tags as $key => $value) {
+						$pr_tags_info = array(
+							'pr_id' => $result_press_release,
+							'tags_id' => $value,
+						);
+
+						$this->news_model->prTagsAdd($pr_tags_info);
+					}
+
 					$this->session->set_flashdata('success', '新增成功!');
 				} else {
 					$this->session->set_flashdata('error', '新增失敗!');
 				}
-				// $data['success_msg'] = '圖片上傳成功';
+
+				$data['success_msg'] = '圖片上傳成功';
 			} else {
 				$data['error_msg'] = $this->upload->display_errors();
 			}
@@ -608,6 +621,7 @@ class News extends BaseController
 			$s_title = $this->security->xss_clean($this->input->post('s_title'));
 			$date_start = $this->security->xss_clean($this->input->post('date_start'));
 			$editor = $this->input->post('editor1');
+			$tags = $this->security->xss_clean($this->input->post('tags'));
 			$showStatusCheck = $this->input->post('happy');
 
 			$showStatus = $showStatusCheck != 'N' ? 1 : 0;
@@ -630,7 +644,7 @@ class News extends BaseController
 				$uploadedFile = $uploadData['file_name'];
 
 				// Insert files data
-				$userInfo = array(
+				$press_release_info = array(
 					'pr_type_id' => 2,
 					'showup' => $showStatus,
 					'img' => $uploadedFile,
@@ -640,13 +654,26 @@ class News extends BaseController
 					'editor' => $editor,
 				);
 
-				$result = $this->news_model->pressReleaseAdd($userInfo);
+				$result_press_release = $this->news_model->pressReleaseAdd($press_release_info);
 
-				if ($result > 0) {
+				if ($result_press_release > 0) {
+					$pr_tags_info = array();
+
+					foreach ($tags as $key => $value) {
+						$pr_tags_info = array(
+							'pr_id' => $result_press_release,
+							'tags_id' => $value,
+						);
+
+						$this->news_model->prTagsAdd($pr_tags_info);
+					}
+
 					$this->session->set_flashdata('success', '新增成功!');
 				} else {
 					$this->session->set_flashdata('error', '新增失敗!');
 				}
+
+				$data['success_msg'] = '圖片上傳成功';
 			} else {
 				$data['error_msg'] = $this->upload->display_errors();
 			}
@@ -679,6 +706,7 @@ class News extends BaseController
 			$s_title = $this->security->xss_clean($this->input->post('s_title'));
 			$date_start = $this->security->xss_clean($this->input->post('date_start'));
 			$editor = $this->input->post('editor1');
+			$tags = $this->security->xss_clean($this->input->post('tags'));
 			$showStatusCheck = $this->input->post('happy');
 
 			$showStatus = $showStatusCheck != 'N' ? 1 : 0;
@@ -701,7 +729,7 @@ class News extends BaseController
 				$uploadedFile = $uploadData['file_name'];
 
 				// Insert files data
-				$userInfo = array(
+				$press_release_info = array(
 					'pr_type_id' => 3,
 					'showup' => $showStatus,
 					'img' => $uploadedFile,
@@ -711,16 +739,30 @@ class News extends BaseController
 					'editor' => $editor,
 				);
 
-				$result = $this->news_model->pressReleaseAdd($userInfo);
+				$result_press_release = $this->news_model->pressReleaseAdd($press_release_info);
 
-				if ($result > 0) {
+				if ($result_press_release > 0) {
+					$pr_tags_info = array();
+
+					foreach ($tags as $key => $value) {
+						$pr_tags_info = array(
+							'pr_id' => $result_press_release,
+							'tags_id' => $value,
+						);
+
+						$this->news_model->prTagsAdd($pr_tags_info);
+					}
+
 					$this->session->set_flashdata('success', '新增成功!');
 				} else {
 					$this->session->set_flashdata('error', '新增失敗!');
 				}
+
+				$data['success_msg'] = '圖片上傳成功';
 			} else {
 				$data['error_msg'] = $this->upload->display_errors();
 			}
+
 			redirect('news/addRecords');
 		}
 	}

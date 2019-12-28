@@ -308,10 +308,22 @@ class News_model extends CI_Model
 ##     ## ########  ########
 */
 
-    function pressReleaseAdd($userInfo)
+    function prTagsAdd($pr_tags_info)
     {
         $this->db->trans_start();
-        $this->db->insert('press_release', $userInfo);
+        $this->db->insert('pr_tags', $pr_tags_info);
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
+    function pressReleaseAdd($press_release_info)
+    {
+        $this->db->trans_start();
+        $this->db->insert('press_release', $press_release_info);
 
         $insert_id = $this->db->insert_id();
 

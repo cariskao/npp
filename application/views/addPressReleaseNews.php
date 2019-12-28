@@ -54,7 +54,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="select-tools">標籤:</label>
-										<select id="select-tools" placeholder="請選取標籤">
+										<select id="select-tools" name="tags[]" placeholder="請選取標籤">
 											<option value="">請選取標籤</option>
 											<?php
 											if (!empty($getTagsList)) {
@@ -66,7 +66,6 @@
 											}
 											?>
 										</select>
-										<!-- <div><button id="btn">获取值</button></div> -->
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -168,12 +167,6 @@
 					// 	}
 					// ],
 				});
-
-				var selectize = $('#select-tools')[0].selectize;
-
-				// $("#btn").click(function() {
-				// 	console.log('selectize', selectize.getValue().join(","));
-				// });
 
 				// 插件產生的link,在ci無法使用下列語法獲取到最後一個<link>來做改寫,所以先在error的路徑直接放入該檔案解決
 				// console.log($('link:last-of-type').attr('href'));
