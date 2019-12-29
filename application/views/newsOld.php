@@ -66,22 +66,15 @@ $editor = $userInfo->editor;
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="select-tools">標籤:</label>
-										<select id="select-tools" placeholder="請選取標籤">
+										<!-- name記得加上[],才能以陣列形式回傳。並加上multiple="multiple"才能在一開始就同時顯示selected的全部元素 -->
+										<select id="select-tools" name="tags[]" placeholder="請選取標籤" multiple="multiple">
 											<option value="">請選取標籤</option>
 											<?php if (!empty($getTagsChoice)) : ?>
-												<?php if (!empty($getTagsList)) : ?>
-													<?php foreach ($getTagsList as $list) : ?>
-														<!-- <?php if ($choice->tags_id == $list->tags_id) : ?> -->
-														<option value="<?php echo $list->tags_id; ?> selected">
-															<?php echo $list->name; ?>
-														</option>
-														<!-- <?php else : ?>
-															<option value="<?php echo $list->tags_id; ?>">
-																<?php echo $list->name; ?>
-															</option>
-														<?php endif; ?> -->
-													<?php endforeach; ?>
-												<?php endif; ?>
+												<?php foreach ($getTagsList as $list) : ?>
+													<option value="<?php echo $list->tags_id; ?>" selected>
+														<?php echo $list->name; ?>
+													</option>
+												<?php endforeach; ?>
 											<?php else : ?>
 												<?php foreach ($getTagsList as $list) : ?>
 													<option value="<?php echo $list->tags_id; ?>">
@@ -160,8 +153,8 @@ $editor = $userInfo->editor;
 				$('#radioBtn a').on('click', function() {
 					var sel = $(this).data('title');
 					var tog = $(this).data('toggle');
-					console.log('sel', sel);
-					console.log('tog', tog);
+					// console.log('sel', sel);
+					// console.log('tog', tog);
 					$('#' + tog).prop('value', sel); //將該被點擊的data-title值寫入到id="happy"的value中。
 
 					// 當點擊爲Y,就把不爲Y的元素移除active並加上notActive
@@ -174,25 +167,25 @@ $editor = $userInfo->editor;
 				$('#select-tools').selectize({
 					maxItems: null,
 					plugins: ['remove_button'],
-					valueField: 'id',
-					labelField: 'title',
-					searchField: 'title',
-					options: [{
-							id: 1,
-							title: 'Spectrometer',
-							url: 'http://en.wikipedia.org/wiki/Spectrometers'
-						},
-						{
-							id: 2,
-							title: 'Star Chart',
-							url: 'http://en.wikipedia.org/wiki/Star_chart'
-						},
-						{
-							id: 3,
-							title: 'Electrical Tape',
-							url: 'http://en.wikipedia.org/wiki/Electrical_tape'
-						}
-					],
+					// valueField: 'id',
+					// labelField: 'title',
+					// searchField: 'title',
+					// options: [{
+					// 		id: 1,
+					// 		title: 'Spectrometer',
+					// 		url: 'http://en.wikipedia.org/wiki/Spectrometers'
+					// 	},
+					// 	{
+					// 		id: 2,
+					// 		title: 'Star Chart',
+					// 		url: 'http://en.wikipedia.org/wiki/Star_chart'
+					// 	},
+					// 	{
+					// 		id: 3,
+					// 		title: 'Electrical Tape',
+					// 		url: 'http://en.wikipedia.org/wiki/Electrical_tape'
+					// 	}
+					// ],
 				});
 			</script>
 			<?php

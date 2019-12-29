@@ -48,6 +48,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="select-tools">標籤:</label>
+										<!-- name記得加上[],才能以陣列形式回傳 -->
 										<select id="select-tools" name="tags[]" placeholder="請選取標籤">
 											<option value="">請選取標籤</option>
 											<?php
