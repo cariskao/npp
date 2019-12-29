@@ -952,7 +952,7 @@ class News extends BaseController
 	// 刪除標籤列表
 	function deleteNewsTag()
 	{
-		$id = $this->input->post('tagsid');
+		$id = $this->input->post('tags_id');
 		$result = $this->news_model->deleteNewsTag($id);
 
 		if ($result > 0) {

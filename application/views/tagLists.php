@@ -47,8 +47,8 @@
 											<?php } ?>
 										</td>
 										<td class=" text-center" style="width:30%">
-											<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/tagsEdit/' . $record->tagsid; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-											<a class="btn btn-sm btn-danger deleteNewsTag" href="#" data-tagsid="<?php echo $record->tagsid; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
+											<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/tagsEdit/' . $record->tags_id; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
+											<a class="btn btn-sm btn-danger deleteNewsTag" href="#" data-tagsid="<?php echo $record->tags_id; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
 										</td>
 									</tr>
 								<?php

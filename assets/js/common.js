@@ -157,9 +157,10 @@ jQuery(document).ready(function () {
 			),
 			_isNotNum = isNaN(value)
 
-		// console.log('link', link)
-		// console.log('value', value)
-		// console.log('isNotNum', _isNotNum)
+		// console.log('tagsid', tagid);
+		// console.log('link', link);
+		// console.log('value', value);
+		// console.log('isNotNum', _isNotNum);
 
 		if (_isNotNum) {
 			reDirect += 'news/tagLists'
@@ -176,7 +177,7 @@ jQuery(document).ready(function () {
 					dataType: 'json',
 					url: hitURL,
 					data: {
-						tagsid: tagid,
+						tags_id: tagid,
 					},
 				})
 				.done(function (data) {

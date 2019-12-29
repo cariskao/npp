@@ -22,20 +22,22 @@ class News_model extends CI_Model
     function userListingCount($searchText = '')
     {
         // log_message('error', 'News_model userListingCount 有錯誤!');
-
         // $this->db->select('SELECT * FROM press_release BaseTbl WHERE BaseTbl.pr_type_id=1');
+
         $this->db->select('*');
-        $this->db->from('press_release as BaseTbl');
-        // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
+        $this->db->from('press_release as pr');
+
+        // $this->db->from('pr_tags as pt');
+        // $this->db->join('press_release as pr', 'pt.pr_id = pr.pr_id', 'inner');
+        // $this->db->join('tags as t', 't.tags_id = pt.tags_id', 'inner');
 
         if (!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
-            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
+            $likeCriteria = "(pr.main_title  LIKE '%" . $searchText . "%'
+            OR  pr.sub_title  LIKE '%" . $searchText . "%')";
             $this->db->where($likeCriteria);
         }
-        // $this->db->where('BaseTbl.isDeleted', 0);
-        // $this->db->where('BaseTbl.roleId !=', 1);
-        $this->db->where('BaseTbl.pr_type_id', 1);
+
+        $this->db->where('pr.pr_type_id', 1);
 
         $query = $this->db->get();
 
@@ -53,20 +55,24 @@ class News_model extends CI_Model
     function userListing($searchText = '', $page, $segment)
     {
         // log_message('error', 'News_model userListing 有錯誤!');
+        // $this->db->select('SELECT * FROM press_release BaseTbl WHERE BaseTbl.pr_type_id=1');
 
         $this->db->select('*');
-        $this->db->from('press_release as BaseTbl');
-        // $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId', 'left');
+        $this->db->from('press_release as pr');
+
+        // $this->db->from('pr_tags as pt');
+        // $this->db->join('press_release as pr', 'pt.pr_id = pr.pr_id', 'inner');
+        // $this->db->join('tags as t', 't.tags_id = pt.tags_id', 'inner');
+
         if (!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.main_title  LIKE '%" . $searchText . "%'
-            OR  BaseTbl.sub_title  LIKE '%" . $searchText . "%')";
+            $likeCriteria = "(pr.main_title  LIKE '%" . $searchText . "%'
+            OR  pr.sub_title  LIKE '%" . $searchText . "%')";
             $this->db->where($likeCriteria);
         }
-        // $this->db->where('BaseTbl.isDeleted', 0);
-        // $this->db->where('BaseTbl.roleId !=', 1);
-        $this->db->where('BaseTbl.pr_type_id', 1);
 
-        $this->db->order_by('BaseTbl.pr_id', 'DESC');
+        $this->db->where('pr.pr_type_id', 1);
+
+        $this->db->order_by('pr.pr_id', 'DESC');
         $this->db->limit($page, $segment);
         $query = $this->db->get();
 
@@ -187,7 +193,7 @@ class News_model extends CI_Model
             $this->db->where($likeCriteria);
         }
 
-        $this->db->order_by('BaseTbl.tagsid', 'DESC');
+        $this->db->order_by('BaseTbl.tags_id', 'DESC');
         $this->db->limit($page, $segment);
         $query = $this->db->get();
 
@@ -227,7 +233,7 @@ class News_model extends CI_Model
 
     function tagsEditSend($userInfo, $userId)
     {
-        $this->db->where('tagsid', $userId);
+        $this->db->where('tags_id', $userId);
         $this->db->update('tags', $userInfo);
 
         return TRUE;
@@ -288,7 +294,7 @@ class News_model extends CI_Model
         $this->db->from('tags');
         $this->db->where('name', $name);
         if ($id != '') {
-            $this->db->where('tagsid !=', $id);
+            $this->db->where('tags_id !=', $id);
         }
 
         $query = $this->db->get();
@@ -382,7 +388,7 @@ class News_model extends CI_Model
     // 刪除標籤列表
     function deleteNewsTag($id)
     {
-        $this->db->where('tagsid', $id);
+        $this->db->where('tags_id', $id);
         $this->db->delete('tags');
 
         return $this->db->affected_rows();
@@ -402,7 +408,7 @@ class News_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tags');
-        $this->db->where('tagsid', $id);
+        $this->db->where('tags_id', $id);
 
         $query = $this->db->get();
 
@@ -415,7 +421,7 @@ class News_model extends CI_Model
         $this->db->from('tags as BaseTbl');
         $this->db->where('showup', 1);
 
-        // $this->db->order_by('BaseTbl.tagsid', 'DESC');
+        // $this->db->order_by('BaseTbl.tags_id', 'DESC');
         $query = $this->db->get();
 
         $result = $query->result();

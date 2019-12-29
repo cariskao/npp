@@ -27,7 +27,7 @@
                                         <label for="title">標籤名稱</label>
                                         <input type="text" class="form-control" id="title" name="title" value="<?php echo $getTagsEditInfo->name; ?>">
                                         <?php echo form_error('title'); ?>
-                                        <input type="hidden" name="tagsid" value="<?php echo $getTagsEditInfo->tagsid; ?>">
+                                        <input type="hidden" name="tagsid" value="<?php echo $getTagsEditInfo->tags_id; ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
