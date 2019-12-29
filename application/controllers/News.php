@@ -51,6 +51,7 @@ class News extends BaseController
 		// echo ' segment-News: ' . $returns['segment'];
 
 		$data['newsRecords'] = $this->news_model->userListing($searchText, $returns["page"], $returns["segment"]);
+		$data['getTagsChoice'] = $this->news_model->getTagsChoice();
 
 		// $this->global['pageTitle'] = '最新新聞管理';
 
@@ -70,6 +71,7 @@ class News extends BaseController
 		$returns = $this->paginationCompress("news/message/", $count, 10, 3);
 
 		$data['userRecords'] = $this->news_model->messageListing($searchText, $returns["page"], $returns["segment"]);
+		$data['getTagsChoice'] = $this->news_model->getTagsChoice();
 
 		// $this->global['pageTitle'] = '訊息公告管理';
 
@@ -91,6 +93,7 @@ class News extends BaseController
 		// echo ' segment: ' . $returns['segment'];
 
 		$data['Records'] = $this->news_model->recordsListing($searchText, $returns["page"], $returns["segment"]);
+		$data['getTagsChoice'] = $this->news_model->getTagsChoice();
 
 		// $this->global['pageTitle'] = '活動記錄管理';
 

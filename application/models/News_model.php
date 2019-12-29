@@ -27,10 +27,6 @@ class News_model extends CI_Model
         $this->db->select('*');
         $this->db->from('press_release as pr');
 
-        // $this->db->from('pr_tags as pt');
-        // $this->db->join('press_release as pr', 'pt.pr_id = pr.pr_id', 'inner');
-        // $this->db->join('tags as t', 't.tags_id = pt.tags_id', 'inner');
-
         if (!empty($searchText)) {
             $likeCriteria = "(pr.main_title  LIKE '%" . $searchText . "%'
             OR  pr.sub_title  LIKE '%" . $searchText . "%')";
@@ -59,10 +55,6 @@ class News_model extends CI_Model
 
         $this->db->select('*');
         $this->db->from('press_release as pr');
-
-        // $this->db->from('pr_tags as pt');
-        // $this->db->join('press_release as pr', 'pt.pr_id = pr.pr_id', 'inner');
-        // $this->db->join('tags as t', 't.tags_id = pt.tags_id', 'inner');
 
         if (!empty($searchText)) {
             $likeCriteria = "(pr.main_title  LIKE '%" . $searchText . "%'
@@ -422,6 +414,18 @@ class News_model extends CI_Model
         $this->db->where('showup', 1);
 
         // $this->db->order_by('BaseTbl.tags_id', 'DESC');
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
+
+    function getTagsChoice()
+    {
+        $this->db->from('pr_tags as pt');
+        $this->db->join('press_release as pr', 'pt.pr_id = pr.pr_id', 'inner');
+        $this->db->join('tags as t', 't.tags_id = pt.tags_id', 'inner');
+
         $query = $this->db->get();
 
         $result = $query->result();

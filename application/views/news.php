@@ -46,7 +46,15 @@
 										<td><?php echo '<b>' . $record->main_title . '</b>' . '<br>' . $record->sub_title; ?></td>
 										<td class="text-center"><?php echo $record->date_start . '<br>' . $record->time_start ?></td>
 										<td><?php echo mb_strimwidth(htmlspecialchars($record->editor), 0, 100, '...') ?></td>
-										<td></td>
+										<td>
+											<?php if (!empty($getTagsChoice)) : ?>
+												<?php foreach ($getTagsChoice as $getTags) : ?>
+													<?php if ($record->pr_id == $getTags->pr_id) : ?>
+														<p><?= $getTags->name; ?></p>
+													<?php endif; ?>
+												<?php endforeach; ?>
+											<?php endif; ?>
+										</td>
 										<td class="text-center">
 											<?php if ($record->showup == 1) { ?>
 												<img style="background-color:green" src="<?php echo base_url(); ?>assets/images/show.png" alt="">
