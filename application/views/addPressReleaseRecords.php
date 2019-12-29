@@ -54,7 +54,7 @@
 											if (!empty($getTagsList)) {
 												foreach ($getTagsList as $record) {
 											?>
-													<option value="<?php echo $record->tagsid; ?>"><?php echo $record->name; ?></option>
+													<option value="<?php echo $record->tags_id; ?>"><?php echo $record->name; ?></option>
 											<?php
 												}
 											}

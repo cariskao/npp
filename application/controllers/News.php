@@ -141,6 +141,7 @@ class News extends BaseController
 		// $data['roles'] = $this->news_model->getUserRoles();
 		$data = array(
 			'userInfo' => $this->news_model->getPressReleaseInfo($userId),
+			'getTagsChoice' => $this->news_model->getTagsChoice($userId),
 			'getTagsList' => $this->news_model->getTagsList(),
 			// 'error' => '',
 		);
@@ -543,7 +544,7 @@ class News extends BaseController
 			$editor = $this->input->post('editor1');
 			$tags = $this->security->xss_clean($this->input->post('tags'));
 			$showStatusCheck = $this->input->post('happy');
-
+			// uninitialized
 			$showStatus = $showStatusCheck != 'N' ? 1 : 0;
 
 			// File upload configuration
@@ -576,6 +577,7 @@ class News extends BaseController
 
 				$result_press_release = $this->news_model->pressReleaseAdd($press_release_info);
 
+				// 當回傳成功insert的id時...
 				if ($result_press_release > 0) {
 					$pr_tags_info = array();
 
@@ -584,7 +586,6 @@ class News extends BaseController
 							'pr_id' => $result_press_release,
 							'tags_id' => $value,
 						);
-
 						$this->news_model->prTagsAdd($pr_tags_info);
 					}
 

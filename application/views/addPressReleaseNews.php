@@ -54,7 +54,7 @@
 											if (!empty($getTagsList)) {
 												foreach ($getTagsList as $record) {
 											?>
-													<option value="<?php echo $record->tagsid; ?>"><?php echo $record->name; ?></option>
+													<option value="<?php echo $record->tags_id; ?>"><?php echo $record->name; ?></option>
 											<?php
 												}
 											}
@@ -141,25 +141,6 @@
 				$('#select-tools').selectize({
 					maxItems: null,
 					plugins: ['remove_button'],
-					// valueField: 'id',
-					// labelField: 'title',
-					// searchField: 'title',
-					// options: [{
-					// 		id: 1,
-					// 		title: 'Spectrometer',
-					// 		url: 'http://en.wikipedia.org/wiki/Spectrometers'
-					// 	},
-					// 	{
-					// 		id: 2,
-					// 		title: 'Star Chart',
-					// 		url: 'http://en.wikipedia.org/wiki/Star_chart'
-					// 	},
-					// 	{
-					// 		id: 3,
-					// 		title: 'Electrical Tape',
-					// 		url: 'http://en.wikipedia.org/wiki/Electrical_tape'
-					// 	}
-					// ],
 				});
 
 				// 插件產生的link,在ci無法使用下列語法獲取到最後一個<link>來做改寫,所以先在error的路徑直接放入該檔案解決

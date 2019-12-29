@@ -68,15 +68,27 @@ $editor = $userInfo->editor;
 										<label for="select-tools">標籤:</label>
 										<select id="select-tools" placeholder="請選取標籤">
 											<option value="">請選取標籤</option>
-											<?php
-											if (!empty($getTagsList)) {
-												foreach ($getTagsList as $record) {
-											?>
-													<option value="<?php echo $record->tagsid; ?>"><?php echo $record->name; ?></option>
-											<?php
-												}
-											}
-											?>
+											<?php if (!empty($getTagsChoice)) : ?>
+												<?php if (!empty($getTagsList)) : ?>
+													<?php foreach ($getTagsList as $list) : ?>
+														<!-- <?php if ($choice->tags_id == $list->tags_id) : ?> -->
+														<option value="<?php echo $list->tags_id; ?> selected">
+															<?php echo $list->name; ?>
+														</option>
+														<!-- <?php else : ?>
+															<option value="<?php echo $list->tags_id; ?>">
+																<?php echo $list->name; ?>
+															</option>
+														<?php endif; ?> -->
+													<?php endforeach; ?>
+												<?php endif; ?>
+											<?php else : ?>
+												<?php foreach ($getTagsList as $list) : ?>
+													<option value="<?php echo $list->tags_id; ?>">
+														<?php echo $list->name; ?>
+													</option>
+												<?php endforeach; ?>
+											<?php endif; ?>
 										</select>
 									</div>
 								</div>
@@ -161,7 +173,26 @@ $editor = $userInfo->editor;
 				// 標籤
 				$('#select-tools').selectize({
 					maxItems: null,
-					dropdownParent: 'body'
+					plugins: ['remove_button'],
+					valueField: 'id',
+					labelField: 'title',
+					searchField: 'title',
+					options: [{
+							id: 1,
+							title: 'Spectrometer',
+							url: 'http://en.wikipedia.org/wiki/Spectrometers'
+						},
+						{
+							id: 2,
+							title: 'Star Chart',
+							url: 'http://en.wikipedia.org/wiki/Star_chart'
+						},
+						{
+							id: 3,
+							title: 'Electrical Tape',
+							url: 'http://en.wikipedia.org/wiki/Electrical_tape'
+						}
+					],
 				});
 			</script>
 			<?php

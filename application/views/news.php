@@ -48,9 +48,9 @@
 										<td><?php echo mb_strimwidth(htmlspecialchars($record->editor), 0, 100, '...') ?></td>
 										<td>
 											<?php if (!empty($getTagsChoice)) : ?>
-												<?php foreach ($getTagsChoice as $getTags) : ?>
-													<?php if ($record->pr_id == $getTags->pr_id) : ?>
-														<p><?= $getTags->name; ?></p>
+												<?php foreach ($getTagsChoice as $tags) : ?>
+													<?php if ($record->pr_id == $tags->pr_id) : ?>
+														<p><?= $tags->name; ?></p>
 													<?php endif; ?>
 												<?php endforeach; ?>
 											<?php endif; ?>
