@@ -116,9 +116,9 @@
 							</span>
 						</a>
 						<ul class="treeview-menu">
-							<li><a href="<?php echo base_url(); ?>news/index">法案及議事說明</a></li>
-							<li><a href="<?php echo base_url(); ?>news/message">懶人包及議題追追追</a></li>
-							<li><a href="<?php echo base_url(); ?>news/records">行動紀實</a></li>
+							<li><a href="<?php echo base_url(); ?>news/lists/1">法案及議事說明</a></li>
+							<li><a href="<?php echo base_url(); ?>news/lists/2">懶人包及議題追追追</a></li>
+							<li><a href="<?php echo base_url(); ?>news/lists/3">行動紀實</a></li>
 							<li><a href="<?php echo base_url(); ?>news/tagLists">標籤管理</a></li>
 						</ul>
 					</li>

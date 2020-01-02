@@ -36,68 +36,30 @@ class News extends BaseController
 ######## ####  ######     ##
 */
 
-	// 最新新聞
-	function index()
+	// 新聞訊息的各項列表
+	function lists($type_id)
 	{
+		if ($type_id < 1 || $type_id > 3) {
+			redirect('dashboard');
+		}
+
 		$searchText = $this->security->xss_clean($this->input->post('searchText'));
 		$data['searchText'] = $searchText;
 
 		$this->load->library('pagination');
 
-		$count = $this->news_model->userListingCount($searchText); //算出總筆數
+		$count = $this->news_model->listingCount($searchText, $type_id); //算出總筆數
 		// echo ' count: ' . $count;
 
-		$returns = $this->paginationCompress("news/index/", $count, 10, 3);
+		$returns = $this->paginationCompress("news/lists/" . $type_id . '/', $count, 10, 4); //記得加上「/」
 		// echo ' segment-News: ' . $returns['segment'];
 
-		$data['newsRecords'] = $this->news_model->userListing($searchText, $returns["page"], $returns["segment"]);
+		$data['listItems'] = $this->news_model->listing($searchText, $type_id, $returns["page"], $returns["segment"]);
 		$data['getTagsChoice'] = $this->news_model->getTagsChoice();
-
+		$data['type_id'] = $type_id;
 		// $this->global['pageTitle'] = '最新新聞管理';
 
-		$this->loadViews("news", $this->global, $data, NULL);
-	}
-
-	//  訊息公告
-	function message()
-	{
-		$searchText = $this->security->xss_clean($this->input->post('searchText'));
-		$data['searchText'] = $searchText;
-
-		$this->load->library('pagination');
-
-		$count = $this->news_model->messageListingCount($searchText);
-
-		$returns = $this->paginationCompress("news/message/", $count, 10, 3);
-
-		$data['userRecords'] = $this->news_model->messageListing($searchText, $returns["page"], $returns["segment"]);
-		$data['getTagsChoice'] = $this->news_model->getTagsChoice();
-
-		// $this->global['pageTitle'] = '訊息公告管理';
-
-		$this->loadViews("message", $this->global, $data, NULL);
-	}
-
-	// 活動記錄
-	function records()
-	{
-		$searchText = $this->security->xss_clean($this->input->post('searchText'));
-		$data['searchText'] = $searchText;
-
-		$this->load->library('pagination');
-
-		$count = $this->news_model->recordsListingCount($searchText);
-		$returns = $this->paginationCompress("news/records/", $count, 10, 3); //記得records右方加上「/」
-
-		// echo ' page: ' . $returns['page'];
-		// echo ' segment: ' . $returns['segment'];
-
-		$data['Records'] = $this->news_model->recordsListing($searchText, $returns["page"], $returns["segment"]);
-		$data['getTagsChoice'] = $this->news_model->getTagsChoice();
-
-		// $this->global['pageTitle'] = '活動記錄管理';
-
-		$this->loadViews("records", $this->global, $data, NULL);
+		$this->loadViews("newsLists", $this->global, $data, NULL);
 	}
 
 	// 標籤
@@ -515,34 +477,34 @@ class News extends BaseController
 ##     ## ########  ########
 */
 
-	/**
-	 * This function is used to load the add new form
-	 * 在這個檔案中只有最新新聞才有使用到addNew()，其它訊息公告跟活動記錄沒有經過addNew()
-	 */
-	function addNew()
+	// 新聞訊息各項目的新增頁面
+	function adds($type_id)
 	{
+		if ($type_id < 1 || $type_id > 3) {
+			redirect('dashboard');
+		}
+
 		$data = array(
 			'getTagsList' => $this->news_model->getTagsList(),
+			'type_id' => $type_id
 		);
 
 		// $this->global['pageTitle'] = '新增最新新聞資料';
 
-		$this->loadViews("addPressReleaseNews", $this->global, $data, NULL);
+		$this->loadViews("newsAdds", $this->global, $data, NULL);
 	}
 
-	/**
-	 * This function is used to add new user to the system
-	 */
-	function addNewUser()
+	// 新聞訊息各項目的新增送出面
+	function addsSend($type_id)
 	{
-		$this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[1,1,""]');
+		$this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[' . $type_id . ',1,""]');
 		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-		$this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[1,1]');
+		$this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[' . $type_id . ',1]');
 		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('check', '驗證失敗');
-			$this->addNew();
+			$this->adds($type_id);
 		} else {
 			$m_title = $this->security->xss_clean($this->input->post('m_title'));
 			$s_title = $this->security->xss_clean($this->input->post('s_title'));
@@ -550,12 +512,11 @@ class News extends BaseController
 			$editor = $this->input->post('editor1');
 			$tags = $this->security->xss_clean($this->input->post('tags'));
 			$showStatusCheck = $this->input->post('happy');
-			// uninitialized
 			$showStatus = $showStatusCheck != 'N' ? 1 : 0;
 
 			// File upload configuration
-			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/news/';
-			$uploadPath = 'assets/uploads/news_upload/news/';
+			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/' . $type_id . '/';
+			$uploadPath = 'assets/uploads/news_upload/' . $type_id . '/';
 			$config['upload_path'] = $uploadPath;
 			$config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
 			// $config['max_size'] = 1024;
@@ -572,7 +533,7 @@ class News extends BaseController
 
 				// Insert files data into the database
 				$press_release_info = array(
-					'pr_type_id' => 1,
+					'pr_type_id' => $type_id,
 					'showup' => $showStatus,
 					'img' => $uploadedFile,
 					'main_title' => $m_title,
@@ -583,7 +544,7 @@ class News extends BaseController
 
 				$result_press_release = $this->news_model->pressReleaseAdd($press_release_info);
 
-				// 當回傳成功insert的id時...
+				// 當回傳press_release成功insert的id時,就也將書籤的資料insert到DB
 				if ($result_press_release > 0) {
 					$pr_tags_info = array();
 
@@ -605,176 +566,7 @@ class News extends BaseController
 				$data['error_msg'] = $this->upload->display_errors();
 			}
 
-			redirect('news/addNew');
-		}
-	}
-
-	function addMessage()
-	{
-		// $this->global['pageTitle'] = '新增訊息公告資料';
-		$data['getTagsList'] = $this->news_model->getTagsList();
-
-		$this->loadViews("addPressReleaseMessage", $this->global, $data, NULL);
-	}
-
-	function addNewMessage()
-	{
-		$this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[2,1,""]');
-		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-		$this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[2,1]');
-		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->session->set_flashdata('check', '驗證失敗');
-			$this->addMessage();
-		} else {
-			$m_title = $this->security->xss_clean($this->input->post('m_title'));
-			$s_title = $this->security->xss_clean($this->input->post('s_title'));
-			$date_start = $this->security->xss_clean($this->input->post('date_start'));
-			$editor = $this->input->post('editor1');
-			$tags = $this->security->xss_clean($this->input->post('tags'));
-			$showStatusCheck = $this->input->post('happy');
-
-			$showStatus = $showStatusCheck != 'N' ? 1 : 0;
-
-			// // File upload configuration
-			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/message/';
-			$uploadPath = 'assets/uploads/news_upload/message/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
-			// $config['max_size'] = 1024;
-
-			// Load and initialize upload library
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-
-			// Upload file to server
-			if ($this->upload->do_upload('file')) {
-				// Uploaded file data
-				$uploadData = $this->upload->data();
-				$uploadedFile = $uploadData['file_name'];
-
-				// Insert files data
-				$press_release_info = array(
-					'pr_type_id' => 2,
-					'showup' => $showStatus,
-					'img' => $uploadedFile,
-					'main_title' => $m_title,
-					'sub_title' => $s_title,
-					'date_start' => $date_start,
-					'editor' => $editor,
-				);
-
-				$result_press_release = $this->news_model->pressReleaseAdd($press_release_info);
-
-				if ($result_press_release > 0) {
-					$pr_tags_info = array();
-
-					foreach ($tags as $key => $value) {
-						$pr_tags_info = array(
-							'pr_id' => $result_press_release,
-							'tags_id' => $value,
-						);
-
-						$this->news_model->prTagsAdd($pr_tags_info);
-					}
-
-					$this->session->set_flashdata('success', '新增成功!');
-				} else {
-					$this->session->set_flashdata('error', '新增失敗!');
-				}
-
-				$data['success_msg'] = '圖片上傳成功';
-			} else {
-				$data['error_msg'] = $this->upload->display_errors();
-			}
-
-			redirect('news/addMessage');
-		}
-	}
-
-	function addRecords()
-	{
-		// $this->global['pageTitle'] = '新增活動記錄資料';
-		$data['getTagsList'] = $this->news_model->getTagsList();
-
-		$this->loadViews("addPressReleaseRecords", $this->global, $data, NULL);
-	}
-
-	function addNewRecords()
-	{
-		$this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[3,1,""]');
-		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-		$this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[3,1]');
-		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->session->set_flashdata('check', '驗證失敗');
-			// redirect('news/addNewRecords');
-			$this->addMessage();
-		} else {
-			$m_title = $this->security->xss_clean($this->input->post('m_title'));
-			$s_title = $this->security->xss_clean($this->input->post('s_title'));
-			$date_start = $this->security->xss_clean($this->input->post('date_start'));
-			$editor = $this->input->post('editor1');
-			$tags = $this->security->xss_clean($this->input->post('tags'));
-			$showStatusCheck = $this->input->post('happy');
-
-			$showStatus = $showStatusCheck != 'N' ? 1 : 0;
-
-			// // File upload configuration
-			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/records/';
-			$uploadPath = 'assets/uploads/news_upload/records/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
-			// $config['max_size'] = 1024;
-
-			// Load and initialize upload library
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-
-			// Upload file to server
-			if ($this->upload->do_upload('file')) {
-				// Uploaded file data
-				$uploadData = $this->upload->data();
-				$uploadedFile = $uploadData['file_name'];
-
-				// Insert files data
-				$press_release_info = array(
-					'pr_type_id' => 3,
-					'showup' => $showStatus,
-					'img' => $uploadedFile,
-					'main_title' => $m_title,
-					'sub_title' => $s_title,
-					'date_start' => $date_start,
-					'editor' => $editor,
-				);
-
-				$result_press_release = $this->news_model->pressReleaseAdd($press_release_info);
-
-				if ($result_press_release > 0) {
-					$pr_tags_info = array();
-
-					foreach ($tags as $key => $value) {
-						$pr_tags_info = array(
-							'pr_id' => $result_press_release,
-							'tags_id' => $value,
-						);
-
-						$this->news_model->prTagsAdd($pr_tags_info);
-					}
-
-					$this->session->set_flashdata('success', '新增成功!');
-				} else {
-					$this->session->set_flashdata('error', '新增失敗!');
-				}
-
-				$data['success_msg'] = '圖片上傳成功';
-			} else {
-				$data['error_msg'] = $this->upload->display_errors();
-			}
-
-			redirect('news/addRecords');
+			redirect('news/adds/' . $type_id);
 		}
 	}
 

@@ -3,14 +3,20 @@
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
-		<h1>新聞訊息 - 行動紀實列表 - 新增</h1>
+		<?php if ($type_id == 1) : ?>
+			<h1>新聞訊息 - 法案及議事說明 - 新增</h1>
+		<?php elseif ($type_id == 2) : ?>
+			<h1>新聞訊息 - 懶人包及議題追追追 - 新增</h1>
+		<?php elseif ($type_id == 3) : ?>
+			<h1>新聞訊息 - 行動紀實 - 新增</h1>
+		<?php endif; ?>
 	</section>
 
 	<section class="content">
 		<div class="row">
 			<div class="col-xs-12 text-right">
 				<div class="form-group">
-					<a class="btn btn-warning" href="<?php echo base_url(); ?>news/records">返回</a>
+					<a class="btn btn-warning" href="<?php echo base_url('news/lists/' . $type_id); ?>">返回</a>
 				</div>
 			</div>
 		</div>
@@ -22,7 +28,7 @@
 				<div class="box box-primary">
 					<!-- form start -->
 					<!--  enctype="multipart/form-data"記得加 -->
-					<form role="form" action="<?php echo base_url() ?>news/addNewRecords" method="post" id="" role="form" enctype="multipart/form-data">
+					<form role="form" action="<?php echo base_url('news/addsSend/' . $type_id) ?>" method="post" id="" role="form" enctype="multipart/form-data">
 						<div class="box-body">
 							<div class="row">
 								<div class="col-md-12">
@@ -48,6 +54,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="select-tools">標籤:</label>
+										<!-- name記得加上[],才能以陣列形式回傳 -->
 										<select id="select-tools" name="tags[]" placeholder="請選取標籤">
 											<option value="">請選取標籤</option>
 											<?php
@@ -113,6 +120,7 @@
 			<!-- <div class="col-md-12"> -->
 
 			<script language='javascript' type='text/javascript'>
+				// 上方訊息視窗
 				$(function() {
 					setTimeout(function() {
 						$("#alert-success").hide();
@@ -145,6 +153,12 @@
 						direction: 'asc' // 升序降序
 					}
 				});
+
+				// 插件產生的link,在ci無法使用下列語法獲取到最後一個<link>來做改寫,所以先在error的路徑直接放入該檔案解決
+				// console.log($('link:last-of-type').attr('href'));
+				// console.log($('link:last-child').attr('href'));
+				// console.log($('link:last').attr('href'));
+				// console.log($('link').last().attr('href'));
 			</script>
 			<?php
 			$this->load->helper('form');
@@ -202,6 +216,5 @@
 			</style>
 			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 		</div>
-</div>
-</section>
+	</section>
 </div>
