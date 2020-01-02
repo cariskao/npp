@@ -69,19 +69,15 @@ $editor = $userInfo->editor;
 										<!-- name記得加上[],才能以陣列形式回傳。並加上multiple="multiple"才能在一開始就同時顯示selected的全部元素 -->
 										<select id="select-tools" name="tags[]" placeholder="請選取標籤" multiple="multiple">
 											<option value="">請選取標籤</option>
-											<?php if (!empty($getTagsChoice)) : ?>
-												<?php foreach ($getTagsList as $list) : ?>
-													<option value="<?php echo $list->tags_id; ?>" selected>
-														<?php echo $list->name; ?>
-													</option>
-												<?php endforeach; ?>
-											<?php else : ?>
-												<?php foreach ($getTagsList as $list) : ?>
-													<option value="<?php echo $list->tags_id; ?>">
-														<?php echo $list->name; ?>
-													</option>
-												<?php endforeach; ?>
-											<?php endif; ?>
+											<?php
+											if (!empty($getTagsList)) {
+												foreach ($getTagsList as $record) {
+											?>
+													<option value="<?php echo $record->tags_id; ?>"><?php echo $record->name; ?></option>
+											<?php
+												}
+											}
+											?>
 										</select>
 									</div>
 								</div>
@@ -165,28 +161,19 @@ $editor = $userInfo->editor;
 
 				// 標籤
 				$('#select-tools').selectize({
-					maxItems: null,
+					maxItems: 5,
 					plugins: ['remove_button'],
-					// valueField: 'id',
-					// labelField: 'title',
-					// searchField: 'title',
-					// options: [{
-					// 		id: 1,
-					// 		title: 'Spectrometer',
-					// 		url: 'http://en.wikipedia.org/wiki/Spectrometers'
-					// 	},
-					// 	{
-					// 		id: 2,
-					// 		title: 'Star Chart',
-					// 		url: 'http://en.wikipedia.org/wiki/Star_chart'
-					// 	},
-					// 	{
-					// 		id: 3,
-					// 		title: 'Electrical Tape',
-					// 		url: 'http://en.wikipedia.org/wiki/Electrical_tape'
-					// 	}
-					// ],
+					sortField: { //排序
+						field: 'text', // text:依據文本排序，id：依據value排序
+						direction: 'asc' // 升序降序
+					}
 				});
+
+				var selectTools = $('#select-tools')[0].selectize;
+				var jsArray = ["<?php echo join("\", \"", $getTagsChoice); ?>"];
+				// console.log('jsArray',jsArray);
+
+				selectTools.setValue(jsArray, true);
 			</script>
 			<?php
 			$this->load->helper('form');

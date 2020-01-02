@@ -140,8 +140,12 @@
 
 				// 標籤
 				$('#select-tools').selectize({
-					maxItems: null,
+					maxItems: 5,
 					plugins: ['remove_button'],
+					sortField: { //排序
+						field: 'text', // text:依據文本排序，id：依據value排序
+						direction: 'asc' // 升序降序
+					}
 				});
 
 				// 插件產生的link,在ci無法使用下列語法獲取到最後一個<link>來做改寫,所以先在error的路徑直接放入該檔案解決

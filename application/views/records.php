@@ -32,9 +32,9 @@
 								<th style="width:50px" class="text-center">大圖</th>
 								<th>大標 & 次標</th>
 								<th style=" width:120px" class="text-center">建立日期時間</th>
-								<th style="width:300px">內文</th>
-								<th>標籤</th>
-								<th class="text-center">狀態</th>
+								<th>內文</th>
+								<th style="width:150px">標籤</th>
+								<th style="width:50px" class="text-center">狀態</th>
 								<th style="width:100px" class="text-center">可執行動作</th>
 							</tr>
 							<?php

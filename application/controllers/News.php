@@ -141,12 +141,18 @@ class News extends BaseController
 		// $data['roles'] = $this->news_model->getUserRoles();
 		$data = array(
 			'userInfo' => $this->news_model->getPressReleaseInfo($userId),
-			'getTagsChoice' => $this->news_model->getTagsChoice($userId),
+			'getTagsChoiceDB' => $this->news_model->getTagsChoice($userId),
 			'getTagsList' => $this->news_model->getTagsList(),
 			// 'error' => '',
 		);
 		// $this->global['pageTitle'] = '編輯最新新聞資料';
 
+		$getTagsId = [];
+		foreach ($data['getTagsChoiceDB'] as $key => $value) {
+			array_push($getTagsId, $value->tags_id);
+		}
+
+		$data['getTagsChoice'] = $getTagsId;
 		$this->loadViews("newsOld", $this->global, $data, NULL);
 	}
 

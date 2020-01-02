@@ -32,9 +32,9 @@
 								<th style="width:50px" class="text-center">大圖</th>
 								<th>大標 & 次標</th>
 								<th style=" width:120px" class="text-center">建立日期時間</th>
-								<th style="width:300px">內文</th>
-								<th>標籤</th>
-								<th class="text-center">狀態</th>
+								<th>內文</th>
+								<th style="width:150px">標籤</th>
+								<th style="width:50px" class="text-center">狀態</th>
 								<th style="width:100px" class="text-center">可執行動作</th>
 							</tr>
 							<?php
@@ -48,9 +48,9 @@
 										<td><?php echo mb_strimwidth(htmlspecialchars($record->editor), 0, 100, '...') ?></td>
 										<td>
 											<?php if (!empty($getTagsChoice)) : ?>
-												<?php foreach ($getTagsChoice as $tags) : ?>
-													<?php if ($record->pr_id == $tags->pr_id) : ?>
-														<p><?= $tags->name; ?></p>
+												<?php foreach ($getTagsChoice as $choice) : ?>
+													<?php if ($record->pr_id == $choice->pr_id) : ?>
+														<p><?= $choice->name; ?></p>
 													<?php endif; ?>
 												<?php endforeach; ?>
 											<?php endif; ?>
