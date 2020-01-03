@@ -1,5 +1,5 @@
-<script src="<?php echo base_url(); ?>assets/plugins/selectizejs/dist/js/standalone/selectize.js"></script>
-<script src="<?php echo base_url(); ?>assets/plugins/selectizejs/js/index.js"></script>
+<script src="<?php echo base_url('assets/plugins/selectizejs/dist/js/standalone/selectize.js'); ?>"></script>
+<script src="<?php echo base_url('assets/plugins/selectizejs/js/index.js'); ?>"></script>
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
@@ -28,7 +28,7 @@
 				<div class="box box-primary">
 					<!-- form start -->
 					<!--  enctype="multipart/form-data"記得加 -->
-					<form role="form" action="<?php echo base_url('news/addsSend/' . $type_id) ?>" method="post" id="" role="form" enctype="multipart/form-data">
+					<form role="form" action="<?php echo base_url('news/addsSend/' . $type_id); ?>" method="post" id="" role="form" enctype="multipart/form-data">
 						<div class="box-body">
 							<div class="row">
 								<div class="col-md-12">
@@ -97,9 +97,9 @@
 									<textarea name="editor1" id="editor1"></textarea>
 									<script>
 										CKEDITOR.replace("editor1", {
-											filebrowserBrowseUrl: '<?php echo base_url(); ?>assets/plugins/ckeditor4/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
-											filebrowserUploadUrl: '<?php echo base_url(); ?>assets/plugins/ckeditor4/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
-											filebrowserImageBrowseUrl: '<?php echo base_url(); ?>assets/plugins/ckeditor4/filemanager/dialog.php?type=1&editor=ckeditor&fldr=',
+											filebrowserBrowseUrl: "<?php echo base_url('assets/plugins/ckeditor4/filemanager/dialog.php?type=2&editor=ckeditor&fldr='); ?>",
+											filebrowserUploadUrl: "<?php echo base_url('assets/plugins/ckeditor4/filemanager/dialog.php?type=2&editor=ckeditor&fldr='); ?>",
+											filebrowserImageBrowseUrl: "<?php echo base_url('assets/plugins/ckeditor4/filemanager/dialog.php?type=1&editor=ckeditor&fldr='); ?>",
 											// width: 1000,
 											height: 800,
 											// language: '',

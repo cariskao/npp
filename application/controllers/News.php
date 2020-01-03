@@ -80,30 +80,27 @@ class News extends BaseController
 	}
 
 	/*
-.########.########..####.########.........##....##.########.##......##..######.
-.##.......##.....##..##.....##............###...##.##.......##..##..##.##....##
-.##.......##.....##..##.....##............####..##.##.......##..##..##.##......
-.######...##.....##..##.....##....#######.##.##.##.######...##..##..##..######.
-.##.......##.....##..##.....##............##..####.##.......##..##..##.......##
-.##.......##.....##..##.....##............##...###.##.......##..##..##.##....##
-.########.########..####....##............##....##.########..###..###...######.
+.########.########..####.########
+.##.......##.....##..##.....##...
+.##.......##.....##..##.....##...
+.######...##.....##..##.....##...
+.##.......##.....##..##.....##...
+.##.......##.....##..##.....##...
+.########.########..####....##...
 */
 
-	/**
-	 * This function is used load user edit information
-	 * @param number $userId : Optional : This is user id
-	 */
-	// news edit enter
-	function newsOld($userId = NULL)
+	function newsEdit($pr_id)
 	{
-		if ($userId == null) {
-			redirect('news');
+		$editProtectChcek = $this->news_model->editProtectCheck($pr_id);
+
+		if ($editProtectChcek == 0) {
+			redirect('dashboard');
 		}
 
 		// $data['roles'] = $this->news_model->getUserRoles();
 		$data = array(
-			'userInfo' => $this->news_model->getPressReleaseInfo($userId),
-			'getTagsChoiceDB' => $this->news_model->getTagsChoice($userId),
+			'userInfo' => $this->news_model->getPressReleaseInfo($pr_id),
+			'getTagsChoiceDB' => $this->news_model->getTagsChoice($pr_id),
 			'getTagsList' => $this->news_model->getTagsList(),
 			// 'error' => '',
 		);
@@ -115,22 +112,19 @@ class News extends BaseController
 		}
 
 		$data['getTagsChoice'] = $getTagsId;
-		$this->loadViews("newsOld", $this->global, $data, NULL);
+		$this->loadViews("newsEdit", $this->global, $data, NULL);
 	}
 
-	// news edit send
-	function editUser()
+	function editSend($type_id, $pr_id)
 	{
-		$newsId = $this->input->post('prid');
-
-		$this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[1,2,' . $newsId . ']');
+		$this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[' . $type_id . ',2,' . $pr_id . ']');
 		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-		$this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[1,2]');
+		$this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[' . $type_id . ',2]');
 		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('check', '驗證失敗');
-			$this->newsOld($newsId);
+			$this->newsEdit($pr_id);
 		} else {
 			$m_title = $this->security->xss_clean($this->input->post('m_title'));
 			$s_title = $this->security->xss_clean($this->input->post('s_title'));
@@ -140,8 +134,8 @@ class News extends BaseController
 			$showStatusCheck = $this->input->post('happy');
 
 			// File upload configuration
-			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/news/';
-			$uploadPath = 'assets/uploads/news_upload/news/';
+			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/' . $type_id . '/';
+			$uploadPath = 'assets/uploads/news_upload/' . $type_id . '/';
 			$config['upload_path'] = $uploadPath;
 			$config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
 			// $config['max_size'] = 1024;
@@ -172,7 +166,7 @@ class News extends BaseController
 			// 當有選擇圖片時
 			if (!empty($uploadData)) {
 				// 就上傳新圖片並馬上刪除舊圖片
-				$imgDelete = $this->news_model->imgNameRepeatDel($newsId);
+				$imgDelete = $this->news_model->imgNameRepeatDel($pr_id);
 				$imgDelName = $imgDelete->img;
 				unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/news/' . $imgDelName);
 				// https://blog.longwin.com.tw/2009/01/php-get-directory-file-path-dirname-2008/
@@ -188,7 +182,7 @@ class News extends BaseController
 				$userInfo['img'] = $uploadData;
 			}
 
-			$result = $this->news_model->pressReleaseUpdate($userInfo, $newsId);
+			$result = $this->news_model->pressReleaseUpdate($userInfo, $pr_id);
 
 			if ($result) {
 				$this->session->set_flashdata('success', '儲存成功!');
@@ -197,219 +191,8 @@ class News extends BaseController
 				$this->session->set_flashdata('error', '儲存失敗!');
 			}
 
-			$this->newsOld($newsId);
-			// redirect('news/newsOld');
-		}
-	}
-
-	/*
-.########.########..####.########.........##.....##.########..######...######.....###.....######...########
-.##.......##.....##..##.....##............###...###.##.......##....##.##....##...##.##...##....##..##......
-.##.......##.....##..##.....##............####.####.##.......##.......##........##...##..##........##......
-.######...##.....##..##.....##....#######.##.###.##.######....######...######..##.....##.##...####.######..
-.##.......##.....##..##.....##............##.....##.##.............##.......##.#########.##....##..##......
-.##.......##.....##..##.....##............##.....##.##.......##....##.##....##.##.....##.##....##..##......
-.########.########..####....##............##.....##.########..######...######..##.....##..######...########
-*/
-
-	// edit message enter
-	function messageOld($userId = NULL)
-	{
-		if ($userId == null) {
-			redirect('news/message');
-		}
-
-		// $data['roles'] = $this->news_model->getUserRoles();
-		$data = array(
-			'userInfo' => $this->news_model->getPressReleaseInfo($userId),
-			'getTagsList' => $this->news_model->getTagsList(),
-		);
-
-		// $this->global['pageTitle'] = '編輯訊息公告資料';
-
-		$this->loadViews("messageOld", $this->global, $data, NULL);
-	}
-
-	// edit message send
-	function editMessage()
-	{
-		$newsId = $this->input->post('prid');
-
-		$this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[2,2,' . $newsId . ']');
-		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-		$this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[2,2]');
-		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->session->set_flashdata('check', '驗證失敗');
-			$this->messageOld($newsId);
-		} else {
-			$m_title = $this->security->xss_clean($this->input->post('m_title'));
-			$s_title = $this->security->xss_clean($this->input->post('s_title'));
-			$date_start = $this->security->xss_clean($this->input->post('date_start'));
-			$time_start = $this->security->xss_clean($this->input->post('time_start'));
-			$editor = $this->input->post('editor1');
-			$showStatusCheck = $this->input->post('happy');
-
-			$showStatus = $showStatusCheck == 'Y' ? 1 : 0;
-			// File upload configuration
-			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/message/';
-			$uploadPath = 'assets/uploads/news_upload/message/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
-			// $config['max_size'] = 1024;
-
-			// Load and initialize upload library
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-
-			// Upload file to server
-			if ($this->upload->do_upload('file')) {
-				$fileData = $this->upload->data();
-				$uploadData = $fileData['file_name'];
-			}
-
-			$userInfo = array(
-				'main_title' => $m_title,
-				'sub_title' => $s_title,
-				'date_start' => $date_start,
-				'time_start' => $time_start,
-				'editor' => $editor,
-			);
-
-			if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
-				$showStatus = $showStatusCheck == 'Y' ? 1 : 0;
-				$userInfo['showup'] = $showStatus;
-			}
-
-			// 當有選擇圖片時
-			if (!empty($uploadData)) {
-				// 就上傳新圖片並馬上刪除舊圖片
-				$imgDelete = $this->news_model->imgNameRepeatDel($newsId);
-				$imgDelName = $imgDelete->img;
-				unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/message/' . $imgDelName);
-				// https://blog.longwin.com.tw/2009/01/php-get-directory-file-path-dirname-2008/
-				// https://www.awaimai.com/408.html
-
-				// 再把欄位的資料寫入資料庫
-				$userInfo['img'] = $uploadData;
-			}
-
-			$result = $this->news_model->pressReleaseUpdate($userInfo, $newsId);
-
-			if ($result == true) {
-				$this->session->set_flashdata('success', '儲存成功!');
-				$this->session->set_flashdata('check', '驗證成功');
-			} else {
-				$this->session->set_flashdata('error', '儲存失敗!');
-			}
-			$this->messageOld($newsId);
-			// redirect('news/newsOld');
-		}
-	}
-
-	/*
-.########.########..####.########.........########..########..######...#######..########..########...######.
-.##.......##.....##..##.....##............##.....##.##.......##....##.##.....##.##.....##.##.....##.##....##
-.##.......##.....##..##.....##............##.....##.##.......##.......##.....##.##.....##.##.....##.##......
-.######...##.....##..##.....##....#######.########..######...##.......##.....##.########..##.....##..######.
-.##.......##.....##..##.....##............##...##...##.......##.......##.....##.##...##...##.....##.......##
-.##.......##.....##..##.....##............##....##..##.......##....##.##.....##.##....##..##.....##.##....##
-.########.########..####....##............##.....##.########..######...#######..##.....##.########...######.
-*/
-
-	// edit records enter
-	function recordsOld($userId = NULL)
-	{
-		if ($userId == null) {
-			redirect('news/records');
-		}
-
-		// $data['roles'] = $this->news_model->getUserRoles();
-		$data = array(
-			'userInfo' => $this->news_model->getPressReleaseInfo($userId),
-			'getTagsList' => $this->news_model->getTagsList(),
-		);
-
-		// $this->global['pageTitle'] = '編輯活動記錄資料';
-
-		$this->loadViews("recordsOld", $this->global, $data, NULL);
-	}
-
-	// edit records send
-	function editRecords()
-	{
-		$newsId = $this->input->post('prid');
-
-		$this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[3,2,' . $newsId . ']');
-		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-		$this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[3,2]');
-		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-
-		if ($this->form_validation->run() == FALSE) {
-			$this->session->set_flashdata('check', '驗證失敗');
-			$this->recordsOld($newsId);
-		} else {
-			$m_title = $this->security->xss_clean($this->input->post('m_title'));
-			$s_title = $this->security->xss_clean($this->input->post('s_title'));
-			$date_start = $this->security->xss_clean($this->input->post('date_start'));
-			$time_start = $this->security->xss_clean($this->input->post('time_start'));
-			$editor = $this->input->post('editor1');
-			$showStatusCheck = $this->input->post('happy');
-
-			$showStatus = $showStatusCheck == 'Y' ? 1 : 0;
-			// File upload configuration
-			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/records/';
-			$uploadPath = 'assets/uploads/news_upload/records/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
-			// $config['max_size'] = 1024;
-
-			// Load and initialize upload library
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-
-			// Upload file to server
-			if ($this->upload->do_upload('file')) {
-				$fileData = $this->upload->data();
-				$uploadData = $fileData['file_name'];
-			}
-
-			$userInfo = array(
-				'main_title' => $m_title,
-				'sub_title' => $s_title,
-				'date_start' => $date_start,
-				'time_start' => $time_start,
-				'editor' => $editor,
-			);
-
-			if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
-				$showStatus = $showStatusCheck == 'Y' ? 1 : 0;
-				$userInfo['showup'] = $showStatus;
-			}
-
-			// 當有選擇圖片時
-			if (!empty($uploadData)) {
-				// 就上傳新圖片並馬上刪除舊圖片
-				$imgDelete = $this->news_model->imgNameRepeatDel($newsId);
-				$imgDelName = $imgDelete->img;
-				unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/records/' . $imgDelName);
-				// https://blog.longwin.com.tw/2009/01/php-get-directory-file-path-dirname-2008/
-				// https://www.awaimai.com/408.html
-
-				// 再把欄位的資料寫入資料庫
-				$userInfo['img'] = $uploadData;
-			}
-			$result = $this->news_model->pressReleaseUpdate($userInfo, $newsId);
-
-			if ($result == true) {
-				$this->session->set_flashdata('success', '儲存成功!');
-				$this->session->set_flashdata('check', '驗證成功');
-			} else {
-				$this->session->set_flashdata('error', '儲存失敗!');
-			}
-			$this->recordsOld($newsId);
-			// redirect('news/newsOld');
+			$this->newsEdit($pr_id);
+			// redirect('news/newsEdit');
 		}
 	}
 
@@ -423,11 +206,16 @@ class News extends BaseController
 ######## ########  ####    ##               ##    ##     ##  ######    ######
 */
 
-	function tagsEdit($id)
+	function tagsEdit($tags_id)
 	{
 		// $this->global['pageTitle'] = '編輯標籤';
+		$editProtectChcek = $this->news_model->editProtectCheck($tags_id, true);
 
-		$data['getTagsEditInfo'] = $this->news_model->getTagsEditInfo($id);
+		if ($editProtectChcek == 0) {
+			redirect('dashboard');
+		}
+
+		$data['getTagsEditInfo'] = $this->news_model->getTagsEditInfo($tags_id);
 
 		$this->loadViews("tagsEdit", $this->global, $data, NULL);
 	}

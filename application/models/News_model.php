@@ -144,6 +144,27 @@ class News_model extends CI_Model
  ######  ##     ## ########  ######  ##    ##
 */
 
+    function editProtectCheck($id, $isTag = false)
+    {
+        $this->db->trans_start();
+
+        if ($isTag) {
+            $this->db->select('tags_id');
+            $this->db->from('tags');
+            $this->db->where('tags_id', $id);
+        } else {
+            $this->db->select('pr_id');
+            $this->db->from('press_release');
+            $this->db->where('pr_id', $id);
+        }
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return  $query->num_rows();
+    }
+
     function imgNameCheck($imgName, $type = 1)
     {
         $this->db->trans_start();

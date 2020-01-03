@@ -1,5 +1,6 @@
 <?php
 $pr_id = $userInfo->pr_id;
+$type_id = $userInfo->pr_type_id;
 $img = $userInfo->img;
 $m_title = $userInfo->main_title;
 $s_title = $userInfo->sub_title;
@@ -7,19 +8,19 @@ $date_start = $userInfo->date_start;
 $time_start = $userInfo->time_start;
 $editor = $userInfo->editor;
 ?>
-<script src="<?php echo base_url(); ?>assets/plugins/selectizejs/dist/js/standalone/selectize.js"></script>
-<script src="<?php echo base_url(); ?>assets/plugins/selectizejs/js/index.js"></script>
+<script src="<?php echo base_url('assets/plugins/selectizejs/dist/js/standalone/selectize.js'); ?>"></script>
+<script src="<?php echo base_url('assets/plugins/selectizejs/js/index.js'); ?>"></script>
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
-		<h1>新聞訊息 - 懶人包及議題追追追 - 編輯</h1>
+		<h1>新聞訊息 - 法案及議事說明列表 - 編輯</h1>
 	</section>
 
 	<section class="content">
 		<div class="row">
 			<div class="col-xs-12 text-right">
 				<div class="form-group">
-					<a class="btn btn-warning" href="<?php echo base_url(); ?>news/message">返回</a>
+					<a class="btn btn-warning" href="<?php echo base_url('news/lists/' . $type_id); ?>">返回</a>
 				</div>
 			</div>
 		</div>
@@ -29,16 +30,19 @@ $editor = $userInfo->editor;
 				<!-- general form elements -->
 
 				<div class="box box-primary">
+					<div class="box-header">
+						<h3 class="box-title">編輯最新新聞資料</h3>
+					</div><!-- /.box-header -->
 					<!-- form start -->
 					<!--  enctype="multipart/form-data"記得加 -->
-					<form role="form" action="<?php echo base_url() ?>news/editMessage" method="post" id="" role="form" enctype="multipart/form-data">
+					<form role="form" action="<?php echo base_url('news/editSend/' . $type_id . '/' . $pr_id); ?>" method="post" id="" role="form" enctype="multipart/form-data">
 						<div class="box-body">
 							<div class="row">
 								<div class="col-md-12">
 									<div class="form-group">
 										<div class="hvcenter-flexbox">
 											<main>
-												<img style="max-width:1000px;" src="<?php echo base_url('assets/uploads/news_upload/message/' . $img); ?>">
+												<img style="max-width:1000px;" src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>">
 											</main>
 										</div>
 										<label for="img">更換圖片</label>
@@ -51,7 +55,6 @@ $editor = $userInfo->editor;
 										<label for="m_title">大標</label>
 										<input type="text" class="form-control" id="m_title" name="m_title" value="<?php echo $m_title; ?>">
 										<?php echo form_error('m_title'); ?>
-										<input type="hidden" value="<?php echo $pr_id; ?>" name="prid" id="prid" />
 									</div>
 								</div>
 								<div class="col-md-12">
@@ -63,13 +66,14 @@ $editor = $userInfo->editor;
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="select-tools">標籤:</label>
-										<select id="select-tools" placeholder="請選取標籤">
+										<!-- name記得加上[],才能以陣列形式回傳。並加上multiple="multiple"才能在一開始就同時顯示selected的全部元素 -->
+										<select id="select-tools" name="tags[]" placeholder="請選取標籤" multiple="multiple">
 											<option value="">請選取標籤</option>
 											<?php
 											if (!empty($getTagsList)) {
 												foreach ($getTagsList as $record) {
 											?>
-													<option value="<?php echo $record->tagsid; ?>"><?php echo $record->name; ?></option>
+													<option value="<?php echo $record->tags_id; ?>"><?php echo $record->name; ?></option>
 											<?php
 												}
 											}
@@ -109,9 +113,9 @@ $editor = $userInfo->editor;
 									<textarea name="editor1" id="editor1"><?php echo $editor; ?></textarea>
 									<script>
 										CKEDITOR.replace("editor1", {
-											filebrowserBrowseUrl: '<?php echo base_url(); ?>assets/plugins/ckeditor4/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
-											filebrowserUploadUrl: '<?php echo base_url(); ?>assets/plugins/ckeditor4/filemanager/dialog.php?type=2&editor=ckeditor&fldr=',
-											filebrowserImageBrowseUrl: '<?php echo base_url(); ?>assets/plugins/ckeditor4/filemanager/dialog.php?type=1&editor=ckeditor&fldr=',
+											filebrowserBrowseUrl: "<?php echo base_url('assets/plugins/ckeditor4/filemanager/dialog.php?type=2&editor=ckeditor&fldr='); ?>",
+											filebrowserUploadUrl: "<?php echo base_url('assets/plugins/ckeditor4/filemanager/dialog.php?type=2&editor=ckeditor&fldr='); ?>",
+											filebrowserImageBrowseUrl: "<?php echo base_url('assets/plugins/ckeditor4/filemanager/dialog.php?type=1&editor=ckeditor&fldr='); ?>",
 											// width: 1000,
 											height: 800,
 											// language: '',
@@ -164,6 +168,12 @@ $editor = $userInfo->editor;
 						direction: 'asc' // 升序降序
 					}
 				});
+
+				var selectTools = $('#select-tools')[0].selectize;
+				var jsArray = ["<?php echo join("\", \"", $getTagsChoice); ?>"];
+				// console.log('jsArray',jsArray);
+
+				selectTools.setValue(jsArray, true);
 			</script>
 			<?php
 			$this->load->helper('form');
@@ -178,6 +188,7 @@ $editor = $userInfo->editor;
 			<?php } ?>
 			<?php
 			$success = $this->session->flashdata('success');
+			// echo $success; //存儲成功!
 			if ($success && $check == '驗證成功') {
 			?>
 				<div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">

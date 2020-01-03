@@ -63,13 +63,13 @@
 										</td>
 										<td class="text-center">
 											<?php if ($record->showup == 1) { ?>
-												<img style="background-color:green" src="<?php echo base_url(); ?>assets/images/show.png" alt="">
+												<img style="background-color:green" src="<?php echo base_url('assets/images/show.png'); ?>" alt="">
 											<?php } else { ?>
-												<img style="background-color:red" src="<?php echo base_url(); ?>assets/images/hide.png" alt="">
+												<img style="background-color:red" src="<?php echo base_url('assets/images/hide.png'); ?>" alt="">
 											<?php } ?>
 										</td>
 										<td class="text-center">
-											<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/newsOld/' . $record->pr_id; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
+											<a class="btn btn-sm btn-info" href="<?php echo base_url('news/newsEdit/' . $record->pr_id); ?>" title="編輯"><i class="fa fa-pencil"></i></a>
 											<a class="btn btn-sm btn-danger newsListDel" href="#" data-delid="<?php echo $record->pr_id; ?>" data-typeid="1" data-img="<?php echo $record->img; ?>" title="移除"><i class="fa fa-trash"></i></a>
 										</td>
 									</tr>
@@ -92,7 +92,7 @@
 		</div>
 	</section>
 </div>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/common.js'); ?>" charset="utf-8"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery('ul.pagination li a').click(function(e) {
