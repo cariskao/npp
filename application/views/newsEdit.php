@@ -35,7 +35,7 @@ $editor = $userInfo->editor;
 					</div><!-- /.box-header -->
 					<!-- form start -->
 					<!--  enctype="multipart/form-data"記得加 -->
-					<form role="form" action="<?php echo base_url('news/editSend/' . $type_id . '/' . $pr_id); ?>" method="post" id="" role="form" enctype="multipart/form-data">
+					<form role="form" action="<?php echo base_url('news/editSend/' . $pr_id); ?>" method="post" id="" role="form" enctype="multipart/form-data">
 						<div class="box-body">
 							<div class="row">
 								<div class="col-md-12">
@@ -79,6 +79,7 @@ $editor = $userInfo->editor;
 											}
 											?>
 										</select>
+										<input type="hidden" name="pr_id" id="pr_id" value="<?php echo $type_id; ?>">
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -164,7 +165,7 @@ $editor = $userInfo->editor;
 					maxItems: 5,
 					plugins: ['remove_button'],
 					sortField: { //排序
-						field: 'text', // text:依據文本排序，id：依據value排序
+						field: 'id', // text:依據文本排序，id：依據value排序
 						direction: 'asc' // 升序降序
 					}
 				});

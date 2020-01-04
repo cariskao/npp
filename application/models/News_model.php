@@ -144,7 +144,8 @@ class News_model extends CI_Model
  ######  ##     ## ########  ######  ##    ##
 */
 
-    function editProtectCheck($id, $isTag = false)
+    // 網址防禦
+    function editProtectCheck($id, $isTag = false, $pr_tags_check = false)
     {
         $this->db->trans_start();
 
@@ -154,7 +155,12 @@ class News_model extends CI_Model
             $this->db->where('tags_id', $id);
         } else {
             $this->db->select('pr_id');
-            $this->db->from('press_release');
+
+            if ($pr_tags_check) {
+                $this->db->from('pr_tags');
+            } else {
+                $this->db->from('press_release');
+            }
             $this->db->where('pr_id', $id);
         }
 
@@ -230,18 +236,6 @@ class News_model extends CI_Model
 ##     ## ########  ########
 */
 
-    function prTagsAdd($pr_tags_info)
-    {
-        $this->db->trans_start();
-        $this->db->insert('pr_tags', $pr_tags_info);
-
-        $insert_id = $this->db->insert_id();
-
-        $this->db->trans_complete();
-
-        return $insert_id;
-    }
-
     function pressReleaseAdd($press_release_info)
     {
         $this->db->trans_start();
@@ -258,6 +252,18 @@ class News_model extends CI_Model
     {
         $this->db->trans_start();
         $this->db->insert('tags', $userInfo);
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
+    function prTagsAdd($pr_tags_info)
+    {
+        $this->db->trans_start();
+        $this->db->insert_batch('pr_tags', $pr_tags_info);
 
         $insert_id = $this->db->insert_id();
 
@@ -306,6 +312,15 @@ class News_model extends CI_Model
     {
         $this->db->where('tags_id', $id);
         $this->db->delete('tags');
+
+        return $this->db->affected_rows();
+    }
+
+    // 刪除編輯中在pr_tags的舊資料
+    function prTagsDel($pr_id)
+    {
+        $this->db->where('pr_id', $pr_id);
+        $this->db->delete('pr_tags');
 
         return $this->db->affected_rows();
     }

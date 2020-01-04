@@ -149,7 +149,7 @@
 					maxItems: 5,
 					plugins: ['remove_button'],
 					sortField: { //排序
-						field: 'text', // text:依據文本排序，id：依據value排序
+						field: 'id', // text:依據文本排序，id：依據value排序
 						direction: 'asc' // 升序降序
 					}
 				});

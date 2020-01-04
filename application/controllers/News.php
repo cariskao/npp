@@ -115,8 +115,10 @@ class News extends BaseController
 		$this->loadViews("newsEdit", $this->global, $data, NULL);
 	}
 
-	function editSend($type_id, $pr_id)
+	function editSend($pr_id)
 	{
+		$type_id = $this->security->xss_clean($this->input->post('pr_id'));
+
 		$this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[' . $type_id . ',2,' . $pr_id . ']');
 		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 		$this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[' . $type_id . ',2]');
@@ -131,6 +133,7 @@ class News extends BaseController
 			$date_start = $this->security->xss_clean($this->input->post('date_start'));
 			$time_start = $this->security->xss_clean($this->input->post('time_start'));
 			$editor = $this->input->post('editor1');
+			$tags = $this->security->xss_clean($this->input->post('tags'));
 			$showStatusCheck = $this->input->post('happy');
 
 			// File upload configuration
@@ -150,7 +153,7 @@ class News extends BaseController
 				$uploadData = $fileData['file_name'];
 			}
 
-			$userInfo = array(
+			$press_release_info = array(
 				'main_title' => $m_title,
 				'sub_title' => $s_title,
 				'date_start' => $date_start,
@@ -160,7 +163,7 @@ class News extends BaseController
 
 			if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
 				$showStatus = $showStatusCheck == 'Y' ? 1 : 0;
-				$userInfo['showup'] = $showStatus;
+				$press_release_info['showup'] = $showStatus;
 			}
 
 			// 當有選擇圖片時
@@ -179,12 +182,33 @@ class News extends BaseController
             echo ' 1 層dirname + DIR: ' . dirname(__DIR__);*/
 
 				// 再把欄位的資料寫入資料庫
-				$userInfo['img'] = $uploadData;
+				$press_release_info['img'] = $uploadData;
 			}
 
-			$result = $this->news_model->pressReleaseUpdate($userInfo, $pr_id);
+			$result = $this->news_model->pressReleaseUpdate($press_release_info, $pr_id);
 
+			// 當回傳press_release update成功並return true,就check pr_tags資料表是否已有此pr_id
 			if ($result) {
+				$pr_tags_info = array();
+				$one_array = array();
+
+				foreach ($tags as $key => $value) {
+					$one_array['pr_id'] = $pr_id;
+					$one_array['tags_id'] = $value;
+
+					$pr_tags_info[] = $one_array;
+				}
+
+				$pr_tags_check = $this->news_model->editProtectCheck($pr_id, false, true);
+
+				// yes,del all old id data then insert new data
+				// no,just insert new data
+				if ($pr_tags_check > 0) {
+					$return_rows = $this->news_model->prTagsDel($pr_id);
+				}
+
+				$return_id = $this->news_model->prTagsAdd($pr_tags_info);
+
 				$this->session->set_flashdata('success', '儲存成功!');
 				$this->session->set_flashdata('check', '驗證成功');
 			} else {
@@ -330,19 +354,21 @@ class News extends BaseController
 					'editor' => $editor,
 				);
 
-				$result_press_release = $this->news_model->pressReleaseAdd($press_release_info);
+				$return_insert_id = $this->news_model->pressReleaseAdd($press_release_info);
 
-				// 當回傳press_release成功insert的id時,就也將書籤的資料insert到DB
-				if ($result_press_release > 0) {
+				// 當回傳press_release成功insert的id(pr_id)時,就將此書籤的資料insert到DB
+				if ($return_insert_id > 0) {
 					$pr_tags_info = array();
+					$one_array = array();
 
 					foreach ($tags as $key => $value) {
-						$pr_tags_info = array(
-							'pr_id' => $result_press_release,
-							'tags_id' => $value,
-						);
-						$this->news_model->prTagsAdd($pr_tags_info);
+						$one_array['pr_id'] = $return_insert_id;
+						$one_array['tags_id'] = $value;
+
+						$pr_tags_info[] = $one_array;
 					}
+
+					$this->news_model->prTagsAdd($pr_tags_info);
 
 					$this->session->set_flashdata('success', '新增成功!');
 				} else {
