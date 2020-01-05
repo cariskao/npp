@@ -56,7 +56,7 @@ jQuery(document).ready(function () {
 		var pr_id = $(this).data('delid'),
 			type_id = $(this).data('typeid'),
 			img = $(this).data('img'),
-			hitURL = baseURL + 'news/deleteList',
+			hitURL = baseURL + 'news/newsListDel',
 			currentRow = $(this),
 			link = jQuery(this).get(0).href,
 			value = link.substring(
@@ -76,48 +76,20 @@ jQuery(document).ready(function () {
 
 		// 若url最後不爲數字
 		if (_isNotNum) {
-			switch (type_id) {
-				case 1:
-					reDirect += 'news/index'
-					break
-				case 2:
-					reDirect += 'news/message'
-					break
-				case 3:
-					reDirect += 'news/records'
-					break
-
-				default:
-					// console.log('_isNotNum-true')
-					break
-			}
+			reDirect += 'news/lists/' + type_id
 		} else {
-			switch (type_id) {
-				case 1:
-					reDirect += 'news/index/' + value
-					break
-				case 2:
-					reDirect += 'news/message/' + value
-					break
-				case 3:
-					reDirect += 'news/records/' + value
-					break
-
-				default:
-					// console.log('_isNotNum-false')
-					break
-			}
+			reDirect += 'news/lists/' + type_id + '/' + value;
 		}
 
 		switch (type_id) {
 			case 1:
-				var confirmation = confirm('確認刪除此新聞 ?')
+				var confirmation = confirm('確認刪除此法案及議事 ?')
 				break
 			case 2:
-				var confirmation = confirm('確認刪除此訊息公告 ?')
+				var confirmation = confirm('確認刪除此懶人包及議題 ?')
 				break
 			case 3:
-				var confirmation = confirm('確認刪除此活動記錄 ?')
+				var confirmation = confirm('確認刪除此行動紀實 ?')
 				break
 
 			default:

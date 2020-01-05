@@ -70,7 +70,7 @@
 										</td>
 										<td class="text-center">
 											<a class="btn btn-sm btn-info" href="<?php echo base_url('news/newsEdit/' . $record->pr_id); ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-											<a class="btn btn-sm btn-danger newsListDel" href="#" data-delid="<?php echo $record->pr_id; ?>" data-typeid="1" data-img="<?php echo $record->img; ?>" title="移除"><i class="fa fa-trash"></i></a>
+											<a class="btn btn-sm btn-danger newsListDel" href="#" data-delid="<?php echo $record->pr_id; ?>" data-typeid="<?php echo $record->pr_type_id; ?>" data-img="<?php echo $record->img; ?>" title="移除"><i class="fa fa-trash"></i></a>
 										</td>
 									</tr>
 								<?php

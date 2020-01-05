@@ -299,10 +299,13 @@ class News_model extends CI_Model
      * @return boolean $result : TRUE / FALSE
      * 刪除新聞訊息列表
      */
-    function deleteList($id)
+    function newsListDel($pr_id)
     {
-        $this->db->where('pr_id', $id);
+        $this->db->where('pr_id', $pr_id);
         $this->db->delete('press_release');
+
+        $this->db->where('pr_id', $pr_id);
+        $this->db->delete('pr_tags');
 
         return $this->db->affected_rows();
     }

@@ -171,7 +171,7 @@ class News extends BaseController
 				// 就上傳新圖片並馬上刪除舊圖片
 				$imgDelete = $this->news_model->imgNameRepeatDel($pr_id);
 				$imgDelName = $imgDelete->img;
-				unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/news/' . $imgDelName);
+				unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/' . $type_id . '/' . $imgDelName);
 				// https://blog.longwin.com.tw/2009/01/php-get-directory-file-path-dirname-2008/
 				// https://www.awaimai.com/408.html
 				/*
@@ -187,27 +187,29 @@ class News extends BaseController
 
 			$result = $this->news_model->pressReleaseUpdate($press_release_info, $pr_id);
 
-			// 當回傳press_release update成功並return true,就check pr_tags資料表是否已有此pr_id
+			// 當回傳press_release update成功並return true而且tags不爲空,就check pr_tags資料表是否已有此pr_id
 			if ($result) {
-				$pr_tags_info = array();
-				$one_array = array();
-
-				foreach ($tags as $key => $value) {
-					$one_array['pr_id'] = $pr_id;
-					$one_array['tags_id'] = $value;
-
-					$pr_tags_info[] = $one_array;
-				}
-
 				$pr_tags_check = $this->news_model->editProtectCheck($pr_id, false, true);
 
-				// yes,del all old id data then insert new data
-				// no,just insert new data
+				// 若此prid已存在,就先刪除此prid在tags資料表中的資料
 				if ($pr_tags_check > 0) {
-					$return_rows = $this->news_model->prTagsDel($pr_id);
+					$this->news_model->prTagsDel($pr_id);
 				}
 
-				$return_id = $this->news_model->prTagsAdd($pr_tags_info);
+				// 若$tags爲空就不在pr_tags寫入任何資料,否則就寫入$tags中的值
+				if (!empty($tags)) {
+					$pr_tags_info = array();
+					$one_array = array();
+
+					foreach ($tags as $key => $value) {
+						$one_array['pr_id'] = $pr_id;
+						$one_array['tags_id'] = $value;
+
+						$pr_tags_info[] = $one_array;
+					}
+
+					$this->news_model->prTagsAdd($pr_tags_info);
+				}
 
 				$this->session->set_flashdata('success', '儲存成功!');
 				$this->session->set_flashdata('check', '驗證成功');
@@ -357,7 +359,7 @@ class News extends BaseController
 				$return_insert_id = $this->news_model->pressReleaseAdd($press_release_info);
 
 				// 當回傳press_release成功insert的id(pr_id)時,就將此書籤的資料insert到DB
-				if ($return_insert_id > 0) {
+				if ($return_insert_id > 0 && !empty($tags)) {
 					$pr_tags_info = array();
 					$one_array = array();
 
@@ -369,14 +371,12 @@ class News extends BaseController
 					}
 
 					$this->news_model->prTagsAdd($pr_tags_info);
-
-					$this->session->set_flashdata('success', '新增成功!');
-				} else {
-					$this->session->set_flashdata('error', '新增失敗!');
 				}
 
 				$data['success_msg'] = '圖片上傳成功';
+				$this->session->set_flashdata('success', '新增成功!');
 			} else {
+				$this->session->set_flashdata('error', '新增失敗!');
 				$data['error_msg'] = $this->upload->display_errors();
 			}
 
@@ -533,30 +533,17 @@ class News extends BaseController
 	 * @return boolean $result : TRUE / FALSE
 	 * 刪除 新聞訊息裡項目的列表
 	 */
-	function deleteList()
+	function newsListDel()
 	{
 		//這裏的post('pr_id')是common.js的jQuery.ajax.data
 		$pr_id = $this->input->post('pr_id');
 		$type_id = $this->input->post('type_id');
 		$img = $this->input->post('img');
 
-		switch ($type_id) {
-			case 1:
-				unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/news/' . $img);
-				break;
-			case 2:
-				unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/message/' . $img);
-				break;
-			case 3:
-				unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/records/' . $img);
-				break;
-
-			default:
-				break;
-		}
+		unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/' . $type_id . '/' . $img);
 
 		// $userInfo = array('isDeleted' => 1, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
-		$result = $this->news_model->deleteList($pr_id); //刪除資料庫數據
+		$result = $this->news_model->newsListDel($pr_id); //刪除資料庫數據
 
 		if ($result > 1) {
 			echo (json_encode(array('status' => TRUE)));
