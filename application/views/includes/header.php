@@ -157,7 +157,7 @@
 						<ul class="treeview-menu">
 							<li><a href="#">輪播管理</a></li>
 							<li><a href="#">陳情須知內容編輯</a></li>
-							<li><a href="#">其它設定</a></li>
+							<li><a href="<?php echo base_url('website/setup/' . true); ?>">其它設定</a></li>
 						</ul>
 					</li>
 
