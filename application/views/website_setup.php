@@ -37,6 +37,7 @@ $servicetime = $getSetupInfo->servicetime;
 										<div class="form-group">
 											<label for="mail">Email</label>
 											<input type="text" class="form-control" id="mail" name="mail" value="<?php echo $mail; ?>">
+                                 <?php echo form_error('mail'); ?>
 											<label for="fb">臉書</label>
 											<input type="text" class="form-control" id="fb" name="fb" value="<?php echo $fb; ?>">
 										</div>
