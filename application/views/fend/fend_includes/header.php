@@ -1,6 +1,6 @@
 <?php
-$fb = $headerfooterInfo->fb;
-$mail = $headerfooterInfo->mail;
+$mail = $getSetupInfo->mail;
+$fb = $getSetupInfo->fb;
 ?>
 <!DOCTYPE html>
 <html>

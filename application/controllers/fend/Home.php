@@ -10,13 +10,13 @@ class Home extends FendBaseController
    public function __construct()
    {
       parent::__construct();
-      // $this->load->model('');
+      $this->load->model('website_model');
+      $this->global['pageTitle'] = '最新訊息 - 時代力量立法院黨團';
       // $this->isLoggedIn();
    }
 
    function index()
    {
-      $this->global['pageTitle'] = '首頁';
       $data['test'] = 'test';
 
       // $searchText = $this->security->xss_clean($this->input->post('searchText'));

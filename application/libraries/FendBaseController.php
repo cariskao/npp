@@ -13,12 +13,6 @@ class FendBaseController extends CI_Controller
 	protected $global = array();
 	protected $lastLogin = '';
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->load->model('headerfooter_model');
-	}
-
 	/**
 	 * Takes mixed data and optionally a status code, then creates the response
 	 *
@@ -55,12 +49,11 @@ class FendBaseController extends CI_Controller
 	 */
 	function loadViews($viewName = "", $headerInfo = NULL, $pageInfo = NULL, $footerInfo = NULL)
 	{
-		$headerInfo['headerfooterInfo'] = $this->headerfooter_model->getHeaderFooterInfo();
-		$footerInfo['headerfooterInfo'] = $this->headerfooter_model->getHeaderFooterInfo();
+		$data['getSetupInfo'] = $this->website_model->getSetupInfo();
 
-		$this->load->view('fend/fend_includes/header', $headerInfo);
+		$this->load->view('fend/fend_includes/header', $data);
 		$this->load->view($viewName, $pageInfo);
-		$this->load->view('fend/fend_includes/footer', $footerInfo);
+		$this->load->view('fend/fend_includes/footer', $data);
 	}
 
 	/**
