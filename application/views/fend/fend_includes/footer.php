@@ -64,6 +64,7 @@ $servicetime = $getSetupInfo->servicetime;
 	.container-footer_style {
 		padding: 10px 50px;
 		background-color: #F7F7F7;
+		-webkit-box-shadow: 0px -2px 5px #888888;
 		box-shadow: 0px -2px 5px #888888;
 
 	}

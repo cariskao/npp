@@ -1,5 +1,5 @@
 $nav-link-color: black; // 導航項目文字顏色
-$npp-bg-color: #ffc107;
+$nav-link-color-hover: #ffc107;
 
 .container-content_padding {
 	@include media-breakpoint-up(lg) {
@@ -28,16 +28,13 @@ $npp-bg-color: #ffc107;
 		}
 
 		@include media-breakpoint-up(xl) {
-			width: 280px;
+			width: 300px;
 		}
 	}
 }
 
 .nav-icons {
-	position: absolute;
-	top: 4.5px;
-	right: 80px;
-	width: 40px;
+	width: 85px;
 
 	a,
 	img {
@@ -45,37 +42,65 @@ $npp-bg-color: #ffc107;
 		height: 30px;
 	}
 
-	@include media-breakpoint-up(sm) {
-		width: 110px;
-		top: 13.5px;
+	a {
+		padding: 0 2.5px;
+	}
+
+	@include media-breakpoint-down(sm) {
+		width: 60px;
+		top: 20px !important;
 
 		a,
 		img {
-			width: 50px;
-			height: 50px;
+			width: 20px;
+			height: 20px;
 		}
 	}
 
-	@include media-breakpoint-up(md) {
-		top: 21px;
+	@include media-breakpoint-down(md) {
+		position: absolute;
+		right: 100px;
+		top: 28.5px;
 	}
 
 	@include media-breakpoint-up(lg) {
-		top: 0;
-		right: 8px;
-		width: 70px;
+		width: 75px;
+		margin-top: -50px;
+		margin-left: -92px;
 
 		a,
 		img {
-			width: 30px;
-			height: 30px;
+			width: 25px;
+			height: 25px;
 		}
 	}
 }
 
-.navbar-dark {
+.navbar {
+	box-shadow: 0px 2px 5px #888888;
+
+	@include media-breakpoint-up(lg) {
+		padding-left: 130px;
+		padding-right: 130px;
+	}
+
+	@include media-breakpoint-up(xl) {
+		padding-left: 210px;
+		padding-right: 210px;
+	}
+
+	.navbar-collapse.collapse {
+		@include media-breakpoint-up(lg) {
+			margin-bottom: -40px;
+		}
+	}
+
 	.navbar-nav a.nav-link {
+		&:hover {
+			color: $nav-link-color-hover;
+		}
+
 		color: $nav-link-color;
-		font-size: 16px;
+		font-size: 18px;
 	}
 }
