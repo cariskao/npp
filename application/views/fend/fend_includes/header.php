@@ -26,6 +26,16 @@ $fb = $getSetupInfo->fb;
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	<style>
+		@font-face {
+			font-family: KozGoPro-ExtraLight_0;
+			src: url("<?php echo base_url('assets/fonts/KozGoPro-ExtraLight_0.otf'); ?>");
+		}
+
+		* {
+			font-family: KozGoPro-ExtraLight_0;
+		}
+	</style>
 </head>
 
 <body>
