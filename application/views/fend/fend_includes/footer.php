@@ -8,23 +8,23 @@ $servicetime = $getSetupInfo->servicetime;
 ?>
 <footer class="container-fluid">
 	<div class="row container-footer_style">
-		<div class="col-md">
+		<div class="col-lg-6 col-md-12">
 			<div class="hvcenter-flexbox">
-				<main style="margin: auto 0 auto auto;">
+				<main class="textPos">
 					<a class="logo logo-footer_center" href="#"><img src="<?php echo base_url(); ?>assets/f_imgs/header/LY-logo.svg" alt="圖片不存在"></a>
 					<address>
-						<div><span>地址</span><a target="blank" href="https://www.google.com.tw/maps/place/%E7%AB%8B%E6%B3%95%E9%99%A2%E9%9D%92%E5%B3%B6%E4%B8%89%E9%A4%A8/@25.0442613,121.5205838,19z/data=!3m1!4b1!4m5!3m4!1s0x3442a971746339c3:0x841664d7ac9478bc!8m2!3d25.0442613!4d121.521131">100台北市中正區青島東路1-3號2樓</a></div>
-						<div><span>信箱</span><a target="blank" href="mailto:<?php echo $mail; ?>"><?php echo $mail; ?></a></div>
-						<div><span>電話</span><a target="blank" href="tel:<?php echo $num; ?>"><?php echo $num; ?></a></div>
-						<div><span>傳真</span><?php echo $fax; ?></div>
-						<div><span>服務時間</span><?php echo $servicetime; ?></div>
+						<div><span>地址 </span><a target="blank" href="https://www.google.com.tw/maps/place/%E7%AB%8B%E6%B3%95%E9%99%A2%E9%9D%92%E5%B3%B6%E4%B8%89%E9%A4%A8/@25.0442613,121.5205838,19z/data=!3m1!4b1!4m5!3m4!1s0x3442a971746339c3:0x841664d7ac9478bc!8m2!3d25.0442613!4d121.521131">100台北市中正區青島東路1-3號2樓</a></div>
+						<div><span>信箱 </span><a target="blank" href="mailto:<?php echo $mail; ?>"><?php echo $mail; ?></a></div>
+						<div><span>電話 </span><a target="blank" href="tel:<?php echo $num; ?>"><?php echo $num; ?></a></div>
+						<div><span>傳真 </span><?php echo $fax; ?></div>
+						<div><span>服務時間 </span><?php echo $servicetime; ?></div>
 					</address>
 				</main>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-lg-6 col-md-12">
 			<div class="hvcenter-flexbox">
-				<main style="margin: auto auto auto 0;">
+				<main class="imgPos">
 					<div class="f-footer_bg">
 						<img src="<?php echo base_url('assets/f_imgs/footer/f_footer_bg.png'); ?>" alt="找不到圖片">
 						<div class="linear-gd child" style="z-index:1"></div>
@@ -71,6 +71,10 @@ $servicetime = $getSetupInfo->servicetime;
 		font-size: 20px;
 	}
 
+	.container-footer_style address a {
+		color: black;
+	}
+
 	.f-footer_under {
 		background-color: black;
 		color: white;
@@ -113,6 +117,24 @@ $servicetime = $getSetupInfo->servicetime;
 		top: 3px;
 		left: 65px;
 		color: white;
+	}
+
+	.textPos {
+		margin: auto 0 auto auto;
+	}
+
+	.imgPos {
+		margin: auto auto auto 0;
+	}
+
+	@media (max-width: 992px) {
+		.textPos {
+			margin: auto;
+		}
+
+		.imgPos {
+			margin: auto;
+		}
 	}
 </style>
 <script src="<?php echo base_url(); ?>assets/node_modules/jquery/dist/jquery.min.js"></script>

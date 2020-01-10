@@ -11,13 +11,24 @@ class Home extends FendBaseController
    {
       parent::__construct();
       $this->load->model('website_model');
-      $this->global['pageTitle'] = '最新訊息 - 時代力量立法院黨團';
+      $this->global['getSetupInfo'] = $this->website_model->getSetupInfo();
+      $this->global['pageTitle'] = '時代力量立法院黨團';
       // $this->isLoggedIn();
+   }
+
+   /**
+    * Page not found : error 404
+    */
+   function pageNotFound()
+   {
+      $this->global['pageTitle'] = 'CodeInsect : 404 - Page Not Found';
+
+      $this->loadViews("404", $this->global, NULL, NULL);
    }
 
    function index()
    {
-      $data['test'] = 'test';
+      $data['aaa'] = '';
 
       // $searchText = $this->security->xss_clean($this->input->post('searchText'));
       // $data['searchText'] = $searchText;

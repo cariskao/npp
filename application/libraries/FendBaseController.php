@@ -49,11 +49,10 @@ class FendBaseController extends CI_Controller
 	 */
 	function loadViews($viewName = "", $headerInfo = NULL, $pageInfo = NULL, $footerInfo = NULL)
 	{
-		$data['getSetupInfo'] = $this->website_model->getSetupInfo();
 
-		$this->load->view('fend/fend_includes/header', $data);
+		$this->load->view('fend/fend_includes/header', $headerInfo);
 		$this->load->view($viewName, $pageInfo);
-		$this->load->view('fend/fend_includes/footer', $data);
+		$this->load->view('fend/fend_includes/footer', $footerInfo);
 	}
 
 	/**
