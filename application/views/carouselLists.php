@@ -1,6 +1,6 @@
 <div class="content-wrapper">
 	<section class="content-header">
-		<h1>網站管理 - 輪播管理</h1>
+		<h1>網站管理 - 輪播管理 - 列表</h1>
 	</section>
 	<section class="content">
 		<div class="row">
@@ -42,7 +42,7 @@
 									<tr>
 										<td><img style="width:200px;height:50px;" src="<?php echo base_url('assets/uploads/carousel_upload/' . $record->img); ?>"></td>
 										<td><?php echo $record->title; ?></td>
-										<td><?php echo $record->introduction; ?></td>
+										<td><?php echo mb_strimwidth(htmlspecialchars($record->introduction), 0, 100, '...') ?></td>
 										<td>
 											<?php if ($record->showup == 1) { ?>
 												<img style="background-color:green" src="<?php echo base_url('assets/images/show.png'); ?>" alt="">

@@ -46,8 +46,6 @@ class Website_model extends CI_Model
         return $result;
     }
 
-
-
     /*
 .########.########..####.########
 .##.......##.....##..##.....##...
@@ -58,6 +56,7 @@ class Website_model extends CI_Model
 .########.########..####....##...
 */
 
+    // 其它設定
     function getSetupInfo()
     {
         $this->db->select();
@@ -69,6 +68,25 @@ class Website_model extends CI_Model
     }
 
     function setupUpdate($userInfo)
+    {
+        $this->db->where('set_id', 1);
+        $this->db->update('setup', $userInfo);
+
+        return TRUE;
+    }
+
+    // 輪播
+    function getCarouselInfo($id)
+    {
+        $this->db->select();
+        $this->db->from('carousel');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
+    function carouseUpdate($userInfo)
     {
         $this->db->where('set_id', 1);
         $this->db->update('setup', $userInfo);

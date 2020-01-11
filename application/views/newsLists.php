@@ -1,11 +1,11 @@
 <div class="content-wrapper">
 	<section class="content-header">
 		<?php if ($type_id == 1) : ?>
-			<h1>新聞訊息 - 法案及議事說明列表</h1>
+			<h1>新聞訊息 - 法案及議事說明 - 列表</h1>
 		<?php elseif ($type_id == 2) : ?>
-			<h1>新聞訊息 - 懶人包及議題追追追列表</h1>
+			<h1>新聞訊息 - 懶人包及議題追追追 - 列表</h1>
 		<?php elseif ($type_id == 3) : ?>
-			<h1>新聞訊息 - 行動紀實列表</h1>
+			<h1>新聞訊息 - 行動紀實 - 列表</h1>
 		<?php endif; ?>
 	</section>
 	<section class="content">

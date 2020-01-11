@@ -113,13 +113,13 @@ class Website extends BaseController
 	}
 
 	// 輪播
-	function carousel()
+	function carouselEdit($id)
 	{
 		// if ($check) {
 		// 	$this->session->set_flashdata('check', '驗證失敗');
 		// }
 
-		$data['getCarouselInfo'] = $this->website_model->getCarouselInfo();
-		$this->loadViews("website_setup", $this->global, $data, NULL);
+		$data['getCarouselInfo'] = $this->website_model->getCarouselInfo($id);
+		$this->loadViews("carouselEdit", $this->global, $data, NULL);
 	}
 }
