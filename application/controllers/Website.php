@@ -26,6 +26,43 @@ class Website extends BaseController
 		$this->loadViews("404", $this->global, NULL, NULL);
 	}
 
+	/*
+##       ####  ######  ########
+##        ##  ##    ##    ##
+##        ##  ##          ##
+##        ##   ######     ##
+##        ##        ##    ##
+##        ##  ##    ##    ##
+######## ####  ######     ##
+*/
+
+	// 輪播列表
+	function carouselLists()
+	{
+		$searchText = $this->security->xss_clean($this->input->post('searchText'));
+		$data['searchText'] = $searchText;
+
+		$this->load->library('pagination');
+		$count = $this->website_model->carouselListCount($searchText); //算出總筆數
+
+		$returns = $this->paginationCompress("website/carouselList/", $count, 10, 3);
+
+		$data['getCarouselList'] = $this->website_model->carouselListing($searchText, $returns["page"], $returns["segment"]);
+
+		$this->loadViews("carouselLists", $this->global, $data, NULL);
+	}
+
+	/*
+######## ########  #### ########
+##       ##     ##  ##     ##
+##       ##     ##  ##     ##
+######   ##     ##  ##     ##
+##       ##     ##  ##     ##
+##       ##     ##  ##     ##
+######## ########  ####    ##
+*/
+
+	// 其它設定
 	function setup($check = false)
 	{
 		if ($check) {
@@ -73,5 +110,16 @@ class Website extends BaseController
 			$this->setup();
 			// redirect('website/setup');
 		}
+	}
+
+	// 輪播
+	function carousel()
+	{
+		// if ($check) {
+		// 	$this->session->set_flashdata('check', '驗證失敗');
+		// }
+
+		$data['getCarouselInfo'] = $this->website_model->getCarouselInfo();
+		$this->loadViews("website_setup", $this->global, $data, NULL);
 	}
 }

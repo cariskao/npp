@@ -1,12 +1,12 @@
 <div class="content-wrapper">
 	<section class="content-header">
-		<h1>新聞訊息 - 標籤列表</h1>
+		<h1>網站管理 - 輪播管理</h1>
 	</section>
 	<section class="content">
 		<div class="row">
 			<div class="col-xs-12 text-right">
 				<div class="form-group">
-					<a class="btn btn-primary" href="<?php echo base_url(); ?>news/tagsAdd"><i class="fa fa-plus"></i> 新增標籤</a>
+					<a class="btn btn-primary" href="<?php echo base_url('website/carouselAdd'); ?>"><i class="fa fa-plus"></i> 新增</a>
 				</div>
 			</div>
 		</div>
@@ -16,9 +16,9 @@
 					<div class="box-header">
 						<h3 class="box-title"></h3>
 						<div class="box-tools">
-							<form action="<?php echo base_url() ?>news/tagLists" method="POST" id="searchList">
+							<form action="<?php echo base_url('website/carouselLists') ?>" method="POST" id="searchList">
 								<div class="input-group">
-									<input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋標籤名稱" />
+									<input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋標題" />
 									<div class="input-group-btn">
 										<button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
 									</div>
@@ -29,26 +29,30 @@
 					<div class="box-body table-responsive no-padding">
 						<table class="table table-hover title-center">
 							<tr class="title-center">
-								<th>標籤名稱</th>
+								<th>圖片</th>
+								<th>標題</th>
+								<th>簡介</th>
 								<th>狀態</th>
 								<th class="text-center">可執行動作</th>
 							</tr>
 							<?php
-							if (!empty($newsTags)) {
-								foreach ($newsTags as $record) {
+							if (!empty($getCarouselList)) {
+								foreach ($getCarouselList as $record) {
 							?>
 									<tr>
-										<td><?php echo $record->name; ?></td>
+										<td><img style="width:200px;height:50px;" src="<?php echo base_url('assets/uploads/carousel_upload/' . $record->img); ?>"></td>
+										<td><?php echo $record->title; ?></td>
+										<td><?php echo $record->introduction; ?></td>
 										<td>
 											<?php if ($record->showup == 1) { ?>
-												<img style="background-color:green" src="<?php echo base_url(); ?>assets/images/show.png" alt="">
+												<img style="background-color:green" src="<?php echo base_url('assets/images/show.png'); ?>" alt="">
 											<?php } else { ?>
-												<img style="background-color:red" src="<?php echo base_url(); ?>assets/images/hide.png" alt="">
+												<img style="background-color:red" src="<?php echo base_url('assets/images/hide.png'); ?>" alt="">
 											<?php } ?>
 										</td>
 										<td class=" text-center" style="width:30%">
-											<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/tagsEdit/' . $record->tags_id; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-											<a class="btn btn-sm btn-danger deleteNewsTag" href="javascript:;" data-tagsid="<?php echo $record->tags_id; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
+											<a class="btn btn-sm btn-info" href="<?php echo base_url('website/carouselEdit/' . $record->id); ?>" title="編輯"><i class="fa fa-pencil"></i></a>
+											<a class="btn btn-sm btn-danger deleteCarousel" href="#" data-carouselid="<?php echo $record->id; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
 										</td>
 									</tr>
 								<?php
@@ -104,7 +108,7 @@
 			var value = link.substring(link.lastIndexOf('/') + 1);
 			// alert('link: ' + link);
 			// alert('value: ' + value);
-			jQuery("#searchList").attr("action", baseURL + "news/tagLists/" + value); //注意這裡要加上index
+			jQuery("#searchList").attr("action", baseURL + "website/carouselLists/" + value); //注意這裡要加上index
 			// jQuery("#searchList").attr("action", baseURL + "news/" + 10);
 			jQuery("#searchList").submit();
 		});
