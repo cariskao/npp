@@ -95,6 +95,28 @@ class Website_model extends CI_Model
     }
 
     /*
+   ###    ########  ########
+  ## ##   ##     ## ##     ##
+ ##   ##  ##     ## ##     ##
+##     ## ##     ## ##     ##
+######### ##     ## ##     ##
+##     ## ##     ## ##     ##
+##     ## ########  ########
+*/
+
+    function carouselAdd($userInfo)
+    {
+        $this->db->trans_start();
+        $this->db->insert('carousel', $userInfo);
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
+    /*
 ########  ######## ##       ######## ######## ########
 ##     ## ##       ##       ##          ##    ##
 ##     ## ##       ##       ##          ##    ##
@@ -124,6 +146,22 @@ class Website_model extends CI_Model
 ##    ## ##     ## ##       ##    ## ##   ##
  ######  ##     ## ########  ######  ##    ##
 */
+
+    // 網址防禦
+    function editProtectCheck($id)
+    {
+        $this->db->trans_start();
+
+        $this->db->select('id');
+        $this->db->from('carousel');
+        $this->db->where('id', $id);
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return  $query->num_rows();
+    }
 
     // 輪播
     function carouselTitleCheck($id = '', $title)

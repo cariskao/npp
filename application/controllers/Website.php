@@ -115,9 +115,11 @@ class Website extends BaseController
 	// 輪播
 	function carouselEdit($id)
 	{
-		// if ($check) {
-		// 	$this->session->set_flashdata('check', '驗證失敗');
-		// }
+		$editProtectChcek = $this->website_model->editProtectCheck($id);
+
+		if ($editProtectChcek == 0) {
+			redirect('dashboard');
+		}
 
 		$data['getCarouselInfo'] = $this->website_model->getCarouselInfo($id);
 		$this->loadViews("carouselEdit", $this->global, $data, NULL);
@@ -163,7 +165,7 @@ class Website extends BaseController
 			);
 
 			if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
-				$showStatus = $showStatusCheck == 'Y' ? 1 : 0;
+				$showStatus = $showStatusCheck != 'N' ? 1 : 0;
 				$carousel_info['showup'] = $showStatus;
 			}
 
@@ -192,6 +194,77 @@ class Website extends BaseController
 	}
 
 	/*
+   ###    ########  ########
+  ## ##   ##     ## ##     ##
+ ##   ##  ##     ## ##     ##
+##     ## ##     ## ##     ##
+######### ##     ## ##     ##
+##     ## ##     ## ##     ##
+##     ## ########  ########
+*/
+
+	// 輪播
+	function carouselAdds()
+	{
+		$this->loadViews("carouselAdds", $this->global, NULL);
+	}
+
+	function carouselAddSend()
+	{
+		$this->form_validation->set_rules('title', '標題', 'trim|required|max_length[128]|callback_carouselTitleCheck');
+		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+		$this->form_validation->set_rules('file', '圖片', 'callback_carouselImgCheck[true]');
+		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('check', '驗證失敗');
+			$this->carouselAdds();
+		} else {
+			$title = $this->security->xss_clean($this->input->post('title'));
+			$introduction = $this->security->xss_clean($this->input->post('introduction'));
+			$link = $this->security->xss_clean($this->input->post('link'));
+			$showStatusCheck = $this->input->post('happy');
+			$showStatus = $showStatusCheck != 'N' ? 1 : 0;
+
+			// File upload configuration
+			// $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/carousel_upload/';
+			$uploadPath = 'assets/uploads/carousel_upload/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
+			// $config['max_size'] = 1024;
+
+			// Load and initialize upload library
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+
+			// Upload file to server
+			if ($this->upload->do_upload('file')) {
+				$fileData = $this->upload->data();
+				$uploadData = $fileData['file_name'];
+			}
+
+			$carousel_info = array(
+				'img' => $uploadData,
+				'title' => $title,
+				'showup' => $showStatus,
+				'introduction' => $introduction,
+				'link' => $link,
+			);
+
+			$return_insert_id = $this->website_model->carouselAdd($carousel_info);
+
+			if ($return_insert_id) {
+				$this->session->set_flashdata('success', '儲存成功!');
+				$this->session->set_flashdata('check', '驗證成功');
+			} else {
+				$this->session->set_flashdata('error', '儲存失敗!');
+			}
+
+			$this->carouselAdds();
+		}
+	}
+
+	/*
  ######  ##     ## ########  ######  ##    ##
 ##    ## ##     ## ##       ##    ## ##   ##
 ##       ##     ## ##       ##       ##  ##
@@ -216,9 +289,17 @@ class Website extends BaseController
 		}
 	}
 
-	function carouselImgCheck($str)
+	function carouselImgCheck($str, $isAdd = false)
 	{
 		$imgName = $_FILES['file']['name'];
+
+		if ($isAdd) {
+			if (!isset($imgName) || $imgName == '') {
+				$this->form_validation->set_message('carouselImgCheck', '請選擇要上傳的圖片');
+				$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+				return false;
+			}
+		}
 
 		// 如果圖片檔名有空白字元就報錯後離開
 		// \s: 任何空白字元(空白,換行,tab)。\S: 任何非空白字元(空白,換行,tab)。
