@@ -80,7 +80,7 @@ $editor = $userInfo->editor;
 											}
 											?>
 										</select>
-										<input type="hidden" name="pr_id" id="pr_id" value="<?php echo $type_id; ?>">
+										<input type="hidden" name="type_id" id="type_id" value="<?php echo $type_id; ?>">
 									</div>
 								</div>
 								<div class="col-md-2">

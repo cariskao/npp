@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -37,7 +38,7 @@
  */
 defined('BASEPATH') or exit('No direct script access allowed');
 $lang['form_validation_valid_base64'] = '必須包含有效的Base64字符串。';
-$lang['form_validation_required'] = '要求含有 {field} 欄位';
+$lang['form_validation_required'] = '{field} 欄位不可空白';
 $lang['form_validation_isset'] = '{field} 欄位必須有值';
 $lang['form_validation_valid_email'] = '{field} 欄位必須是一個有效的 E-mail 地址';
 $lang['form_validation_valid_emails'] = '{field} 欄位必須包含有效的 E-mail地址';

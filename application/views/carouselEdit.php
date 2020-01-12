@@ -80,7 +80,16 @@ $link = $getCarouselInfo->link;
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="introduction">簡介</label>
-										<textarea class="form-control" name="introduction" id="introduction" cols="30" rows="10"><?php echo $introduction; ?></textarea>
+										<textarea class="form-control" name="introduction" id="introduction" cols="30" rows="5"><?php echo $introduction; ?></textarea>
+									</div>
+								</div>
+							</div>
+						<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="link">連結</label>
+										<input type="text" class="form-control" id="link" name="link" value="<?php echo $link; ?>">
+										<?php echo form_error('link'); ?>
 									</div>
 								</div>
 							</div>

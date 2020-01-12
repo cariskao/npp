@@ -86,11 +86,75 @@ class Website_model extends CI_Model
         return $query->row();
     }
 
-    function carouseUpdate($userInfo)
+    function carouselUpdate($userInfo, $id)
     {
-        $this->db->where('set_id', 1);
-        $this->db->update('setup', $userInfo);
+        $this->db->where('id', $id);
+        $this->db->update('carousel', $userInfo);
 
         return TRUE;
+    }
+
+    /*
+########  ######## ##       ######## ######## ########
+##     ## ##       ##       ##          ##    ##
+##     ## ##       ##       ##          ##    ##
+##     ## ######   ##       ######      ##    ######
+##     ## ##       ##       ##          ##    ##
+##     ## ##       ##       ##          ##    ##
+########  ######## ######## ########    ##    ########
+*/
+
+    // 輪播update時將舊的圖片刪除,先獲取圖片名稱
+    function imgNameRepeatDel($id)
+    {
+        $this->db->select('img');
+        $this->db->from('carousel');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
+    /*
+ ######  ##     ## ########  ######  ##    ##
+##    ## ##     ## ##       ##    ## ##   ##
+##       ##     ## ##       ##       ##  ##
+##       ######### ######   ##       #####
+##       ##     ## ##       ##       ##  ##
+##    ## ##     ## ##       ##    ## ##   ##
+ ######  ##     ## ########  ######  ##    ##
+*/
+
+    // 輪播
+    function carouselTitleCheck($id = '', $title)
+    {
+        $this->db->trans_start();
+        $this->db->select('title');
+        $this->db->from('carousel');
+        $this->db->where('title', $title);
+
+        if ($id != '') {
+            $this->db->where('id !=', $id);
+        }
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return  $query->num_rows();
+    }
+
+    function carouselImgCheck($imgName)
+    {
+        $this->db->trans_start();
+        $this->db->select('img');
+        $this->db->from('carousel');
+        $this->db->where('img', $imgName);
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return  $query->num_rows();
     }
 }

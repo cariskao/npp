@@ -117,7 +117,7 @@ class News extends BaseController
 
 	function editSend($pr_id)
 	{
-		$type_id = $this->security->xss_clean($this->input->post('pr_id'));
+		$type_id = $this->security->xss_clean($this->input->post('type_id'));
 
 		$this->form_validation->set_rules('m_title', '大標', 'trim|required|max_length[128]|callback_mainTitleCheck[' . $type_id . ',2,' . $pr_id . ']');
 		$this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');

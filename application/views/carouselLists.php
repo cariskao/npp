@@ -52,7 +52,7 @@
 										</td>
 										<td class=" text-center" style="width:30%">
 											<a class="btn btn-sm btn-info" href="<?php echo base_url('website/carouselEdit/' . $record->id); ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-											<a class="btn btn-sm btn-danger deleteCarousel" href="#" data-carouselid="<?php echo $record->id; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
+											<a class="btn btn-sm btn-danger deleteCarousel" href="javascript:;" data-carouselid="<?php echo $record->id; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
 										</td>
 									</tr>
 								<?php
@@ -123,14 +123,5 @@ if ($error) {
 	<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 		<?php echo $this->session->flashdata('error'); ?>
-	</div>
-<?php } ?>
-<?php
-$success = $this->session->flashdata('success');
-if ($success) {
-?>
-	<div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-		<?php echo $this->session->flashdata('success'); ?>
 	</div>
 <?php } ?>
