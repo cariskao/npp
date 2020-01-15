@@ -43,6 +43,22 @@ class News extends BaseController
 			redirect('dashboard');
 		}
 
+		switch ($type_id) {
+			case '1':
+				$this->global['navTitle'] = '新聞訊息 - 法案及議事說明 - 列表';
+				break;
+			case '2':
+				$this->global['navTitle'] = '新聞訊息 - 懶人包及議題追追追 - 列表';
+				break;
+			case '3':
+				$this->global['navTitle'] = '新聞訊息 - 行動紀實 - 列表';
+				break;
+
+			default:
+				# code...
+				break;
+		}
+
 		$searchText = $this->security->xss_clean($this->input->post('searchText'));
 		$data['searchText'] = $searchText;
 
@@ -65,6 +81,8 @@ class News extends BaseController
 	// 標籤
 	function tagLists()
 	{
+		$this->global['navTitle'] = '新聞訊息 - 標籤列表';
+
 		$searchText = $this->security->xss_clean($this->input->post('searchText'));
 		$data['searchText'] = $searchText;
 
@@ -388,6 +406,7 @@ class News extends BaseController
 	function tagsAdd()
 	{
 		// $this->global['pageTitle'] = '新增標籤';
+		$this->global['navTitle'] = '新聞訊息 - 標籤列表';
 
 		$this->loadViews("tagsAdd", $this->global, NULL);
 	}

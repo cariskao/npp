@@ -39,6 +39,8 @@ class Website extends BaseController
 	// 輪播列表
 	function carouselLists()
 	{
+		$this->global['navTitle'] = '網站管理 - 輪播管理 - 列表';
+
 		$searchText = $this->security->xss_clean($this->input->post('searchText'));
 		$data['searchText'] = $searchText;
 

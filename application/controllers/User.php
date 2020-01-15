@@ -19,6 +19,7 @@ class User extends BaseController
         parent::__construct();
         $this->load->model('user_model');
         $this->isLoggedIn();
+        $this->global['pageTitle'] = '時代力量後台管理';
     }
 
     /**
@@ -26,8 +27,7 @@ class User extends BaseController
      */
     public function index()
     {
-        $this->global['pageTitle'] = '控制面板';
-
+        // $this->global['pageTitle'] = '控制面板';
         $this->loadViews("dashboard", $this->global, NULL, NULL);
     }
 
@@ -53,7 +53,8 @@ class User extends BaseController
 
             $data['userRecords'] = $this->user_model->userListing($searchText, $returns["page"], $returns["segment"]);
 
-            $this->global['pageTitle'] = '人員管理(系統管理員)';
+            // $this->global['pageTitle'] = '人員管理';
+            $this->global['navTitle'] = '人員管理';
 
             $this->loadViews("users", $this->global, $data, NULL);
         }

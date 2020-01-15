@@ -1,36 +1,35 @@
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            <i class="fa fa-users"></i> 人員管理(系統管理員)
-            <small>新增, 編輯, 移除</small>
-        </h1>
-    </section>
-    <section class="content">
-        <div class="row">
-            <div class="col-xs-12 text-right">
-                <div class="form-group">
-                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNew"><i class="fa fa-plus"></i> 新增</a>
+    <section>
+        <div class="row functoin-on-top" style="margin-top:51.45px">
+            <div class="col-xs-12">
+                <div class="box" style="border-top:none;border-radius:0">
+                    <div class="box-header" style="border-bottom:2px solid #d2d6de;">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <a class="btn btn-primary" href="<?php echo base_url('addNew'); ?>"><i class="fa fa-plus"></i> 新增</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="box-tools">
+                                    <form action="<?php echo base_url('userListing') ?>" method="POST" id="searchList">
+                                        <div class="input-group">
+                                            <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋名稱、mail、手機" />
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.box-header -->
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top:107.45px;border-top:none;">
             <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title"></h3>
-                        <div class="box-tools">
-                            <!-- 送出時送到指定位置userListing -->
-                            <form action="<?php echo base_url() ?>userListing" method="POST" id="searchList">
-                                <div class="input-group">
-                                    <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋名稱、mail、手機" />
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div><!-- /.box-header -->
+                <div class="box" style="border-top:none;">
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover">
                             <tr>
@@ -44,7 +43,7 @@
                             <?php
                             if (!empty($userRecords)) {
                                 foreach ($userRecords as $record) {
-                                    ?>
+                            ?>
                                     <tr>
                                         <td><?php echo $record->name ?></td>
                                         <td><?php echo $record->email ?></td>
@@ -58,9 +57,9 @@
                                         </td>
                                     </tr>
                                 <?php
-                                    }
-                                } else {
-                                    ?>
+                                }
+                            } else {
+                                ?>
                                 <div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
                                     無相關資料!
                                 </div>

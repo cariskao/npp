@@ -7,6 +7,18 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.validate.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/validation.js" type="text/javascript"></script>
 <script type="text/javascript">
+  var $titleTop = $('.nav.navbar-nav li.title-on-top');
+  var $halfWidth = $titleTop.width() / 2;
+  console.log('$halfWidth', $halfWidth);
+
+  $titleTop.css({
+    right: 'calc(50% - ' + $halfWidth + 'px)', //記得「-」號右邊要空一格
+    position: 'absolute'
+  });
+
+  //這裏要取得跟我們設定position的相反值才能獲取,這裏設爲right,所以要log出的值爲left
+  // console.log($titleTop.position().left);//但是這一行得不到我們要的值,只是說明一下
+
   var windowURL = window.location.href;
   pageURL = windowURL.substring(0, windowURL.lastIndexOf('/'));
   var x = $('a[href="' + pageURL + '"]');

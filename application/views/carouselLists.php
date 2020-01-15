@@ -1,38 +1,43 @@
 <div class="content-wrapper">
-	<section class="content-header">
-		<h1>網站管理 - 輪播管理 - 列表</h1>
-	</section>
-	<section class="content">
-		<div class="row">
-			<div class="col-xs-12 text-right">
-				<div class="form-group">
-					<a class="btn btn-primary" href="<?php echo base_url('website/carouselAdds'); ?>"><i class="fa fa-plus"></i> 新增</a>
+	<!-- <section class="content"> -->
+	<section>
+		<div class="row functoin-on-top" style="margin-top:51.45px">
+			<div class="col-xs-12">
+				<div class="box" style="border-top:none;border-radius:0">
+					<div class="box-header" style="border-bottom:2px solid #d2d6de;">
+						<div class="row">
+							<div class="col-xs-6">
+								<div class="form-group">
+									<a class="btn btn-primary" href="<?php echo base_url('website/carouselAdds'); ?>"><i class="fa fa-plus"></i> 新增</a>
+								</div>
+							</div>
+							<div class="col-xs-6">
+								<div class="box-tools">
+									<form action="<?php echo base_url('website/carouselLists') ?>" method="POST" id="searchList">
+										<div class="input-group">
+											<input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋標題" />
+											<div class="input-group-btn">
+												<button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div><!-- /.box-header -->
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" style="margin-top:107.45px;border-top:none;">
 			<div class="col-xs-12">
-				<div class="box">
-					<div class="box-header">
-						<h3 class="box-title"></h3>
-						<div class="box-tools">
-							<form action="<?php echo base_url('website/carouselLists') ?>" method="POST" id="searchList">
-								<div class="input-group">
-									<input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋標題" />
-									<div class="input-group-btn">
-										<button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div><!-- /.box-header -->
+				<div class="box" style="border-top:none;">
 					<div class="box-body table-responsive no-padding">
 						<table class="table table-hover title-center">
 							<tr class="title-center">
 								<th>圖片</th>
 								<th>標題</th>
 								<th>簡介</th>
-								<th>狀態</th>
+								<th style="width:50px">狀態</th>
 								<th class="text-center">可執行動作</th>
 							</tr>
 							<?php
@@ -64,7 +69,6 @@
 								</div>
 							<?php } ?>
 						</table>
-
 					</div><!-- /.box-body -->
 					<div class="box-footer clearfix">
 						<?php echo $this->pagination->create_links(); ?>
@@ -87,7 +91,7 @@
 		margin: auto;
 		left: 230px;
 		right: 0;
-		top: 80px;
+		top: 51.45px;
 	}
 </style>
 <script>

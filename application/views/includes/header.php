@@ -18,6 +18,27 @@
 		folder instead of downloading all of them to reduce the load. -->
 	<link href="<?php echo base_url(); ?>assets/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<style>
+		/* nav navbar-nav */
+		.hover-bg:hover {
+			color: white !important;
+			background-color: #3C8DBC !important;
+			cursor: default;
+		}
+
+		.form-group {
+			margin-bottom: 0;
+		}
+
+		.functoin-on-top {
+			position: fixed;
+			z-index: 1;
+			top: 0;
+		}
+
+		.treeview-menu li {
+			padding-left: 30px;
+		}
+
 		.error {
 			color: red;
 			font-weight: normal;
@@ -39,23 +60,25 @@
 
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
-
 		<header class="main-header">
 			<!-- Logo -->
 			<a href="<?php echo base_url(); ?>" class="logo">
 				<!-- mini logo for sidebar mini 50x50 pixels -->
-				<span class="logo-mini">後台</span>
+				<span class="logo-mini"><img style="width:25px" src="<?php echo base_url('assets/dist/img/npp-logo.png'); ?>" class="user-image" alt="img not found" /></span>
 				<!-- logo for regular state and mobile devices -->
 				<span class="logo-lg">時代力量後台管理</span>
 			</a>
 			<!-- Header Navbar: style can be found in header.less -->
-			<nav class="navbar navbar-static-top" role="navigation">
+			<nav class="navbar navbar-fixed-top" role="navigation">
 				<!-- Sidebar toggle button-->
 				<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
 					<span class="sr-only">Toggle navigation</span>
 				</a>
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
+						<li class="title-on-top"><a class="hover-bg"><?php if (!empty($navTitle)) {
+																						echo $navTitle;
+																					} ?></a></li>
 						<li class="dropdown tasks-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 								<i class="fa fa-history"></i>
@@ -67,13 +90,12 @@
 						<!-- User Account: style can be found in dropdown.less -->
 						<li class="dropdown user user-menu">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<img src="<?php echo base_url(); ?>assets/dist/img/npp-logo.png" class="user-image" alt="User Image" />
+								<img style="width:20px" src="<?php echo base_url(); ?>assets/dist/img/npp-logo.png" class="img-circle" alt="User Image" />
 								<span class="hidden-xs"><?php echo $name; ?></span>
 							</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
 								<li class="user-header">
-
 									<img src="<?php echo base_url(); ?>assets/dist/img/npp-logo.png" class="img-circle" alt="User Image" />
 									<p>
 										<span style="display:block;font-size:30px;margin-top:-15px;margin-bottom:5px"><?php echo $name; ?></span>
@@ -167,7 +189,7 @@
 						<li>
 							<a href="<?php echo base_url(); ?>userListing">
 								<i class="fa fa-user-plus"></i>
-								<span>人員管理(系統管理員)</span>
+								<span>人員管理1</span>
 							</a>
 						</li>
 					<?php } ?>
@@ -177,7 +199,7 @@
 						<li>
 							<a href="<?php echo base_url(); ?>user/managerListing">
 								<i class="fa fa-user-plus"></i>
-								<span>人員管理(管理員)</span>
+								<span>人員管理2</span>
 							</a>
 						</li>
 					<?php } ?>
@@ -185,8 +207,3 @@
 			</section>
 			<!-- /.sidebar -->
 		</aside>
-		<style>
-			.treeview-menu li {
-				padding-left: 30px;
-			}
-		</style>
