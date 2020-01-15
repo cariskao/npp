@@ -95,7 +95,8 @@ class User extends BaseController
         } else {
             $data['roles'] = $this->user_model->getUserRoles();
 
-            $this->global['pageTitle'] = '新增人員資料';
+            // $this->global['pageTitle'] = '新增人員資料';
+            $this->global['navTitle'] = '新增人員資料';
 
             $this->loadViews("addNew", $this->global, $data, NULL);
         }
@@ -248,7 +249,8 @@ class User extends BaseController
             $data['roles'] = $this->user_model->getUserRoles();
             $data['userInfo'] = $this->user_model->getUserInfo($userId);
 
-            $this->global['pageTitle'] = '編輯人員資料';
+            // $this->global['pageTitle'] = '編輯人員資料';
+            $this->global['navTitle'] = '編輯人員資料';
 
             $this->loadViews("editOld", $this->global, $data, NULL);
         }

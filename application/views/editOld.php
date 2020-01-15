@@ -7,28 +7,16 @@ $roleId = $userInfo->roleId;
 ?>
 
 <div class="content-wrapper">
-	<!-- Content Header (Page header) -->
-	<section class="content-header">
-		<h1>
-			<i class="fa fa-users"></i> 編輯人員
-		</h1>
-	</section>
-
-	<section class="content">
-
+	<section>
 		<div class="row">
 			<!-- left column -->
 			<div class="col-md-8">
 				<!-- general form elements -->
-
-
-
-				<div class="box box-primary">
+				<div class="box box-primary" style="border:none">
 					<div class="box-header">
 						<h3 class="box-title">編輯人員資料</h3>
 					</div><!-- /.box-header -->
 					<!-- form start -->
-
 					<form role="form" action="<?php echo base_url() ?>editUser" method="post" id="editUser" role="form">
 						<div class="box-body">
 							<div class="row">
@@ -38,7 +26,6 @@ $roleId = $userInfo->roleId;
 										<input type="text" class="form-control" id="fname" name="fname" value="<?php echo $name; ?>" maxlength="128">
 										<input type="hidden" value="<?php echo $userId; ?>" name="userId" id="userId" />
 									</div>
-
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
@@ -90,7 +77,6 @@ $roleId = $userInfo->roleId;
 								</div>
 							</div>
 						</div><!-- /.box-body -->
-
 						<div class="box-footer">
 							<input type="submit" class="btn btn-primary" value="送出" />
 							<input type="reset" class="btn btn-default" value="重置" />
@@ -131,3 +117,7 @@ $roleId = $userInfo->roleId;
 </div>
 
 <script src="<?php echo base_url(); ?>assets/js/editUser.js" type="text/javascript"></script>
+<script>
+	$(".navbar").removeClass("navbar-fixed-top");
+	$(".navbar").addClass("navbar-static-top");
+</script>

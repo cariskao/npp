@@ -18,7 +18,14 @@
 		folder instead of downloading all of them to reduce the load. -->
 	<link href="<?php echo base_url(); ?>assets/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<style>
-		/* nav navbar-nav */
+		.submit-pos {
+			position: fixed;
+			right: 0px;
+			top: 51.45px;
+			z-index: 2;
+			margin: 10px
+		}
+
 		.hover-bg:hover {
 			color: white !important;
 			background-color: #3C8DBC !important;
@@ -29,12 +36,6 @@
 			margin-bottom: 0;
 		}
 
-		.functoin-on-top {
-			position: fixed;
-			z-index: 1;
-			top: 0;
-		}
-
 		.treeview-menu li {
 			padding-left: 30px;
 		}
@@ -42,6 +43,12 @@
 		.error {
 			color: red;
 			font-weight: normal;
+		}
+
+		.functoin-on-top {
+			position: fixed;
+			z-index: 1;
+			top: 0;
 		}
 	</style>
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.js"></script>

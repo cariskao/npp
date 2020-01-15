@@ -208,6 +208,7 @@ class Website extends BaseController
 	// 輪播
 	function carouselAdds()
 	{
+		$this->global['navTitle'] = '網站管理 - 輪播管理 - 新增';
 		$this->loadViews("carouselAdds", $this->global, NULL);
 	}
 

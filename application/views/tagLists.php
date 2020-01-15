@@ -1,75 +1,80 @@
 <div class="content-wrapper">
+	<!-- <section class="content"> -->
 	<section>
-		<div class="row functoin-on-top" style="margin-top:51.45px">
-			<div class="col-xs-12">
-				<div class="box" style="border-top:none;border-radius:0">
-					<div class="box-header" style="border-bottom:2px solid #d2d6de;">
-						<div class="row">
-							<div class="col-xs-6">
-								<div class="form-group">
-									<a class="btn btn-primary" href="<?php echo base_url('news/tagsAdd'); ?>"><i class="fa fa-plus"></i> 新增</a>
+		<div class="functoin-on-top" style="margin-top:51.45px">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="box" style="border-top:none;border-radius:0">
+						<div class="box-header" style="border-bottom:2px solid #d2d6de;">
+							<div class="row">
+								<div class="col-xs-6">
+									<div class="form-group">
+										<a class="btn btn-primary" href="<?php echo base_url('news/tagsAdd'); ?>"><i class="fa fa-plus"></i> 新增</a>
+									</div>
 								</div>
-							</div>
-							<div class="col-xs-6">
-								<div class="box-tools">
-									<form action="<?php echo base_url('news/tagLists') ?>" method="POST" id="searchList">
-										<div class="input-group">
-											<input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋標籤名稱" />
-											<div class="input-group-btn">
-												<button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
+								<div class="col-xs-6">
+									<div class="box-tools">
+										<form action="<?php echo base_url('news/tagLists') ?>" method="POST" id="searchList">
+											<div class="input-group">
+												<input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋標籤名稱" />
+												<div class="input-group-btn">
+													<button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
+												</div>
 											</div>
-										</div>
-									</form>
+										</form>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div><!-- /.box-header -->
+						</div><!-- /.box-header -->
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row" style="margin-top:107.45px;border-top:none;">
-			<div class="col-xs-12">
-				<div class="box" style="border-top:none;">
-					<div class="box-body table-responsive no-padding">
-						<table class="table table-hover title-center">
-							<tr class="title-center">
-								<th>標籤名稱</th>
-								<th>狀態</th>
-								<th class="text-center">可執行動作</th>
-							</tr>
-							<?php
-							if (!empty($newsTags)) {
-								foreach ($newsTags as $record) {
-							?>
-									<tr>
-										<td><?php echo $record->name; ?></td>
-										<td>
-											<?php if ($record->showup == 1) { ?>
-												<img style="background-color:green" src="<?php echo base_url(); ?>assets/images/show.png" alt="">
-											<?php } else { ?>
-												<img style="background-color:red" src="<?php echo base_url(); ?>assets/images/hide.png" alt="">
-											<?php } ?>
-										</td>
-										<td class=" text-center" style="width:30%">
-											<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/tagsEdit/' . $record->tags_id; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-											<a class="btn btn-sm btn-danger deleteNewsTag" href="javascript:;" data-tagsid="<?php echo $record->tags_id; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
-										</td>
-									</tr>
+		<div class="add-fixed-top-css" style="border-top:none;">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="box" style="border-top:none;">
+						<div class="box-body table-responsive no-padding">
+							<table class="table table-hover title-center">
+								<tr class="title-center">
+									<th>標籤名稱</th>
+									<th>狀態</th>
+									<th class="text-center">可執行動作</th>
+								</tr>
 								<?php
-								}
-							} else {
+								if (!empty($newsTags)) {
+									foreach ($newsTags as $record) {
 								?>
-								<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
-									無相關資料!
-								</div>
-							<?php } ?>
-						</table>
+										<tr>
+											<td><?php echo $record->name; ?></td>
+											<td>
+												<?php if ($record->showup == 1) { ?>
+													<img style="background-color:green" src="<?php echo base_url(); ?>assets/images/show.png" alt="">
+												<?php } else { ?>
+													<img style="background-color:red" src="<?php echo base_url(); ?>assets/images/hide.png" alt="">
+												<?php } ?>
+											</td>
+											<td class=" text-center" style="width:30%">
+												<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/tagsEdit/' . $record->tags_id; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
+												<a class="btn btn-sm btn-danger deleteNewsTag" href="javascript:;" data-tagsid="<?php echo $record->tags_id; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
+											</td>
+										</tr>
+									<?php
+									}
+								} else {
+									?>
+									<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
+										無相關資料!
+									</div>
+								<?php } ?>
+							</table>
 
-					</div><!-- /.box-body -->
-					<div class="box-footer clearfix">
-						<?php echo $this->pagination->create_links(); ?>
-					</div>
-				</div><!-- /.box -->
+						</div><!-- /.box-body -->
+						<div class="box-footer clearfix">
+							<?php echo $this->pagination->create_links(); ?>
+						</div>
+					</div><!-- /.box -->
+				</div>
 			</div>
 		</div>
 	</section>
@@ -88,6 +93,16 @@
 		left: 230px;
 		right: 0;
 		top: 80px;
+	}
+
+	.add-fixed-top-css {
+		margin-top: 107.45px;
+	}
+
+	@media (max-width: 767px) {
+		.add-fixed-top-css {
+			margin-top: 57.45px;
+		}
 	}
 </style>
 <script>

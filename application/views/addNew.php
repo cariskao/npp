@@ -1,18 +1,11 @@
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
-	<section class="content-header">
-		<h1>
-			<i class="fa fa-users"></i> 新增人員
-		</h1>
-	</section>
-
-	<section class="content">
-
+	<section>
 		<div class="row">
 			<!-- left column -->
 			<div class="col-md-8">
 				<!-- general form elements -->
-				<div class="box box-primary">
+				<div class="box box-primary" style="border:none">
 					<div class="box-header">
 						<h3 class="box-title">輸入人員資料</h3>
 					</div><!-- /.box-header -->
@@ -63,14 +56,14 @@
 											<?php
 											if (!empty($roles)) {
 												foreach ($roles as $rl) {
-													?>
+											?>
 													<option value="<?php echo $rl->roleId ?>" <?php if ($rl->roleId == set_value('role')) {
 																												echo "selected=selected";
 																											} ?>><?php echo $rl->role ?></option>
-												<?php
+											<?php
+												}
 											}
-										}
-										?>
+											?>
 										</select>
 									</div>
 								</div>
@@ -90,7 +83,7 @@
 				$this->load->helper('form');
 				$error = $this->session->flashdata('error');
 				if ($error) {
-					?>
+				?>
 					<div class="alert alert-danger alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 						<?php echo $this->session->flashdata('error'); ?>
@@ -99,7 +92,7 @@
 				<?php
 				$success = $this->session->flashdata('success');
 				if ($success) {
-					?>
+				?>
 					<div class="alert alert-success alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 						<?php echo $this->session->flashdata('success'); ?>
@@ -116,3 +109,7 @@
 	</section>
 </div>
 <script src="<?php echo base_url(); ?>assets/js/addUser.js" type="text/javascript"></script>
+<script>
+	$(".navbar").removeClass("navbar-fixed-top");
+	$(".navbar").addClass("navbar-static-top");
+</script>

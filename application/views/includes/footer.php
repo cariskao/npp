@@ -9,7 +9,7 @@
 <script type="text/javascript">
   var $titleTop = $('.nav.navbar-nav li.title-on-top');
   var $halfWidth = $titleTop.width() / 2;
-  console.log('$halfWidth', $halfWidth);
+  // console.log('$halfWidth', $halfWidth);
 
   $titleTop.css({
     right: 'calc(50% - ' + $halfWidth + 'px)', //記得「-」號右邊要空一格
