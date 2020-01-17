@@ -339,4 +339,33 @@ class Website extends BaseController
 			}
 		}
 	}
+
+	/*
+########  ######## ##       ######## ######## ########
+##     ## ##       ##       ##          ##    ##
+##     ## ##       ##       ##          ##    ##
+##     ## ######   ##       ######      ##    ######
+##     ## ##       ##       ##          ##    ##
+##     ## ##       ##       ##          ##    ##
+########  ######## ######## ########    ##    ########
+*/
+
+	// 輪播
+	function deleteCarousel()
+	{
+		//common.js的jQuery.ajax.data
+		$id = $this->input->post('id');
+		$img = $this->input->post('img');
+
+		unlink(dirname(dirname(__DIR__)) . '/assets/uploads/carousel_upload/' . $img);
+
+		// $userInfo = array('isDeleted' => 1, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
+		$result = $this->website_model->deleteCarousel($id);
+
+		if ($result > 1) {
+			echo (json_encode(array('status' => TRUE)));
+		} else {
+			echo (json_encode(array('status' => FALSE)));
+		}
+	}
 }

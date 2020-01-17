@@ -60,7 +60,7 @@
 											</td>
 											<td class=" text-center" style="width:30%">
 												<a class="btn btn-sm btn-info" href="<?php echo base_url('website/carouselEdit/' . $record->id); ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-												<a class="btn btn-sm btn-danger deleteCarousel" href="javascript:;" data-carouselid="<?php echo $record->id; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
+												<a class="btn btn-sm btn-danger deleteCarousel" href="javascript:;" data-carouselid="<?php echo $record->id; ?>" data-img="<?php echo $record->img; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
 											</td>
 										</tr>
 									<?php

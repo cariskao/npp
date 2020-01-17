@@ -137,6 +137,15 @@ class Website_model extends CI_Model
         return $query->row();
     }
 
+    // 輪播
+    function deleteCarousel($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('carousel');
+
+        return $this->db->affected_rows();
+    }
+
     /*
  ######  ##     ## ########  ######  ##    ##
 ##    ## ##     ## ##       ##    ## ##   ##

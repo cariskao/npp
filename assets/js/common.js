@@ -137,7 +137,7 @@ jQuery(document).ready(function () {
 		if (_isNotNum) {
 			reDirect += 'news/tagLists'
 		} else {
-			reDirect += 'news/tagLists' + value
+			reDirect += 'news/tagLists/' + value
 		}
 
 		var confirmation = confirm('確認刪除此標籤 ?')
@@ -150,6 +150,52 @@ jQuery(document).ready(function () {
 					url: hitURL,
 					data: {
 						tags_id: tagid,
+					},
+				})
+				.done(function (data) {
+					// console.log(data)
+					currentRow.parents('tr').remove()
+				})
+
+			window.location.href = reDirect
+		}
+	})
+
+	jQuery(document).on('click', '.deleteCarousel', function () {
+		var carouselid = $(this).data('carouselid'),
+			img = $(this).data('img'),
+			hitURL = baseURL + 'website/deleteCarousel',
+			currentRow = $(this),
+			reDirect = baseURL,
+			link = jQuery(this).get(0).href,
+			value = link.substring(
+				link.lastIndexOf('/') + 1,
+				link.lastIndexOf('/') + 3,
+			),
+			_isNotNum = isNaN(value)
+
+		// console.log('tagsid', tagid);
+		// console.log('link', link);
+		// console.log('value', value);
+		// console.log('isNotNum', _isNotNum);
+
+		if (_isNotNum) {
+			reDirect += 'website/carouselLists'
+		} else {
+			reDirect += 'website/carouselLists/' + value
+		}
+
+		var confirmation = confirm('確認刪除此輪播項目 ?')
+
+		if (confirmation) {
+			jQuery
+				.ajax({
+					type: 'POST',
+					dataType: 'json',
+					url: hitURL,
+					data: {
+						id: carouselid,
+						img: img,
 					},
 				})
 				.done(function (data) {
