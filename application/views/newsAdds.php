@@ -131,8 +131,9 @@
 				setTimeout(function() {
 					$("#alert-success").hide();
 				}, 3000);
-				setTimeout(function() {}, 3000);
-				$("#alert-error").hide();
+				setTimeout(function() {
+					$("#alert-error").hide();
+				}, 3000);
 			})
 
 			// 顯示狀態
@@ -214,7 +215,8 @@
 				margin: auto;
 				left: 230px;
 				right: 0;
-				top: 80px;
+				top: 50px;
+				z-index: 3;
 			}
 
 			@media screen and (max-width: 768px) {

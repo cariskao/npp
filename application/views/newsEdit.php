@@ -239,7 +239,8 @@ $editor = $userInfo->editor;
 					margin: auto;
 					left: 230px;
 					right: 0;
-					top: 80px;
+					top: 50px;
+					z-index: 3;
 				}
 
 				@media screen and (max-width: 768px) {

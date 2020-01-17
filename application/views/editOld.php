@@ -100,7 +100,7 @@ $roleId = $userInfo->roleId;
 				$success = $this->session->flashdata('success');
 				if ($success) {
 				?>
-					<div class="alert alert-success alert-dismissable">
+					<div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 						<?php echo $this->session->flashdata('success'); ?>
 					</div>
@@ -115,9 +115,28 @@ $roleId = $userInfo->roleId;
 		</div>
 	</section>
 </div>
+<style>
+	.alert-absoulte {
+		text-align: center;
+		position: absolute;
+		margin: auto;
+		left: 0;
+		top: 0;
+		z-index: 3;
+	}
 
+	@media screen and (max-width: 768px) {
+		.alert-absoulte {
+			left: 0;
+		}
+	}
+</style>
 <script src="<?php echo base_url(); ?>assets/js/editUser.js" type="text/javascript"></script>
 <script>
+	setTimeout(function() {
+		$("#alert-success").hide();
+	}, 3000);
+
 	$(".navbar").removeClass("navbar-fixed-top");
 	$(".navbar").addClass("navbar-static-top");
 </script>

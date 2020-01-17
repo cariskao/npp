@@ -308,9 +308,9 @@ class News extends BaseController
 			$result = $this->news_model->tagsEditSend($userInfo, $id);
 
 			if ($result > 0) {
-				$this->session->set_flashdata('success', '新增成功!');
+				$this->session->set_flashdata('success', '更新成功!');
 			} else {
-				$this->session->set_flashdata('error', '新增失敗!');
+				$this->session->set_flashdata('error', '更新失敗!');
 			}
 
 			redirect('news/tagLists');
