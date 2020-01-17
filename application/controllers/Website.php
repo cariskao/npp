@@ -124,6 +124,8 @@ class Website extends BaseController
 		}
 
 		$data['getCarouselInfo'] = $this->website_model->getCarouselInfo($id);
+
+		$this->global['navTitle'] = '網站管理 - 輪播管理 - 編輯';
 		$this->loadViews("carouselEdit", $this->global, $data, NULL);
 	}
 

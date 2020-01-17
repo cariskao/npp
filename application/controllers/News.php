@@ -53,10 +53,6 @@ class News extends BaseController
 			case '3':
 				$this->global['navTitle'] = '新聞訊息 - 行動紀實 - 列表';
 				break;
-
-			default:
-				# code...
-				break;
 		}
 
 		$searchText = $this->security->xss_clean($this->input->post('searchText'));
@@ -122,10 +118,30 @@ class News extends BaseController
 			'getTagsList' => $this->news_model->getTagsList(),
 			// 'error' => '',
 		);
+
+		// Cannot use object of type stdClass as array 解決方案
+		foreach ($data['userInfo'] as $key => $value) {
+			if ($key == 'pr_type_id') {
+				$type_id = $value;
+			}
+		}
+
 		// $this->global['pageTitle'] = '編輯最新新聞資料';
+		switch ($type_id) {
+			case '1':
+				$this->global['navTitle'] = '新聞訊息 - 法案及議事說明 - 編輯';
+				break;
+			case '2':
+				$this->global['navTitle'] = '新聞訊息 - 懶人包及議題追追追 - 編輯';
+				break;
+			case '3':
+				$this->global['navTitle'] = '新聞訊息 - 行動紀實 - 編輯';
+				break;
+		}
 
 		$getTagsId = [];
 		foreach ($data['getTagsChoiceDB'] as $key => $value) {
+			// Cannot use object of type stdClass as array 解決方案
 			array_push($getTagsId, $value->tags_id);
 		}
 
@@ -259,6 +275,8 @@ class News extends BaseController
 			redirect('dashboard');
 		}
 
+		$this->global['navTitle'] = '新聞訊息 - 編輯標籤';
+
 		$data['getTagsEditInfo'] = $this->news_model->getTagsEditInfo($tags_id);
 
 		$this->loadViews("tagsEdit", $this->global, $data, NULL);
@@ -322,6 +340,17 @@ class News extends BaseController
 		);
 
 		// $this->global['pageTitle'] = '新增最新新聞資料';
+		switch ($type_id) {
+			case '1':
+				$this->global['navTitle'] = '新聞訊息 - 法案及議事說明 - 新增';
+				break;
+			case '2':
+				$this->global['navTitle'] = '新聞訊息 - 懶人包及議題追追追 - 新增';
+				break;
+			case '3':
+				$this->global['navTitle'] = '新聞訊息 - 行動紀實 - 新增';
+				break;
+		}
 
 		$this->loadViews("newsAdds", $this->global, $data, NULL);
 	}
@@ -406,7 +435,7 @@ class News extends BaseController
 	function tagsAdd()
 	{
 		// $this->global['pageTitle'] = '新增標籤';
-		$this->global['navTitle'] = '新聞訊息 - 標籤列表';
+		$this->global['navTitle'] = '新聞訊息 - 新增標籤';
 
 		$this->loadViews("tagsAdd", $this->global, NULL);
 	}

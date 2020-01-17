@@ -1,14 +1,17 @@
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>新聞訊息 - 新增標籤</h1>
-    </section>
-
-    <section class="content">
+    <section>
         <div class="row">
-            <div class="col-xs-12 text-right">
-                <div class="form-group">
-                    <a class="btn btn-warning" href="<?php echo base_url(); ?>news/tagLists">返回</a>
+            <div class="col-xs-12">
+                <div class="box" style="border-top:none;border-radius:0">
+                    <div class="box-header" style="border-bottom:2px solid #d2d6de;">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <a class="btn btn-warning" href="<?php echo base_url('news/tagLists'); ?>">返回</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.box-header -->
                 </div>
             </div>
         </div>
@@ -16,8 +19,7 @@
             <!-- left column -->
             <div class="col-md-12">
                 <!-- general form elements -->
-
-                <div class="box box-primary">
+                <div class="box box-primary" style="border-top:3px solid #d2d6de">
                     <!-- form start -->
                     <form role="form" action="<?php echo base_url() ?>news/tagsAddSend" method="post" id="addYearSend" role="form">
                         <div class="box-body">
@@ -43,17 +45,16 @@
                                 </div>
                             </div>
                         </div><!-- /.box-body -->
-
-                        <div class="box-footer seat" style="text-align:center">
-                            <input type="submit" class="btn btn-primary" value="儲存" />
-                            <input type="reset" class="btn btn-default" value="重置" />
-                        </div>
+                        <input type="submit" class="btn btn-success submit-pos" value="儲存" />
                     </form>
                 </div>
             </div>
             <!-- <div class="col-md-12"> -->
 
             <script language='javascript' type='text/javascript'>
+                $(".navbar").removeClass("navbar-fixed-top");
+                $(".navbar").addClass("navbar-static-top");
+
                 $(function() {
                     setTimeout(function() {
                         $("#alert-success").hide();
@@ -100,11 +101,6 @@
                     background-color: #fff;
                 }
 
-                .seat input {
-                    width: 100px;
-                    margin: 0 40px;
-                }
-
                 .alert-absoulte {
                     width: 150px;
                     text-align: center;
@@ -121,16 +117,13 @@
                     }
                 }
 
-                .box-body .row>div {
-                    margin-bottom: 40px;
-                }
-
-                .contact div input {
-                    margin-bottom: 15px;
+                @media (max-width: 767px) {
+                    .submit-pos {
+                        margin-top: 57.45px;
+                    }
                 }
             </style>
             <!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
         </div>
     </section>
 </div>
-<!-- <script src="<?php echo base_url(); ?>assets/js/addLegislatorPage.js" type="text/javascript"></script> -->

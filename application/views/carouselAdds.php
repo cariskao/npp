@@ -81,6 +81,7 @@
 							<input type="submit" class="btn btn-success submit-pos" value="儲存" />
 						</form>
 					</div>
+					<!-- box -->
 				</div>
 				<!-- <div class="col-md-12"> -->
 
@@ -175,6 +176,9 @@
 				</style>
 				<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 			</div>
+			<!-- row -->
 		</div>
+		<!-- add-fixed-top-css -->
 	</section>
 </div>
+<!-- content-wrapper -->
