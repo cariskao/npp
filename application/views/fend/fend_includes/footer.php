@@ -139,9 +139,7 @@ $servicetime = $getSetupInfo->servicetime;
 		}
 	}
 </style>
-<script src="<?php echo base_url(); ?>assets/node_modules/jquery/dist/jquery.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/bower_components/bootstrap4/dist/js/bootstrap.min.js"></script>
-<!-- <script src="<?php echo base_url(); ?>assets/bower_components/popper.js/dist/popper.min.js"></script> -->
+
 <script src="<?php echo base_url(); ?>assets/js/jquery.validate.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/validation.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/public/js/all.js" type="text/javascript"></script>

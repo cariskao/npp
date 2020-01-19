@@ -1,13 +1,25 @@
 $nav-link-color: black; // 導航項目文字顏色
 $nav-link-color-hover: #ffc107;
 
-.container-content_padding {
+.body-css {
+	padding-top: 110px;
+
 	@include media-breakpoint-up(lg) {
-		padding-top: 93px;
+		padding-top: 195px;
 	}
 
 	@include media-breakpoint-up(xl) {
-		padding-top: 100px;
+		padding-top: 105px;
+	}
+}
+
+.container-content_padding {
+	@include media-breakpoint-up(lg) {
+		padding-top: 195px;
+	}
+
+	@include media-breakpoint-up(xl) {
+		padding-top: 105px;
 	}
 }
 

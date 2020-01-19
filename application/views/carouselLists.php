@@ -40,6 +40,7 @@
 									<th>圖片</th>
 									<th>標題</th>
 									<th>簡介</th>
+									<th>連結</th>
 									<th style="width:50px">狀態</th>
 									<th class="text-center">可執行動作</th>
 								</tr>
@@ -51,6 +52,7 @@
 											<td><img style="width:200px;height:50px;" src="<?php echo base_url('assets/uploads/carousel_upload/' . $record->img); ?>"></td>
 											<td><?php echo $record->title; ?></td>
 											<td><?php echo mb_strimwidth(htmlspecialchars($record->introduction), 0, 100, '...') ?></td>
+											<td><?php echo $record->link; ?></td>
 											<td>
 												<?php if ($record->showup == 1) { ?>
 													<img style="background-color:green" src="<?php echo base_url('assets/images/show.png'); ?>" alt="">

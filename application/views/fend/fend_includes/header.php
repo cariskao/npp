@@ -16,6 +16,10 @@ $fb = $getSetupInfo->fb;
 	<link href="<?php echo base_url(); ?>assets/bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 	<!-- Bootstrap 4.1.3 -->
 	<link href="<?php echo base_url(); ?>assets/public/css/all.css" rel="stylesheet" type="text/css" />
+	<script src="<?php echo base_url(); ?>assets/node_modules/jquery/dist/jquery.min.js"></script>
+	<!-- 如果是 <script type="text/javascript"> 的載入方式，可以直接使用umd目錄下的popper.js -->
+	<script src="<?php echo base_url(); ?>assets/bower_components/popper.js/dist/umd/popper.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/bower_components/bootstrap4/dist/js/bootstrap.min.js"></script>
 	<!-- <link href="<?php echo base_url(); ?>assets/bower_components/animate.css/animate.min.css" rel="stylesheet" type="text/css" /> -->
 	<script src="<?php echo base_url(); ?>assets/bower_components/vue/dist/vue.min.js"></script>
 	<script type="text/javascript">
@@ -38,7 +42,7 @@ $fb = $getSetupInfo->fb;
 	</style>
 </head>
 
-<body>
+<body class="body-css">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top fixed-top_mobile">
 		<a class="navbar-brand logo" href="<?php echo base_url(); ?>fend/home"><img src="<?php echo base_url(); ?>assets/f_imgs/header/LY-logo.svg" alt="圖片不存在"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
