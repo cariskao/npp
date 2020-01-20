@@ -1,12 +1,5 @@
-<style>
-   /* Make the image fully responsive */
-   .carousel-inner img {
-      width: 100%;
-      height: 100%;
-   }
-</style>
-<div class="container-fluid" style="margin-bottom:50px">
-   <div id="carousel" class="carousel slide" data-ride="carousel" style="margin:0px -15px;">
+<div class="container-fluid">
+   <div id="carousel" class="carousel slide" data-ride="carousel">
 
       <!-- 指示符 -->
       <ul class="carousel-indicators">
@@ -29,9 +22,7 @@
          if (!empty($getCarouselInfo)) {
             foreach ($getCarouselInfo as $record) {
          ?>
-               <div class="carousel-item <?php if ($record->id == 1) {
-                                             echo 'active';
-                                          } ?>">
+               <div class="carousel-item">
                   <a href="<?php echo $record->link; ?>"><img src="<?php echo base_url('assets/uploads/carousel_upload/' . $record->img); ?>"></a>
                   <div class="carousel-caption">
                      <h3><?php echo $record->title; ?></h3>
@@ -54,14 +45,3 @@
 
    </div>
 </div>
-
-<script>
-   $(function() {
-      $('.carousel').carousel({
-         interval: 2000, // false
-         pause: "hover", // false
-      });
-   });
-
-   $(".carousel-indicators li:first").addClass("active");
-</script>

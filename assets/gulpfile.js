@@ -1,10 +1,3 @@
-/*
- * @Description: In User Settings Edit
- * @Author: your name
- * @Date: 2019-09-23 22:34:22
- * @LastEditTime: 2019-09-28 20:21:07
- * @LastEditors: Please set LastEditors
- */
 var gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	autoprefixer = require('autoprefixer'),
