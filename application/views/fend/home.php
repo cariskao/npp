@@ -42,6 +42,16 @@
       <a class="carousel-control-next" href="#carousel" data-slide="next">
          <span class="carousel-control-next-icon"></span>
       </a>
-
    </div>
 </div>
+<script>
+   $(function() {
+      $('.carousel').carousel({
+         interval: 7000, // false
+         pause: "hover", // false
+      });
+   });
+
+   $(".carousel-indicators li:first").addClass("active");
+   $(".carousel-inner div:first").addClass("active");
+</script>
