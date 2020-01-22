@@ -48,11 +48,18 @@ $nav-link-color-hover: #ffc107;
 
 	@include media-breakpoint-down(sm) {
 		top: 21px !important;
+		width: 60px;
+
+		a,
+		img {
+			width: 20px;
+			height: 20px;
+		}
 	}
 
 	@include media-breakpoint-down(md) {
 		position: absolute;
-		right: 100px;
+		right: 85px;
 		top: 30px;
 	}
 

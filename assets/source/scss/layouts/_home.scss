@@ -4,6 +4,10 @@
 
 	.carousel-indicators {
 		justify-content: flex-end; //指示符位置
+
+		@include media-breakpoint-down(sm) {
+			display: none;
+		}
 	}
 
 	.carousel-control-prev,
@@ -26,12 +30,27 @@
 			bottom: 0;
 			color: white;
 			background-color: rgba($color: #000, $alpha: 0.5);
-			padding: 0 50px 0;
+			padding: 5px 50px;
 			margin-bottom: -20px;
-			text-align-last: left;
+			text-align: left;
 
 			h3 {
 				font-weight: 600;
+
+				@include media-breakpoint-down(sm) {
+					font-size: 18px;
+				}
+			}
+
+			p {
+				@include media-breakpoint-down(sm) {
+					display: none;
+				}
+			}
+
+			@include media-breakpoint-down(sm) {
+				margin-bottom: -10px;
+				text-align: center;
 			}
 		}
 	}

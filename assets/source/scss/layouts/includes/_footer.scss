@@ -42,6 +42,12 @@
 	}
 }
 
+@media (max-width: 392px) {
+	.hvcenter-flexbox main.iframe {
+		margin: auto -10px auto;
+	}
+}
+
 .f-footer_under {
 	background-color: black;
 	color: white;
