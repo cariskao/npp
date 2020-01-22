@@ -6,10 +6,15 @@
 		justify-content: flex-end; //指示符位置
 	}
 
+	.carousel-control-prev,
+	.carousel-control-next {
+		&:hover {
+			background-color: rgba($color: gray, $alpha: 0.5);
+		}
+	}
+
 	// Make the image fully responsive
 	.carousel-inner {
-		// height: 600px;
-
 		img {
 			width: 100%;
 			height: 100%;
