@@ -1,10 +1,10 @@
 <?php
-$id = $getCarouselInfo->id;
-$showup = $getCarouselInfo->showup;
-$img = $getCarouselInfo->img;
-$title = $getCarouselInfo->title;
+$id           = $getCarouselInfo->id;
+$showup       = $getCarouselInfo->showup;
+$img          = $getCarouselInfo->img;
+$title        = $getCarouselInfo->title;
 $introduction = $getCarouselInfo->introduction;
-$link = $getCarouselInfo->link;
+$link         = $getCarouselInfo->link;
 ?>
 <div class="content-wrapper">
 	<section>
@@ -69,9 +69,9 @@ $link = $getCarouselInfo->link;
 											<div class="input-group">
 												<div id="radioBtn" class="btn-group">
 													<?php
-													$active = $showup == 1 ? 'active' : 'notActive';
-													$notActive = $showup == 0 ? 'active' : 'notActive';
-													?>
+$active    = $showup == 1 ? 'active' : 'notActive';
+$notActive = $showup == 0 ? 'active' : 'notActive';
+?>
 													<a class="btn btn-primary btn-sm <?php echo $active; ?>" data-toggle="happy" data-title="Y">顯示</a>
 													<a class="btn btn-primary btn-sm <?php echo $notActive; ?>" data-toggle="happy" data-title="N">隱藏</a>
 												</div>
@@ -130,26 +130,25 @@ $link = $getCarouselInfo->link;
 					})
 				</script>
 				<?php
-				$this->load->helper('form');
-				$check = $this->session->flashdata('check');
-				if ($check == '驗證失敗') {
-				?>
+$this->load->helper('form');
+$check = $this->session->flashdata('check');
+if ($check == '驗證失敗') {
+    ?>
 					<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 						<?php echo $this->session->flashdata('check') . '!<br>請修正以下提示錯誤!'; ?>
-
 					</div>
-				<?php } ?>
+				<?php }?>
 				<?php
-				$success = $this->session->flashdata('success');
-				// echo $success; //存儲成功!
-				if ($success && $check == '驗證成功') {
-				?>
+$success = $this->session->flashdata('success');
+// echo $success; //存儲成功!
+if ($success && $check == '驗證成功') {
+    ?>
 					<div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 						<?php echo $this->session->flashdata('success'); ?>
 					</div>
-				<?php } ?>
+				<?php }?>
 
 				<style>
 					.box-body>div {

@@ -263,7 +263,7 @@ class News_model extends CI_Model
     function prTagsAdd($pr_tags_info)
     {
         $this->db->trans_start();
-        $this->db->insert_batch('pr_tags', $pr_tags_info);
+        $this->db->insert_batch('pr_tags', $pr_tags_info);// insert陣列
 
         $insert_id = $this->db->insert_id();
 

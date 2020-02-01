@@ -10,6 +10,7 @@
 								<div class="col-xs-6">
 									<div class="form-group">
 										<a class="btn btn-primary" href="<?php echo base_url('website/carouselAdds'); ?>"><i class="fa fa-plus"></i> 新增</a>
+										<a class="btn btn-success" href="<?php echo base_url('website/carouselSorts'); ?>"><i class="fa fa-sort" aria-hidden="true"></i> 排序</a>
 									</div>
 								</div>
 								<div class="col-xs-6">
@@ -38,41 +39,41 @@
 							<table class="table table-hover title-center">
 								<tr class="title-center">
 									<th>圖片</th>
-									<th>標題</th>
+									<th style="width:250px;">標題</th>
 									<th>簡介</th>
 									<th>連結</th>
 									<th style="width:50px">狀態</th>
-									<th class="text-center">可執行動作</th>
+									<th style="width:100px" class="text-center">可執行動作</th>
 								</tr>
 								<?php
-								if (!empty($getCarouselList)) {
-									foreach ($getCarouselList as $record) {
-								?>
+if (!empty($getCarouselList)) {
+    foreach ($getCarouselList as $record) {
+        ?>
 										<tr>
 											<td><img style="width:200px;height:50px;" src="<?php echo base_url('assets/uploads/carousel_upload/' . $record->img); ?>"></td>
 											<td><?php echo $record->title; ?></td>
 											<td><?php echo mb_strimwidth(htmlspecialchars($record->introduction), 0, 100, '...') ?></td>
 											<td><?php echo $record->link; ?></td>
 											<td>
-												<?php if ($record->showup == 1) { ?>
+												<?php if ($record->showup == 1) {?>
 													<img style="background-color:green" src="<?php echo base_url('assets/images/show.png'); ?>" alt="">
-												<?php } else { ?>
+												<?php } else {?>
 													<img style="background-color:red" src="<?php echo base_url('assets/images/hide.png'); ?>" alt="">
-												<?php } ?>
+												<?php }?>
 											</td>
-											<td class=" text-center" style="width:30%">
+											<td class=" text-center">
 												<a class="btn btn-sm btn-info" href="<?php echo base_url('website/carouselEdit/' . $record->id); ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-												<a class="btn btn-sm btn-danger deleteCarousel" href="javascript:;" data-carouselid="<?php echo $record->id; ?>" data-img="<?php echo $record->img; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
+												<a class="btn btn-sm btn-danger deleteCarousel" data-carouselid="<?php echo $record->id; ?>" data-img="<?php echo $record->img; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
 											</td>
 										</tr>
 									<?php
-									}
-								} else {
-									?>
+}
+} else {
+    ?>
 									<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
 										無相關資料!
 									</div>
-								<?php } ?>
+								<?php }?>
 							</table>
 						</div><!-- /.box-body -->
 						<div class="box-footer clearfix">
@@ -139,9 +140,9 @@
 $this->load->helper('form');
 $error = $this->session->flashdata('error');
 if ($error) {
-?>
+    ?>
 	<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 		<?php echo $this->session->flashdata('error'); ?>
 	</div>
-<?php } ?>
+<?php }?>

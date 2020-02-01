@@ -1,19 +1,21 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 class Website_model extends CI_Model
 {
     /*
-##       ####  ######  ########
-##        ##  ##    ##    ##
-##        ##  ##          ##
-##        ##   ######     ##
-##        ##        ##    ##
-##        ##  ##    ##    ##
-######## ####  ######     ##
-*/
+    ##       ####  ######  ########
+    ##        ##  ##    ##    ##
+    ##        ##  ##          ##
+    ##        ##   ######     ##
+    ##        ##        ##    ##
+    ##        ##  ##    ##    ##
+    ######## ####  ######     ##
+     */
 
     // 標籤
-    function carouselListCount($searchText = '')
+    public function carouselListCount($searchText = '')
     {
         $this->db->select();
         $this->db->from('carousel as BaseTbl');
@@ -28,7 +30,7 @@ class Website_model extends CI_Model
         return $query->num_rows();
     }
 
-    function carouselListing($searchText = '', $page, $segment)
+    public function carouselListing($searchText = '', $page = '', $segment = '')
     {
         $this->db->select();
         $this->db->from('carousel as BaseTbl');
@@ -38,8 +40,12 @@ class Website_model extends CI_Model
             $this->db->where($likeCriteria);
         }
 
-        $this->db->order_by('BaseTbl.id', 'DESC');
-        $this->db->limit($page, $segment);
+        $this->db->order_by('BaseTbl.sort', 'ASC');
+
+        if ($page != '' && $segment != '') {
+            $this->db->limit($page, $segment);
+        }
+
         $query = $this->db->get();
 
         $result = $query->result();
@@ -47,17 +53,17 @@ class Website_model extends CI_Model
     }
 
     /*
-.########.########..####.########
-.##.......##.....##..##.....##...
-.##.......##.....##..##.....##...
-.######...##.....##..##.....##...
-.##.......##.....##..##.....##...
-.##.......##.....##..##.....##...
-.########.########..####....##...
-*/
+    .########.########..####.########
+    .##.......##.....##..##.....##...
+    .##.......##.....##..##.....##...
+    .######...##.....##..##.....##...
+    .##.......##.....##..##.....##...
+    .##.......##.....##..##.....##...
+    .########.########..####....##...
+     */
 
     // 其它設定
-    function getSetupInfo()
+    public function getSetupInfo()
     {
         $this->db->select();
         $this->db->from('setup');
@@ -67,16 +73,16 @@ class Website_model extends CI_Model
         return $query->row();
     }
 
-    function setupUpdate($userInfo)
+    public function setupUpdate($userInfo)
     {
         $this->db->where('set_id', 1);
         $this->db->update('setup', $userInfo);
 
-        return TRUE;
+        return true;
     }
 
     // 輪播
-    function getCarouselInfo($id)
+    public function getCarouselInfo($id)
     {
         $this->db->select();
         $this->db->from('carousel');
@@ -86,30 +92,45 @@ class Website_model extends CI_Model
         return $query->row();
     }
 
-    function carouselUpdate($userInfo, $id)
+    public function carouselUpdate($userInfo, $id)
     {
         $this->db->where('id', $id);
         $this->db->update('carousel', $userInfo);
 
-        return TRUE;
+        return true;
+    }
+
+    // 輪播 - sort
+    public function sort($sort)
+    {
+        foreach ($sort as $k => $v) {
+            $k++;
+            $sql   = "UPDATE `carousel` SET `sort` = $k WHERE `id` = $v";
+            $query = $this->db->query($sql);
+        }
+
+        return true;
     }
 
     /*
-   ###    ########  ########
-  ## ##   ##     ## ##     ##
- ##   ##  ##     ## ##     ##
-##     ## ##     ## ##     ##
-######### ##     ## ##     ##
-##     ## ##     ## ##     ##
-##     ## ########  ########
-*/
+    ....###....########..########.
+    ...##.##...##.....##.##.....##
+    ..##...##..##.....##.##.....##
+    .##.....##.##.....##.##.....##
+    .#########.##.....##.##.....##
+    .##.....##.##.....##.##.....##
+    .##.....##.########..########.
+     */
 
-    function carouselAdd($userInfo)
+    public function carouselAdd($userInfo)
     {
         $this->db->trans_start();
         $this->db->insert('carousel', $userInfo);
 
         $insert_id = $this->db->insert_id();
+
+        $sql   = "UPDATE `carousel` SET `sort` = (SELECT MAX(sort) FROM `carousel`)+1 WHERE `id` = $insert_id";
+        $query = $this->db->query($sql);
 
         $this->db->trans_complete();
 
@@ -117,17 +138,17 @@ class Website_model extends CI_Model
     }
 
     /*
-########  ######## ##       ######## ######## ########
-##     ## ##       ##       ##          ##    ##
-##     ## ##       ##       ##          ##    ##
-##     ## ######   ##       ######      ##    ######
-##     ## ##       ##       ##          ##    ##
-##     ## ##       ##       ##          ##    ##
-########  ######## ######## ########    ##    ########
-*/
+    ########  ######## ##       ######## ######## ########
+    ##     ## ##       ##       ##          ##    ##
+    ##     ## ##       ##       ##          ##    ##
+    ##     ## ######   ##       ######      ##    ######
+    ##     ## ##       ##       ##          ##    ##
+    ##     ## ##       ##       ##          ##    ##
+    ########  ######## ######## ########    ##    ########
+     */
 
     // 輪播update時將舊的圖片刪除,先獲取圖片名稱
-    function imgNameRepeatDel($id)
+    public function imgNameRepeatDel($id)
     {
         $this->db->select('img');
         $this->db->from('carousel');
@@ -138,7 +159,7 @@ class Website_model extends CI_Model
     }
 
     // 輪播
-    function deleteCarousel($id)
+    public function deleteCarousel($id)
     {
         $this->db->where('id', $id);
         $this->db->delete('carousel');
@@ -147,17 +168,17 @@ class Website_model extends CI_Model
     }
 
     /*
- ######  ##     ## ########  ######  ##    ##
-##    ## ##     ## ##       ##    ## ##   ##
-##       ##     ## ##       ##       ##  ##
-##       ######### ######   ##       #####
-##       ##     ## ##       ##       ##  ##
-##    ## ##     ## ##       ##    ## ##   ##
- ######  ##     ## ########  ######  ##    ##
-*/
+    ######  ##     ## ########  ######  ##    ##
+    ##    ## ##     ## ##       ##    ## ##   ##
+    ##       ##     ## ##       ##       ##  ##
+    ##       ######### ######   ##       #####
+    ##       ##     ## ##       ##       ##  ##
+    ##    ## ##     ## ##       ##    ## ##   ##
+    ######  ##     ## ########  ######  ##    ##
+     */
 
     // 網址防禦
-    function editProtectCheck($id)
+    public function editProtectCheck($id)
     {
         $this->db->trans_start();
 
@@ -169,11 +190,11 @@ class Website_model extends CI_Model
 
         $this->db->trans_complete();
 
-        return  $query->num_rows();
+        return $query->num_rows();
     }
 
     // 輪播
-    function carouselTitleCheck($id = '', $title)
+    public function carouselTitleCheck($id = '', $title)
     {
         $this->db->trans_start();
         $this->db->select('title');
@@ -188,10 +209,10 @@ class Website_model extends CI_Model
 
         $this->db->trans_complete();
 
-        return  $query->num_rows();
+        return $query->num_rows();
     }
 
-    function carouselImgCheck($imgName)
+    public function carouselImgCheck($imgName)
     {
         $this->db->trans_start();
         $this->db->select('img');
@@ -202,6 +223,6 @@ class Website_model extends CI_Model
 
         $this->db->trans_complete();
 
-        return  $query->num_rows();
+        return $query->num_rows();
     }
 }

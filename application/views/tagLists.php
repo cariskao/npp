@@ -42,31 +42,31 @@
 									<th class="text-center">可執行動作</th>
 								</tr>
 								<?php
-								if (!empty($newsTags)) {
-									foreach ($newsTags as $record) {
-								?>
+if (!empty($newsTags)) {
+    foreach ($newsTags as $record) {
+        ?>
 										<tr>
 											<td><?php echo $record->name; ?></td>
 											<td>
-												<?php if ($record->showup == 1) { ?>
+												<?php if ($record->showup == 1) {?>
 													<img style="background-color:green" src="<?php echo base_url(); ?>assets/images/show.png" alt="">
-												<?php } else { ?>
+												<?php } else {?>
 													<img style="background-color:red" src="<?php echo base_url(); ?>assets/images/hide.png" alt="">
-												<?php } ?>
+												<?php }?>
 											</td>
 											<td class=" text-center" style="width:30%">
 												<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/tagsEdit/' . $record->tags_id; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-												<a class="btn btn-sm btn-danger deleteNewsTag" href="javascript:;" data-tagsid="<?php echo $record->tags_id; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
+												<a class="btn btn-sm btn-danger deleteNewsTag" data-tagsid="<?php echo $record->tags_id; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
 											</td>
 										</tr>
 									<?php
-									}
-								} else {
-									?>
+}
+} else {
+    ?>
 									<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
 										無相關資料!
 									</div>
-								<?php } ?>
+								<?php }?>
 							</table>
 
 						</div><!-- /.box-body -->
@@ -135,18 +135,18 @@
 $this->load->helper('form');
 $error = $this->session->flashdata('error');
 if ($error) {
-?>
+    ?>
 	<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 		<?php echo $this->session->flashdata('error'); ?>
 	</div>
-<?php } ?>
+<?php }?>
 <?php
 $success = $this->session->flashdata('success');
 if ($success) {
-?>
+    ?>
 	<div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 		<?php echo $this->session->flashdata('success'); ?>
 	</div>
-<?php } ?>
+<?php }?>

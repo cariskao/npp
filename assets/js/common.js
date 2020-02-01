@@ -39,6 +39,7 @@ jQuery(document).ready(function () {
 				.done(function (data) {
 					// console.log(data)
 					currentRow.parents('tr').remove()
+					window.location.href = reDirect
 					// if (data.status = true) {
 					// 	alert("人員成功刪除");
 					// } else if (data.status = false) {
@@ -47,8 +48,6 @@ jQuery(document).ready(function () {
 					// 	alert("拒絕訪問..!");
 					// }
 				})
-
-			window.location.href = reDirect
 		}
 	})
 
@@ -111,9 +110,8 @@ jQuery(document).ready(function () {
 				.done(function (data) {
 					// console.log(data)
 					currentRow.parents('tr').remove()
+					window.location.href = reDirect
 				})
-
-			window.location.href = reDirect
 		}
 	})
 
@@ -155,9 +153,8 @@ jQuery(document).ready(function () {
 				.done(function (data) {
 					// console.log(data)
 					currentRow.parents('tr').remove()
+					window.location.href = reDirect
 				})
-
-			window.location.href = reDirect
 		}
 	})
 
@@ -201,9 +198,8 @@ jQuery(document).ready(function () {
 				.done(function (data) {
 					// console.log(data)
 					currentRow.parents('tr').remove()
+					window.location.href = reDirect
 				})
-
-			window.location.href = reDirect
 		}
 	})
 
@@ -243,9 +239,8 @@ jQuery(document).ready(function () {
 				.done(function (data) {
 					// console.log(data)
 					currentRow.parents('tr').remove()
+					window.location.href = reDirect
 				})
-
-			window.location.href = reDirect
 		}
 	})
 
@@ -301,9 +296,8 @@ jQuery(document).ready(function () {
 				.done(function (data) {
 					// console.log(data)
 					currentRow.parents('tr').remove()
+					window.location.href = reDirect
 				})
-
-			window.location.href = reDirect
 		}
 	})
 
@@ -345,9 +339,8 @@ jQuery(document).ready(function () {
 				.done(function (data) {
 					// console.log(data)
 					currentRow.parents('tr').remove()
+					window.location.href = reDirect
 				})
-
-			window.location.href = reDirect
 		}
 	})
 
@@ -387,9 +380,8 @@ jQuery(document).ready(function () {
 				.done(function (data) {
 					// console.log(data)
 					currentRow.parents('tr').remove()
+					window.location.href = reDirect
 				})
-
-			window.location.href = reDirect
 		}
 	})
 

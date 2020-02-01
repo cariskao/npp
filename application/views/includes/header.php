@@ -12,6 +12,8 @@
 	<link href="<?php echo base_url(); ?>assets/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<!-- Ionicons 2.0.0 -->
 	<link href="<?php echo base_url(); ?>assets/bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+	<!-- Juqery Css -->
+	<link href="<?php echo base_url(); ?>assets/bower_components/jquery-ui/themes/base/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 	<!-- Theme style -->
 	<link href="<?php echo base_url(); ?>assets/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -52,6 +54,7 @@
 		}
 	</style>
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.js"></script>
+	<script src="<?php echo base_url(); ?>assets/bower_components/jquery-ui/jquery-ui.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/plugins/ckeditor4/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript">
 		var baseURL = "<?php echo base_url(); ?>";

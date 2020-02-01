@@ -46,44 +46,44 @@
 									<th style="width:100px" class="text-center">可執行動作</th>
 								</tr>
 								<?php
-								if (!empty($listItems)) {
-									foreach ($listItems as $record) {
-								?>
+if (!empty($listItems)) {
+    foreach ($listItems as $record) {
+        ?>
 										<tr>
 											<td><img style="width:50px;height:50px;" src="<?php echo base_url('assets/uploads/news_upload/' . $record->pr_type_id . '/' . $record->img); ?>"></td>
 											<td><?php echo '<b>' . $record->main_title . '</b>' . '<br>' . $record->sub_title; ?></td>
 											<td class="text-center"><?php echo $record->date_start . '<br>' . $record->time_start ?></td>
 											<td><?php echo mb_strimwidth(htmlspecialchars($record->editor), 0, 100, '...') ?></td>
 											<td>
-												<?php if (!empty($getTagsChoice)) : ?>
-													<?php foreach ($getTagsChoice as $choice) : ?>
-														<?php if ($record->pr_id == $choice->pr_id) : ?>
-															<p><?= $choice->name; ?></p>
-														<?php endif; ?>
-													<?php endforeach; ?>
-												<?php endif; ?>
+												<?php if (!empty($getTagsChoice)): ?>
+													<?php foreach ($getTagsChoice as $choice): ?>
+														<?php if ($record->pr_id == $choice->pr_id): ?>
+															<p><?=$choice->name;?></p>
+														<?php endif;?>
+													<?php endforeach;?>
+												<?php endif;?>
 											</td>
 											<td class="text-center">
-												<?php if ($record->showup == 1) { ?>
+												<?php if ($record->showup == 1) {?>
 													<img style="background-color:green" src="<?php echo base_url('assets/images/show.png'); ?>" alt="">
-												<?php } else { ?>
+												<?php } else {?>
 													<img style="background-color:red" src="<?php echo base_url('assets/images/hide.png'); ?>" alt="">
-												<?php } ?>
+												<?php }?>
 											</td>
 											<td class="text-center">
 												<a class="btn btn-sm btn-info" href="<?php echo base_url('news/newsEdit/' . $record->pr_id); ?>" title="編輯"><i class="fa fa-pencil"></i></a>
 												<!-- href='javascript:' 主要是說明a標籤需要執行一段js代碼，並不需要跳轉 -->
-												<a class="btn btn-sm btn-danger newsListDel" href="javascript:;" data-delid="<?php echo $record->pr_id; ?>" data-typeid="<?php echo $record->pr_type_id; ?>" data-img="<?php echo $record->img; ?>" title="移除"><i class="fa fa-trash"></i></a>
+												<a class="btn btn-sm btn-danger newsListDel" data-delid="<?php echo $record->pr_id; ?>" data-typeid="<?php echo $record->pr_type_id; ?>" data-img="<?php echo $record->img; ?>" title="移除"><i class="fa fa-trash"></i></a>
 											</td>
 										</tr>
 									<?php
-									}
-								} else {
-									?>
+}
+} else {
+    ?>
 									<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
 										無相關資料!
 									</div>
-								<?php } ?>
+								<?php }?>
 							</table>
 
 						</div><!-- /.box-body -->
