@@ -16,4 +16,18 @@ class Home_model extends CI_Model
         $result = $query->result();
         return $result;
     }
+
+    public function getNewsInfo()
+    {
+        $this->db->select();
+        $this->db->from('press_release as pr');
+
+        $this->db->order_by('pr.date_start', 'DESC');
+        $this->db->limit(3);
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
+
 }

@@ -1,6 +1,6 @@
 <?php
 $mail = $getSetupInfo->mail;
-$fb = $getSetupInfo->fb;
+$fb   = $getSetupInfo->fb;
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,12 +32,15 @@ $fb = $getSetupInfo->fb;
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	<style>
 		@font-face {
-			font-family: KozGoPro-ExtraLight_0;
-			src: url("<?php echo base_url('assets/fonts/KozGoPro-ExtraLight_0.otf'); ?>");
+			font-family: KozGoPr6N-Light_0;
+			src: url("<?php echo base_url('assets/fonts/KozGoPr6N-Light_0.otf'); ?>");
 		}
 
 		* {
-			font-family: KozGoPro-ExtraLight_0;
+			font-family: KozGoPr6N-Light_0;
+		}
+		h1,h2,h3,h4,h5,h6{
+			font-weight:bolder;
 		}
 	</style>
 </head>

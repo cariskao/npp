@@ -1,3 +1,4 @@
+// carousel
 .carousel {
 	margin-left: -15px;
 	margin-right: -15px;
@@ -53,5 +54,64 @@
 				text-align: center;
 			}
 		}
+	}
+}
+
+// 新聞訊息的區塊 - 自訂gutters
+$custom-gutter-width: 50px; // 將欄距改成 20px
+
+.custom-gutters {
+	&.container {
+		padding-left: $custom-gutter-width / 2;
+		padding-right: $custom-gutter-width / 2;
+	}
+
+	.row {
+		margin-left: -($custom-gutter-width / 2);
+		margin-right: -($custom-gutter-width / 2);
+	}
+
+	.col-md-4 {
+		padding-left: $custom-gutter-width / 2;
+		padding-right: $custom-gutter-width / 2;
+	}
+}
+
+.home-title_style {
+	text-align: center;
+	margin-top: 100px;
+	margin-bottom: 15px;
+	padding: 15px;
+	font-weight: bolder;
+	font-size: 30px;
+	border-bottom: solid 1px gray;
+}
+
+a.newsBlock_style {
+	text-decoration: none;
+
+	.card-body {
+		color: black;
+
+		.data-start_fontsize {
+			font-size: 15px;
+			font-weight: bold;
+			color: gray;
+		}
+	}
+}
+
+.more {
+	text-align: center;
+
+	a {
+		text-decoration: none;
+		display: block;
+		margin: auto;
+		width: 120px;
+		line-height: 40px;
+		background-color: #FFBD00;
+		color: black;
+		border-radius: 30px;
 	}
 }
