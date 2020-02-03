@@ -59,7 +59,7 @@ if (!empty($getNewsInfo)) {
         $date    = $record->date_start;
         $e       = $record->editor;
         ?>
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6">
                <a href="#" class="newsBlock_style">
                   <div class="card mb-4 box-shadow">
                      <img class="card-img-top"
@@ -78,7 +78,7 @@ if (!empty($getNewsInfo)) {
 }
 ?>
          </div>
-         <div class="more"><a href="#">更多內容</a></div>
+         <div class="more"><a href="<?php echo base_url('fend/news_f'); ?>">更多內容</a></div>
       </div>
    </div>
 </div>

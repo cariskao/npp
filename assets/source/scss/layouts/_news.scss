@@ -1,0 +1,12 @@
+.breadcrumb-bg {
+	background-color: #ffc107;
+}
+
+.breadcrumb {
+	background-color: transparent;
+	border-radius: 0;
+
+	li:not(:last-child) a {
+		color: black;
+	}
+}

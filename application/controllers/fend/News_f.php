@@ -4,16 +4,17 @@
 
 require APPPATH . '/libraries/FendBaseController.php';
 
-class Home extends FendBaseController
+class News_f extends FendBaseController
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('home_model');
         $this->load->model('website_model');
+        $this->load->model('home_model');
+        $this->load->model('news_f_model');
         $this->global['getSetupInfo'] = $this->website_model->getSetupInfo();
         $this->global['pageTitle']    = '時代力量立法院黨團';
-        $this->global['navActive']    = null;
+        $this->global['navActive']    = 1;
         // $this->isLoggedIn();
     }
 
@@ -27,10 +28,11 @@ class Home extends FendBaseController
     public function index()
     {
         $data = array(
-            'getCarouselInfo' => $this->home_model->getCarouselInfo(),
-            'getNewsInfo'     => $this->home_model->getNewsInfo(),
+            'get1Info' => $this->news_f_model->getNewsInfo(1),
+            'get2Info' => $this->news_f_model->getNewsInfo(2),
+            'get3Info' => $this->news_f_model->getNewsInfo(3),
         );
 
-        $this->loadViews("fend/home", $this->global, $data, null);
+        $this->loadViews("fend/news/news", $this->global, $data, null);
     }
 }
