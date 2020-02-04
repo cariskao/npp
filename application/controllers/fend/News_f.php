@@ -10,7 +10,6 @@ class News_f extends FendBaseController
     {
         parent::__construct();
         $this->load->model('website_model');
-        $this->load->model('home_model');
         $this->load->model('news_f_model');
         $this->global['getSetupInfo'] = $this->website_model->getSetupInfo();
         $this->global['pageTitle']    = '時代力量立法院黨團';
@@ -34,5 +33,49 @@ class News_f extends FendBaseController
         );
 
         $this->loadViews("fend/news/news", $this->global, $data, null);
+    }
+
+    /*
+    ##       ####  ######  ########
+    ##        ##  ##    ##    ##
+    ##        ##  ##          ##
+    ##        ##   ######     ##
+    ##        ##        ##    ##
+    ##        ##  ##    ##    ##
+    ######## ####  ######     ##
+     */
+
+// 新聞訊息的各項列表
+    public function newsFlists($type_id)
+    {
+        switch ($type_id) {
+            case '1':
+                $this->global['breadcrumbTag'] = '法案及議事說明';
+                break;
+            case '2':
+                $this->global['breadcrumbTag'] = '懶人包及議題追追追';
+                break;
+            case '3':
+                $this->global['breadcrumbTag'] = '行動紀實';
+                break;
+        }
+
+        $searchText         = $this->security->xss_clean($this->input->post('searchText'));
+        $data['searchText'] = $searchText;
+
+        $this->load->library('pagination');
+
+        $count = $this->news_f_model->listingCount($searchText, $type_id); //算出總筆數
+        // echo ' count: ' . $count;
+
+        //記得加上「/」
+        // paginationCompress要配合searchText(含前台的html)才有作用
+        $returns = $this->paginationCompress("fend/news_f/newsFlists/" . $type_id . '/', $count, 12, 5);
+        // echo ' segment-News: ' . $returns['segment'];
+
+        $data['listItems'] = $this->news_f_model->listing($searchText, $type_id, $returns["page"], $returns["segment"]);
+        $data['type_id']   = $type_id;
+
+        $this->loadViews("fend/news/newsFlists", $this->global, $data, null);
     }
 }

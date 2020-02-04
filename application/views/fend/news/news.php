@@ -2,7 +2,7 @@
    <div class="container">
       <nav aria-label="breadcrumb">
          <ol class="breadcrumb">
-            <li style="margin-left:20px" class="breadcrumb-item"><a href="<?php echo base_url('fend/home'); ?>">首頁</a>
+            <li style="" class="breadcrumb-item"><a href="<?php echo base_url('fend/home'); ?>">首頁</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">新聞訊息</li>
          </ol>
@@ -42,7 +42,7 @@ if (!empty($get1Info)) {
 }
 ?>
          </div>
-         <div class="more"><a href="<?php echo base_url('fend/news/1'); ?>">更多內容</a></div>
+         <div class="more"><a href="<?php echo base_url('fend/news_f/newsFlists/1'); ?>">更多內容</a></div>
       </div>
    </div>
 </div>
@@ -79,7 +79,7 @@ if (!empty($get2Info)) {
 }
 ?>
          </div>
-         <div class="more"><a href="<?php echo base_url('fend/news/1'); ?>">更多內容</a></div>
+         <div class="more"><a href="<?php echo base_url('fend/news_f/newsFlists/2'); ?>">更多內容</a></div>
       </div>
    </div>
 </div>
@@ -116,7 +116,7 @@ if (!empty($get3Info)) {
 }
 ?>
          </div>
-         <div class="more"><a href="<?php echo base_url('fend/news/1'); ?>">更多內容</a></div>
+         <div class="more"><a href="<?php echo base_url('fend/news_f/newsFlists/3'); ?>">更多內容</a></div>
       </div>
    </div>
 </div>
