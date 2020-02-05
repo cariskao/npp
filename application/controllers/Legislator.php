@@ -21,7 +21,6 @@ class Legislator extends BaseController
       $searchText = $this->security->xss_clean($this->input->post('searchText'));
       $data['searchText'] = $searchText;
 
-      $this->load->library('pagination');
       $count = $this->legislator_model->legislatorYearsListingCount($searchText); //算出總筆數
       // echo ' count: ' . $count;
 
@@ -101,7 +100,6 @@ class Legislator extends BaseController
       $searchText = $this->security->xss_clean($this->input->post('searchText'));
       $data['searchText'] = $searchText;
 
-      $this->load->library('pagination');
       $count = $this->legislator_model->legislatorListingCount($searchText, $yearid);
       // echo ' count: ' . $count;
 
@@ -299,7 +297,6 @@ class Legislator extends BaseController
       $searchText = $this->security->xss_clean($this->input->post('searchText'));
       $data['searchText'] = $searchText;
 
-      $this->load->library('pagination');
       $count = $this->partymember_model->partymemberListingCount($searchText); //算出總筆數
       // echo ' count: ' . $count;
 

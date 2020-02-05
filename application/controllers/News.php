@@ -58,8 +58,6 @@ class News extends BaseController
 		$searchText = $this->security->xss_clean($this->input->post('searchText'));
 		$data['searchText'] = $searchText;
 
-		$this->load->library('pagination');
-
 		$count = $this->news_model->listingCount($searchText, $type_id); //算出總筆數
 		// echo ' count: ' . $count;
 
@@ -82,7 +80,6 @@ class News extends BaseController
 		$searchText = $this->security->xss_clean($this->input->post('searchText'));
 		$data['searchText'] = $searchText;
 
-		$this->load->library('pagination');
 		$count = $this->news_model->tagsListingCount($searchText); //算出總筆數
 
 		$returns = $this->paginationCompress("news/tagLists/", $count, 10, 3);

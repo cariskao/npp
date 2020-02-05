@@ -43,8 +43,6 @@ class User extends BaseController
             $searchText = $this->security->xss_clean($this->input->post('searchText'));
             $data['searchText'] = $searchText;
 
-            $this->load->library('pagination');
-
             $count = $this->user_model->userListingCount($searchText); //算出總筆數,有搜尋結果就顯示全部搜尋的結果,否則就顯示全部的結果。
 
             $returns = $this->paginationCompress("userListing/", $count, 10);
@@ -68,8 +66,6 @@ class User extends BaseController
         } else {
             $searchText = $this->security->xss_clean($this->input->post('searchText'));
             $data['searchText'] = $searchText;
-
-            $this->load->library('pagination');
 
             $count = $this->user_model->managerListingCount($searchText); //算出總筆數,有搜尋結果就顯示全部搜尋的結果,否則就顯示全部的結果。
 
@@ -455,8 +451,6 @@ class User extends BaseController
             $data['searchText'] = $searchText;
             $data['fromDate'] = $fromDate;
             $data['toDate'] = $toDate;
-
-            $this->load->library('pagination');
 
             $count = $this->user_model->loginHistoryCount($userId, $searchText, $fromDate, $toDate);
 

@@ -21,7 +21,6 @@ class Partymember extends BaseController
       $searchText = $this->security->xss_clean($this->input->post('searchText'));
       $data['searchText'] = $searchText;
 
-      $this->load->library('pagination');
       $count = $this->partymember_model->partymemberListingCount($searchText);
       // echo ' count: ' . $count;
 

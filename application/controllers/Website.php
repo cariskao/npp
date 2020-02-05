@@ -46,7 +46,6 @@ class Website extends BaseController
         $searchText         = $this->security->xss_clean($this->input->post('searchText'));
         $data['searchText'] = $searchText;
 
-        $this->load->library('pagination');
         $count = $this->website_model->carouselListCount($searchText); //算出總筆數
 
         $returns = $this->paginationCompress("website/carouselList/", $count, 10, 3);

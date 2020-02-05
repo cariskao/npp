@@ -63,8 +63,6 @@ class News_f extends FendBaseController
         $searchText         = $this->security->xss_clean($this->input->post('searchText'));
         $data['searchText'] = $searchText;
 
-        $this->load->library('pagination');
-
         $count = $this->news_f_model->listingCount($searchText, $type_id); //算出總筆數
         // echo ' count: ' . $count;
 
@@ -76,6 +74,6 @@ class News_f extends FendBaseController
         $data['listItems'] = $this->news_f_model->listing($searchText, $type_id, $returns["page"], $returns["segment"]);
         $data['type_id']   = $type_id;
 
-        $this->loadViews("fend/news/newsFlists", $this->global, $data, null);
+        $this->loadViews("fend/news/newsLists_f", $this->global, $data, null);
     }
 }

@@ -20,7 +20,6 @@ class Stars extends BaseController
       // $searchText = $this->security->xss_clean($this->input->post('searchText'));
       // $data['searchText'] = $searchText;
 
-      // $this->load->library('pagination');
       // $count = $this->legislator_model->legislatorListingCount($searchText); //算出總筆數
       // // echo ' count: ' . $count;
 
