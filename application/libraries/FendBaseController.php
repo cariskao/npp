@@ -71,22 +71,22 @@ class FendBaseController extends CI_Controller
 		$config['uri_segment'] = $segment;
 		$config['per_page'] = $perPage;
 		$config['num_links'] = 5;
-		$config['full_tag_open'] = '<nav class="paginationf-f"><ul class="pagination">';
+		$config['full_tag_open'] = '<nav class="pagination-f"><ul class="pagination">';
 		$config['full_tag_close'] = '</ul></nav>';
-		$config['first_tag_open'] = '<li class="pagination-common first-page">';
+		$config['first_tag_open'] = '<li class="notNum-common first-page">';
 		$config['first_link'] = '最新文章';
 		$config['first_tag_close'] = '</li>';
 		$config['prev_link'] = '前一頁';
-		$config['prev_tag_open'] = '<li class="pagination-common prev-page">';
+		$config['prev_tag_open'] = '<li class="notNum-common prev-page">';
 		$config['prev_tag_close'] = '</li>';
 		$config['next_link'] = '下一頁';
-		$config['next_tag_open'] = '<li class="pagination-common next-page">';
+		$config['next_tag_open'] = '<li class="notNum-common next-page">';
 		$config['next_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a href="#">';
+		$config['cur_tag_open'] = '<li class="num-page active"><a href="#">';
 		$config['cur_tag_close'] = '</a></li>';
 		$config['num_tag_open'] = '<li class="num-page">';
 		$config['num_tag_close'] = '</li>';
-		$config['last_tag_open'] = '<li class="pagination-common last-page">';
+		$config['last_tag_open'] = '<li class="notNum-common last-page">';
 		$config['last_link'] = '最舊文章';
 		$config['last_tag_close'] = '</li>';
 

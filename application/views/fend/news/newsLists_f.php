@@ -51,14 +51,38 @@ if (!empty($listItems)) {
 }
 ?>
 			</div>
-			<div class="box-footer clearfix">
-				<?php echo $this->pagination->create_links(); ?>
-			</div>
+			<?php echo $this->pagination->create_links(); ?>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
 	jQuery(document).ready(function () {
+		// RWD來更改分頁文本
+		var w = $(window).width();
+		// console.log(w); //獲取刷新後的值
+		if (w < 992) {
+			$('.first-page a').text('<<');
+			$('.last-page a').text('>>');
+			$('.prev-page a').text('<');
+			$('.next-page a').text('>');
+		}
+		$(window).resize(function () {
+			var rw = $(window).width();
+			// console.log(rw); //獲取解析度變動後的值
+			if (rw < 992) {
+				$('.first-page a').text('<<');
+				$('.last-page a').text('>>');
+				$('.prev-page a').text('<');
+				$('.next-page a').text('>');
+			} else {
+				$('.first-page a').text('最新文章');
+				$('.last-page a').text('最舊文章');
+				$('.prev-page a').text('前一頁');
+				$('.next-page a').text('下一頁');
+			}
+		});
+
+		// pagination
 		jQuery('ul.pagination li a').click(function (e) {
 			// 當點擊下方頁面時,就獲取以下資料並跳轉
 			e.preventDefault();
