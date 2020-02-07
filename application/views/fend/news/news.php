@@ -9,6 +9,7 @@
       </nav>
    </div>
 </div>
+<div id="gotop">^</div>
 <div class="container custom-gutters" style="margin-bottom:20px">
    <div class="row">
       <div class="col-md-12">

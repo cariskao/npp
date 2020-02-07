@@ -55,6 +55,7 @@ if (!empty($listItems)) {
 		</div>
 	</div>
 </div>
+<div id="gotop">^</div>
 <script type="text/javascript">
 	jQuery(document).ready(function () {
 		// RWD來更改分頁文本

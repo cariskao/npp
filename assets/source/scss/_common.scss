@@ -1,0 +1,14 @@
+#gotop {
+   cursor: pointer;
+   display: none;
+   position: fixed;
+   right: 30px;
+   bottom: 70px;
+   z-index: 1;
+   background-color: gray;
+   color: white;
+   font-weight: bolder;
+   font-size: 36px;
+   padding: 0 15px;
+   border-radius: 33px;
+}

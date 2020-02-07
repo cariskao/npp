@@ -521,18 +521,42 @@ class CI_Pagination
 
         // Calculate the start and end numbers. These determine
         // which number to start and end the digit links with.
-        $start = (($this->cur_page - $this->num_links) > 0) ? $this->cur_page - ($this->num_links - 1) : 1;
-        $end   = (($this->cur_page + $this->num_links) < $num_pages) ? $this->cur_page + $this->num_links : $num_pages;
-        // 加上這二個部分使之改成都能保持10頁
-		// $r     = $end - $start; // 觀察發現除了中間長度爲8外,前後的長度都爲9
+        if ($num_pages <= 10) {
+            // 改成總頁數不到10頁就直接顯示全部頁數
+            $start = 0;
+            $end   = $num_pages;
+        } else {
+            // 原代碼
+            // $start = (($this->cur_page - $this->num_links) > 0) ? $this->cur_page - ($this->num_links - 1) : 1;
+            // $end = (($this->cur_page + $this->num_links) < $num_pages) ? $this->cur_page + $this->num_links : $num_pages;
+            $num_pages;
+            $cur_page = $this->cur_page;
 
-		// 最後4頁執行這裏
-        if (($num_pages - $this->cur_page) < $this->num_links - 1) {
-            $start = $num_pages - 8; // 用最後一頁 - $r即可得到我要的$start(後來改8)
-        }
+            // 改成會一直保持10頁
 
-        if ($this->cur_page < $this->num_links) {
-            $end += ($this->num_links - $this->cur_page);
+            /**
+             * if (當前頁-設定頁數) > 0
+             *  true
+             *      if (當前頁+設定頁) > 總頁數:看是否爲最後5頁
+             *          true就直接設$start爲總頁數-8頁
+             *          false就將當前頁-(設定頁-1)
+             *
+             *  false
+             *      則爲最前面5頁,就直接設$start爲1
+             */
+            $start = (($this->cur_page - $this->num_links) > 0) ? (($this->cur_page + $this->num_links) > $num_pages ? $num_pages - 8 : $this->cur_page - ($this->num_links - 1)) : 1;
+
+            /**
+             * if (當前頁+設定頁數)<總頁數
+             *  true
+             *      if (當前頁<設定頁數):看是否爲最前面4頁
+             *          true就將$end設爲10
+             *          false就把$end設爲當前頁+5
+             *
+             *  false
+             *      則爲最後5頁,就直接設$end爲總頁數
+             */
+            $end = (($this->cur_page + $this->num_links) < $num_pages) ? ($this->cur_page < $this->num_links ? $this->num_links + 5 : $this->cur_page + $this->num_links) : $num_pages;
         }
 
         // And here we go...
