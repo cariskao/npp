@@ -12,15 +12,20 @@
 <div class="container custom-gutters" style="margin-bottom:20px">
 	<div class="row">
 		<div class="col-md-12">
-			<div class="home-title_style" style="margin-top:30px"><?php echo $breadcrumbTag; ?></div>
-			<form action="<?php echo base_url('news/lists/' . $type_id) ?>" method="POST" id="searchList">
-				<div class="input-group">
-					<input type="text" name="searchText" value="<?php echo $searchText; ?>"
-						class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋大標、次標" />
-					<div class="input-group-btn">
-						<button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
-					</div>
-				</div>
+			<div class="home-title_style" style="margin-top:30px;margin-bottom:0"><?php echo $breadcrumbTag; ?></div>
+			<form action="<?php echo base_url('news_f/newsFlists/' . $type_id) ?>" method="POST" id="searchList"
+				class="searchList-f_form">
+				<!-- autocomplete自動完成 -->
+				<input autocomplete="off" style="height:50px" type="text" name="searchFrom" value="<?php echo $searchFrom; ?>"
+					class="searchList-f_from" style="width: 250px;height:30px"
+					placeholder="開始時間" />
+				<input autocomplete="off" style="height:50px" type="text" name="searchEnd" value="<?php echo $searchEnd; ?>"
+					class="searchList-f_end" style="width: 250px;height:30px"
+					placeholder="結束時間" />
+				<input autocomplete="off" style="height:50px" type="text" name="searchText" value="<?php echo $searchText; ?>"
+					class="searchList-f_keyword" style="width: 250px;height:30px"
+					placeholder="關鍵字" />
+				<button class="btn btn-default searchList searchList-f_submit">搜尋</button>
 			</form>
 			<div class="row" style="border-bottom:solid 1px gray;margin-bottom:50px;padding-bottom:50px">
 				<?php

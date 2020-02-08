@@ -11,3 +11,22 @@
 		color: black;
 	}
 }
+
+.searchList-f_form {
+	display: flex;
+	justify-content: flex-end;
+	line-height: 150px;
+	padding: 30px 0;
+
+	input {
+		// height: 100px; // 設定display:block也沒有效果,直接寫在行內
+		margin: 0 10px;
+		padding-left: 10px;
+	}
+
+	.searchList-f_submit {
+		background-color: orange;
+		color: white;
+		border-radius: 0;
+	}
+}
