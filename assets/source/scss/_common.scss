@@ -4,11 +4,17 @@
    position: fixed;
    right: 30px;
    bottom: 70px;
-   z-index: 1;
+   z-index: 3;
    background-color: gray;
    color: white;
    font-weight: bolder;
    font-size: 36px;
    padding: 0 15px;
    border-radius: 33px;
+
+   @include media-breakpoint-down(xs) {
+      background-color: red;
+      right: 5px;
+      bottom: 150px;
+   }
 }

@@ -18,7 +18,7 @@ $lh:40px;
 
 .pagination-f {
 
-   // 前後各二大塊樣式(li)
+   // next-page、prev-page、first-page、last-page
    .notNum-common {
       $w: 80px;
       $lh: 25px;
@@ -54,6 +54,44 @@ $lh:40px;
 
       @include media-breakpoint-down(md) {
          width: 40px;
+      }
+
+      &.first-page,
+      &.prev-page {
+         @include media-breakpoint-down(sm) {
+            position: absolute;
+            top: -30px;
+            left: 140px;
+         }
+
+         @include media-breakpoint-down(xs) {
+            left: 25px;
+         }
+      }
+
+      &.prev-page {
+         @include media-breakpoint-down(sm) {
+            margin-left: 60px;
+         }
+      }
+
+      &.last-page,
+      &.next-page {
+         @include media-breakpoint-down(sm) {
+            position: absolute;
+            top: -30px;
+            right: 140px;
+         }
+
+         @include media-breakpoint-down(xs) {
+            right: 25px;
+         }
+      }
+
+      &.next-page {
+         @include media-breakpoint-down(sm) {
+            margin-right: 60px;
+         }
       }
    }
 
@@ -109,6 +147,10 @@ $lh:40px;
                background-color: $bg-color;
             }
          }
+      }
+
+      @include media-breakpoint-down(sm) {
+         position: relative;
       }
    }
 }

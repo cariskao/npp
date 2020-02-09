@@ -78,7 +78,7 @@ class News_f extends FendBaseController
         $returns = $this->paginationCompress("fend/news_f/newsFlists/" . $type_id . '/', $count, 12, 5);
         // echo ' segment-News: ' . $returns['segment'];
 
-        $data['listItems'] = $this->news_f_model->listing($searchText, $type_id, $returns["page"], $returns["segment"]);
+        $data['listItems'] = $this->news_f_model->listing($searchFrom, $searchEnd, $searchText, $type_id, $returns["page"], $returns["segment"]);
         $data['type_id']   = $type_id; //用來帶入newsLists_f中searchText的form action
 
         $this->loadViews("fend/news/newsLists_f", $this->global, $data, null);

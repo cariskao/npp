@@ -52,7 +52,7 @@ class News_f_model extends CI_Model
     }
 
     // 計算新聞訊息各項列表的總項目
-    public function listing($searchText = '', $type_id, $page, $segment)
+    public function listing($searchFrom = '', $searchEnd = '', $searchText = '', $type_id, $page, $segment)
     {
         $this->db->select();
 
