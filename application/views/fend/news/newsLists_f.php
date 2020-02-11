@@ -9,26 +9,43 @@
 		</nav>
 	</div>
 </div>
-<div class="container custom-gutters" style="margin-bottom:20px">
-	<div class="row">
+<div class="container" style="margin-bottom:20px">
+	<div class="row" style="border-bottom: solid 1px gray;">
 		<div class="col-md-12">
-			<div class="home-title_style" style="margin-top:30px;margin-bottom:0"><?php echo $breadcrumbTag; ?></div>
-			<form action="<?php echo base_url('news_f/newsFlists/' . $type_id) ?>" method="POST" id="searchList"
-				class="searchList-f_form">
+			<div class="home-title_style"><?php echo $breadcrumbTag; ?></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<form action="<?php echo base_url('news/newsFlists/' . $type_id) ?>" method="POST" id="searchList"
+				class="form-inline searchList-f_form">
 				<!-- autocomplete自動完成 -->
-				<input autocomplete="off" style="height:50px" type="text" name="searchFrom" value="<?php echo $searchFrom; ?>"
-					class="searchList-f_from" style="width: 250px;height:30px"
-					placeholder="開始時間" />
-				<input autocomplete="off" style="height:50px" type="text" name="searchEnd" value="<?php echo $searchEnd; ?>"
-					class="searchList-f_end" style="width: 250px;height:30px"
-					placeholder="結束時間" />
-				<input autocomplete="off" style="height:50px" type="text" name="searchText" value="<?php echo $searchText; ?>"
-					class="searchList-f_keyword" style="width: 250px;height:30px"
-					placeholder="關鍵字" />
-				<button class="btn btn-default searchList searchList-f_submit">搜尋</button>
-			</form>
-			<div class="row" style="border-bottom:solid 1px gray;margin-bottom:50px;padding-bottom:50px">
-				<?php
+				<div class="form-group form-group-custom" >
+					<label for="searchFrom" class="sr-only">開始時間</label>
+					<input id="searchFrom" type="text" name="searchFrom" value="<?php echo $searchFrom; ?>"
+						class="form-control" placeholder="開始時間" autocomplete="off" />
+				</div>
+				<div class="form-group form-group-custom" >
+					<label for="searchEnd" class="sr-only">結束時間</label>
+					<input id="searchEnd" type="text" name="searchEnd" value="<?php echo $searchEnd; ?>"
+						class="form-control" placeholder="結束時間" autocomplete="off" />
+				</div>
+				<div class="form-group form-group-custom">
+					<label for="searchKey" class="sr-only">關鍵字</label>
+					<input id="searchKey" type="text" name="searchKey" value="<?php echo $searchKey; ?>"
+						class="form-control" placeholder="關鍵字" autocomplete="off" />
+				</div>
+				<div class="form-group form-group-custom_submit">
+					<button class="btn btn-default">搜尋</button>
+				</div>
+		</div>
+		</form>
+	</div>
+</div>
+<div class="container custom-gutters" style="margin-bottom:20px">
+	<div class="row" style="border-bottom:solid 1px gray;margin-bottom:50px;padding-bottom:50px">
+		<?php
 if (!empty($listItems)) {
     foreach ($listItems as $record) {
         $type_id = $record->pr_type_id;
@@ -37,28 +54,27 @@ if (!empty($listItems)) {
         $date    = $record->date_start;
         $e       = $record->editor;
         ?>
-				<div class="col-lg-4 col-md-6">
-					<a href="#" class="newsBlock_style">
-						<div class="card mb-4 box-shadow">
-							<img class="card-img-top"
-								src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>"
-								alt="Card image cap">
-							<div class="card-body">
-								<h5><?php echo mb_strimwidth(strip_tags($m_title), 0, 40, '...'); ?></h5>
-								<span class="data-start_fontsize">發布日期：<?php echo $date; ?></span>
-								<p><?php echo mb_strimwidth(strip_tags($e), 0, 100, '...'); ?></p>
-							</div>
-						</div>
-					</a>
+		<div class="col-lg-4 col-md-6">
+			<a href="#" class="newsBlock_style" style="border-radius:0">
+				<div class="card mb-4 box-shadow" style="border-radius:0">
+					<img class="card-img-top"
+						src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>"
+						alt="Card image cap" style="border-radius:0">
+					<div class="card-body">
+						<h5><?php echo mb_strimwidth(strip_tags($m_title), 0, 40, '...'); ?></h5>
+						<span class="data-start_fontsize">發布日期：<?php echo $date; ?></span>
+						<p><?php echo mb_strimwidth(strip_tags($e), 0, 100, '...'); ?></p>
+					</div>
 				</div>
-				<?php
+			</a>
+		</div>
+		<?php
 }
 }
 ?>
-			</div>
-			<?php echo $this->pagination->create_links(); ?>
-		</div>
 	</div>
+</div>
+<?php echo $this->pagination->create_links(); ?>
 </div>
 <div id="gotop">^</div>
 <script type="text/javascript">

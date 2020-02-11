@@ -16,6 +16,7 @@
 								<div class="col-xs-6">
 									<div class="box-tools">
 										<form action="<?php echo base_url('website/carouselLists') ?>" method="POST" id="searchList">
+											<!-- input-group讓裏面的元素融合(合併)在一起 -->
 											<div class="input-group">
 												<input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋標題" />
 												<div class="input-group-btn">

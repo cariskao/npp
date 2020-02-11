@@ -79,12 +79,19 @@ $custom-gutter-width: 50px; // 將欄距改成 20px
 
 .home-title_style {
 	text-align: center;
-	margin-top: 100px;
-	margin-bottom: 15px;
+	margin-top: 30px;
+	margin-bottom: 0;
 	padding: 15px;
 	font-weight: bolder;
 	font-size: 30px;
-	border-bottom: solid 1px gray;
+
+	@include media-breakpoint-down(md) {
+		margin-top: 10px;
+	}
+
+	@include media-breakpoint-down(sm) {
+		margin-top: -10px;
+	}
 }
 
 a.newsBlock_style {

@@ -9,16 +9,21 @@
 							<div class="row">
 								<div class="col-xs-6">
 									<div class="form-group">
-										<a class="btn btn-primary" href="<?php echo base_url('news/tagsAdd'); ?>"><i class="fa fa-plus"></i> 新增</a>
+										<a class="btn btn-primary" href="<?php echo base_url('news/tagsAdd'); ?>"><i
+												class="fa fa-plus"></i> 新增</a>
 									</div>
 								</div>
 								<div class="col-xs-6">
 									<div class="box-tools">
 										<form action="<?php echo base_url('news/tagLists') ?>" method="POST" id="searchList">
+											<!-- input-group讓裏面的元素融合(合併)在一起 -->
 											<div class="input-group">
-												<input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 250px;height:30px" placeholder="可搜尋標籤名稱" />
+												<input type="text" name="searchText" value="<?php echo $searchText; ?>"
+													class="form-control input-sm pull-right" style="width: 250px;height:30px"
+													placeholder="可搜尋標籤名稱" />
 												<div class="input-group-btn">
-													<button class="btn btn-sm btn-default searchList"><i class="fa fa-search"></i></button>
+													<button class="btn btn-sm btn-default searchList"><i
+															class="fa fa-search"></i></button>
 												</div>
 											</div>
 										</form>
@@ -45,27 +50,33 @@
 if (!empty($newsTags)) {
     foreach ($newsTags as $record) {
         ?>
-										<tr>
-											<td><?php echo $record->name; ?></td>
-											<td>
-												<?php if ($record->showup == 1) {?>
-													<img style="background-color:green" src="<?php echo base_url(); ?>assets/images/show.png" alt="">
-												<?php } else {?>
-													<img style="background-color:red" src="<?php echo base_url(); ?>assets/images/hide.png" alt="">
-												<?php }?>
-											</td>
-											<td class=" text-center" style="width:30%">
-												<a class="btn btn-sm btn-info" href="<?php echo base_url() . 'news/tagsEdit/' . $record->tags_id; ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-												<a class="btn btn-sm btn-danger deleteNewsTag" data-tagsid="<?php echo $record->tags_id; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
-											</td>
-										</tr>
-									<?php
+								<tr>
+									<td><?php echo $record->name; ?></td>
+									<td>
+										<?php if ($record->showup == 1) {?>
+										<img style="background-color:green" src="<?php echo base_url(); ?>assets/images/show.png"
+											alt="">
+										<?php } else {?>
+										<img style="background-color:red" src="<?php echo base_url(); ?>assets/images/hide.png"
+											alt="">
+										<?php }?>
+									</td>
+									<td class=" text-center" style="width:30%">
+										<a class="btn btn-sm btn-info"
+											href="<?php echo base_url() . 'news/tagsEdit/' . $record->tags_id; ?>" title="編輯"><i
+												class="fa fa-pencil"></i></a>
+										<a class="btn btn-sm btn-danger deleteNewsTag"
+											data-tagsid="<?php echo $record->tags_id; ?>" title="刪除"><i
+												class="fa fa-trash fa-lg"></i></a>
+									</td>
+								</tr>
+								<?php
 }
 } else {
     ?>
-									<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
-										無相關資料!
-									</div>
+								<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
+									無相關資料!
+								</div>
 								<?php }?>
 							</table>
 
@@ -107,15 +118,15 @@ if (!empty($newsTags)) {
 	}
 </style>
 <script>
-	$(function() {
-		setTimeout(function() {
+	$(function () {
+		setTimeout(function () {
 			$("#alert-success").hide();
 		}, 3000);
 	})
 
 	// 分頁
-	jQuery(document).ready(function() {
-		jQuery('ul.pagination li a').click(function(e) {
+	jQuery(document).ready(function () {
+		jQuery('ul.pagination li a').click(function (e) {
 			// 當點擊下方頁面時,就獲取以下資料並跳轉
 			e.preventDefault();
 			var link = jQuery(this).get(0).href; // http://localhost/npp_ci/news/index/10
@@ -136,17 +147,17 @@ $this->load->helper('form');
 $error = $this->session->flashdata('error');
 if ($error) {
     ?>
-	<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-		<?php echo $this->session->flashdata('error'); ?>
-	</div>
+<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<?php echo $this->session->flashdata('error'); ?>
+</div>
 <?php }?>
 <?php
 $success = $this->session->flashdata('success');
 if ($success) {
     ?>
-	<div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
-		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-		<?php echo $this->session->flashdata('success'); ?>
-	</div>
+<div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<?php echo $this->session->flashdata('success'); ?>
+</div>
 <?php }?>

@@ -60,17 +60,17 @@ class News_f extends FendBaseController
                 break;
         }
 
-        $searchText = $this->security->xss_clean($this->input->post('searchText'));
+        $searchKey  = $this->security->xss_clean($this->input->post('searchKey'));
         $searchFrom = $this->security->xss_clean($this->input->post('searchFrom'));
         $searchEnd  = $this->security->xss_clean($this->input->post('searchEnd'));
 
         $data = array(
             'searchFrom' => $searchFrom,
             'searchEnd'  => $searchEnd,
-            'searchText' => $searchText,
+            'searchKey'  => $searchKey,
         );
 
-        $count = $this->news_f_model->listingCount($searchText, $type_id); //算出總筆數
+        $count = $this->news_f_model->listingCount($searchKey, $type_id); //算出總筆數
         // echo ' count: ' . $count;
 
         //記得加上「/」
@@ -78,7 +78,7 @@ class News_f extends FendBaseController
         $returns = $this->paginationCompress("fend/news_f/newsFlists/" . $type_id . '/', $count, 12, 5);
         // echo ' segment-News: ' . $returns['segment'];
 
-        $data['listItems'] = $this->news_f_model->listing($searchFrom, $searchEnd, $searchText, $type_id, $returns["page"], $returns["segment"]);
+        $data['listItems'] = $this->news_f_model->listing($searchFrom, $searchEnd, $searchKey, $type_id, $returns["page"], $returns["segment"]);
         $data['type_id']   = $type_id; //用來帶入newsLists_f中searchText的form action
 
         $this->loadViews("fend/news/newsLists_f", $this->global, $data, null);
