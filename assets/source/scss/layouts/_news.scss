@@ -2,23 +2,23 @@
 	background-color: #ffc107;
 }
 
-// firefox
+// firefox(無法做@mixin)
 @-moz-document url-prefix() {
 	.breadcrumb-bg {
 		margin-top: -6px;
 		height: 60px;
 		padding-top: 5px;
-		padding-bottom: 5px
+		padding-bottom: 5px;
 	}
 }
 
-// safari
+// safari(無法做@mixin)
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 	.breadcrumb-bg {
 		margin-top: -6px;
 		height: 60px;
 		padding-top: 5px;
-		padding-bottom: 5px
+		padding-bottom: 5px;
 	}
 }
 
