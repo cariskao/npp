@@ -1,4 +1,5 @@
 jQuery(document).ready(function () {
+   // gotop
    $(window).scroll(function () {
       if ($(this).scrollTop() > 750) {
          $('#gotop').fadeIn("fast");

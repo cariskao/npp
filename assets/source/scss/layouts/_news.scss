@@ -47,6 +47,7 @@
 
 		input {
 			border-radius: 0;
+			background-color: #fff;
 
 			@include media-breakpoint-up(lg) {
 				width: 256px; // 要指定width,否則每個瀏覽器預設不同
