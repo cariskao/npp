@@ -40,7 +40,20 @@
 	padding-top: 15px;
 	padding-bottom: 15px;
 
+	.btn-clear-searchdate {
+		padding: 0;
+		border: none;
+		background-color: transparent;
+		position: absolute;
+		right: 10px;
+
+		@include media-breakpoint-down(xs) {
+			top: 7.5px;
+		}
+	}
+
 	.form-group-custom {
+		position: relative;
 		margin-top: 15px;
 		margin-bottom: 15px;
 		margin-right: 10px;

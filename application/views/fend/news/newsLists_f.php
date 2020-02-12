@@ -1,4 +1,5 @@
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/plugins/mydatepicker/css/jquery-ui-git.css'); ?>">
+<link rel="stylesheet" type="text/css"
+	href="<?php echo base_url('assets/plugins/mydatepicker/css/jquery-ui-git.css'); ?>">
 <script src="<?php echo base_url('assets/plugins/mydatepicker/js/jquery-clockpicker.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/mydatepicker/js/highlight.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/mydatepicker/js/jquery-ui-git.js'); ?>"></script>
@@ -29,16 +30,22 @@
 					<label for="searchFrom" class="sr-only">開始時間</label>
 					<input id="searchFrom" type="text" name="searchFrom" value="<?php echo $searchFrom; ?>"
 						class="form-control" placeholder="開始時間" autocomplete="off" readonly />
+					<button type="button" class="btn-clear-searchdate from"><i class="fa fa-times-circle"
+							aria-hidden="true"></i></button>
 				</div>
 				<div class="form-group form-group-custom">
 					<label for="searchEnd" class="sr-only">結束時間</label>
 					<input id="searchEnd" type="text" name="searchEnd" value="<?php echo $searchEnd; ?>" class="form-control"
 						placeholder="結束時間" autocomplete="off" readonly />
+					<button type="button" class="btn-clear-searchdate end"><i class="fa fa-times-circle"
+							aria-hidden="true"></i></button>
 				</div>
 				<div class="form-group form-group-custom">
 					<label for="searchKey" class="sr-only">關鍵字</label>
 					<input id="searchKey" type="text" name="searchKey" value="<?php echo $searchKey; ?>" class="form-control"
 						placeholder="關鍵字" autocomplete="off" />
+					<button type="button" class="btn-clear-searchdate key"><i class="fa fa-times-circle"
+							aria-hidden="true"></i></button>
 				</div>
 				<div class="form-group form-group-custom_submit">
 					<button class="btn btn-default">搜尋</button>
@@ -128,22 +135,21 @@ if (!empty($listItems)) {
 				value);
 			jQuery("#searchList").submit();
 		});
-	});
 
-	// JQuery UI datepicker
-	$.datepicker.regional['zh-TW'] = {
-		dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-		dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"],
-		monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-		monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-		prevText: "上月",
-		nextText: "次月",
-		weekHeader: "週",
-		currentText: "今天",
-		closeText: "關閉"
-	};
-	$.datepicker.setDefaults($.datepicker.regional["zh-TW"]);
-	$(function () {
+		// JQuery UI datepicker
+		$.datepicker.regional['zh-TW'] = {
+			dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+			dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"],
+			monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+			monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+			prevText: "上月",
+			nextText: "次月",
+			weekHeader: "週",
+			currentText: "今天",
+			closeText: "關閉"
+		};
+
+		$.datepicker.setDefaults($.datepicker.regional["zh-TW"]);
 		$("#searchFrom").datepicker({
 			//限制日期選擇範圍,d=天,w=週,m=月
 			// minDate: "-1d",
@@ -152,10 +158,23 @@ if (!empty($listItems)) {
 			dateFormat: 'yy-mm-dd',
 			showMonthAfterYear: true
 		});
+
 		$("#searchEnd").datepicker({
 			showButtonPanel: true,
 			dateFormat: 'yy-mm-dd',
 			showMonthAfterYear: true
+		});
+
+		$('.from').click(function () {
+			$('#searchFrom').val('');
+		});
+
+		$('.end').click(function () {
+			$('#searchEnd').val('');
+		});
+
+		$('.key').click(function () {
+			$('#searchKey').val('');
 		});
 	});
 </script>
