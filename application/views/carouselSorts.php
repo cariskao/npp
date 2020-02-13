@@ -68,6 +68,7 @@ if (!empty($getCarouselList)) {
 							var _sort = new Array();
 							var hitURL = baseURL + 'website/carouselSortSend';
 
+							// 從上到下遍歷排序後的所有元素,並把dbid放入_sort中,之後就可將dbid當作 WHERE 條件更改sort順序
 							$(".ui-state-default").each(function () {
 								_sort.push($(this).attr('dbid'));
 							});

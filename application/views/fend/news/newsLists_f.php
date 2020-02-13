@@ -23,28 +23,28 @@
 
 	<div class="row">
 		<div class="col-sm-12">
-			<form action="<?php echo base_url('news/newsFlists/' . $type_id) ?>" method="POST" id="searchList"
+			<form action="<?php echo base_url('fend/news_f/newsFlists/' . $type_id) ?>" method="POST" id="searchList"
 				class="form-inline searchList-f_form">
 				<!-- autocomplete自動完成 readonly在手機點擊時才不會彈出輸入視窗 -->
 				<div class="form-group form-group-custom">
 					<label for="searchFrom" class="sr-only">開始時間</label>
 					<input id="searchFrom" type="text" name="searchFrom" value="<?php echo $searchFrom; ?>"
 						class="form-control" placeholder="開始時間" autocomplete="off" readonly />
-					<button type="button" class="btn-clear-searchdate from"><i class="fa fa-times-circle"
+					<button title="清除" type="button" class="btn-clear-searchdate from"><i class="fa fa-times-circle"
 							aria-hidden="true"></i></button>
 				</div>
 				<div class="form-group form-group-custom">
 					<label for="searchEnd" class="sr-only">結束時間</label>
 					<input id="searchEnd" type="text" name="searchEnd" value="<?php echo $searchEnd; ?>" class="form-control"
 						placeholder="結束時間" autocomplete="off" readonly />
-					<button type="button" class="btn-clear-searchdate end"><i class="fa fa-times-circle"
+					<button title="清除" type="button" class="btn-clear-searchdate end"><i class="fa fa-times-circle"
 							aria-hidden="true"></i></button>
 				</div>
 				<div class="form-group form-group-custom">
 					<label for="searchKey" class="sr-only">關鍵字</label>
 					<input id="searchKey" type="text" name="searchKey" value="<?php echo $searchKey; ?>" class="form-control"
 						placeholder="關鍵字" autocomplete="off" />
-					<button type="button" class="btn-clear-searchdate key"><i class="fa fa-times-circle"
+					<button title="清除" type="button" class="btn-clear-searchdate key"><i class="fa fa-times-circle"
 							aria-hidden="true"></i></button>
 				</div>
 				<div class="form-group form-group-custom_submit">
@@ -89,6 +89,11 @@ if (!empty($listItems)) {
 </div>
 <div id="gotop">^</div>
 <script type="text/javascript">
+	var _dateFrom = '<?php echo $searchFrom; ?>';
+	var _dateEnd = '<?php echo $searchEnd; ?>';
+	console.log('reFreshFrom:', _dateFrom);
+	console.log('reFreshEnd:', _dateEnd);
+
 	jQuery(document).ready(function () {
 		// RWD來更改分頁文本
 		var w = $(window).width();
@@ -150,27 +155,65 @@ if (!empty($listItems)) {
 		};
 
 		$.datepicker.setDefaults($.datepicker.regional["zh-TW"]);
+
 		$("#searchFrom").datepicker({
 			//限制日期選擇範圍,d=天,w=週,m=月
 			// minDate: "-1d",
 			// maxDate: "+1d",
+			maxDate: "+0d",
 			showButtonPanel: true,
 			dateFormat: 'yy-mm-dd',
-			showMonthAfterYear: true
+			showMonthAfterYear: true,
+
+			// 在日期面板中點選了一個日期後,觸發此事件
+			onSelect: function (dateText, inst) {
+				// console.log('datetext', dateText);
+				// console.log('getdate', $(this).datepicker('getDate'));
+				console.log('beforeSelectFrom:', _dateFrom);
+				console.log('beforeSelectEnd:', _dateEnd);
+				_dateFrom = dateText;
+				console.log('afterSelectFrom:', _dateFrom);
+
+				if (_dateEnd != '') {
+					if (_dateFrom > _dateEnd) {
+						$(this).val('');
+						_dateFrom = '';
+						alert('開始日期「不可大於」結束日期');
+					}
+				}
+			}
 		});
 
 		$("#searchEnd").datepicker({
+			maxDate: "+0d",
 			showButtonPanel: true,
 			dateFormat: 'yy-mm-dd',
-			showMonthAfterYear: true
+			showMonthAfterYear: true,
+
+			onSelect: function (dateText, inst) {
+				console.log('beforeSelectFrom:', _dateFrom);
+				console.log('beforeSelectEnd:', _dateEnd);
+				_dateEnd = dateText;
+				console.log('afterSelectEnd:', _dateEnd);
+
+				if (_dateFrom != '') {
+					if (_dateEnd < _dateFrom) {
+						$(this).val('');
+						_dateEnd = '';
+						alert('結束日期「不可小於」開始日期');
+					}
+				}
+			}
 		});
 
 		$('.from').click(function () {
 			$('#searchFrom').val('');
+			_dateFrom = '';
 		});
 
 		$('.end').click(function () {
 			$('#searchEnd').val('');
+			_dateEnd = '';
 		});
 
 		$('.key').click(function () {

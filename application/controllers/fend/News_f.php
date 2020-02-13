@@ -60,17 +60,18 @@ class News_f extends FendBaseController
                 break;
         }
 
-        $searchKey  = $this->security->xss_clean($this->input->post('searchKey'));
         $searchFrom = $this->security->xss_clean($this->input->post('searchFrom'));
         $searchEnd  = $this->security->xss_clean($this->input->post('searchEnd'));
+        $searchKey  = $this->security->xss_clean($this->input->post('searchKey'));
 
+        // 回傳前台的搜尋欄位
         $data = array(
             'searchFrom' => $searchFrom,
             'searchEnd'  => $searchEnd,
             'searchKey'  => $searchKey,
         );
 
-        $count = $this->news_f_model->listingCount($searchKey, $type_id); //算出總筆數
+        $count = $this->news_f_model->listingCount($searchFrom, $searchEnd, $searchKey, $type_id); //算出總筆數
         // echo ' count: ' . $count;
 
         //記得加上「/」
