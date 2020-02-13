@@ -1,9 +1,9 @@
 <?php
-$mail = $getSetupInfo->mail;
-$fb = $getSetupInfo->fb;
-$address = $getSetupInfo->address;
-$num = $getSetupInfo->num;
-$fax = $getSetupInfo->fax;
+$mail        = $getSetupInfo->mail;
+$fb          = $getSetupInfo->fb;
+$address     = $getSetupInfo->address;
+$num         = $getSetupInfo->num;
+$fax         = $getSetupInfo->fax;
 $servicetime = $getSetupInfo->servicetime;
 ?>
 <footer class="container-fluid container-footer_style">

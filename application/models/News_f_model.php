@@ -97,4 +97,27 @@ class News_f_model extends CI_Model
         $result = $query->result();
         return $result;
     }
+
+    /*
+    .####.##....##.##....##.########.########.
+    ..##..###...##.###...##.##.......##.....##
+    ..##..####..##.####..##.##.......##.....##
+    ..##..##.##.##.##.##.##.######...########.
+    ..##..##..####.##..####.##.......##...##..
+    ..##..##...###.##...###.##.......##....##.
+    .####.##....##.##....##.########.##.....##
+     */
+
+    public function getInnerInfo($id)
+    {
+        $this->db->select();
+        $this->db->from('press_release');
+        $this->db->where('showup', 1);
+        $this->db->where('pr_id', $id);
+
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
 }

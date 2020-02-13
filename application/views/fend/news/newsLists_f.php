@@ -59,6 +59,7 @@
 		<?php
 if (!empty($listItems)) {
     foreach ($listItems as $record) {
+        $id      = $record->pr_id;
         $type_id = $record->pr_type_id;
         $img     = $record->img;
         $m_title = $record->main_title;
@@ -66,7 +67,8 @@ if (!empty($listItems)) {
         $e       = $record->editor;
         ?>
 		<div class="col-lg-4 col-md-6">
-			<a href="#" class="newsBlock_style" style="border-radius:0">
+			<a href="<?php echo base_url('fend/news_f/newsInner?t=' . $type_id . '&d=' . $id); ?>" class="newsBlock_style"
+				style="border-radius:0">
 				<div class="card mb-4 box-shadow" style="border-radius:0">
 					<img class="card-img-top"
 						src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>"
@@ -91,8 +93,8 @@ if (!empty($listItems)) {
 <script type="text/javascript">
 	var _dateFrom = '<?php echo $searchFrom; ?>';
 	var _dateEnd = '<?php echo $searchEnd; ?>';
-	console.log('reFreshFrom:', _dateFrom);
-	console.log('reFreshEnd:', _dateEnd);
+	// console.log('reFreshFrom:', _dateFrom);
+	// console.log('reFreshEnd:', _dateEnd);
 
 	jQuery(document).ready(function () {
 		// RWD來更改分頁文本
@@ -169,10 +171,10 @@ if (!empty($listItems)) {
 			onSelect: function (dateText, inst) {
 				// console.log('datetext', dateText);
 				// console.log('getdate', $(this).datepicker('getDate'));
-				console.log('beforeSelectFrom:', _dateFrom);
-				console.log('beforeSelectEnd:', _dateEnd);
+				// console.log('beforeSelectFrom:', _dateFrom);
+				// console.log('beforeSelectEnd:', _dateEnd);
 				_dateFrom = dateText;
-				console.log('afterSelectFrom:', _dateFrom);
+				// console.log('afterSelectFrom:', _dateFrom);
 
 				if (_dateEnd != '') {
 					if (_dateFrom > _dateEnd) {
@@ -191,10 +193,10 @@ if (!empty($listItems)) {
 			showMonthAfterYear: true,
 
 			onSelect: function (dateText, inst) {
-				console.log('beforeSelectFrom:', _dateFrom);
-				console.log('beforeSelectEnd:', _dateEnd);
+				// console.log('beforeSelectFrom:', _dateFrom);
+				// console.log('beforeSelectEnd:', _dateEnd);
 				_dateEnd = dateText;
-				console.log('afterSelectEnd:', _dateEnd);
+				// console.log('afterSelectEnd:', _dateEnd);
 
 				if (_dateFrom != '') {
 					if (_dateEnd < _dateFrom) {

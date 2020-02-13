@@ -45,7 +45,7 @@ class News_f extends FendBaseController
     ######## ####  ######     ##
      */
 
-// 新聞訊息的各項列表
+    // 新聞訊息的各項列表
     public function newsFlists($type_id)
     {
         switch ($type_id) {
@@ -83,5 +83,30 @@ class News_f extends FendBaseController
         $data['type_id']   = $type_id; //用來帶入newsLists_f中searchText的form action
 
         $this->loadViews("fend/news/newsLists_f", $this->global, $data, null);
+    }
+
+    // 新聞訊息列表內頁
+    public function newsInner()
+    {
+        $id      = $this->input->get('d');
+        $type_id = $this->input->get('t');
+
+        $data = array(
+            'getInnerInfo' => $this->news_f_model->getInnerInfo($id),
+        );
+
+        switch ($type_id) {
+            case '1':
+                $this->global['breadcrumbTag'] = '法案及議事說明';
+                break;
+            case '2':
+                $this->global['breadcrumbTag'] = '懶人包及議題追追追';
+                break;
+            case '3':
+                $this->global['breadcrumbTag'] = '行動紀實';
+                break;
+        }
+
+        $this->loadViews("fend/news/newsInner", $this->global, $data, null);
     }
 }
