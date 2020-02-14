@@ -85,11 +85,7 @@ class News_f_model extends CI_Model
         $this->db->where('pr.pr_type_id', $type_id);
         $this->db->where('pr.showup', 1);
 
-        if (!empty($searchFrom) || !empty($searchEnd)) {
-            $this->db->order_by('pr.date_start', 'DESC');
-        } else {
-            $this->db->order_by('pr.pr_id', 'DESC');
-        }
+        $this->db->order_by('pr.date_start', 'DESC');
 
         $this->db->limit($page, $segment);
         $query = $this->db->get();

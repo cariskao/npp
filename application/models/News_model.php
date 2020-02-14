@@ -1,4 +1,6 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 class News_model extends CI_Model
 {
@@ -9,17 +11,17 @@ class News_model extends CI_Model
      */
 
     /*
-##       ####  ######  ########
-##        ##  ##    ##    ##
-##        ##  ##          ##
-##        ##   ######     ##
-##        ##        ##    ##
-##        ##  ##    ##    ##
-######## ####  ######     ##
-*/
+    ##       ####  ######  ########
+    ##        ##  ##    ##    ##
+    ##        ##  ##          ##
+    ##        ##   ######     ##
+    ##        ##        ##    ##
+    ##        ##  ##    ##    ##
+    ######## ####  ######     ##
+     */
 
     // 計算新聞訊息各項列表的總頁數
-    function listingCount($searchText = '', $type_id)
+    public function listingCount($searchText = '', $type_id)
     {
         // log_message('error', 'News_model listingCount 有錯誤!');
         $this->db->select();
@@ -40,7 +42,7 @@ class News_model extends CI_Model
     }
 
     // 計算新聞訊息各項列表的總項目
-    function listing($searchText = '', $type_id, $page, $segment)
+    public function listing($searchText = '', $type_id, $page, $segment)
     {
         // log_message('error', 'News_model listing 有錯誤!');
         $this->db->select();
@@ -63,7 +65,7 @@ class News_model extends CI_Model
     }
 
     // 標籤
-    function tagsListingCount($searchText = '')
+    public function tagsListingCount($searchText = '')
     {
         $this->db->select('*');
         $this->db->from('tags as BaseTbl');
@@ -78,7 +80,7 @@ class News_model extends CI_Model
         return $query->num_rows();
     }
 
-    function tagsListing($searchText = '', $page, $segment)
+    public function tagsListing($searchText = '', $page, $segment)
     {
         $this->db->select('*');
         $this->db->from('tags as BaseTbl');
@@ -97,16 +99,16 @@ class News_model extends CI_Model
     }
 
     /*
-.########.########..####.########
-.##.......##.....##..##.....##...
-.##.......##.....##..##.....##...
-.######...##.....##..##.....##...
-.##.......##.....##..##.....##...
-.##.......##.....##..##.....##...
-.########.########..####....##...
-*/
+    .########.########..####.########
+    .##.......##.....##..##.....##...
+    .##.......##.....##..##.....##...
+    .######...##.....##..##.....##...
+    .##.......##.....##..##.....##...
+    .##.......##.....##..##.....##...
+    .########.########..####....##...
+     */
 
-    function getPressReleaseInfo($id)
+    public function getPressReleaseInfo($id)
     {
         $this->db->select();
         $this->db->from('press_release');
@@ -118,34 +120,34 @@ class News_model extends CI_Model
         return $query->row();
     }
 
-    function pressReleaseUpdate($userInfo, $id)
+    public function pressReleaseUpdate($userInfo, $id)
     {
         $this->db->where('pr_id', $id);
         $this->db->update('press_release', $userInfo);
 
-        return TRUE;
+        return true;
     }
 
-    function tagsEditSend($userInfo, $userId)
+    public function tagsEditSend($userInfo, $userId)
     {
         $this->db->where('tags_id', $userId);
         $this->db->update('tags', $userInfo);
 
-        return TRUE;
+        return true;
     }
 
     /*
- ######  ##     ## ########  ######  ##    ##
-##    ## ##     ## ##       ##    ## ##   ##
-##       ##     ## ##       ##       ##  ##
-##       ######### ######   ##       #####
-##       ##     ## ##       ##       ##  ##
-##    ## ##     ## ##       ##    ## ##   ##
- ######  ##     ## ########  ######  ##    ##
-*/
+    ######  ##     ## ########  ######  ##    ##
+    ##    ## ##     ## ##       ##    ## ##   ##
+    ##       ##     ## ##       ##       ##  ##
+    ##       ######### ######   ##       #####
+    ##       ##     ## ##       ##       ##  ##
+    ##    ## ##     ## ##       ##    ## ##   ##
+    ######  ##     ## ########  ######  ##    ##
+     */
 
     // 網址防禦
-    function editProtectCheck($id, $isTag = false, $pr_tags_check = false)
+    public function editProtectCheck($id, $isTag = false, $pr_tags_check = false)
     {
         $this->db->trans_start();
 
@@ -168,10 +170,10 @@ class News_model extends CI_Model
 
         $this->db->trans_complete();
 
-        return  $query->num_rows();
+        return $query->num_rows();
     }
 
-    function imgNameCheck($imgName, $type = 1)
+    public function imgNameCheck($imgName, $type = 1)
     {
         $this->db->trans_start();
         $this->db->select('img');
@@ -187,10 +189,10 @@ class News_model extends CI_Model
 
         $this->db->trans_complete();
 
-        return  $query->num_rows();
+        return $query->num_rows();
     }
 
-    function mainTitleCheck($name, $type, $mode, $id)
+    public function mainTitleCheck($name, $type, $mode, $id)
     {
         $this->db->trans_start();
         $this->db->select('main_title');
@@ -206,10 +208,10 @@ class News_model extends CI_Model
 
         $this->db->trans_complete();
 
-        return  $query->num_rows();
+        return $query->num_rows();
     }
 
-    function tagsCheck($name, $id)
+    public function tagsCheck($name, $id)
     {
         $this->db->trans_start();
         $this->db->select(); // 空白預設爲*
@@ -223,20 +225,20 @@ class News_model extends CI_Model
 
         $this->db->trans_complete();
 
-        return  $query->num_rows();
+        return $query->num_rows();
     }
 
     /*
-   ###    ########  ########
-  ## ##   ##     ## ##     ##
- ##   ##  ##     ## ##     ##
-##     ## ##     ## ##     ##
-######### ##     ## ##     ##
-##     ## ##     ## ##     ##
-##     ## ########  ########
-*/
+    ###    ########  ########
+    ## ##   ##     ## ##     ##
+    ##   ##  ##     ## ##     ##
+    ##     ## ##     ## ##     ##
+    ######### ##     ## ##     ##
+    ##     ## ##     ## ##     ##
+    ##     ## ########  ########
+     */
 
-    function pressReleaseAdd($press_release_info)
+    public function pressReleaseAdd($press_release_info)
     {
         $this->db->trans_start();
         $this->db->insert('press_release', $press_release_info);
@@ -248,7 +250,7 @@ class News_model extends CI_Model
         return $insert_id;
     }
 
-    function tagsAddSend($userInfo)
+    public function tagsAddSend($userInfo)
     {
         $this->db->trans_start();
         $this->db->insert('tags', $userInfo);
@@ -260,10 +262,10 @@ class News_model extends CI_Model
         return $insert_id;
     }
 
-    function prTagsAdd($pr_tags_info)
+    public function prTagsAdd($pr_tags_info)
     {
         $this->db->trans_start();
-        $this->db->insert_batch('pr_tags', $pr_tags_info);// insert陣列
+        $this->db->insert_batch('pr_tags', $pr_tags_info); // insert陣列
 
         $insert_id = $this->db->insert_id();
 
@@ -273,17 +275,17 @@ class News_model extends CI_Model
     }
 
     /*
-########  ######## ##       ######## ######## ########
-##     ## ##       ##       ##          ##    ##
-##     ## ##       ##       ##          ##    ##
-##     ## ######   ##       ######      ##    ######
-##     ## ##       ##       ##          ##    ##
-##     ## ##       ##       ##          ##    ##
-########  ######## ######## ########    ##    ########
-*/
+    ########  ######## ##       ######## ######## ########
+    ##     ## ##       ##       ##          ##    ##
+    ##     ## ##       ##       ##          ##    ##
+    ##     ## ######   ##       ######      ##    ######
+    ##     ## ##       ##       ##          ##    ##
+    ##     ## ##       ##       ##          ##    ##
+    ########  ######## ######## ########    ##    ########
+     */
 
     // 新聞訊息update時將舊的圖片刪除,先獲取圖片名稱
-    function imgNameRepeatDel($id)
+    public function imgNameRepeatDel($id)
     {
         $this->db->select();
         $this->db->from('press_release');
@@ -299,7 +301,7 @@ class News_model extends CI_Model
      * @return boolean $result : TRUE / FALSE
      * 刪除新聞訊息列表
      */
-    function newsListDel($pr_id)
+    public function newsListDel($pr_id)
     {
         $this->db->where('pr_id', $pr_id);
         $this->db->delete('press_release');
@@ -311,7 +313,7 @@ class News_model extends CI_Model
     }
 
     // 刪除標籤列表
-    function deleteNewsTag($id)
+    public function deleteNewsTag($id)
     {
         $this->db->where('tags_id', $id);
         $this->db->delete('tags');
@@ -320,7 +322,7 @@ class News_model extends CI_Model
     }
 
     // 刪除編輯中在pr_tags的舊資料
-    function prTagsDel($pr_id)
+    public function prTagsDel($pr_id)
     {
         $this->db->where('pr_id', $pr_id);
         $this->db->delete('pr_tags');
@@ -329,16 +331,16 @@ class News_model extends CI_Model
     }
 
     /*
-########    ###     ######           ########  ##       ##     ##  ######   #### ##    ##
+    ########    ###     ######           ########  ##       ##     ##  ######   #### ##    ##
     ##      ## ##   ##    ##          ##     ## ##       ##     ## ##    ##   ##  ###   ##
     ##     ##   ##  ##                ##     ## ##       ##     ## ##         ##  ####  ##
     ##    ##     ## ##   #### ####### ########  ##       ##     ## ##   ####  ##  ## ## ##
     ##    ######### ##    ##          ##        ##       ##     ## ##    ##   ##  ##  ####
     ##    ##     ## ##    ##          ##        ##       ##     ## ##    ##   ##  ##   ###
     ##    ##     ##  ######           ##        ########  #######   ######   #### ##    ##
-*/
+     */
 
-    function getTagsEditInfo($id)
+    public function getTagsEditInfo($id)
     {
         $this->db->select();
         $this->db->from('tags');
@@ -349,7 +351,7 @@ class News_model extends CI_Model
         return $query->row();
     }
 
-    function getTagsList()
+    public function getTagsList()
     {
         $this->db->select();
         $this->db->from('tags as BaseTbl');
@@ -362,7 +364,7 @@ class News_model extends CI_Model
         return $result;
     }
 
-    function getTagsChoice($id = '')
+    public function getTagsChoice($id = '')
     {
         $this->db->select();
         $this->db->from('pr_tags as pt');

@@ -32,27 +32,32 @@ $e       = $getInnerInfo->editor;
 		</div>
 		<div class="col-md-12">
 			<div class="inner-share">
-				<span style="font-size:14px;font-weight:bold">發布時間：<?php echo $date; ?></span>
-				<div class="addthis_inline_share_toolbox"></div>
-
-				<!-- 社群分享 -->
-				<!-- <ul class="share-buttons pull-right">
-					<li>
-						<a href="javascript:void(0)" onclick="CopyTextToClipboard('copythis')">
-							<img alt="Share"
-								src="<?php echo base_url('assets/f_imgs/'); ?>sharingButtonsGenerator/share_icon_grey.svg" />
-						</a>
-					</li>
-				</ul> -->
-
-				<script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async"
-					defer="defer"></script>
-				<!-- 點擊複製連結 -->
-				<div id="copythis"></div>
+				<span class="pull-left" style="font-size:14px;font-weight:bold">發布時間：<?php echo $date; ?></span>
+				<!-- 社群分享列 -->
+				<div class="share-buttons">
+					<!-- addthis -->
+					<div class="addthis_inline_share_toolbox"></div>
+					<!-- copythis -->
+					<a class="copy-hover" href="javascript:void(0)" onclick="CopyTextToClipboard('copythis')">
+						<img alt="Share" src="<?php echo base_url('assets/f_imgs/'); ?>share_icon_grey.svg" />
+					</a>
+					<div id="copythis"></div>
+				</div>
 			</div>
 		</div>
 		<div class="col-md-12">
-		<img style="width:100%" src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>" alt="img not found">
+			<img style="width:100%" src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>"
+				alt="img not found">
+		</div>
+		<div class="col-md-12">
+			<div class="e">
+				<?php echo $e; ?>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+
 		</div>
 	</div>
 </div>
