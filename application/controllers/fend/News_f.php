@@ -12,7 +12,6 @@ class News_f extends FendBaseController
         $this->load->model('website_model');
         $this->load->model('news_f_model');
         $this->global['getSetupInfo'] = $this->website_model->getSetupInfo();
-        $this->global['pageTitle']    = '時代力量立法院黨團';
         $this->global['navActive']    = 1;
         // $this->isLoggedIn();
     }
@@ -26,6 +25,8 @@ class News_f extends FendBaseController
 
     public function index()
     {
+        $this->global['pageTitle'] = '新聞訊息 - 時代力量立法院黨團';
+
         $data = array(
             'get1Info' => $this->news_f_model->getNewsInfo(1),
             'get2Info' => $this->news_f_model->getNewsInfo(2),
@@ -50,12 +51,15 @@ class News_f extends FendBaseController
     {
         switch ($type_id) {
             case '1':
+                $this->global['pageTitle']     = '法案及議事說明 - 時代力量立法院黨團';
                 $this->global['breadcrumbTag'] = '法案及議事說明';
                 break;
             case '2':
+                $this->global['pageTitle']     = '懶人包及議題追追追 - 時代力量立法院黨團';
                 $this->global['breadcrumbTag'] = '懶人包及議題追追追';
                 break;
             case '3':
+                $this->global['pageTitle']     = '行動紀實 - 時代力量立法院黨團';
                 $this->global['breadcrumbTag'] = '行動紀實';
                 break;
         }
@@ -85,7 +89,15 @@ class News_f extends FendBaseController
         $this->loadViews("fend/news/newsLists_f", $this->global, $data, null);
     }
 
-    // 新聞訊息列表內頁
+/*
+.####.##....##.##....##.########.########.
+..##..###...##.###...##.##.......##.....##
+..##..####..##.####..##.##.......##.....##
+..##..##.##.##.##.##.##.######...########.
+..##..##..####.##..####.##.......##...##..
+..##..##...###.##...###.##.......##....##.
+.####.##....##.##....##.########.##.....##
+ */
     public function newsInner()
     {
         $id      = $this->input->get('d');
@@ -94,6 +106,12 @@ class News_f extends FendBaseController
         $data = array(
             'getInnerInfo' => $this->news_f_model->getInnerInfo($id),
         );
+
+        foreach ($data['getInnerInfo'] as $k => $v) {
+            if ($k == 'main_title') {
+                $this->global['pageTitle'] = $v;
+            }
+        }
 
         switch ($type_id) {
             case '1':

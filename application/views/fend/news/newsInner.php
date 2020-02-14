@@ -33,33 +33,26 @@ $e       = $getInnerInfo->editor;
 		<div class="col-md-12">
 			<div class="inner-share">
 				<span style="font-size:14px;font-weight:bold">發布時間：<?php echo $date; ?></span>
+				<div class="addthis_inline_share_toolbox"></div>
+
 				<!-- 社群分享 -->
-				<ul class="share-buttons pull-right">
-					<li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fnewpowerparty.geekers.tw%2F&quote="
-							title="Share on Facebook" target="_blank"><img alt="Share on Facebook"
-								src="<?php echo base_url('assets/f_imgs/'); ?>sharingButtonsGenerator/flat_web_icon_set/color/Facebook.png" /></a>
-					</li>
-					<li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fnewpowerparty.geekers.tw%2F&text=:%20http%3A%2F%2Fnewpowerparty.geekers.tw%2F"
-							target="_blank" title="Tweet"><img alt="Tweet"
-								src="<?php echo base_url('assets/f_imgs/'); ?>sharingButtonsGenerator/flat_web_icon_set/color/Twitter.png" /></a>
-					</li>
-					<div class="line-it-button" data-lang="zh_Hant" data-type="share-c" data-ver="3"
-						data-url="http://newpowerparty.geekers.tw/" data-color="default" data-size="small" data-count="false"
-						style="display: none;"></div>
+				<!-- <ul class="share-buttons pull-right">
 					<li>
 						<a href="javascript:void(0)" onclick="CopyTextToClipboard('copythis')">
 							<img alt="Share"
 								src="<?php echo base_url('assets/f_imgs/'); ?>sharingButtonsGenerator/share_icon_grey.svg" />
 						</a>
 					</li>
-				</ul>
+				</ul> -->
 
 				<script src="https://d.line-scdn.net/r/web/social-plugin/js/thirdparty/loader.min.js" async="async"
 					defer="defer"></script>
-
 				<!-- 點擊複製連結 -->
 				<div id="copythis"></div>
 			</div>
+		</div>
+		<div class="col-md-12">
+		<img style="width:100%" src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>" alt="img not found">
 		</div>
 	</div>
 </div>
@@ -82,3 +75,4 @@ $e       = $getInnerInfo->editor;
 		alert("網址複製完成！");
 	}
 </script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e4611d57249fac6"></script>
