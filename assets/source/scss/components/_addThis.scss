@@ -24,4 +24,9 @@
          }
       }
    }
+
+   @include media-breakpoint-down(xs) {
+      flex-direction: column-reverse;
+      align-items: center;
+   }
 }

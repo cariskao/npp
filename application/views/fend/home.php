@@ -54,6 +54,7 @@ if (!empty($getCarouselInfo)) {
             <?php
 if (!empty($getNewsInfo)) {
     foreach ($getNewsInfo as $record) {
+        $id      = $record->pr_id;
         $type_id = $record->pr_type_id;
         $img     = $record->img;
         $m_title = $record->main_title;
@@ -61,7 +62,8 @@ if (!empty($getNewsInfo)) {
         $e       = $record->editor;
         ?>
             <div class="col-lg-4 col-md-6">
-               <a href="#" class="newsBlock_style">
+               <a href="<?php echo base_url('fend/news_f/newsInner/' . $type_id . '/' . $id); ?>"
+                  class="newsBlock_style" style="border-radius:0">
                   <div class="card mb-4 box-shadow">
                      <img class="card-img-top"
                         src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>"
