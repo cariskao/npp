@@ -25,6 +25,11 @@ class News_f extends FendBaseController
 
     public function index()
     {
+        $check = $this->input->get('b');
+        if ($check) {
+            echo '<script>alert("找不到此資料")</script>';
+        }
+
         $this->global['pageTitle'] = '新聞訊息 - 時代力量立法院黨團';
 
         $data = array(
@@ -98,19 +103,33 @@ class News_f extends FendBaseController
 ..##..##...###.##...###.##.......##....##.
 .####.##....##.##....##.########.##.....##
  */
-    public function newsInner()
+    public function newsInner($type_id, $id)
     {
-        $id      = $this->input->get('d');
-        $type_id = $this->input->get('t');
+        // 在views使用?xx=xx
+        // $id      = $this->input->get('d');
+        // $type_id = $this->input->get('t');
+        $this->session->set_flashdata('defense', '');
 
         $data = array(
-            'getInnerInfo' => $this->news_f_model->getInnerInfo($id),
+            'getInnerInfo'  => $this->news_f_model->getInnerInfo($id),
+            'innerPrevNews' => $this->news_f_model->innerPrevNews($type_id, $id),
+            'innerNextNews' => $this->news_f_model->innerNextNews($type_id, $id),
         );
 
         foreach ($data['getInnerInfo'] as $k => $v) {
+            if ($k == 'pr_type_id') {
+                $t = $v;
+            }
+            if ($k == 'pr_id') {
+                $d = $v;
+            }
             if ($k == 'main_title') {
                 $this->global['pageTitle'] = $v;
             }
+        }
+
+        if ($t != $type_id || $d != $id) {
+            redirect('fend/news_f?b=true');
         }
 
         switch ($type_id) {

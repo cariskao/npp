@@ -6,8 +6,10 @@ $m_title = $getInnerInfo->main_title;
 $s_title = $getInnerInfo->sub_title;
 $date    = $getInnerInfo->date_start;
 $e       = $getInnerInfo->editor;
-?>
 
+$prev = !empty($innerPrevNews) ? $innerPrevNews->pr_id : '';
+$next = !empty($innerNextNews) ? $innerNextNews->pr_id : '';
+?>
 <div class="breadcrumb-bg">
 	<div class="container">
 		<nav aria-label="breadcrumb">
@@ -54,12 +56,23 @@ $e       = $getInnerInfo->editor;
 				<?php echo $e; ?>
 			</div>
 		</div>
-	</div>
-	<div class="row">
 		<div class="col-md-12">
-
+			標籤
 		</div>
 	</div>
+	<nav class="newsInner-pagination">
+		<ul>
+			<?php if ($prev != ''): ?>
+			<li class="newsInner-prev"><a
+					href="<?php echo base_url('fend/news_f/newsInner/' . $type_id . '/' . $prev); ?>">上一則</a></li>
+			<?php endif;?>
+			<li class="newsInner-list"><a href="<?php echo base_url('fend/news_f/newsFlists/' . $type_id); ?>">回列表</a></li>
+			<?php if ($next != ''): ?>
+			<li class="newsInner-next"><a
+					href="<?php echo base_url('fend/news_f/newsInner/' . $type_id . '/' . $next); ?>">下一則</a></li>
+			<?php endif;?>
+		</ul>
+	</nav>
 </div>
 <div id="gotop">^</div>
 <script type="text/javascript">
@@ -80,4 +93,5 @@ $e       = $getInnerInfo->editor;
 		alert("網址複製完成！");
 	}
 </script>
+<!-- addthis分享列 -->
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e4611d57249fac6"></script>

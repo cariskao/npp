@@ -91,9 +91,9 @@ class News_f_model extends CI_Model
         $query = $this->db->get();
 
         $result = $query->result();
+
         return $result;
     }
-
     /*
     .####.##....##.##....##.########.########.
     ..##..###...##.###...##.##.......##.....##
@@ -104,6 +104,7 @@ class News_f_model extends CI_Model
     .####.##....##.##....##.########.##.....##
      */
 
+    // get inner page  content
     public function getInnerInfo($id)
     {
         $this->db->select();
@@ -116,4 +117,25 @@ class News_f_model extends CI_Model
         return $query->row();
     }
 
+    // 獲取下方分頁的資料
+    public function innerPrevNews($type_id, $id)
+    {
+        // 不要使用「`」,會造成 as error
+        // 上、下一則使用id排序來跑,不要使用日期排序來跑,因爲同一天會有多筆文章,到時候會error
+        // 而且因爲資料使用SQL語法載入,否則正常輸入資料,id越大日期也會越大才對
+        $sql = "SELECT pr.pr_id FROM press_release pr WHERE pr.pr_type_id = $type_id AND pr.showup = 1 AND pr.pr_id < (SELECT pr_id FROM press_release WHERE pr_id = $id) ORDER BY pr.pr_id DESC LIMIT 1 ";
+
+        $query = $this->db->query($sql);
+
+        return $query->row();
+    }
+
+    public function innerNextNews($type_id, $id)
+    {
+        $sql = "SELECT pr.pr_id FROM press_release pr WHERE pr.pr_type_id = $type_id AND pr.showup = 1 AND pr.pr_id > (SELECT pr_id FROM press_release WHERE pr_id = $id) ORDER BY pr.pr_id ASC LIMIT 1 ";
+
+        $query = $this->db->query($sql);
+
+        return $query->row();
+    }
 }

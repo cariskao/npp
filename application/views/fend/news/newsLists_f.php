@@ -67,7 +67,10 @@ if (!empty($listItems)) {
         $e       = $record->editor;
         ?>
 		<div class="col-lg-4 col-md-6">
-			<a href="<?php echo base_url('fend/news_f/newsInner?t=' . $type_id . '&d=' . $id); ?>" class="newsBlock_style"
+			<!-- 在controller使用input->get() -->
+			<!-- <a href="<?php echo base_url('fend/news_f/newsInner?t=' . $type_id . '&d=' . $id); ?>" class="newsBlock_style"
+				style="border-radius:0"> -->
+			<a href="<?php echo base_url('fend/news_f/newsInner/' . $type_id . '/' . $id); ?>" class="newsBlock_style"
 				style="border-radius:0">
 				<div class="card mb-4 box-shadow" style="border-radius:0">
 					<img class="card-img-top"

@@ -18,6 +18,7 @@
             <?php
 if (!empty($get1Info)) {
     foreach ($get1Info as $record) {
+        $id      = $record->pr_id;
         $type_id = $record->pr_type_id;
         $img     = $record->img;
         $m_title = $record->main_title;
@@ -25,7 +26,8 @@ if (!empty($get1Info)) {
         $e       = $record->editor;
         ?>
             <div class="col-lg-4 col-md-6">
-               <a href="#" class="newsBlock_style">
+               <a href="<?php echo base_url('fend/news_f/newsInner/' . $type_id . '/' . $id); ?>"
+                  class="newsBlock_style" style="border-radius:0">
                   <div class="card mb-4 box-shadow">
                      <img class="card-img-top"
                         src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>"
@@ -55,6 +57,7 @@ if (!empty($get1Info)) {
             <?php
 if (!empty($get2Info)) {
     foreach ($get2Info as $record) {
+        $id      = $record->pr_id;
         $type_id = $record->pr_type_id;
         $img     = $record->img;
         $m_title = $record->main_title;
@@ -62,7 +65,8 @@ if (!empty($get2Info)) {
         $e       = $record->editor;
         ?>
             <div class="col-lg-4 col-md-6">
-               <a href="#" class="newsBlock_style">
+               <a href="<?php echo base_url('fend/news_f/newsInner/' . $type_id . '/' . $id); ?>"
+                  class="newsBlock_style" style="border-radius:0">
                   <div class="card mb-4 box-shadow">
                      <img class="card-img-top"
                         src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>"
@@ -92,6 +96,7 @@ if (!empty($get2Info)) {
             <?php
 if (!empty($get3Info)) {
     foreach ($get3Info as $record) {
+        $id      = $record->pr_id;
         $type_id = $record->pr_type_id;
         $img     = $record->img;
         $m_title = $record->main_title;
@@ -99,7 +104,8 @@ if (!empty($get3Info)) {
         $e       = $record->editor;
         ?>
             <div class="col-lg-4 col-md-6">
-               <a href="#" class="newsBlock_style">
+               <a href="<?php echo base_url('fend/news_f/newsInner/' . $type_id . '/' . $id); ?>"
+                  class="newsBlock_style" style="border-radius:0">
                   <div class="card mb-4 box-shadow">
                      <img class="card-img-top"
                         src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>"
