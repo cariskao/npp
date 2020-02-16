@@ -114,6 +114,7 @@ class News_f extends FendBaseController
             'getInnerInfo'  => $this->news_f_model->getInnerInfo($id),
             'innerPrevNews' => $this->news_f_model->innerPrevNews($type_id, $id),
             'innerNextNews' => $this->news_f_model->innerNextNews($type_id, $id),
+            'getTagsChoice' => $this->news_f_model->getTagsChoice($id),
         );
 
         foreach ($data['getInnerInfo'] as $k => $v) {

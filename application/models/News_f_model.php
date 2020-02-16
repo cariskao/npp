@@ -138,4 +138,30 @@ class News_f_model extends CI_Model
 
         return $query->row();
     }
+
+    /*
+    .########....###.....######....######.
+    ....##......##.##...##....##..##....##
+    ....##.....##...##..##........##......
+    ....##....##.....##.##...####..######.
+    ....##....#########.##....##........##
+    ....##....##.....##.##....##..##....##
+    ....##....##.....##..######....######.
+     */
+    public function getTagsChoice($id = '')
+    {
+        $this->db->select();
+        $this->db->from('pr_tags as pt');
+        $this->db->join('press_release as pr', 'pt.pr_id = pr.pr_id', 'inner');
+        $this->db->join('tags as t', 't.tags_id = pt.tags_id', 'inner');
+
+        if ($id != '') {
+            $this->db->where('pt.pr_id', $id);
+        }
+
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
 }

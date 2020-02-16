@@ -1,17 +1,10 @@
 // editor
 .e {
-   margin: 50px 0;
-   border-bottom: 1px solid #979797;
+   margin-top: 50px;
 }
 
 // 下方頁數導航
 $bg-color:#F5A623;
-
-@mixin notNum-page_style($w:130px, $lh:$lh, $r:30px) {
-   width: $w;
-   height: $lh;
-   border-radius: $r;
-}
 
 .newsInner-pagination {
    ul {
@@ -22,7 +15,8 @@ $bg-color:#F5A623;
 
       li,
       a {
-         @include notNum-page_style;
+         width: 130px;
+         border-radius: 30px;
 
          font-size: 20px;
          line-height: 40px;
@@ -54,5 +48,49 @@ $bg-color:#F5A623;
          text-decoration: none;
          color: black;
       }
+   }
+}
+
+// 下方tags
+.newsInner-tags {
+   border-bottom: 1px solid #979797;
+
+   ul {
+      display: flex;
+      list-style: none;
+      padding-left: 0;
+      align-items: center;
+
+      @include media-breakpoint-down(xs) {
+         flex-direction: column;
+      }
+   }
+
+   img {
+      width: 30px;
+   }
+
+   li {
+      text-align: center;
+      margin: 10px 5px;
+      transition: background-color .3s;
+
+      &:not(.img) {
+         display: flex;
+         align-items: stretch;
+         background-color: #4A4A4A;
+         border-radius: 30px;
+
+         &:hover {
+            background-color: lighten(#4A4A4A, 10%);
+         }
+      }
+   }
+
+   a {
+      text-decoration: none;
+      color: white;
+      font-size: 14px;
+      padding: 5px 10px;
    }
 }
