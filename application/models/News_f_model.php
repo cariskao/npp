@@ -148,15 +148,22 @@ class News_f_model extends CI_Model
     ....##....##.....##.##....##..##....##
     ....##....##.....##..######....######.
      */
-    public function getTagsChoice($id = '')
+    public function getTagsChoice($id = '', $tag_id = '')
     {
         $this->db->select();
         $this->db->from('pr_tags as pt');
         $this->db->join('press_release as pr', 'pt.pr_id = pr.pr_id', 'inner');
         $this->db->join('tags as t', 't.tags_id = pt.tags_id', 'inner');
 
+        // newsInner下方tags
         if ($id != '') {
             $this->db->where('pt.pr_id', $id);
+        }
+
+        // newsTags_f 標籤總覽
+        if ($tag_id != '') {
+            $this->db->where('pt.tags_id', $tag_id);
+            $this->db->where('pr.showup', 1);
         }
 
         $query = $this->db->get();

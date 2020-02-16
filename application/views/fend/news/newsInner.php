@@ -62,7 +62,7 @@ $next = !empty($innerNextNews) ? $innerNextNews->pr_id : '';
 					<li class="img"><img src="<?php echo base_url('assets/f_imgs/tag.png'); ?>" alt=""></li>
 					<?php if (!empty($getTagsChoice)): ?>
 					<?php foreach ($getTagsChoice as $item): ?>
-					<li><a href=""><?=$item->name?></a></li>
+					<li><a href="<?php echo base_url('fend/news_f/newsTags/' . $item->tags_id); ?>"><?=$item->name?></a></li>
 					<?php endforeach;?>
 					<?php endif;?>
 				</ul>

@@ -61,7 +61,7 @@ $bg-color:#F5A623;
       padding-left: 0;
       align-items: center;
 
-      @include media-breakpoint-down(xs) {
+      @include media-breakpoint-down(sm) {
          flex-direction: column;
       }
    }

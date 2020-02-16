@@ -147,4 +147,31 @@ class News_f extends FendBaseController
 
         $this->loadViews("fend/news/newsInner", $this->global, $data, null);
     }
+
+    /*
+    .########....###.....######....######.
+    ....##......##.##...##....##..##....##
+    ....##.....##...##..##........##......
+    ....##....##.....##.##...####..######.
+    ....##....#########.##....##........##
+    ....##....##.....##.##....##..##....##
+    ....##....##.....##..######....######.
+     */
+    public function newsTags($tag_id)
+    {
+        $data = array(
+            'getTagsChoice' => $this->news_f_model->getTagsChoice('', $tag_id),
+        );
+
+        foreach ($data['getTagsChoice'] as $k => $v) {
+            foreach ($v as $k => $i) {
+                $name = $i;
+            }
+        }
+
+        $this->global['pageTitle']     = $name . ' - 新聞訊息 - 時代力量立法院黨團';
+        $this->global['breadcrumbTag'] = $name;
+
+        $this->loadViews("fend/news/newsTags_f", $this->global, $data, null);
+    }
 }
