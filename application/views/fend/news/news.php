@@ -88,7 +88,7 @@ if (!empty($get2Info)) {
       </div>
    </div>
 </div>
-<div class="container custom-gutters" style="margin-bottom:70px">
+<div class="container custom-gutters">
    <div class="row">
       <div class="col-md-12">
          <div class="home-title_style" style="margin-top:30px">行動紀實</div>

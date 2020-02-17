@@ -23,6 +23,7 @@ class News_f extends FendBaseController
         $this->loadViews("404", $this->global, null, null);
     }
 
+    // 新聞訊息首頁
     public function index()
     {
         $check = $this->input->get('b');
@@ -84,7 +85,10 @@ class News_f extends FendBaseController
         // echo ' count: ' . $count;
 
         //記得加上「/」
-        // paginationCompress要配合searchText(含前台的html)才有作用
+        // paginationCompress好像要配合前台的form才有作用
+        // 當使用__CLASS__跟__FUNCTION__時,若檔案放在controller目錄的一個子目錄下,獲取的url會吃不到子目錄名稱
+        // $siteUrl = site_url(strtolower(__CLASS__) . '/' . __FUNCTION__);
+        // $returns = $this->paginationCompress(site_url($siteUrl, $count, 12, 5);
         $returns = $this->paginationCompress("fend/news_f/newsFlists/" . $type_id . '/', $count, 12, 5);
         // echo ' segment-News: ' . $returns['segment'];
 
@@ -92,6 +96,27 @@ class News_f extends FendBaseController
         $data['type_id']   = $type_id; //用來帶入newsLists_f中searchText的form action
 
         $this->loadViews("fend/news/newsLists_f", $this->global, $data, null);
+    }
+
+    // tags列表
+    public function tagsList($tag_id)
+    {
+        $count = $this->news_f_model->tagslistingCount($tag_id);
+        // echo ' count: ' . $count . '<br>';
+        $returns = $this->paginationCompress("fend/news_f/tagsList/" . $tag_id . '/', $count, 5, 5);
+        // echo ' segment-News: ' . $returns['segment'];
+        $data['tagsList'] = $this->news_f_model->tagsListing($tag_id, $returns["page"], $returns["segment"]);
+
+        foreach ($data['tagsList'] as $k => $v) {
+            foreach ($v as $k => $i) {
+                $name = $i;
+            }
+        }
+
+        $this->global['pageTitle']     = $name . ' - 新聞訊息 - 時代力量立法院黨團';
+        $this->global['breadcrumbTag'] = $name;
+
+        $this->loadViews("fend/news/tagsList_f", $this->global, $data, null);
     }
 
 /*
@@ -146,32 +171,5 @@ class News_f extends FendBaseController
         }
 
         $this->loadViews("fend/news/newsInner", $this->global, $data, null);
-    }
-
-    /*
-    .########....###.....######....######.
-    ....##......##.##...##....##..##....##
-    ....##.....##...##..##........##......
-    ....##....##.....##.##...####..######.
-    ....##....#########.##....##........##
-    ....##....##.....##.##....##..##....##
-    ....##....##.....##..######....######.
-     */
-    public function newsTags($tag_id)
-    {
-        $data = array(
-            'getTagsChoice' => $this->news_f_model->getTagsChoice('', $tag_id),
-        );
-
-        foreach ($data['getTagsChoice'] as $k => $v) {
-            foreach ($v as $k => $i) {
-                $name = $i;
-            }
-        }
-
-        $this->global['pageTitle']     = $name . ' - 新聞訊息 - 時代力量立法院黨團';
-        $this->global['breadcrumbTag'] = $name;
-
-        $this->loadViews("fend/news/newsTags_f", $this->global, $data, null);
     }
 }

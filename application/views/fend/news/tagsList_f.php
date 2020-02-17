@@ -11,17 +11,21 @@
 </div>
 <div class="container" style="margin-bottom:20px">
 	<div class="row" style="border-bottom: solid 1px gray;">
+		<div class="col-sm-12" style="display:none;">
+			<form id="searchList"></form>
+		</div>
 		<div class="col-md-12">
 			<div class="newsTags-title"><span><?php echo $breadcrumbTag; ?></span></div>
 		</div>
 	</div>
 </div>
 <div class="container" style="margin-bottom:20px">
-	<div class="row">
-		<?php if (!empty($getTagsChoice)): ?>
-		<?php foreach ($getTagsChoice as $item): ?>
+	<div class="row" style="margin-bottom:50px">
+		<?php if (!empty($tagsList)): ?>
+		<?php foreach ($tagsList as $item): ?>
 		<div class="col-md-12">
-			<a href="<?php echo base_url('fend/news_f/newsInner/' . $item->pr_type_id . '/' . $item->pr_id); ?>" class="tags-block">
+			<a href="<?php echo base_url('fend/news_f/newsInner/' . $item->pr_type_id . '/' . $item->pr_id); ?>"
+				class="tags-block">
 				<h5><?=$item->main_title;?></h5>
 				<span>發布時間：<?=$item->date_start;?></span>
 				<div class="content"><?=mb_strimwidth(strip_tags($item->editor), 0, 200, '...');?></div>
@@ -30,6 +34,7 @@
 		<?php endforeach;?>
 		<?php endif;?>
 	</div>
+	<?php echo $this->pagination->create_links(); ?>
 </div>
 <div id="gotop">^</div>
 <script type="text/javascript">
@@ -67,16 +72,15 @@
 			var value = link.substring(link.lastIndexOf('/') + 1);
 			var url = link.substr(link.lastIndexOf('/', link.lastIndexOf('/') - 1) + 1);
 			var site = url.lastIndexOf("\/");
-			var type_id = url.substring(0, site);
+			var tag_id = url.substring(0, site);
 
 			// console.log('link: ' + link);
 			// console.log('value: ' + value);
 			// console.log('url: ' + url);
 			// console.log('site: ' + site);
-			// console.log('type_id: ' + type_id);
+			// console.log('tag_id: ' + tag_id);
 
-			jQuery("#searchList").attr("action", baseURL + "fend/news_f/newsFlists/" + type_id + '/' +
-				value);
+			jQuery("#searchList").attr("action", baseURL + "fend/news_f/tagsList/" + tag_id + '/' + value);
 			jQuery("#searchList").submit();
 		});
 	});

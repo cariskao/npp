@@ -59,10 +59,10 @@ $next = !empty($innerNextNews) ? $innerNextNews->pr_id : '';
 		<div class="col-md-12">
 			<nav class="newsInner-tags">
 				<ul>
-					<li class="img"><img src="<?php echo base_url('assets/f_imgs/tag.png'); ?>" alt=""></li>
 					<?php if (!empty($getTagsChoice)): ?>
+					<li class="img"><img src="<?php echo base_url('assets/f_imgs/tag.png'); ?>" alt=""></li>
 					<?php foreach ($getTagsChoice as $item): ?>
-					<li><a href="<?php echo base_url('fend/news_f/newsTags/' . $item->tags_id); ?>"><?=$item->name?></a></li>
+					<li><a href="<?php echo base_url('fend/news_f/tagsList/' . $item->tags_id); ?>"><?=$item->name?></a></li>
 					<?php endforeach;?>
 					<?php endif;?>
 				</ul>

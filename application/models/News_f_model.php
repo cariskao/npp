@@ -94,6 +94,44 @@ class News_f_model extends CI_Model
 
         return $result;
     }
+
+    // 計算各項tags總頁數
+    public function tagslistingCount($tag_id)
+    {
+
+        $this->db->select();
+        $this->db->from('pr_tags as pt');
+        $this->db->join('press_release as pr', 'pt.pr_id = pr.pr_id', 'inner');
+        $this->db->join('tags as t', 't.tags_id = pt.tags_id', 'inner');
+
+        $this->db->where('pr.showup', 1);
+        $this->db->where('pt.tags_id', $tag_id);
+
+        $query = $this->db->get();
+
+        return $query->num_rows();
+    }
+
+    // 計算tags關聯總項目數
+    public function tagsListing($tag_id, $page, $segment)
+    {
+        $this->db->select();
+        $this->db->from('pr_tags as pt');
+        $this->db->join('press_release as pr', 'pt.pr_id = pr.pr_id', 'inner');
+        $this->db->join('tags as t', 't.tags_id = pt.tags_id', 'inner');
+
+        $this->db->where('pr.showup', 1);
+        $this->db->where('pt.tags_id', $tag_id);
+
+        $this->db->order_by('pr.date_start', 'DESC');
+
+        $this->db->limit($page, $segment);
+        $query = $this->db->get();
+
+        $result = $query->result();
+
+        return $result;
+    }
     /*
     .####.##....##.##....##.########.########.
     ..##..###...##.###...##.##.......##.....##
@@ -148,7 +186,7 @@ class News_f_model extends CI_Model
     ....##....##.....##.##....##..##....##
     ....##....##.....##..######....######.
      */
-    public function getTagsChoice($id = '', $tag_id = '')
+    public function getTagsChoice($id = '')
     {
         $this->db->select();
         $this->db->from('pr_tags as pt');
@@ -158,12 +196,6 @@ class News_f_model extends CI_Model
         // newsInner下方tags
         if ($id != '') {
             $this->db->where('pt.pr_id', $id);
-        }
-
-        // newsTags_f 標籤總覽
-        if ($tag_id != '') {
-            $this->db->where('pt.tags_id', $tag_id);
-            $this->db->where('pr.showup', 1);
         }
 
         $query = $this->db->get();

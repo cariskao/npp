@@ -50,8 +50,8 @@
 				<div class="form-group form-group-custom_submit">
 					<button class="btn btn-default">搜尋</button>
 				</div>
+			</form>
 		</div>
-		</form>
 	</div>
 </div>
 <div class="container custom-gutters" style="margin-bottom:20px">
