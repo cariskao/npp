@@ -46,6 +46,10 @@
 			background-color: #2f4f4f;
 		}
 
+		.skin-blue .sidebar-menu .treeview-menu>li {
+			transition: padding-left, .5s;
+		}
+
 		/* 若有子項目則標題的遊標變成這樣 */
 		.treeview>a {
 			cursor: text;
