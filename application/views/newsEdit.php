@@ -1,12 +1,12 @@
 <?php
-$pr_id = $userInfo->pr_id;
-$type_id = $userInfo->pr_type_id;
-$img = $userInfo->img;
-$m_title = $userInfo->main_title;
-$s_title = $userInfo->sub_title;
+$pr_id      = $userInfo->pr_id;
+$type_id    = $userInfo->pr_type_id;
+$img        = $userInfo->img;
+$m_title    = $userInfo->main_title;
+$s_title    = $userInfo->sub_title;
 $date_start = $userInfo->date_start;
 $time_start = $userInfo->time_start;
-$editor = $userInfo->editor;
+$editor     = $userInfo->editor;
 ?>
 <script src="<?php echo base_url('assets/plugins/selectizejs/dist/js/standalone/selectize.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/selectizejs/js/index.js'); ?>"></script>
@@ -82,14 +82,14 @@ $editor = $userInfo->editor;
 											<select id="select-tools" name="tags[]" placeholder="請選取標籤" multiple="multiple">
 												<option value="">請選取標籤</option>
 												<?php
-												if (!empty($getTagsList)) {
-													foreach ($getTagsList as $record) {
-												?>
+if (!empty($getTagsList)) {
+    foreach ($getTagsList as $record) {
+        ?>
 														<option value="<?php echo $record->tags_id; ?>"><?php echo $record->name; ?></option>
 												<?php
-													}
-												}
-												?>
+}
+}
+?>
 											</select>
 											<input type="hidden" name="type_id" id="type_id" value="<?php echo $type_id; ?>">
 										</div>
@@ -112,9 +112,9 @@ $editor = $userInfo->editor;
 											<div class="input-group">
 												<div id="radioBtn" class="btn-group">
 													<?php
-													$active = $userInfo->showup == 1 ? 'active' : 'notActive';
-													$notActive = $userInfo->showup == 0 ? 'active' : 'notActive';
-													?>
+$active    = $userInfo->showup == 1 ? 'active' : 'notActive';
+$notActive = $userInfo->showup == 0 ? 'active' : 'notActive';
+?>
 													<a class="btn btn-primary btn-sm <?php echo $active; ?>" data-toggle="happy" data-title="Y">顯示</a>
 													<a class="btn btn-primary btn-sm <?php echo $notActive; ?>" data-toggle="happy" data-title="N">隱藏</a>
 												</div>
@@ -189,26 +189,26 @@ $editor = $userInfo->editor;
 				selectTools.setValue(jsArray, true);
 			</script>
 			<?php
-			$this->load->helper('form');
-			$check = $this->session->flashdata('check');
-			if ($check == '驗證失敗') {
-			?>
+$this->load->helper('form');
+$check = $this->session->flashdata('check');
+if ($check == '驗證失敗') {
+    ?>
 				<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 					<?php echo $this->session->flashdata('check') . '!<br>請修正以下提示錯誤!'; ?>
 
 				</div>
-			<?php } ?>
+			<?php }?>
 			<?php
-			$success = $this->session->flashdata('success');
-			// echo $success; //存儲成功!
-			if ($success && $check == '驗證成功') {
-			?>
+$success = $this->session->flashdata('success');
+// echo $success; //存儲成功!
+if ($success && $check == '驗證成功') {
+    ?>
 				<div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 					<?php echo $this->session->flashdata('success'); ?>
 				</div>
-			<?php } ?>
+			<?php }?>
 
 			<style>
 				.box-body>div {
@@ -250,13 +250,7 @@ $editor = $userInfo->editor;
 				}
 
 				.add-fixed-top-css {
-					margin-top: 107.45px;
-				}
-
-				@media (max-width: 767px) {
-					.add-fixed-top-css {
-						margin-top: 57.45px;
-					}
+					margin-top: 104px;
 				}
 			</style>
 			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->

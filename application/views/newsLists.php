@@ -1,7 +1,7 @@
 <div class="content-wrapper">
 	<!-- <section class="content"> -->
 	<section>
-		<div class="functoin-on-top" style="margin-top:51.45px">
+		<div class="functoin-on-top not-list" style="margin-top:51.45px">
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="box" style="border-top:none;border-radius:0">
@@ -99,13 +99,7 @@ if (!empty($listItems)) {
 </div>
 <style>
 	.add-fixed-top-css {
-		margin-top: 107.45px;
-	}
-
-	@media (max-width: 767px) {
-		.add-fixed-top-css {
-			margin-top: 57.45px;
-		}
+		margin-top: 104px;
 	}
 </style>
 <script type="text/javascript" src="<?php echo base_url('assets/js/common.js'); ?>" charset="utf-8"></script>

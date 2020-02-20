@@ -22,21 +22,13 @@
 
 	// 獲取當前頁面url後,就在符合該url的<a></a>上加上.active
 	var windowURL = window.location.href;
-	pageURL = windowURL.substring(0, windowURL.lastIndexOf('/'));
 
-	var x = $('a[href="' + pageURL + '"]');
-	x.addClass('active');
-	x.parent().addClass('active');
-	x.parents('.treeview').addClass('active');
-
-	var y = $('a[href="' + windowURL + '"]');
-	y.addClass('active');
-	y.parent().addClass('active');
-	y.parents('.treeview').addClass('active');
-	// console.log('windowURL', windowURL);
-	// console.log('pageURL', pageURL);
-	// console.log('x', x);
-	// console.log('y', y);
+	var _active = $('a[href="' + windowURL + '"]');
+	_active.addClass('active');
+	_active.parent().addClass('active');
+	_active.parents('.treeview').addClass('active');
+	console.log('windowURL', windowURL);
+	console.log('_active', _active);
 
 	$(document).ready(function () {
 		$('.sidebar-toggle').click(function () {

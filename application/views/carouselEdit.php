@@ -185,13 +185,7 @@ if ($success && $check == '驗證成功') {
 					}
 
 					.add-fixed-top-css {
-						margin-top: 107.45px;
-					}
-
-					@media (max-width: 767px) {
-						.add-fixed-top-css {
-							margin-top: 57.45px;
-						}
+						margin-top: 104px;
 					}
 				</style>
 				<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->

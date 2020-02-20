@@ -104,6 +104,41 @@
 			z-index: 2;
 			top: 0;
 		}
+
+		.functoin-on-top:not(.not-list) {
+			width: 100%;
+		}
+
+		#radioBtn,
+		#radioBtn a {
+			z-index: 0;
+		}
+
+		@-moz-document url-prefix() {
+			.functoin-on-top.not-list {
+				right: 0;
+				left: 230px;
+			}
+
+			@media (max-width: 767px) {
+				.functoin-on-top.not-list {
+					left: 0px;
+				}
+			}
+		}
+
+		@media screen and (-webkit-min-device-pixel-ratio:0) {
+			.functoin-on-top.not-list {
+				right: 0;
+				left: 230px;
+			}
+
+			@media (max-width: 767px) {
+				.functoin-on-top.not-list {
+					left: 0px;
+				}
+			}
+		}
 	</style>
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.js"></script>
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery-ui/jquery-ui.min.js"></script>
@@ -230,7 +265,7 @@
 						</a>
 						<ul class="treeview-menu">
 							<li><a href="<?php echo base_url('members'); ?>">立委管理</a></li>
-							<li><a href="<?php echo base_url('members/years'); ?>">屆期管理</a></li>
+							<li><a href="<?php echo base_url('members/yearLists'); ?>">屆期管理</a></li>
 						</ul>
 					</li>
 					<li class="treeview">

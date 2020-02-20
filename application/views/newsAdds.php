@@ -28,7 +28,8 @@
 					<div class="box box-primary" style="border:none;">
 						<!-- form start -->
 						<!--  enctype="multipart/form-data"記得加 -->
-						<form role="form" action="<?php echo base_url('news/addsSend/' . $type_id); ?>" method="post" id="" role="form" enctype="multipart/form-data">
+						<form role="form" action="<?php echo base_url('news/addsSend/' . $type_id); ?>" method="post" id=""
+							role="form" enctype="multipart/form-data">
 							<div class="box-body">
 								<div class="row">
 									<div class="col-md-12">
@@ -64,14 +65,15 @@
 											<select id="select-tools" name="tags[]" placeholder="請選取標籤">
 												<option value="">請選取標籤</option>
 												<?php
-												if (!empty($getTagsList)) {
-													foreach ($getTagsList as $record) {
-												?>
-														<option value="<?php echo $record->tags_id; ?>"><?php echo $record->name; ?></option>
+if (!empty($getTagsList)) {
+    foreach ($getTagsList as $record) {
+        ?>
+												<option value="<?php echo $record->tags_id; ?>"><?php echo $record->name; ?>
+												</option>
 												<?php
-													}
-												}
-												?>
+}
+}
+?>
 											</select>
 										</div>
 									</div>
@@ -92,8 +94,10 @@
 											<label for="">顯示狀態</label>
 											<div class="input-group">
 												<div id="radioBtn" class="btn-group">
-													<a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Y">顯示</a>
-													<a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="N">隱藏</a>
+													<a class="btn btn-primary btn-sm active" data-toggle="happy"
+														data-title="Y">顯示</a>
+													<a class="btn btn-primary btn-sm notActive" data-toggle="happy"
+														data-title="N">隱藏</a>
 												</div>
 												<input type="hidden" name="happy" id="happy">
 											</div>
@@ -121,121 +125,115 @@
 					<input type="submit" class="btn btn-success submit-pos" value="儲存" />
 					</form>
 				</div>
+				<!-- <div class="col-md-12"> -->
 			</div>
-		</div>
-		<!-- <div class="col-md-12"> -->
 
-		<script language='javascript' type='text/javascript'>
-			// 上方訊息視窗
-			$(function() {
-				setTimeout(function() {
-					$("#alert-success").hide();
-				}, 3000);
-				setTimeout(function() {
-					$("#alert-error").hide();
-				}, 3000);
-			})
+			<script language='javascript' type='text/javascript'>
+				// 上方訊息視窗
+				$(function () {
+					setTimeout(function () {
+						$("#alert-success").hide();
+					}, 3000);
+					setTimeout(function () {
+						$("#alert-error").hide();
+					}, 3000);
+				})
 
-			// 顯示狀態
-			$('#radioBtn a').on('click', function() {
-				var sel = $(this).data('title');
-				var tog = $(this).data('toggle');
-				// console.log('sel', sel);
-				// console.log('tog', tog);
-				$('#' + tog).prop('value', sel); //將該被點擊的data-title值寫入到id="happy"的value中。
+				// 顯示狀態
+				$('#radioBtn a').on('click', function () {
+					var sel = $(this).data('title');
+					var tog = $(this).data('toggle');
+					// console.log('sel', sel);
+					// console.log('tog', tog);
+					$('#' + tog).prop('value', sel); //將該被點擊的data-title值寫入到id="happy"的value中。
 
-				// 當點擊爲Y,就把不爲Y的元素移除active並加上notActive
-				$('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
-				// 當點擊爲Y,就把爲Y的元素移除notActive並加上active
-				$('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
-			})
+					// 當點擊爲Y,就把不爲Y的元素移除active並加上notActive
+					$('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass(
+						'notActive');
+					// 當點擊爲Y,就把爲Y的元素移除notActive並加上active
+					$('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+				})
 
-			// 標籤
-			$('#select-tools').selectize({
-				maxItems: 5,
-				plugins: ['remove_button'],
-				sortField: { //排序
-					field: 'id', // text:依據文本排序，id：依據value排序
-					direction: 'asc' // 升序降序
-				}
-			});
+				// 標籤
+				$('#select-tools').selectize({
+					maxItems: 5,
+					plugins: ['remove_button'],
+					sortField: { //排序
+						field: 'id', // text:依據文本排序，id：依據value排序
+						direction: 'asc' // 升序降序
+					}
+				});
 
-			// 插件產生的link,在ci無法使用下列語法獲取到最後一個<link>來做改寫,所以先在error的路徑直接放入該檔案解決
-			// console.log($('link:last-of-type').attr('href'));
-			// console.log($('link:last-child').attr('href'));
-			// console.log($('link:last').attr('href'));
-			// console.log($('link').last().attr('href'));
-		</script>
-		<?php
-		$this->load->helper('form');
-		$check = $this->session->flashdata('check');
-		if ($check == '驗證失敗') {
-		?>
+				// 插件產生的link,在ci無法使用下列語法獲取到最後一個<link>來做改寫,所以先在error的路徑直接放入該檔案解決
+				// console.log($('link:last-of-type').attr('href'));
+				// console.log($('link:last-child').attr('href'));
+				// console.log($('link:last').attr('href'));
+				// console.log($('link').last().attr('href'));
+			</script>
+			<?php
+$this->load->helper('form');
+$check = $this->session->flashdata('check');
+if ($check == '驗證失敗') {
+    ?>
 			<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 				<?php echo $this->session->flashdata('check') . '!<br>請修正以下提示錯誤!'; ?>
 			</div>
-		<?php } ?>
-		<?php
-		$success = $this->session->flashdata('success');
-		if ($success) {
-		?>
+			<?php }?>
+			<?php
+$success = $this->session->flashdata('success');
+if ($success) {
+    ?>
 			<div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 				<?php echo $this->session->flashdata('success'); ?>
 			</div>
-		<?php } ?>
+			<?php }?>
 
-		<style>
-			.box-body>div {
-				margin-bottom: 15px;
-			}
+			<style>
+				.box-body>div {
+					margin-bottom: 15px;
+				}
 
-			#radioBtn .notActive {
-				color: #3276b1;
-				background-color: #fff;
-			}
+				#radioBtn .notActive {
+					color: #3276b1;
+					background-color: #fff;
+				}
 
-			.seat input {
-				width: 100px;
-				margin: 0 40px;
-			}
+				.seat input {
+					width: 100px;
+					margin: 0 40px;
+				}
 
-			.success-width {
-				width: 150px;
-			}
+				.success-width {
+					width: 150px;
+				}
 
-			.error-width {
-				width: 250px;
-			}
+				.error-width {
+					width: 250px;
+				}
 
-			.alert-absoulte {
-				text-align: center;
-				position: absolute;
-				margin: auto;
-				left: 230px;
-				right: 0;
-				top: 50px;
-				z-index: 3;
-			}
-
-			@media screen and (max-width: 768px) {
 				.alert-absoulte {
-					left: 0;
+					text-align: center;
+					position: absolute;
+					margin: auto;
+					left: 230px;
+					right: 0;
+					top: 50px;
+					z-index: 3;
 				}
-			}
 
-			.add-fixed-top-css {
-				margin-top: 107.45px;
-			}
+				@media screen and (max-width: 768px) {
+					.alert-absoulte {
+						left: 0;
+					}
+				}
 
-			@media (max-width: 767px) {
 				.add-fixed-top-css {
-					margin-top: 57.45px;
+					margin-top: 104px;
 				}
-			}
-		</style>
-		<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
-</div>
-</section>
+			</style>
+			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
+		</div>
+	</section>
 </div>
