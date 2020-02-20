@@ -229,8 +229,8 @@
 							<i class="fa fa-user"></i> <span>本黨立委</span>
 						</a>
 						<ul class="treeview-menu">
-							<li><a href="<?php echo base_url(); ?>legislator">立委管理</a></li>
-							<li><a href="<?php echo base_url(); ?>partymember">屆期管理</a></li>
+							<li><a href="<?php echo base_url('members'); ?>">立委管理</a></li>
+							<li><a href="<?php echo base_url('members/years'); ?>">屆期管理</a></li>
 						</ul>
 					</li>
 					<li class="treeview">
