@@ -23,14 +23,26 @@
 	// 獲取當前頁面url後,就在符合該url的<a></a>上加上.active
 	var windowURL = window.location.href;
 
-	var _active = $('a[href="' + windowURL + '"]');
-	_active.addClass('active');
-	_active.parent().addClass('active');
-	_active.parents('.treeview').addClass('active');
-	console.log('windowURL', windowURL);
-	console.log('_active', _active);
+	var _activeLeftnav = $('a[href="' + windowURL + '"]');
+	_activeLeftnav.addClass('active');
+	_activeLeftnav.parent().addClass('active');
+	_activeLeftnav.parents('.treeview').addClass('active');
+	// console.log('windowURL', windowURL);
+	// console.log('_activeLeftnav', _activeLeftnav);
 
 	$(document).ready(function () {
+		// 偵測瀏覽器
+		var explorer = navigator.userAgent;
+		var _brower = 0;
+
+		if (explorer.indexOf("Firefox") >= 0) {
+			// alert("Firefox");
+			_brower = 1;
+		}
+		if (explorer.indexOf("Safari") >= 0) {
+			_brower = 2;
+		}
+
 		$('.sidebar-toggle').click(function () {
 			setTimeout(function () {
 				var w = $('.sidebar-menu').width();
@@ -38,9 +50,17 @@
 				if (w <= 50) {
 					$('.skin-blue .sidebar-menu .treeview-menu>li').css('padding-left', '0');
 					$('.treeview>a').css('cursor', 'pointer');
+
+					if (_brower == 1 || _brower == 2) {
+						$('.functoin-on-top').css('left', '50px');
+					}
 				} else {
 					$('.skin-blue .sidebar-menu .treeview-menu>li').css('padding-left', '30px');
 					$('.treeview>a').css('cursor', 'text');
+
+					if (_brower == 1 || _brower == 2) {
+						$('.functoin-on-top').css('left', '230px');
+					}
 				}
 			}, 500);
 		});

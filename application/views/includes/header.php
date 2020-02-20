@@ -103,6 +103,7 @@
 			position: fixed;
 			z-index: 2;
 			top: 0;
+			transition: left .1s;
 		}
 
 		.functoin-on-top:not(.not-list) {
@@ -119,26 +120,9 @@
 				right: 0;
 				left: 230px;
 			}
-
-			@media (max-width: 767px) {
-				.functoin-on-top.not-list {
-					left: 0px;
-				}
-			}
 		}
 
-		@media screen and (-webkit-min-device-pixel-ratio:0) {
-			.functoin-on-top.not-list {
-				right: 0;
-				left: 230px;
-			}
-
-			@media (max-width: 767px) {
-				.functoin-on-top.not-list {
-					left: 0px;
-				}
-			}
-		}
+		@media screen and (-webkit-min-device-pixel-ratio:0) {}
 	</style>
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.js"></script>
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery-ui/jquery-ui.min.js"></script>

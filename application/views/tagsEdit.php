@@ -77,8 +77,8 @@ $notActive = $getTagsEditInfo->showup == 0 ? 'active' : 'notActive';
                     $('#radioBtn a').on('click', function () {
                         var sel = $(this).data('title');
                         var tog = $(this).data('toggle');
-                        console.log('sel', sel);
-                        console.log('tog', tog);
+                        // console.log('sel', sel);
+                        // console.log('tog', tog);
                         $('#' + tog).prop('value', sel); //將該被點擊的data-title值寫入到id="happy"的value中。
 
                         // 當點擊爲Y,就把不爲Y的元素移除active並加上notActive
