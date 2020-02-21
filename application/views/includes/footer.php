@@ -33,34 +33,40 @@
 	$(document).ready(function () {
 		// 偵測瀏覽器
 		var explorer = navigator.userAgent;
-		var _brower = 0;
+		var _brower = false;
 
 		if (explorer.indexOf("Firefox") >= 0) {
-			// alert("Firefox");
-			_brower = 1;
-		}
-		if (explorer.indexOf("Safari") >= 0) {
-			_brower = 2;
+			// console.log("Firefox");
+			_brower = true;
+		} else if (explorer.indexOf("Chrome") >= 0) {
+			// console.log("Chrome & Opera");
+		} else if (explorer.indexOf("Safari") >= 0) {
+			// console.log("Safari");
+			_brower = true;
 		}
 
+
+		var _isPhone = false;
+
 		$('.sidebar-toggle').click(function () {
+			if (_brower) {
+				if (!_isPhone) {
+					$('.functoin-on-top').css('left', '50px');
+					_isPhone = true;
+				} else {
+					$('.functoin-on-top').css('left', '230px');
+					_isPhone = false;
+				}
+			}
 			setTimeout(function () {
 				var w = $('.sidebar-menu').width();
 				// alert(w);
 				if (w <= 50) {
 					$('.skin-blue .sidebar-menu .treeview-menu>li').css('padding-left', '0');
 					$('.treeview>a').css('cursor', 'pointer');
-
-					if (_brower == 1 || _brower == 2) {
-						$('.functoin-on-top').css('left', '50px');
-					}
 				} else {
 					$('.skin-blue .sidebar-menu .treeview-menu>li').css('padding-left', '30px');
 					$('.treeview>a').css('cursor', 'text');
-
-					if (_brower == 1 || _brower == 2) {
-						$('.functoin-on-top').css('left', '230px');
-					}
 				}
 			}, 500);
 		});

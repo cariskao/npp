@@ -145,62 +145,6 @@ if ($success && $check == '驗證成功') {
 				<?php }?>
 
 				<style>
-					#sortlist {
-						list-style: none;
-						margin-top: 30px;
-						padding: 0 30px;
-					}
-
-					.ui-state-default {
-						background-color: #3c8dbc;
-						color: white;
-						font-weight: bolder;
-						font-size: 18px;
-						padding: 10px 20px;
-					}
-
-					.ui-state-default:hover {
-						cursor: move;
-						opacity: .7;
-					}
-
-					.box-body>div {
-						margin-bottom: 15px;
-					}
-
-					.success-width {
-						width: 150px;
-					}
-
-					.error-width {
-						width: 250px;
-					}
-
-					.alert-absoulte {
-						text-align: center;
-						position: absolute;
-						margin: auto;
-						left: 230px;
-						right: 0;
-						top: 50px;
-						z-index: 3;
-					}
-
-					@media screen and (max-width: 768px) {
-						.alert-absoulte {
-							left: 0;
-						}
-					}
-
-					.add-fixed-top-css {
-						margin-top: 107.45px;
-					}
-
-					@media (max-width: 767px) {
-						.add-fixed-top-css {
-							margin-top: 57.45px;
-						}
-					}
 				</style>
 				<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 			</div>

@@ -91,24 +91,8 @@ if (!empty($newsTags)) {
 	</section>
 </div>
 <style>
-	.title-center,
-	.title-center th {
-		text-align: center;
-	}
-
 	.alert-absoulte {
-		width: 150px;
-		text-align: center;
-		position: absolute;
-		margin: auto;
-		left: 230px;
-		right: 0;
-		top: 50px;
-		z-index: 3;
-	}
-
-	.add-fixed-top-css {
-		margin-top: 104px;
+		width: 150px
 	}
 </style>
 <script>

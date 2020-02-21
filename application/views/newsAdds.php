@@ -191,47 +191,7 @@ if ($success) {
 			<?php }?>
 
 			<style>
-				.box-body>div {
-					margin-bottom: 15px;
-				}
 
-				#radioBtn .notActive {
-					color: #3276b1;
-					background-color: #fff;
-				}
-
-				.seat input {
-					width: 100px;
-					margin: 0 40px;
-				}
-
-				.success-width {
-					width: 150px;
-				}
-
-				.error-width {
-					width: 250px;
-				}
-
-				.alert-absoulte {
-					text-align: center;
-					position: absolute;
-					margin: auto;
-					left: 230px;
-					right: 0;
-					top: 50px;
-					z-index: 3;
-				}
-
-				@media screen and (max-width: 768px) {
-					.alert-absoulte {
-						left: 0;
-					}
-				}
-
-				.add-fixed-top-css {
-					margin-top: 104px;
-				}
 			</style>
 			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 		</div>

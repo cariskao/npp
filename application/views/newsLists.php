@@ -97,11 +97,6 @@ if (!empty($listItems)) {
 		</div>
 	</section>
 </div>
-<style>
-	.add-fixed-top-css {
-		margin-top: 104px;
-	}
-</style>
 <script type="text/javascript" src="<?php echo base_url('assets/js/common.js'); ?>" charset="utf-8"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {

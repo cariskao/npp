@@ -1,0 +1,72 @@
+// 顯示狀態的插件
+#radioBtn,
+#radioBtn a {
+   z-index: 0;
+}
+
+#radioBtn .notActive {
+   color: #3276b1;
+   background-color: #fff;
+}
+
+// 各input之間上下間隙
+.box-body>div {
+   margin-bottom: 15px;
+}
+
+// 彈出訊息
+.success-width {
+   width: 150px;
+}
+
+.error-width {
+   width: 250px;
+}
+
+// 彈出訊息位置
+.alert-absoulte {
+   text-align: center;
+   position: absolute;
+   margin: auto;
+   left: 230px;
+   right: 0;
+   top: 50px;
+   z-index: 3;
+}
+
+// 輪播跟標籤列表的table置中
+.title-center,
+.title-center th {
+   text-align: center;
+}
+
+// 內容的高度
+.add-fixed-top-css {
+   margin-top: 104px;
+}
+
+// 後台其它設定中的樣式
+.bg-color {
+   border: 1px solid #D2D6DE;
+   padding: 20px 10px 10px 10px;
+   overflow: hidden;
+
+   >p {
+      font-weight: bold;
+      font-size: 20px;
+      color: #3C8DBC;
+      background-color: white;
+      position: absolute;
+      top: -16px;
+   }
+}
+
+.contact div input {
+   margin-bottom: 15px;
+}
+
+@media screen and (max-width: 768px) {
+   .alert-absoulte {
+      left: 0;
+   }
+}

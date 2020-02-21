@@ -23,106 +23,12 @@
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
 		folder instead of downloading all of them to reduce the load. -->
 	<link href="<?php echo base_url(); ?>assets/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/dist/scss/css/backend_all.css" rel="stylesheet" type="text/css" />
 	<style>
-		/* 讓左邊導航固定 */
-		.main-header,
-		.main-sidebar {
-			position: fixed;
-		}
-
-		/* 左方導航子選單ul樣式 */
-		.skin-blue .sidebar-menu>li>.treeview-menu {
-			background: #222d32;
-		}
-
-		/* 左方導航子選單項目li樣式 */
-		.skin-blue .sidebar-menu .treeview-menu>li.active>a,
-		.skin-blue .sidebar-menu .treeview-menu>li>a:hover {
-			color: #fff;
-		}
-
-		.skin-blue .sidebar-menu .treeview-menu>li.active,
-		.skin-blue .sidebar-menu .treeview-menu>li:hover {
-			background-color: #2f4f4f;
-		}
-
-		.skin-blue .sidebar-menu .treeview-menu>li {
-			transition: padding-left, .5s;
-		}
-
-		/* 若有子項目則標題的遊標變成這樣 */
-		.treeview>a {
-			cursor: text;
-		}
-
-		.main-sidebar {
-			font-size: 18px;
-			font-weight: bolder;
-		}
-
-		.main-sidebar .treeview-menu a {
-			font-weight: normal;
-			font-size: 16px;
-		}
-
-		.main-sidebar .treeview-menu {
-			/* 讓左邊導航的下拉選單固定打開 */
-			/* adminlte.js的lte.tree取消點擊事件 */
-			display: block;
-		}
-
-		.submit-pos {
-			position: fixed;
-			right: 0px;
-			top: 51.45px;
-			z-index: 2;
-			margin: 10px
-		}
-
-		/* 上方導航 */
-		.hover-bg:hover {
-			color: white !important;
-			background-color: #3C8DBC !important;
-			cursor: default;
-		}
-
-		.form-group {
-			margin-bottom: 0;
-		}
-
-		.treeview-menu li {
-			padding-left: 30px;
-		}
-
 		.error {
 			color: red;
 			font-weight: normal;
 		}
-
-		.functoin-on-top {
-			position: fixed;
-			z-index: 2;
-			top: 0;
-			transition: left .1s;
-		}
-
-		.functoin-on-top:not(.not-list) {
-			width: 100%;
-		}
-
-		#radioBtn,
-		#radioBtn a {
-			z-index: 0;
-		}
-
-		@-moz-document url-prefix() {
-			.functoin-on-top.not-list {
-				right: 0;
-				left: 230px;
-			}
-		}
-
-		@media screen and (-webkit-min-device-pixel-ratio:0) {}
 	</style>
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.js"></script>
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery-ui/jquery-ui.min.js"></script>

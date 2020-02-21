@@ -87,24 +87,6 @@ if (!empty($getCarouselList)) {
 	</section>
 </div>
 <style>
-	.title-center,
-	.title-center th {
-		text-align: center;
-	}
-
-	.alert-absoulte {
-		width: 150px;
-		text-align: center;
-		position: absolute;
-		margin: auto;
-		left: 230px;
-		right: 0;
-		top: 51.45px;
-	}
-
-	.add-fixed-top-css {
-		margin-top: 104px;
-	}
 </style>
 <script>
 	$(function() {
