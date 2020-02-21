@@ -23,7 +23,7 @@
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
 		folder instead of downloading all of them to reduce the load. -->
 	<link href="<?php echo base_url(); ?>assets/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url(); ?>assets/dist/scss/css/backend_all.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/b/build/css/all.css" rel="stylesheet" type="text/css" />
 	<style>
 		.error {
 			color: red;

@@ -6,6 +6,8 @@
 <!-- <script src="<?php echo base_url(); ?>assets/dist/js/pages/dashboard.js" type="text/javascript"></script> -->
 <script src="<?php echo base_url(); ?>assets/js/jquery.validate.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/validation.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/b/build/js/all.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 	// 上方導航標題置中
 	var $titleTop = $('.nav.navbar-nav li.title-on-top');
