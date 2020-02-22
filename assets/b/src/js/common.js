@@ -1,10 +1,23 @@
 $(function () {
+   // 訊息彈出3秒後消失
    setTimeout(function () {
       $("#alert-success").hide();
    }, 3000);
    setTimeout(function () {
       $("#alert-error").hide();
    }, 3000);
+
+   // 底部footer依照容量多寡會跑版的解決方案
+   var $h = $('.content-wrapper section').height();
+   // console.log('h', $h);
+   if ($h > 950) {
+      $h += 50;
+      // console.log('h2', $h);
+      $('.content-wrapper').css('height', $h);
+   } else {
+      $('.content-wrapper').css('height', '95vh');
+
+   }
 })
 
 // 各個Lists分頁

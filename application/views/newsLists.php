@@ -1,11 +1,11 @@
 <div class="content-wrapper">
 	<!-- <section class="content"> -->
 	<section>
-		<div class="functoin-on-top not-list" style="margin-top:51.45px">
+		<div class="functoin-on-top not-list">
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="box" style="border-top:none;border-radius:0">
-						<div class="box-header" style="border-bottom:2px solid #d2d6de;">
+						<div class="box-header">
 							<div class="row">
 								<div class="col-xs-6">
 									<div class="form-group">

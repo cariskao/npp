@@ -12,11 +12,11 @@ $editor     = $userInfo->editor;
 <script src="<?php echo base_url('assets/plugins/selectizejs/js/index.js'); ?>"></script>
 <div class="content-wrapper">
 	<section>
-		<div class="functoin-on-top" style="margin-top:51.45px;width:100%">
+		<div class="functoin-on-top">
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="box" style="border-top:none;border-radius:0">
-						<div class="box-header" style="border-bottom:2px solid #d2d6de;">
+						<div class="box-header">
 							<div class="row">
 								<div class="col-xs-12">
 									<div class="form-group">

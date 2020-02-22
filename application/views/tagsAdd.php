@@ -1,10 +1,10 @@
 <div class="content-wrapper">
 	<section>
-		<div class="functoin-on-top" style="margin-top:51.45px;">
+		<div class="functoin-on-top">
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="box" style="border-top:none;border-radius:0">
-						<div class="box-header" style="border-bottom:2px solid #d2d6de;">
+						<div class="box-header">
 							<div class="row">
 								<div class="col-xs-12">
 									<div class="form-group">
@@ -23,7 +23,7 @@
 				<!-- left column -->
 				<div class="col-md-12">
 					<!-- general form elements -->
-					<div class="box box-primary" style="border-top:3px solid #d2d6de">
+					<div class="box box-primary" style="border:none;">
 						<!-- form start -->
 						<form role="form" action="<?php echo base_url() ?>news/tagsAddSend" method="post" id="addYearSend"
 							role="form">

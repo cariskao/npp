@@ -5,8 +5,10 @@
 	<meta charset="UTF-8">
 	<title>後台登入</title>
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	<link href="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url(); ?>assets/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+		type="text/css" />
 	<link href="<?php echo base_url(); ?>assets/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -16,40 +18,43 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 	<!-- Google Font -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page login-set">
 	<div class="login-box">
 		<div class="login-logo">
-			<a href="#"><b>後台管理系統</b></a>
+			<!-- <a href="#"><b>後台管理系統</b></a> -->
+			<a href="#"><img style="width:360px" src="<?php echo base_url(); ?>assets/f_imgs/header/LY-logo.svg" alt="no img
+			"></a>
 		</div><!-- /.login-logo -->
 		<div class="login-box-body">
-			<p class="login-box-msg">登入</p>
-			<?php $this->load->helper('form'); ?>
+			<p class="login-box-msg" style="font-size:30px">時代力量 管理者登入</p>
+			<?php $this->load->helper('form');?>
 			<div class="row">
 				<div class="col-md-12">
 					<?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
 				</div>
 			</div>
 			<?php
-			$this->load->helper('form');
-			$error = $this->session->flashdata('error');
-			if ($error) {
-				?>
-				<div class="alert alert-danger alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<?php echo $error; ?>
-				</div>
+$this->load->helper('form');
+$error = $this->session->flashdata('error');
+if ($error) {
+    ?>
+			<div class="alert alert-danger alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<?php echo $error; ?>
+			</div>
 			<?php }
-		$success = $this->session->flashdata('success');
-		if ($success) {
-			?>
-				<div class="alert alert-success alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<?php echo $success; ?>
-				</div>
-			<?php } ?>
+$success = $this->session->flashdata('success');
+if ($success) {
+    ?>
+			<div class="alert alert-success alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<?php echo $success; ?>
+			</div>
+			<?php }?>
 			<form action="<?php echo base_url(); ?>loginMe" method="post">
 				<div class="form-group has-feedback">
 					<input type="email" class="form-control" placeholder="請輸入email帳號" name="email" required />
@@ -73,11 +78,14 @@
 				</div>
 			</form>
 
-			<a href="<?php echo base_url() ?>forgotPassword">忘記密碼</a><br>
+			<!-- <a href="<?php echo base_url() ?>forgotPassword">忘記密碼</a><br> -->
 
 		</div><!-- /.login-box-body -->
 	</div><!-- /.login-box -->
 
+	<!-- <footer class="text-center navbar-fixed-bottom" style="background-color:white;padding:30px;font-size:20px">
+		數位玩家資訊科技有限公司 高雄市楠梓區高雄大學路700號 07-5911329 服務時間：週一至週五 9：00 - 18：00 聯絡信箱：service@geekers.tw
+	</footer> -->
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
