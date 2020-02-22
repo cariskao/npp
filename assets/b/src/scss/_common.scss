@@ -1,3 +1,10 @@
+.no-data {
+   text-align: center;
+   color: red;
+   font-size: 30px;
+   font-weight: bolder
+}
+
 // 顯示狀態的插件
 #radioBtn,
 #radioBtn a {
@@ -35,14 +42,19 @@
 }
 
 // 輪播跟標籤列表的table置中
-.title-center,
-.title-center th {
+.title-center {
    text-align: center;
+
+   th {
+      text-align: center;
+      font-weight: bolder;
+      border-bottom: 3px solid #3c8dbc;
+   }
 }
 
-// 內容的高度
-.add-fixed-top-css {
-   margin-top: 104px;
+// 空div高度
+.div-h {
+   height: 104px;
 }
 
 // 後台其它設定中的樣式

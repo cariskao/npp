@@ -17,7 +17,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="add-fixed-top-css" style="border-top:none;">
+		<div class="div-h"></div>
+		<div style="border-top:none">
 			<div class="row">
 				<!-- left column -->
 				<div class="col-md-12">

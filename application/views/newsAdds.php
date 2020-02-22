@@ -19,7 +19,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="add-fixed-top-css" style="border-top:none;">
+		<div class="div-h"></div>
+		<div style="border-top:none">
 			<div class="row">
 				<!-- left column -->
 				<div class="col-md-12">
@@ -129,31 +130,6 @@ if (!empty($getTagsList)) {
 			</div>
 
 			<script language='javascript' type='text/javascript'>
-				// 上方訊息視窗
-				$(function () {
-					setTimeout(function () {
-						$("#alert-success").hide();
-					}, 3000);
-					setTimeout(function () {
-						$("#alert-error").hide();
-					}, 3000);
-				})
-
-				// 顯示狀態
-				$('#radioBtn a').on('click', function () {
-					var sel = $(this).data('title');
-					var tog = $(this).data('toggle');
-					// console.log('sel', sel);
-					// console.log('tog', tog);
-					$('#' + tog).prop('value', sel); //將該被點擊的data-title值寫入到id="happy"的value中。
-
-					// 當點擊爲Y,就把不爲Y的元素移除active並加上notActive
-					$('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass(
-						'notActive');
-					// 當點擊爲Y,就把爲Y的元素移除notActive並加上active
-					$('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
-				})
-
 				// 標籤
 				$('#select-tools').selectize({
 					maxItems: 5,

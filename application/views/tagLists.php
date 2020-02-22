@@ -35,13 +35,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="add-fixed-top-css" style="border-top:none;">
+		<div class="div-h"></div>
+		<div style="border-top:none">
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="box" style="border-top:none;">
 						<div class="box-body table-responsive no-padding">
 							<table class="table table-hover title-center">
-								<tr class="title-center">
+								<tr>
 									<th>標籤名稱</th>
 									<th>狀態</th>
 									<th class="text-center">可執行動作</th>
@@ -74,9 +75,11 @@ if (!empty($newsTags)) {
 }
 } else {
     ?>
-								<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
-									無相關資料!
-								</div>
+								<tr>
+									<td colspan="3" class="no-data">
+										無相關資料!
+									</td>
+								</tr>
 								<?php }?>
 							</table>
 
@@ -96,27 +99,9 @@ if (!empty($newsTags)) {
 	}
 </style>
 <script>
-	$(function () {
-		setTimeout(function () {
-			$("#alert-success").hide();
-		}, 3000);
-	})
-
 	// 分頁
 	jQuery(document).ready(function () {
-		jQuery('ul.pagination li a').click(function (e) {
-			// 當點擊下方頁面時,就獲取以下資料並跳轉
-			e.preventDefault();
-			var link = jQuery(this).get(0).href; // http://localhost/npp_ci/news/index/10
-			// var test = link.lastIndexOf('/'); //最後一個「/」的位置
-			// alert('test: ' + test);
-			var value = link.substring(link.lastIndexOf('/') + 1);
-			// alert('link: ' + link);
-			// alert('value: ' + value);
-			jQuery("#searchList").attr("action", baseURL + "news/tagLists/" + value); //注意這裡要加上index
-			// jQuery("#searchList").attr("action", baseURL + "news/" + 10);
-			jQuery("#searchList").submit();
-		});
+		pagination('news/tagLists/');
 	});
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js" charset="utf-8"></script>

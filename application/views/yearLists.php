@@ -35,7 +35,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="add-fixed-top-css" style="border-top:none;">
+		<div class="div-h"></div>
+		<div style="border-top:none">
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="box" style="border-top:none;">
@@ -68,8 +69,7 @@ if (!empty($yearLists)) {
 										<a class="btn btn-sm btn-info"
 											href="<?php echo base_url() . 'members/yearsEdit/' . $yid; ?>" title="編輯"><i
 												class="fa fa-pencil"></i></a>
-										<a class="btn btn-sm btn-danger deleteYears"
-											data-yid="<?php echo $yid; ?>" title="刪除"><i
+										<a class="btn btn-sm btn-danger deleteYears" data-yid="<?php echo $yid; ?>" title="刪除"><i
 												class="fa fa-trash fa-lg"></i></a>
 									</td>
 								</tr>
@@ -77,9 +77,11 @@ if (!empty($yearLists)) {
 }
 } else {
     ?>
-								<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
-									無相關資料!
-								</div>
+								<tr>
+									<td colspan="3" class="no-data">
+										無相關資料!
+									</td>
+								</tr>
 								<?php }?>
 							</table>
 
@@ -96,26 +98,9 @@ if (!empty($yearLists)) {
 <style>
 </style>
 <script>
-	$(function () {
-		setTimeout(function () {
-			$("#alert-success").hide();
-		}, 3000);
-	})
-
 	// 分頁
 	jQuery(document).ready(function () {
-		jQuery('ul.pagination li a').click(function (e) {
-			// 當點擊下方頁面時,就獲取以下資料並跳轉
-			e.preventDefault();
-			var link = jQuery(this).get(0).href;
-			// var test = link.lastIndexOf('/'); //最後一個「/」的位置
-			// alert('test: ' + test);
-			var value = link.substring(link.lastIndexOf('/') + 1);
-			// alert('link: ' + link);
-			// alert('value: ' + value);
-			jQuery("#searchList").attr("action", baseURL + "members/yearLists/" + value);
-			jQuery("#searchList").submit();
-		});
+		pagination('members/yearLists/');
 	});
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js" charset="utf-8"></script>

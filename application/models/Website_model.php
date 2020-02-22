@@ -30,7 +30,7 @@ class Website_model extends CI_Model
         return $query->num_rows();
     }
 
-    public function carouselListing($searchText = '', $page = '', $segment = '')
+    public function carouselListing($isSort, $searchText = '', $page = 0, $segment = 0)
     {
         $this->db->select();
         $this->db->from('carousel as BaseTbl');
@@ -42,13 +42,13 @@ class Website_model extends CI_Model
 
         $this->db->order_by('BaseTbl.sort', 'ASC');
 
-        if ($page != '' && $segment != '') {
+        if (!$isSort) {
             $this->db->limit($page, $segment);
         }
 
-        $query = $this->db->get();
-
+        $query  = $this->db->get();
         $result = $query->result();
+
         return $result;
     }
 

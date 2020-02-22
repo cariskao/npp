@@ -50,7 +50,7 @@ class Website extends BaseController
 
         $returns = $this->paginationCompress("website/carouselList/", $count, 10, 3);
 
-        $data['getCarouselList'] = $this->website_model->carouselListing($searchText, $returns["page"], $returns["segment"]);
+        $data['getCarouselList'] = $this->website_model->carouselListing(false, $searchText, $returns["page"], $returns["segment"]);
 
         $this->loadViews("carouselLists", $this->global, $data, null);
     }
@@ -381,7 +381,7 @@ class Website extends BaseController
     {
         $this->global['navTitle'] = '網站管理 - 輪播管理 - 排序';
 
-        $data['getCarouselList'] = $this->website_model->carouselListing();
+        $data['getCarouselList'] = $this->website_model->carouselListing(true);
 
         $this->loadViews("carouselSorts", $this->global, $data, null);
     }

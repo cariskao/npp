@@ -32,7 +32,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="add-fixed-top-css" style="border-top:none;">
+		<div class="div-h"></div>
+		<div style="border-top:none">
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="box" style="border-top:none;">
@@ -53,7 +54,7 @@ if (!empty($getCarouselList)) {
 										<tr>
 											<td><img style="width:200px;height:50px;" src="<?php echo base_url('assets/uploads/carousel_upload/' . $record->img); ?>"></td>
 											<td><?php echo $record->title; ?></td>
-											<td><?php echo mb_strimwidth(htmlspecialchars($record->introduction), 0, 100, '...') ?></td>
+											<td><?php echo mb_strimwidth(strip_tags($record->introduction), 0, 100, '...') ?></td>
 											<td><?php echo $record->link; ?></td>
 											<td>
 												<?php if ($record->showup == 1) {?>
@@ -71,9 +72,11 @@ if (!empty($getCarouselList)) {
 }
 } else {
     ?>
-									<div style="text-align:center;color:red;font-size:30px;font-weight:bolder">
+								<tr>
+									<td colspan="3" class="no-data">
 										無相關資料!
-									</div>
+									</td>
+								</tr>
 								<?php }?>
 							</table>
 						</div><!-- /.box-body -->
@@ -89,27 +92,9 @@ if (!empty($getCarouselList)) {
 <style>
 </style>
 <script>
-	$(function() {
-		setTimeout(function() {
-			$("#alert-success").hide();
-		}, 3000);
-	})
-
 	// 分頁
 	jQuery(document).ready(function() {
-		jQuery('ul.pagination li a').click(function(e) {
-			// 當點擊下方頁面時,就獲取以下資料並跳轉
-			e.preventDefault();
-			var link = jQuery(this).get(0).href; // http://localhost/npp_ci/news/index/10
-			// var test = link.lastIndexOf('/'); //最後一個「/」的位置
-			// alert('test: ' + test);
-			var value = link.substring(link.lastIndexOf('/') + 1);
-			// alert('link: ' + link);
-			// alert('value: ' + value);
-			jQuery("#searchList").attr("action", baseURL + "website/carouselLists/" + value); //注意這裡要加上index
-			// jQuery("#searchList").attr("action", baseURL + "news/" + 10);
-			jQuery("#searchList").submit();
-		});
+		pagination('website/carouselLists/');
 	});
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js" charset="utf-8"></script>
