@@ -8,6 +8,8 @@ $date_start = $userInfo->date_start;
 $time_start = $userInfo->time_start;
 $editor     = $userInfo->editor;
 ?>
+<link rel="stylesheet" href="<?php echo base_url('assets/plugins/clockpicker/css/bootstrap-clockpicker.css'); ?>">
+<script src="<?php echo base_url('assets/plugins/clockpicker/js/bootstrap-clockpicker.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/selectizejs/dist/js/standalone/selectize.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/selectizejs/js/index.js'); ?>"></script>
 <div class="content-wrapper">
@@ -38,13 +40,15 @@ $editor     = $userInfo->editor;
 					<div class="box box-primary" style="border:none;">
 						<!-- form start -->
 						<!--  enctype="multipart/form-data"記得加 -->
-						<form role="form" action="<?php echo base_url('news/editSend/' . $pr_id); ?>" method="post" id="" role="form" enctype="multipart/form-data">
+						<form role="form" action="<?php echo base_url('news/editSend/' . $pr_id); ?>" method="post" id=""
+							role="form" enctype="multipart/form-data">
 							<div class="box-body">
 								<div class="row">
 									<div class="col-md-6 col-xs-12">
 										<div class="form-group">
 											<div class="row">
-												<img class="col-md-12 col-xs-12" src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>">
+												<img class="col-md-12 col-xs-12"
+													src="<?php echo base_url('assets/uploads/news_upload/' . $type_id . '/' . $img); ?>">
 											</div>
 										</div>
 									</div>
@@ -62,7 +66,8 @@ $editor     = $userInfo->editor;
 									<div class="col-md-12">
 										<div class="form-group">
 											<label for="m_title">大標</label>
-											<input type="text" class="form-control" id="m_title" name="m_title" value="<?php echo $m_title; ?>">
+											<input type="text" class="form-control" id="m_title" name="m_title"
+												value="<?php echo $m_title; ?>">
 											<?php echo form_error('m_title'); ?>
 										</div>
 									</div>
@@ -71,7 +76,8 @@ $editor     = $userInfo->editor;
 									<div class="col-md-12">
 										<div class="form-group">
 											<label for="s_title">次標</label>
-											<input type="text" class="form-control" id="s_title" name="s_title" value="<?php echo $s_title; ?>">
+											<input type="text" class="form-control" id="s_title" name="s_title"
+												value="<?php echo $s_title; ?>">
 										</div>
 									</div>
 								</div>
@@ -86,7 +92,8 @@ $editor     = $userInfo->editor;
 if (!empty($getTagsList)) {
     foreach ($getTagsList as $record) {
         ?>
-														<option value="<?php echo $record->tags_id; ?>"><?php echo $record->name; ?></option>
+												<option value="<?php echo $record->tags_id; ?>"><?php echo $record->name; ?>
+												</option>
 												<?php
 }
 }
@@ -98,13 +105,23 @@ if (!empty($getTagsList)) {
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="date_start">建立日期</label>
-											<input type="date" class="form-control" id="date_start" name="date_start" value="<?php echo $date_start; ?>">
+											<div class="input-group clockpicker">
+												<input type="text" class="form-control" id="date_start" name="date_start" placeholder="選擇日期" autocomplete="off" readonly>
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-remove"></span>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="time_start">建立時間</label>
-											<input type="time" class="form-control" id="time_start" name="time_start" value="<?php echo $time_start; ?>">
+											<div class="input-group clockpicker">
+												<input type="text" class="form-control" id="time_start" name="time_start" placeholder="選擇時間" autocomplete="off" readonly>
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-remove"></span>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-2">
@@ -116,8 +133,10 @@ if (!empty($getTagsList)) {
 $active    = $userInfo->showup == 1 ? 'active' : 'notActive';
 $notActive = $userInfo->showup == 0 ? 'active' : 'notActive';
 ?>
-													<a class="btn btn-primary btn-sm <?php echo $active; ?>" data-toggle="happy" data-title="Y">顯示</a>
-													<a class="btn btn-primary btn-sm <?php echo $notActive; ?>" data-toggle="happy" data-title="N">隱藏</a>
+													<a class="btn btn-primary btn-sm <?php echo $active; ?>" data-toggle="happy"
+														data-title="Y">顯示</a>
+													<a class="btn btn-primary btn-sm <?php echo $notActive; ?>" data-toggle="happy"
+														data-title="N">隱藏</a>
 												</div>
 												<input type="hidden" name="happy" id="happy">
 											</div>
@@ -150,6 +169,8 @@ $notActive = $userInfo->showup == 0 ? 'active' : 'notActive';
 			<!-- <div class="col-md-12"> -->
 
 			<script language='javascript' type='text/javascript'>
+				$('#time_start').clockpicker();
+
 				// 標籤
 				$('#select-tools').selectize({
 					maxItems: 5,
@@ -171,21 +192,21 @@ $this->load->helper('form');
 $check = $this->session->flashdata('check');
 if ($check == '驗證失敗') {
     ?>
-				<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<?php echo $this->session->flashdata('check') . '!<br>請修正以下提示錯誤!'; ?>
+			<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<?php echo $this->session->flashdata('check') . '!<br>請修正以下提示錯誤!'; ?>
 
-				</div>
+			</div>
 			<?php }?>
 			<?php
 $success = $this->session->flashdata('success');
 // echo $success; //存儲成功!
 if ($success && $check == '驗證成功') {
     ?>
-				<div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<?php echo $this->session->flashdata('success'); ?>
-				</div>
+			<div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<?php echo $this->session->flashdata('success'); ?>
+			</div>
 			<?php }?>
 			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 		</div>

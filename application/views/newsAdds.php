@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?php echo base_url('assets/plugins/clockpicker/css/bootstrap-clockpicker.css'); ?>">
+<script src="<?php echo base_url('assets/plugins/clockpicker/js/bootstrap-clockpicker.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/selectizejs/dist/js/standalone/selectize.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/selectizejs/js/index.js'); ?>"></script>
 <div class="content-wrapper">
@@ -81,13 +83,23 @@ if (!empty($getTagsList)) {
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="date_start">建立日期</label>
-											<input type="date" class="form-control" id="date_start" name="date_start" value="">
+											<div class="input-group clockpicker">
+												<input type="text" class="form-control" id="date_start" name="date_start" placeholder="選擇日期" autocomplete="off" readonly>
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-remove"></span>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-2">
 										<div class="form-group">
-											<label for="time_start">建立時間</label>
-											<input type="time" class="form-control" id="time_start" name="time_start" value="">
+											<label for="remove_start">建立時間</label>
+											<div class="input-group clockpicker">
+												<input type="text" class="form-control" id="time_start" name="time_start" placeholder="選擇時間" autocomplete="off" readonly>
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-remove"></span>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-2">
@@ -130,6 +142,8 @@ if (!empty($getTagsList)) {
 			</div>
 
 			<script language='javascript' type='text/javascript'>
+				$('#time_start').clockpicker();
+
 				// 標籤
 				$('#select-tools').selectize({
 					maxItems: 5,
