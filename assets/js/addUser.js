@@ -22,7 +22,7 @@ $(document).ready(function () {
 				required: true,
 				email: true,
 				remote: {
-					url: baseURL + "checkEmailExists",
+					url: baseURL + "checkEmailExists", //直接到User.php的checkEmailExists驗證
 					type: "post"
 				}
 			},

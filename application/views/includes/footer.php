@@ -14,23 +14,78 @@
 	var $halfWidth = $titleTop.width() / 2;
 	// console.log('$halfWidth', $halfWidth);
 
+	//這裏要取得跟我們設定position的相反值才能獲取,這裏設爲right,所以要log出的值爲left
+	// console.log($titleTop.position().left);//但是這一行得不到我們要的值,只是說明一下
 	$titleTop.css({
 		right: 'calc(50% - ' + $halfWidth + 'px)', //記得「-」號右邊要空一格
 		position: 'absolute'
 	});
 
-	//這裏要取得跟我們設定position的相反值才能獲取,這裏設爲right,所以要log出的值爲left
-	// console.log($titleTop.position().left);//但是這一行得不到我們要的值,只是說明一下
-
-	// 獲取當前頁面url後,就在符合該url的<a></a>上加上.active
+	// 進入其它頁面也會在相關的導航有 current active
 	var windowURL = window.location.href;
+	var index = '';
+	var bool = windowURL.indexOf('tw') != -1 ? true : false;
 
+	if (bool) {
+		index = windowURL.indexOf('/', 10) + 1;
+	} else {
+		index = windowURL.indexOf('npp') + 4;
+	}
+
+	var str = windowURL.substring(index, windowURL.indexOf('/',index));
+
+	// var _1stPos = windowURL.indexOf('tw') != -1 ? : windowURL.indexOf('geekers') + 3;
+	// var index = windowURL.indexOf('geekers') != -1 ? windowURL.indexOf('/') : windowURL.indexOf('/', windowURL.indexOf('/') + 1);
+
+	// var index1 = windowURL.indexOf('npp') + 4;
+	// var url1 = windowURL.substring(index1);
+	// var str1 = url1.substring(0, url1.indexOf('/'));
+	// var str2 = url1.substring(url1.indexOf('') + 1);
+	// var index2 = url1.indexOf('/') + 1;
+	// var index3 = url1.lastIndexOf('/');
+	// var _str = index3 == -1 ? url1.substring(index2) : url1.substring(index2, index3);
+
+	console.log('windowURL', windowURL);
+	console.log(index);
+	console.log(bool);
+	console.log(str);
+	// console.log('獲取npp後的第一個字串index值', index1);
+	// console.log('url1', url1);
+	// console.log('str1', str1);
+	// console.log('index2', index2);
+	// console.log('index3', index3);
+	// console.log(str2);
+	// console.log(_str);
+
+	// str=windowURL.replace('adds','lists');
+	// console.log(str);
+
+	// 獲取當前頁面url後,就在符合該url的<a></a>上加上.active(對照header)
 	var _activeLeftnav = $('a[href="' + windowURL + '"]');
 	_activeLeftnav.addClass('active');
 	_activeLeftnav.parent().addClass('active');
 	_activeLeftnav.parents('.treeview').addClass('active');
-	// console.log('windowURL', windowURL);
-	// console.log('_activeLeftnav', _activeLeftnav);
+	// console.log(_activeLeftnav);
+
+	// 進入內頁左方導航也會顯示curent active
+	// if (str1 == 'news') {
+	// 	$('.news-active').addClass('active');
+
+	// 	if (windowURL.indexOf('lists/1') != -1) {
+	// 		$('.news-active .treeview-menu>li:first-child').addClass('active');
+	// 		$('.news-active .treeview-menu>li:first-child a').addClass('active');
+	// 	}else if (windowURL.indexOf('lists/2') != -1) {
+	// 		$('.news-active .treeview-menu>li:nth-child(2)').addClass('active');
+	// 		$('.news-active .treeview-menu>li:nth-child(2) a').addClass('active');
+	// 	}else if (windowURL.indexOf('lists/3') != -1) {
+	// 		$('.news-active .treeview-menu>li:nth-child(3)').addClass('active');
+	// 		$('.news-active .treeview-menu>li:nth-child(3) a').addClass('active');
+	// 	}
+	// } else if (str1 == 'members') {
+	// 	$('.member-active').addClass('active');
+	// } else if (str1 == 'website') {
+	// 	$('.website-active').addClass('active');
+	// }
 
 	$(document).ready(function () {
 		// 偵測瀏覽器

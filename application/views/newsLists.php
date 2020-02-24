@@ -125,7 +125,6 @@ if (!empty($listItems)) {
 			var value = link.substring(link.lastIndexOf('/') + 1); // 10
 			//如果不写下面url这一行 将会取最后一个/前所有值
 			var url = link.substr(link.lastIndexOf('/', link.lastIndexOf('/') - 1) + 1); // 1/10
-			// var test = link.lastIndexOf('/'); //最後一個「/」的位置,33
 			var site = url.lastIndexOf("\/"); //获取最后一个/的位置,1
 			var type_id = url.substring(0, site); //截取最后一个/前的值,1
 
@@ -143,13 +142,12 @@ if (!empty($listItems)) {
 			// console.log('link: ' + link);
 			// console.log('value: ' + value);
 			// console.log('url: ' + url);
-			// console.log('test: ' + test);
 			// console.log('site: ' + site);
 			// console.log('type_id: ' + type_id);
 
 			// attr,更改form中的action連結
 			jQuery("#searchList").attr("action", baseURL + "news/lists/" + type_id + '/' +
-			value); //注意如果controller使用index的話,這裡就要加上index
+				value); //注意如果controller使用index的話,這裡就要加上index
 			// jQuery("#searchList").attr("action", baseURL + "news/" + 10);
 			jQuery("#searchList").submit();
 		});

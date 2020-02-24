@@ -1010,7 +1010,7 @@ function ($) {
     accordion: true,
     followLink: false,
     // trigger: '.treeview a'
-    trigger: '' // 讓左邊導航若有子選項則無法產生點擊事件
+    trigger: '' // 讓左邊導航若有子選項則無法產生點擊事件(下拉選單)
   };
 
   var Selector = {
@@ -1038,9 +1038,11 @@ function ($) {
   var Tree = function (element, options) {
     this.element = element;
     this.options = options;
-
+    // console.log(this.element);
+    // console.log(this.options);
     $(this.element).addClass(ClassName.tree);
 
+    //當active被加上去後再加上menu-open
     $(Selector.treeview + Selector.active, this.element).addClass(ClassName.open);
 
     this._setUpListeners();

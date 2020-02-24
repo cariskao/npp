@@ -125,7 +125,7 @@
 							<i class="fa fa-dashboard"></i> <span>控制面板</span></i>
 						</a>
 					</li>
-					<li class="treeview">
+					<li class="treeview news-active">
 						<a href="#">
 							<i class="fa fa-globe"></i> <span>新聞訊息</span>
 							<!-- <span class="pull-right-container">
@@ -139,7 +139,7 @@
 							<li><a href="<?php echo base_url(); ?>news/tagLists">標籤管理</a></li>
 						</ul>
 					</li>
-					<li class="treeview">
+					<li class="treeview xx-active">
 						<a href="#">
 							<i class="fa fa-briefcase"></i> <span>法案管理</span>
 						</a>
@@ -149,7 +149,7 @@
 							<li><a href="#">草案管理</a></li>
 						</ul>
 					</li>
-					<li class="treeview">
+					<li class="treeview member-active">
 						<a href="#">
 							<i class="fa fa-user"></i> <span>本黨立委</span>
 						</a>
@@ -158,7 +158,7 @@
 							<li><a href="<?php echo base_url('members/yearLists'); ?>">屆期管理</a></li>
 						</ul>
 					</li>
-					<li class="treeview">
+					<li class="treeview website-active">
 						<a href="#">
 							<i class="fa fa-cog"></i> <span>網站管理</span>
 						</a>

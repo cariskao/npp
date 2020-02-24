@@ -84,7 +84,8 @@ if (!empty($getTagsList)) {
 										<div class="form-group">
 											<label for="date_start">建立日期</label>
 											<div class="input-group clockpicker">
-												<input type="text" class="form-control" id="date_start" name="date_start" placeholder="選擇日期" autocomplete="off" readonly>
+												<input type="text" class="form-control" id="date_start" name="date_start"
+													placeholder="選擇日期" autocomplete="off" readonly>
 												<span class="input-group-addon">
 													<span class="glyphicon glyphicon-remove"></span>
 												</span>
@@ -95,7 +96,8 @@ if (!empty($getTagsList)) {
 										<div class="form-group">
 											<label for="remove_start">建立時間</label>
 											<div class="input-group clockpicker">
-												<input type="text" class="form-control" id="time_start" name="time_start" placeholder="選擇時間" autocomplete="off" readonly>
+												<input type="text" class="form-control" id="time_start" name="time_start"
+													placeholder="選擇時間" autocomplete="off" readonly>
 												<span class="input-group-addon">
 													<span class="glyphicon glyphicon-remove"></span>
 												</span>
@@ -181,7 +183,6 @@ if ($success) {
 			<?php }?>
 
 			<style>
-
 			</style>
 			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 		</div>

@@ -211,8 +211,7 @@ if ($success && $check == '驗證成功') {
 			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 		</div>
 		<!-- row -->
-</div>
-<!-- add-fixed-top-css -->
-</section>
+		<!-- add-fixed-top-css -->
+	</section>
 </div>
 <!-- content-wrapper -->
