@@ -9,7 +9,7 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <a class="btn btn-warning"
-                                            href="<?php echo base_url('news/tagLists'); ?>">返回</a>
+                                            href="<?php echo base_url('news/tagLists/'); ?>">返回</a>
                                     </div>
                                 </div>
                             </div>

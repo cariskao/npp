@@ -45,10 +45,10 @@
 	// var index3 = url1.lastIndexOf('/');
 	// var _str = index3 == -1 ? url1.substring(index2) : url1.substring(index2, index3);
 
-	console.log('windowURL', windowURL);
-	console.log(index);
-	console.log(bool);
-	console.log(str);
+	// console.log('windowURL', windowURL);
+	// console.log(index);
+	// console.log(bool);
+	// console.log(str);
 	// console.log('獲取npp後的第一個字串index值', index1);
 	// console.log('url1', url1);
 	// console.log('str1', str1);

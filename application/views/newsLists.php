@@ -139,11 +139,11 @@ if (!empty($listItems)) {
 			 * 第二個lastIndexOf因爲沒有第二個參數(看上方說明),所以直接從最後面開始找「/」,找到後再將位置-1就變成那段字串的length,也就是最後一個字。
 			 * 第一個lastIndexOf的第二個參數就是第二個lastIndexOf的結果-1,也代表第一個lastIndexOf會從倒數第二段字串的最後一個字元開始往回查詢,這樣就會避開了最後一個「/」,而搜索到倒數第二個「/」再+1獲取倒數第二個「/」後的全部字串。
 			 */
-			// console.log('link: ' + link);
-			// console.log('value: ' + value);
-			// console.log('url: ' + url);
-			// console.log('site: ' + site);
-			// console.log('type_id: ' + type_id);
+			console.log('link: ' + link);
+			console.log('value: ' + value);
+			console.log('url: ' + url);
+			console.log('site: ' + site);
+			console.log('type_id: ' + type_id);
 
 			// attr,更改form中的action連結
 			jQuery("#searchList").attr("action", baseURL + "news/lists/" + type_id + '/' +

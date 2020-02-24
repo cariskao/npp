@@ -51,13 +51,8 @@ function pagination(url) {
       // 當點擊下方頁面時,就獲取以下資料並跳轉
       e.preventDefault();
       var link = jQuery(this).get(0).href; // http://localhost/npp_ci/news/index/10
-      // var test = link.lastIndexOf('/'); //最後一個「/」的位置
-      // alert('test: ' + test);
       var value = link.substring(link.lastIndexOf('/') + 1);
-      // alert('link: ' + link);
-      // alert('value: ' + value);
       jQuery("#searchList").attr("action", baseURL + url + value); //注意這裡要加上index
-      // jQuery("#searchList").attr("action", baseURL + "news/" + 10);
       jQuery("#searchList").submit();
    });
 }

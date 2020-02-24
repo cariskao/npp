@@ -45,7 +45,7 @@ if (!empty($get1Info)) {
 }
 ?>
          </div>
-         <div class="more"><a href="<?php echo base_url('fend/news_f/newsFlists/1'); ?>">更多內容</a></div>
+         <div class="more"><a href="<?php echo base_url('fend/news_f/newsFlists/1/'); ?>">更多內容</a></div>
       </div>
    </div>
 </div>
@@ -84,7 +84,7 @@ if (!empty($get2Info)) {
 }
 ?>
          </div>
-         <div class="more"><a href="<?php echo base_url('fend/news_f/newsFlists/2'); ?>">更多內容</a></div>
+         <div class="more"><a href="<?php echo base_url('fend/news_f/newsFlists/2/'); ?>">更多內容</a></div>
       </div>
    </div>
 </div>
@@ -123,7 +123,7 @@ if (!empty($get3Info)) {
 }
 ?>
          </div>
-         <div class="more"><a href="<?php echo base_url('fend/news_f/newsFlists/3'); ?>">更多內容</a></div>
+         <div class="more"><a href="<?php echo base_url('fend/news_f/newsFlists/3/'); ?>">更多內容</a></div>
       </div>
    </div>
 </div>
