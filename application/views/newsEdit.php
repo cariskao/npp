@@ -22,7 +22,8 @@ $editor     = $userInfo->editor;
 							<div class="row">
 								<div class="col-xs-12">
 									<div class="form-group">
-										<a class="btn btn-warning" href="<?php echo base_url('news/lists/' . $type_id . '/'); ?>">返回</a>
+										<a class="btn btn-warning"
+											href="<?php echo base_url('news/lists/' . $type_id . '/'); ?>">返回</a>
 									</div>
 								</div>
 							</div>
@@ -106,7 +107,8 @@ if (!empty($getTagsList)) {
 										<div class="form-group">
 											<label for="date_start">建立日期</label>
 											<div class="input-group clockpicker">
-												<input type="text" class="form-control" id="date_start" name="date_start" placeholder="選擇日期" autocomplete="off" readonly>
+												<input type="text" class="form-control" id="date_start" name="date_start"
+													placeholder="選擇日期" autocomplete="off" readonly>
 												<span class="input-group-addon">
 													<span class="glyphicon glyphicon-remove"></span>
 												</span>
@@ -117,7 +119,8 @@ if (!empty($getTagsList)) {
 										<div class="form-group">
 											<label for="time_start">建立時間</label>
 											<div class="input-group clockpicker">
-												<input type="text" class="form-control" id="time_start" name="time_start" placeholder="選擇時間" autocomplete="off" readonly>
+												<input type="text" class="form-control" id="time_start" name="time_start"
+													placeholder="選擇時間" autocomplete="off" readonly>
 												<span class="input-group-addon">
 													<span class="glyphicon glyphicon-remove"></span>
 												</span>
@@ -184,8 +187,15 @@ $notActive = $userInfo->showup == 0 ? 'active' : 'notActive';
 				var selectTools = $('#select-tools')[0].selectize;
 				var jsArray = ["<?php echo join("\", \"", $getTagsChoice); ?>"];
 				// console.log('jsArray',jsArray);
-
 				selectTools.setValue(jsArray, true);
+
+				var windowURL = window.location.href;
+				var _type_id = <?php echo $type_id; ?>;
+
+				if (windowURL.indexOf('newsEdit') != -1) {
+					$('.news-active .treeview-menu>li:nth-child(' + _type_id + ')').addClass('active');
+					$('.news-active .treeview-menu>li:nth-child(' + _type_id + ') a').addClass('active');
+				}
 			</script>
 			<?php
 $this->load->helper('form');

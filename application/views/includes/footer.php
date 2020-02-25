@@ -24,68 +24,67 @@
 	// 進入其它頁面也會在相關的導航有 current active
 	var windowURL = window.location.href;
 	var index = '';
-	var bool = windowURL.indexOf('tw') != -1 ? true : false;
+	var _host = window.location.hostname;
+	// var _path = window.location.pathname;
+	// var _activeURL = _host;//下方分頁會有問題
+	var _protocol = window.location.protocol;
 
-	if (bool) {
-		index = windowURL.indexOf('/', 10) + 1;
-	} else {
+	if (_host.indexOf('localhost') != -1) {
 		index = windowURL.indexOf('npp') + 4;
+		// _activeURL += '/npp';//下方分頁會有問題
+	} else {
+		index = windowURL.indexOf('/', 10) + 1;
 	}
 
-	var str = windowURL.substring(index, windowURL.indexOf('/',index));
+	var str = windowURL.substring(index, windowURL.indexOf('/', index));
 
-	// var _1stPos = windowURL.indexOf('tw') != -1 ? : windowURL.indexOf('geekers') + 3;
-	// var index = windowURL.indexOf('geekers') != -1 ? windowURL.indexOf('/') : windowURL.indexOf('/', windowURL.indexOf('/') + 1);
+	console.log('windowURL', windowURL);
+	console.log('str', str);
 
-	// var index1 = windowURL.indexOf('npp') + 4;
-	// var url1 = windowURL.substring(index1);
-	// var str1 = url1.substring(0, url1.indexOf('/'));
-	// var str2 = url1.substring(url1.indexOf('') + 1);
-	// var index2 = url1.indexOf('/') + 1;
-	// var index3 = url1.lastIndexOf('/');
-	// var _str = index3 == -1 ? url1.substring(index2) : url1.substring(index2, index3);
+	// 進入內頁左方導航也會顯示curent active
+	if (str == 'news') {
+		$('.news-active').addClass('active');
 
-	// console.log('windowURL', windowURL);
-	// console.log(index);
-	// console.log(bool);
-	// console.log(str);
-	// console.log('獲取npp後的第一個字串index值', index1);
-	// console.log('url1', url1);
-	// console.log('str1', str1);
-	// console.log('index2', index2);
-	// console.log('index3', index3);
-	// console.log(str2);
-	// console.log(_str);
+		// 點擊下方分頁時,左方導航也會出現active
+		var _find = 'lists/';
+		if (windowURL.indexOf(_find) != -1) {
+			_index = windowURL.indexOf(_find) + _find.length;
+			var _type_id = windowURL.substring(_index, _index + 1);
+			$('.news-active .treeview-menu>li:nth-child(' + _type_id + ')').addClass('active');
+			$('.news-active .treeview-menu>li:nth-child(' + _type_id + ') a').addClass('active');
+			// var _2ndActive = _activeURL + '/news/' + _find + _type_id + '/';//下方分頁會有問題
+		}
 
-	// str=windowURL.replace('adds','lists');
-	// console.log(str);
+		// 點擊「新增」時左方導航也會出現active(編輯的部分因爲需要獲取type_id,所以做在編輯頁面裡)
+		if (windowURL.indexOf('adds') != -1) {
+			var _type_id = windowURL.substring(windowURL.lastIndexOf('/') + 1);
+			$('.news-active .treeview-menu>li:nth-child(' + _type_id + ')').addClass('active');
+			$('.news-active .treeview-menu>li:nth-child(' + _type_id + ') a').addClass('active');
+		}
+
+		if (windowURL.indexOf('tag') != -1) {
+			$('.news-active .treeview-menu>li:last-child').addClass('active');
+			$('.news-active .treeview-menu>li:last-child a').addClass('active');
+		}
+
+	} else if (str == 'members') {
+		$('.member-active').addClass('active');
+	} else if (str == 'website') {
+		$('.website-active').addClass('active');
+
+				if (windowURL.indexOf('carousel') != -1) {
+			$('.website-active .treeview-menu>li:first-child').addClass('active');
+			$('.website-active .treeview-menu>li:first-child a').addClass('active');
+		}
+	}
 
 	// 獲取當前頁面url後,就在符合該url的<a></a>上加上.active(對照header)
+	// var _activeLeftnav = $('a[href="' + _protocol + '//' + _2ndActive + '"]');// 下方分頁會error
 	var _activeLeftnav = $('a[href="' + windowURL + '"]');
 	_activeLeftnav.addClass('active');
 	_activeLeftnav.parent().addClass('active');
 	_activeLeftnav.parents('.treeview').addClass('active');
 	// console.log(_activeLeftnav);
-
-	// 進入內頁左方導航也會顯示curent active
-	// if (str1 == 'news') {
-	// 	$('.news-active').addClass('active');
-
-	// 	if (windowURL.indexOf('lists/1') != -1) {
-	// 		$('.news-active .treeview-menu>li:first-child').addClass('active');
-	// 		$('.news-active .treeview-menu>li:first-child a').addClass('active');
-	// 	}else if (windowURL.indexOf('lists/2') != -1) {
-	// 		$('.news-active .treeview-menu>li:nth-child(2)').addClass('active');
-	// 		$('.news-active .treeview-menu>li:nth-child(2) a').addClass('active');
-	// 	}else if (windowURL.indexOf('lists/3') != -1) {
-	// 		$('.news-active .treeview-menu>li:nth-child(3)').addClass('active');
-	// 		$('.news-active .treeview-menu>li:nth-child(3) a').addClass('active');
-	// 	}
-	// } else if (str1 == 'members') {
-	// 	$('.member-active').addClass('active');
-	// } else if (str1 == 'website') {
-	// 	$('.website-active').addClass('active');
-	// }
 
 	$(document).ready(function () {
 		// 偵測瀏覽器
@@ -101,7 +100,6 @@
 			// console.log("Safari");
 			_brower = true;
 		}
-
 
 		var _isPhone = false;
 
