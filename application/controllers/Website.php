@@ -68,9 +68,6 @@ class Website extends BaseController
     // 其它設定
     public function setup($check = false)
     {
-        if ($check) {
-            $this->session->set_flashdata('check', '驗證失敗');
-        }
         // $this->global['pageTitle'] = '編輯標籤';
         $data['getSetupInfo'] = $this->website_model->getSetupInfo();
         $this->loadViews("website_setup", $this->global, $data, null);
@@ -82,6 +79,7 @@ class Website extends BaseController
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('check', '驗證失敗');
             $this->setup();
         } else {
             $mail        = $this->security->xss_clean($this->input->post('mail'));
@@ -103,10 +101,14 @@ class Website extends BaseController
             $result = $this->website_model->setupUpdate($updateInfo);
 
             if ($result > 0) {
-                $this->session->set_flashdata('success', '新增成功!');
-                $this->session->set_flashdata('check', '驗證成功');
+                // CodeIgniter支援「快閃資料」(Flashdata), 其為一session資料, 並只對下一次的Server請求有效, 之後就自動清除。
+                $array = array(
+                    'success' => '更新成功!',
+                );
+
+                $this->session->set_flashdata($array);
             } else {
-                $this->session->set_flashdata('error', '新增失敗!');
+                $this->session->set_flashdata('error', '更新失敗!');
             }
 
             $this->setup();
@@ -187,8 +189,12 @@ class Website extends BaseController
             $result = $this->website_model->carouselUpdate($carousel_info, $id);
 
             if ($result) {
-                $this->session->set_flashdata('success', '儲存成功!');
-                $this->session->set_flashdata('check', '驗證成功');
+                // CodeIgniter支援「快閃資料」(Flashdata), 其為一session資料, 並只對下一次的Server請求有效, 之後就自動清除。
+                $array = array(
+                    'success' => '更新成功!',
+                );
+
+                $this->session->set_flashdata($array);
             } else {
                 $this->session->set_flashdata('error', '儲存失敗!');
             }
@@ -259,8 +265,12 @@ class Website extends BaseController
             $return_insert_id = $this->website_model->carouselAdd($carousel_info);
 
             if ($return_insert_id) {
-                $this->session->set_flashdata('success', '儲存成功!');
-                $this->session->set_flashdata('check', '驗證成功');
+                // CodeIgniter支援「快閃資料」(Flashdata), 其為一session資料, 並只對下一次的Server請求有效, 之後就自動清除。
+                $array = array(
+                    'success' => '新增成功!',
+                );
+
+                $this->session->set_flashdata($array);
             } else {
                 $this->session->set_flashdata('error', '儲存失敗!');
             }
@@ -393,10 +403,9 @@ class Website extends BaseController
 
         if ($result > 0) {
             $this->session->set_flashdata('success', '排序已更新!');
-            $this->session->set_flashdata('check', '驗證成功');
         } else {
             $this->session->set_flashdata('error', '排序更新失敗!');
         }
-        // $this->carouselSorts();// 這裏也要用ajax導引到carouselSorts才吃得到成功訊息
+        // $this->carouselSorts();// 這裏要用排序插件的$.ajax({success})來做路徑導引導才能成功
     }
 }

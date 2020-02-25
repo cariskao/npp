@@ -107,20 +107,14 @@ if (!empty($newsTags)) {
 </script>
 <?php
 $this->load->helper('form');
-$error = $this->session->flashdata('error');
-if ($error) {
-    ?>
-<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-	<?php echo $this->session->flashdata('error'); ?>
-</div>
-<?php }?>
-<?php
 $success = $this->session->flashdata('success');
 if ($success) {
     ?>
 <div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-	<?php echo $this->session->flashdata('success'); ?>
+	<?php echo $success; ?>
 </div>
-<?php }?>
+<?php
+unset($_SESSION['success']);
+}
+?>

@@ -60,25 +60,21 @@
 			</div>
 			<?php
 $this->load->helper('form');
-$error = $this->session->flashdata('error');
-if ($error) {
+$check = $this->session->flashdata('check');
+if ($check) {
     ?>
-			<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
+			<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<?php echo $this->session->flashdata('error'); ?>
+				<?php echo $check; ?>
 			</div>
-			<?php }?>
 			<?php
-$success = $this->session->flashdata('success');
-if ($success) {
-    ?>
-			<div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<?php echo $this->session->flashdata('success'); ?>
-			</div>
-			<?php }?>
-
+unset($_SESSION['check']);
+}
+?>
 			<style>
+				.error-width {
+					width: 150px;
+				}
 			</style>
 			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 		</div>

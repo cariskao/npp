@@ -86,7 +86,6 @@ if (!empty($listItems)) {
 										<a class="btn btn-sm btn-info"
 											href="<?php echo base_url('news/newsEdit/' . $record->pr_id); ?>" title="編輯"><i
 												class="fa fa-pencil"></i></a>
-										<!-- href='javascript:' 主要是說明a標籤需要執行一段js代碼，並不需要跳轉 -->
 										<a class="btn btn-sm btn-danger newsListDel" data-delid="<?php echo $record->pr_id; ?>"
 											data-typeid="<?php echo $record->pr_type_id; ?>" data-img="<?php echo $record->img; ?>"
 											title="移除"><i class="fa fa-trash"></i></a>

@@ -84,16 +84,29 @@ $servicetime = $getSetupInfo->servicetime;
 			</script>
 			<?php
 $this->load->helper('form');
-$check   = $this->session->flashdata('check');
-$success = $this->session->flashdata('success');
-// echo $success; //存儲成功!
-if ($success && $check == '驗證成功') {
+$check = $this->session->flashdata('check');
+if ($check) {
     ?>
-			<div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
+			<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<?php echo $this->session->flashdata('success'); ?>
+				<?php echo $check; ?>
 			</div>
-			<?php }?>
+			<?php
+unset($_SESSION['check']);
+}
+?>
+			<?php
+$success = $this->session->flashdata('success');
+if ($success) {
+    ?>
+			<div id="alert-success" class="alert-absoulte alert success-width alert-success alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<?php echo $success; ?>
+			</div>
+			<?php
+unset($_SESSION['success']);
+}
+?>
 
 			<style>
 				.seat input {
@@ -105,9 +118,8 @@ if ($success && $check == '驗證成功') {
 					margin-bottom: 40px;
 				}
 
-				.alert-absoulte {
+				.success-width {
 					width: 150px;
-					top: 50.45px;
 				}
 			</style>
 			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->

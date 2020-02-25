@@ -166,23 +166,28 @@ if (!empty($getTagsList)) {
 			<?php
 $this->load->helper('form');
 $check = $this->session->flashdata('check');
-if ($check == '驗證失敗') {
+if ($check) {
     ?>
 			<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<?php echo $this->session->flashdata('check') . '!<br>請修正以下提示錯誤!'; ?>
+				<?php echo $check . '!<br>請修正以下提示錯誤!'; ?>
 			</div>
-			<?php }?>
+			<?php
+unset($_SESSION['check']);
+}
+?>
 			<?php
 $success = $this->session->flashdata('success');
 if ($success) {
     ?>
 			<div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<?php echo $this->session->flashdata('success'); ?>
+				<?php echo $success; ?>
 			</div>
-			<?php }?>
-
+			<?php
+unset($_SESSION['success']);
+}
+?>
 			<style>
 			</style>
 			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->

@@ -1,10 +1,10 @@
 <div class="content-wrapper">
     <section>
-		<div class="functoin-on-top">
+        <div class="functoin-on-top">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box" style="border-top:none;border-radius:0">
-						<div class="box-header">
+                        <div class="box-header">
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
@@ -24,7 +24,7 @@
                 <!-- left column -->
                 <div class="col-md-12">
                     <!-- general form elements -->
-					<div class="box box-primary" style="border:none;">
+                    <div class="box box-primary" style="border:none;">
                         <!-- form start -->
                         <form role="form" action="<?php echo base_url() ?>news/tagsEditSend" method="post"
                             id="addYearSend" role="form">
@@ -68,25 +68,21 @@ $notActive = $getTagsEditInfo->showup == 0 ? 'active' : 'notActive';
                 <!-- <div class="col-md-12"> -->
                 <?php
 $this->load->helper('form');
-$error = $this->session->flashdata('error');
-if ($error) {
+$check = $this->session->flashdata('check');
+if ($check) {
     ?>
-                <div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
+                <div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo $this->session->flashdata('error'); ?>
+                    <?php echo $check; ?>
                 </div>
-                <?php }?>
                 <?php
-$success = $this->session->flashdata('success');
-if ($success) {
-    ?>
-                <div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo $this->session->flashdata('success'); ?>
-                </div>
-                <?php }?>
-
+unset($_SESSION['check']);
+}
+?>
                 <style>
+                    .error-width {
+                        width: 150px;
+                    }
                 </style>
                 <!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
             </div>

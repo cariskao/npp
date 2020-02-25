@@ -38,8 +38,8 @@
 
 	var str = windowURL.substring(index, windowURL.indexOf('/', index));
 
-	console.log('windowURL', windowURL);
-	console.log('str', str);
+	// console.log('windowURL', windowURL);
+	// console.log('str', str);
 
 	// 進入內頁左方導航也會顯示curent active
 	if (str == 'news') {

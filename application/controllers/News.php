@@ -245,8 +245,13 @@ class News extends BaseController
                     $this->news_model->prTagsAdd($pr_tags_info);
                 }
 
-                $this->session->set_flashdata('success', '儲存成功!');
-                $this->session->set_flashdata('check', '驗證成功');
+                // CodeIgniter支援「快閃資料」(Flashdata), 其為一session資料, 並只對下一次的Server請求有效, 之後就自動清除。
+                $array = array(
+                    'success' => '儲存成功!',
+                    // 'check'   => '驗證成功!',
+                );
+
+                $this->session->set_flashdata($array);
             } else {
                 $this->session->set_flashdata('error', '儲存失敗!');
             }
@@ -290,6 +295,7 @@ class News extends BaseController
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('check', '驗證失敗');
             $this->tagsEdit($id);
         } else {
             $name            = $this->security->xss_clean($this->input->post('title'));
@@ -308,12 +314,17 @@ class News extends BaseController
             $result = $this->news_model->tagsEditSend($userInfo, $id);
 
             if ($result > 0) {
-                $this->session->set_flashdata('success', '更新成功!');
+                // CodeIgniter支援「快閃資料」(Flashdata), 其為一session資料, 並只對下一次的Server請求有效, 之後就自動清除。
+                $array = array(
+                    'success' => '更新成功!',
+                );
+
+                $this->session->set_flashdata($array);
             } else {
                 $this->session->set_flashdata('error', '更新失敗!');
             }
 
-            redirect('news/tagLists');
+            redirect('news/tagLists/');
         }
     }
 
@@ -421,7 +432,13 @@ class News extends BaseController
                 }
 
                 $data['success_msg'] = '圖片上傳成功';
-                $this->session->set_flashdata('success', '新增成功!');
+                // CodeIgniter支援「快閃資料」(Flashdata), 其為一session資料, 並只對下一次的Server請求有效, 之後就自動清除。
+                $array = array(
+                    'success' => '新增成功!',
+                    // 'check'   => '驗證成功!',
+                );
+
+                $this->session->set_flashdata($array);
             } else {
                 $this->session->set_flashdata('error', '新增失敗!');
                 $data['error_msg'] = $this->upload->display_errors();
@@ -446,6 +463,7 @@ class News extends BaseController
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('check', '驗證失敗');
             $this->tagsAdd();
         } else {
             $name            = $this->security->xss_clean($this->input->post('title'));
@@ -461,12 +479,18 @@ class News extends BaseController
             $result = $this->news_model->tagsAddSend($userInfo);
 
             if ($result > 0) {
-                $this->session->set_flashdata('success', '新增成功!');
+                // CodeIgniter支援「快閃資料」(Flashdata), 其為一session資料, 並只對下一次的Server請求有效, 之後就自動清除。
+                $array = array(
+                    'success' => '新增成功!',
+                    // 'check'   => '驗證成功!',
+                );
+
+                $this->session->set_flashdata($array);
             } else {
                 $this->session->set_flashdata('error', '新增失敗!');
             }
 
-            redirect('news/tagLists');
+            redirect('news/tagLists/');
         }
     }
 
