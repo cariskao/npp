@@ -38,7 +38,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
-											<label for="img">新增圖片</label>
+											<label for="img" class="must">新增圖片</label>
 											<input type="file" name="file" />
 											<?php echo form_error('file'); ?>
 										</div>
@@ -47,7 +47,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
-											<label for="m_title">大標</label>
+											<label for="m_title" class="must">大標</label>
 											<input type="text" class="form-control" id="m_title" name="m_title" value="">
 											<?php echo form_error('m_title'); ?>
 										</div>

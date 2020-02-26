@@ -33,7 +33,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="img">選擇圖片</label>
+											<label for="img" class="must">選擇圖片</label>
 											<input class="form-control" id="img" type="file" name="file" size="20" />
 											<?php echo form_error('file'); ?>
 										</div>
@@ -42,7 +42,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="title">標題</label>
+											<label for="title" class="must">標題</label>
 											<input type="text" class="form-control" id="title" name="title" value="">
 											<?php echo form_error('title'); ?>
 										</div>

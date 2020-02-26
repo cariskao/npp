@@ -38,7 +38,12 @@ $(function () {
 
    $.datepicker.setDefaults($.datepicker.regional["zh-TW"]);
 
-   $("#date_start").datepicker({
+   $('#date_start').datepicker({
+      showButtonPanel: true,
+      dateFormat: 'yy-mm-dd',
+      showMonthAfterYear: true,
+   });
+   $('#date_end').datepicker({
       showButtonPanel: true,
       dateFormat: 'yy-mm-dd',
       showMonthAfterYear: true,

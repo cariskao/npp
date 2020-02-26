@@ -75,7 +75,7 @@ class Website extends BaseController
 
     public function setupSend()
     {
-        $this->form_validation->set_rules('mail', 'Email', 'trim|required|valid_email|max_length[128]');
+        $this->form_validation->set_rules('mail', 'Email', 'trim|valid_email|max_length[128]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         if ($this->form_validation->run() == false) {

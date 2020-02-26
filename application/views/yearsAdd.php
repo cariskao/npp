@@ -31,11 +31,14 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="title">屆期名稱</label>
-											<input type="text" class="form-control" id="title" name="title" value="">
+											<label for="title" class="must">屆期名稱</label>
+											<input type="text" class="form-control must" id="title" name="title" value=""
+												placeholder="必填欄位(前台顯示會將名稱與日期合併)">
 											<?php echo form_error('title'); ?>
 										</div>
 									</div>
+								</div>
+								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="">顯示狀態</label>
@@ -51,59 +54,86 @@
 										</div>
 									</div>
 								</div>
-							</div><!-- /.box-body -->
-							<input type="submit" class="btn btn-success submit-pos" value="儲存" />
-						</form>
-					</div>
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="date_start">起始日期</label>
+											<div class="input-group cur">
+												<input type="text" class="form-control" id="date_start" name="date_start"
+													placeholder="選擇起始日期" autocomplete="off" readonly>
+												<span class="input-group-addon" title="清除">
+													<span class="glyphicon glyphicon-remove"></span>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="date_end">結束日期</label>
+											<div class="input-group cur">
+												<input type="text" class="form-control" id="date_end" name="date_end"
+													placeholder="選擇結束日期" autocomplete="off" readonly>
+												<span class="input-group-addon" title="清除">
+													<span class="glyphicon glyphicon-remove"></span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div><!-- /.box-body -->
+					<input type="submit" class="btn btn-success submit-pos" value="儲存" />
+					</form>
 				</div>
-				<!-- <div class="col-md-12"> -->
+			</div>
+			<!-- <div class="col-md-12"> -->
 
-				<script language='javascript' type='text/javascript'>
-					$(function () {
-						setTimeout(function () {
-							$("#alert-success").hide();
-						}, 3000);
-					})
+			<script language='javascript' type='text/javascript'>
+				$(function () {
+					setTimeout(function () {
+						$("#alert-success").hide();
+					}, 3000);
+				})
 
-					// 顯示狀態
-					$('#radioBtn a').on('click', function () {
-						var sel = $(this).data('title');
-						var tog = $(this).data('toggle');
-						console.log('sel', sel);
-						console.log('tog', tog);
-						$('#' + tog).prop('value', sel); //將該被點擊的data-title值寫入到id="happy"的value中。
+				// 顯示狀態
+				$('#radioBtn a').on('click', function () {
+					var sel = $(this).data('title');
+					var tog = $(this).data('toggle');
+					console.log('sel', sel);
+					console.log('tog', tog);
+					$('#' + tog).prop('value', sel); //將該被點擊的data-title值寫入到id="happy"的value中。
 
-						// 當點擊爲Y,就把不爲Y的元素移除active並加上notActive
-						$('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass(
-							'notActive');
-						// 當點擊爲Y,就把爲Y的元素移除notActive並加上active
-						$('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
-					})
-				</script>
-				<?php
+					// 當點擊爲Y,就把不爲Y的元素移除active並加上notActive
+					$('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass(
+						'notActive');
+					// 當點擊爲Y,就把爲Y的元素移除notActive並加上active
+					$('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+				})
+			</script>
+			<?php
 $this->load->helper('form');
 $error = $this->session->flashdata('error');
 if ($error) {
     ?>
-				<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<?php echo $this->session->flashdata('error'); ?>
-				</div>
-				<?php }?>
-				<?php
+			<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<?php echo $this->session->flashdata('error'); ?>
+			</div>
+			<?php }?>
+			<?php
 $success = $this->session->flashdata('success');
 if ($success) {
     ?>
-				<div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<?php echo $this->session->flashdata('success'); ?>
-				</div>
-				<?php }?>
-
-				<style>
-				</style>
-				<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
+			<div id="alert-success" class="alert-absoulte alert alert-success alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<?php echo $this->session->flashdata('success'); ?>
 			</div>
+			<?php }?>
+
+			<style>
+			</style>
+			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 		</div>
-	</section>
+</div>
+</section>
 </div>

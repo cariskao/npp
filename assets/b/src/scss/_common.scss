@@ -86,6 +86,17 @@
    margin-bottom: 15px;
 }
 
+.form-group {
+   label.must:before {
+      content: '*';
+      color: red;
+   }
+
+   .cur {
+      cursor: pointer;
+   }
+}
+
 @media screen and (max-width: 768px) {
    .alert-absoulte {
       left: 0;
