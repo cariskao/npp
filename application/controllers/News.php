@@ -617,7 +617,8 @@ class News extends BaseController
         // $userInfo = array('isDeleted' => 1, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
         $result = $this->news_model->newsListDel($pr_id); //刪除資料庫數據
 
-        if ($result > 1) {
+        // if ($result > 0) {
+        if ($result) {
             echo (json_encode(array('status' => true)));
         } else {
             echo (json_encode(array('status' => false)));

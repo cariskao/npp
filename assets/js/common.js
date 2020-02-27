@@ -37,46 +37,20 @@ jQuery(document).ready(function () {
 					// console.log(data)
 					currentRow.parents('tr').remove()
 					window.location.href = reDirect
-					// if (data.status = true) {
-					// 	alert("人員成功刪除");
-					// } else if (data.status = false) {
-					// 	alert("用戶刪除失敗!");
-					// } else {
-					// 	alert("拒絕訪問..!");
-					// }
 				})
 		}
 	})
 
-	jQuery(document).on('click', '.newsListDel', function (e) {
-		e.preventDefault();
-
+	jQuery(document).on('click', '.newsListDel', function () {
 		var pr_id = $(this).data('delid'),
 			type_id = $(this).data('typeid'),
 			img = $(this).data('img'),
 			hitURL = baseURL + 'news/newsListDel',
 			currentRow = $(this),
-			// link = jQuery(this).get(0).href,
 			link = window.location.href,
-			value = link.substring(link.lastIndexOf('/') + 1, link.lastIndexOf('/') + 3),
-			_isNotNum = isNaN(value)
+			reDirect = link
 
-		console.log(link);
-		// console.log('pr_id', pr_id)
-		// console.log('type_id', type_id)
-		// console.log('link', link)
-		// console.log('hitURL', hitURL)
-		// console.log('value', value)
-		// console.log('isNotNum', _isNotNum)
-
-		var reDirect = baseURL;
-
-		// 若url最後不爲數字
-		if (_isNotNum) {
-			reDirect += 'news/lists/' + type_id
-		} else {
-			reDirect += 'news/lists/' + type_id + '/' + value;
-		}
+		// console.log('link', link);
 
 		switch (type_id) {
 			case 1:
@@ -106,9 +80,16 @@ jQuery(document).ready(function () {
 					},
 				})
 				.done(function (data) {
-					// console.log(data)
-					currentRow.parents('tr').remove()
-					window.location.href = reDirect
+					if (data.status) {
+						alert("成功刪除");
+
+						currentRow.parents('tr').remove()
+						window.location.href = reDirect
+					} else if (!data.status) {
+						alert("刪除失敗!");
+					} else {
+						alert("拒絕訪問..!");
+					}
 				})
 		}
 	})
@@ -117,21 +98,8 @@ jQuery(document).ready(function () {
 		var tagid = $(this).data('tagsid'),
 			hitURL = baseURL + 'news/deleteNewsTag',
 			currentRow = $(this),
-			reDirect = baseURL,
-			link = jQuery(this).get(0).href,
-			value = link.substring(link.lastIndexOf('/') + 1, link.lastIndexOf('/') + 3),
-			_isNotNum = isNaN(value)
-
-		// console.log('tagsid', tagid);
-		// console.log('link', link);
-		// console.log('value', value);
-		// console.log('isNotNum', _isNotNum);
-
-		if (_isNotNum) {
-			reDirect += 'news/tagLists'
-		} else {
-			reDirect += 'news/tagLists/' + value
-		}
+			link = window.location.href,
+			reDirect = link
 
 		var confirmation = confirm('確認刪除此標籤 ?')
 
@@ -146,9 +114,16 @@ jQuery(document).ready(function () {
 					},
 				})
 				.done(function (data) {
-					// console.log(data)
-					currentRow.parents('tr').remove()
-					window.location.href = reDirect
+					if (data.status) {
+						alert("成功刪除");
+
+						currentRow.parents('tr').remove()
+						window.location.href = reDirect
+					} else if (!data.status) {
+						alert("刪除失敗!");
+					} else {
+						alert("拒絕訪問..!");
+					}
 				})
 		}
 	})
@@ -158,21 +133,8 @@ jQuery(document).ready(function () {
 			img = $(this).data('img'),
 			hitURL = baseURL + 'website/deleteCarousel',
 			currentRow = $(this),
-			reDirect = baseURL,
-			link = jQuery(this).get(0).href,
-			value = link.substring(link.lastIndexOf('/') + 1, link.lastIndexOf('/') + 3),
-			_isNotNum = isNaN(value)
-
-		// console.log('tagsid', tagid);
-		// console.log('link', link);
-		// console.log('value', value);
-		// console.log('isNotNum', _isNotNum);
-
-		if (_isNotNum) {
-			reDirect += 'website/carouselLists'
-		} else {
-			reDirect += 'website/carouselLists/' + value
-		}
+			link = window.location.href,
+			reDirect = link
 
 		var confirmation = confirm('確認刪除此輪播項目 ?')
 
@@ -188,9 +150,16 @@ jQuery(document).ready(function () {
 					},
 				})
 				.done(function (data) {
-					// console.log(data)
-					currentRow.parents('tr').remove()
-					window.location.href = reDirect
+					if (data.status) {
+						alert("成功刪除");
+
+						currentRow.parents('tr').remove()
+						window.location.href = reDirect
+					} else if (!data.status) {
+						alert("刪除失敗!");
+					} else {
+						alert("拒絕訪問..!");
+					}
 				})
 		}
 	})
@@ -237,24 +206,8 @@ jQuery(document).ready(function () {
 		var yid = $(this).data('yid'),
 			hitURL = baseURL + 'members/deleteYears',
 			currentRow = $(this),
-			// reDirect = baseURL,
-			reDirect = baseURL + 'members/yearLists',
 			link = window.location.href,
-			// link = jQuery(this).get(0).href,
-			value = link.substring(link.lastIndexOf('/') + 1),
-			_isNotNum = isNaN(value)
-
-		console.log('yid', yid);
-		console.log('link', link);
-		console.log('value', value);
-		console.log('isNotNum', _isNotNum);
-
-		// if (_isNotNum) {
-		// 	reDirect += 'members/tagLists'
-		// } else {
-		// 	reDirect += 'members/tagLists/' + value
-		// }
-		console.log(reDirect);
+			reDirect = link
 
 		var confirmation = confirm('確認刪除此屆期 ?')
 
@@ -269,9 +222,16 @@ jQuery(document).ready(function () {
 					},
 				})
 				.done(function (data) {
-					// console.log(data)
-					currentRow.parents('tr').remove()
-					window.location.href = reDirect
+					if (data.status) {
+						alert("成功刪除");
+
+						currentRow.parents('tr').remove()
+						window.location.href = reDirect
+					} else if (!data.status) {
+						alert("刪除失敗!");
+					} else {
+						alert("拒絕訪問..!");
+					}
 				})
 		}
 	})

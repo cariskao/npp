@@ -309,7 +309,10 @@ class News_model extends CI_Model
         $this->db->where('pr_id', $pr_id);
         $this->db->delete('pr_tags');
 
-        return $this->db->affected_rows();
+        // 可能這裏做了二個刪除的動作,所以會return 0
+        // return $this->db->affected_rows();
+        // 改成
+        return true;
     }
 
     // 刪除標籤列表

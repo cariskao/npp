@@ -371,7 +371,7 @@ class Website extends BaseController
         // $userInfo = array('isDeleted' => 1, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
         $result = $this->website_model->deleteCarousel($id);
 
-        if ($result > 1) {
+        if ($result > 0) {
             echo (json_encode(array('status' => true)));
         } else {
             echo (json_encode(array('status' => false)));
