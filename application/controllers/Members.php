@@ -45,7 +45,7 @@ class Members extends BaseController
 
         $returns = $this->paginationCompress('members/yearLists/', $count, 10, 3);
 
-        $data['yearLists'] = $this->members_model->yearsListing($searchText, $returns["page"], $returns["segment"]);
+        $data['yearLists'] = $this->members_model->yearsListing(false, $searchText, $returns["page"], $returns["segment"]);
         // $this->global['pageTitle'] = '標籤管理';
 
         $this->loadViews("yearLists", $this->global, $data, null);
@@ -72,23 +72,28 @@ class Members extends BaseController
 
     public function yearsAddSend()
     {
-        $this->form_validation->set_rules('title', '名稱', 'trim|required|max_length[128]|callback_tags_check');
+        $this->form_validation->set_rules('title', '名稱', 'trim|required|max_length[128]|callback_years_check');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         if ($this->form_validation->run() == false) {
-            $this->tagsAdd();
+            $this->session->set_flashdata('check', '驗證失敗');
+            $this->yearsAdd();
         } else {
             $name            = $this->security->xss_clean($this->input->post('title'));
             $showStatusCheck = $this->input->post('happy');
+            $dStart          = $this->input->post('date_start');
+            $dEnd            = $this->input->post('date_end');
 
             $showStatus = $showStatusCheck != 'N' ? 1 : 0;
 
             $userInfo = array(
-                'name'   => $name,
-                'showup' => $showStatus,
+                'title'      => $name,
+                'showup'     => $showStatus,
+                'date_start' => $dStart,
+                'date_end'   => $dEnd,
             );
 
-            $result = $this->news_model->tagsAddSend($userInfo);
+            $result = $this->members_model->yearsAddSend($userInfo);
 
             if ($result > 0) {
                 $this->session->set_flashdata('success', '新增成功!');
@@ -96,7 +101,153 @@ class Members extends BaseController
                 $this->session->set_flashdata('error', '新增失敗!');
             }
 
-            redirect('news/tagLists');
+            redirect('members/yearLists');
         }
+    }
+
+/*
+.########.########..####.########
+.##.......##.....##..##.....##...
+.##.......##.....##..##.....##...
+.######...##.....##..##.....##...
+.##.......##.....##..##.....##...
+.##.......##.....##..##.....##...
+.########.########..####....##...
+ */
+
+    public function yearsEdit($yid)
+    {
+        // $this->global['pageTitle'] = '編輯標籤';
+        $editProtectChcek = $this->members_model->editProtectCheck($yid, true);
+
+        if ($editProtectChcek == 0) {
+            redirect('dashboard');
+        }
+
+        $this->global['navTitle'] = '本黨立委 - 屆期編輯';
+
+        $data['getYearInfo'] = $this->members_model->getYearInfo($yid);
+
+        $this->loadViews("yearsEdit", $this->global, $data, null);
+    }
+
+    public function yearsEditSend($id)
+    {
+        $this->form_validation->set_rules('title', '名稱', 'trim|required|max_length[128]|callback_years_check[' . $id . ']');
+        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('check', '驗證失敗');
+            $this->yearsEdit($id);
+        } else {
+            $name            = $this->security->xss_clean($this->input->post('title'));
+            $showStatusCheck = $this->input->post('happy');
+            $dStart          = $this->input->post('date_start');
+            $dEnd            = $this->input->post('date_end');
+
+            $userInfo = array(
+                'title'      => $name,
+                'date_start' => $dStart,
+                'date_end'   => $dEnd,
+            );
+
+            if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
+
+                $showStatus         = $showStatusCheck == 'Y' ? 1 : 0;
+                $userInfo['showup'] = $showStatus;
+            }
+
+            $result = $this->members_model->yearsEditSend($userInfo, $id);
+
+            if ($result > 0) {
+                // CodeIgniter支援「快閃資料」(Flashdata), 其為一session資料, 並只對下一次的Server請求有效, 之後就自動清除。
+                $array = array(
+                    'success' => '更新成功!',
+                );
+
+                $this->session->set_flashdata($array);
+            } else {
+                $this->session->set_flashdata('error', '更新失敗!');
+            }
+
+            redirect('members/yearLists/');
+        }
+    }
+
+    /*
+    .########..########.##.......########.########.########
+    .##.....##.##.......##.......##..........##....##......
+    .##.....##.##.......##.......##..........##....##......
+    .##.....##.######...##.......######......##....######..
+    .##.....##.##.......##.......##..........##....##......
+    .##.....##.##.......##.......##..........##....##......
+    .########..########.########.########....##....########
+     */
+
+    public function deleteYears()
+    {
+        $id     = $this->input->post('yid');
+        $result = $this->members_model->deleteYears($id);
+
+        if ($result > 0) {
+            echo (json_encode(array('status' => true)));
+        } else {
+            echo (json_encode(array('status' => false)));
+        }
+    }
+
+/*
+..............######..##.....##.########..######..##....##
+.............##....##.##.....##.##.......##....##.##...##.
+.............##.......##.....##.##.......##.......##..##..
+.............##.......#########.######...##.......#####...
+.............##.......##.....##.##.......##.......##..##..
+.............##....##.##.....##.##.......##....##.##...##.
+..............######..##.....##.########..######..##....##
+ */
+
+    public function years_check($str, $id = '')
+    {
+        $name       = $this->security->xss_clean($this->input->post('title'));
+        $nameRepeat = $this->members_model->years_check($name, $id);
+
+        if ($nameRepeat > 0) {
+            $this->form_validation->set_message('years_check', '已有同名的標題名稱：「' . $str . '」!');
+            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /*
+    ..######...#######..########..########
+    .##....##.##.....##.##.....##....##...
+    .##.......##.....##.##.....##....##...
+    ..######..##.....##.########.....##...
+    .......##.##.....##.##...##......##...
+    .##....##.##.....##.##....##.....##...
+    ..######...#######..##.....##....##...
+     */
+    public function yearsSort()
+    {
+        $this->global['navTitle'] = '本黨立委 - 屆期管理 - 排序';
+
+        $data['getYearList'] = $this->members_model->yearsListing(true);
+
+        $this->loadViews("yearsSort", $this->global, $data, null);
+    }
+
+    public function yearsSortSend()
+    {
+        $sort   = $this->security->xss_clean($this->input->post('newSort'));
+        $result = $this->members_model->sort($sort);
+
+        if ($result > 0) {
+            $this->session->set_flashdata('success', '排序已更新!');
+        } else {
+            $this->session->set_flashdata('error', '排序更新失敗!');
+        }
+        // 這裏要用排序插件的$.ajax({success})來做路徑導引導才能成功
     }
 }

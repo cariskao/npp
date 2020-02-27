@@ -8,10 +8,7 @@ jQuery(document).ready(function () {
 			hitURL = baseURL + 'deleteUser',
 			currentRow = $(this),
 			link = jQuery(this).get(0).href,
-			value = link.substring(
-				link.lastIndexOf('/') + 1,
-				link.lastIndexOf('/') + 3,
-			),
+			value = link.substring(link.lastIndexOf('/') + 1, link.lastIndexOf('/') + 3),
 			_isNotNum = isNaN(value)
 
 		// console.log('link', link)
@@ -51,19 +48,20 @@ jQuery(document).ready(function () {
 		}
 	})
 
-	jQuery(document).on('click', '.newsListDel', function () {
+	jQuery(document).on('click', '.newsListDel', function (e) {
+		e.preventDefault();
+
 		var pr_id = $(this).data('delid'),
 			type_id = $(this).data('typeid'),
 			img = $(this).data('img'),
 			hitURL = baseURL + 'news/newsListDel',
 			currentRow = $(this),
-			link = jQuery(this).get(0).href,
-			value = link.substring(
-				link.lastIndexOf('/') + 1,
-				link.lastIndexOf('/') + 3,
-			),
+			// link = jQuery(this).get(0).href,
+			link = window.location.href,
+			value = link.substring(link.lastIndexOf('/') + 1, link.lastIndexOf('/') + 3),
 			_isNotNum = isNaN(value)
 
+		console.log(link);
 		// console.log('pr_id', pr_id)
 		// console.log('type_id', type_id)
 		// console.log('link', link)
@@ -121,10 +119,7 @@ jQuery(document).ready(function () {
 			currentRow = $(this),
 			reDirect = baseURL,
 			link = jQuery(this).get(0).href,
-			value = link.substring(
-				link.lastIndexOf('/') + 1,
-				link.lastIndexOf('/') + 3,
-			),
+			value = link.substring(link.lastIndexOf('/') + 1, link.lastIndexOf('/') + 3),
 			_isNotNum = isNaN(value)
 
 		// console.log('tagsid', tagid);
@@ -165,10 +160,7 @@ jQuery(document).ready(function () {
 			currentRow = $(this),
 			reDirect = baseURL,
 			link = jQuery(this).get(0).href,
-			value = link.substring(
-				link.lastIndexOf('/') + 1,
-				link.lastIndexOf('/') + 3,
-			),
+			value = link.substring(link.lastIndexOf('/') + 1, link.lastIndexOf('/') + 3),
 			_isNotNum = isNaN(value)
 
 		// console.log('tagsid', tagid);
@@ -208,10 +200,7 @@ jQuery(document).ready(function () {
 			hitURL = baseURL + 'user/deleteManager',
 			currentRow = $(this),
 			link = jQuery(this).get(0).href,
-			value = link.substring(
-				link.lastIndexOf('/') + 1,
-				link.lastIndexOf('/') + 3,
-			),
+			value = link.substring(link.lastIndexOf('/') + 1, link.lastIndexOf('/') + 3),
 			_isNotNum = isNaN(value)
 
 		// console.log('link', link)
@@ -244,42 +233,30 @@ jQuery(document).ready(function () {
 		}
 	})
 
-	jQuery(document).on('click', '.deleteLegislator', function () {
-		var yearId = $(this).data('yearid'),
-			legId = $(this).data('legid'),
-			yearTitle = $(this).data('title'),
-			hitURL = baseURL + 'legislator/deleteLegislator',
+	jQuery(document).on('click', '.deleteYears', function () {
+		var yid = $(this).data('yid'),
+			hitURL = baseURL + 'members/deleteYears',
 			currentRow = $(this),
-			link = jQuery(this).get(0).href,
-			_lastValue = link.substring(link.lastIndexOf('/') + 1),
-			ary = link.split('/'),
-			arySplit = ary[ary.length - 1].split('#')
+			// reDirect = baseURL,
+			reDirect = baseURL + 'members/yearLists',
+			link = window.location.href,
+			// link = jQuery(this).get(0).href,
+			value = link.substring(link.lastIndexOf('/') + 1),
+			_isNotNum = isNaN(value)
 
-		// for (let i = ary1.length - 1; i > 3; i--) {
-		// 	console.log(ary1[i].split('#'));
+		console.log('yid', yid);
+		console.log('link', link);
+		console.log('value', value);
+		console.log('isNotNum', _isNotNum);
+
+		// if (_isNotNum) {
+		// 	reDirect += 'members/tagLists'
+		// } else {
+		// 	reDirect += 'members/tagLists/' + value
 		// }
-		// ary1.forEach(e => {
-		// 	console.log(e);
-		// });
+		console.log(reDirect);
 
-		// var url = link.substr(link.lastIndexOf('/', link.lastIndexOf('/') - 1) + 1);
-		// var url2 = link.substring(link.lastIndexOf('/', link.lastIndexOf('/', link.lastIndexOf('/') - 1) - 1) + 1, link.lastIndexOf('/', link.lastIndexOf('/') - 1));//獲取網址列最後三個值
-		// var site = url.lastIndexOf("\/"); //获取最后一个/的位置
-		// var _last2Value = url.substring(0, site); //截取最后一个/前的值
-
-		// console.log('_lastValue', _lastValue)
-		// console.log('length', ary.length)
-		// console.log('ary1Last', arySplit[0])
-
-		if (ary.length === 8 && _lastValue != '#') {
-			//本機端爲8,伺服端爲7
-			var reDirect =
-				baseURL + 'legislator/legislatorListPage/' + yearId + '/' + arySplit[0]
-		} else {
-			var reDirect = baseURL + 'legislator/legislatorListPage/' + yearId
-		}
-
-		var confirmation = confirm('確認刪除此委員資料和大頭照 ?')
+		var confirmation = confirm('確認刪除此屆期 ?')
 
 		if (confirmation) {
 			jQuery
@@ -288,9 +265,7 @@ jQuery(document).ready(function () {
 					dataType: 'json',
 					url: hitURL,
 					data: {
-						yearid: yearId,
-						legid: legId,
-						title: yearTitle,
+						yid: yid,
 					},
 				})
 				.done(function (data) {
@@ -301,89 +276,9 @@ jQuery(document).ready(function () {
 		}
 	})
 
-	jQuery(document).on('click', '.deleteLegislatorYear', function () {
-		var userId = $(this).data('yearid'),
-			yearTitle = $(this).data('title'),
-			hitURL = baseURL + 'legislator/deleteLegislatorYear',
-			currentRow = $(this),
-			link = jQuery(this).get(0).href,
-			value = link.substring(
-				link.lastIndexOf('/') + 1,
-				link.lastIndexOf('/') + 3,
-			),
-			_isNotNum = isNaN(value)
-
-		// console.log('link', link)
-		// console.log('value', value)
-		// console.log('isNotNum', _isNotNum)
-
-		if (_isNotNum) {
-			var reDirect = baseURL + 'legislator'
-		} else {
-			var reDirect = baseURL + 'legislator/' + value
-		}
-
-		var confirmation = confirm('確認刪除此屆期及其相關委員資料和大頭照 ?')
-
-		if (confirmation) {
-			jQuery
-				.ajax({
-					type: 'POST',
-					dataType: 'json',
-					url: hitURL,
-					data: {
-						yearid: userId,
-						title: yearTitle,
-					},
-				})
-				.done(function (data) {
-					// console.log(data)
-					currentRow.parents('tr').remove()
-					window.location.href = reDirect
-				})
-		}
-	})
-
-	jQuery(document).on('click', '.deletePartyMember', function () {
-		var memid = $(this).data('memid'),
-			hitURL = baseURL + 'partymember/deletePartyMember',
-			currentRow = $(this),
-			link = jQuery(this).get(0).href,
-			value = link.substring(
-				link.lastIndexOf('/') + 1,
-				link.lastIndexOf('/') + 3,
-			),
-			_isNotNum = isNaN(value)
-
-		// console.log('link', link)
-		// console.log('value', value)
-		// console.log('isNotNum', _isNotNum)
-
-		if (_isNotNum) {
-			var reDirect = baseURL + 'partymember'
-		} else {
-			var reDirect = baseURL + 'partymember/index/' + value
-		}
-
-		var confirmation = confirm('確認刪除此黨員 ?')
-
-		if (confirmation) {
-			jQuery
-				.ajax({
-					type: 'POST',
-					dataType: 'json',
-					url: hitURL,
-					data: {
-						memid: memid,
-					},
-				})
-				.done(function (data) {
-					// console.log(data)
-					currentRow.parents('tr').remove()
-					window.location.href = reDirect
-				})
-		}
-	})
-
-	jQuery(document).on('click', '.searchList', function () {})
+	// var link = window.location.href,
+	// 	_lastValue = link.substring(link.lastIndexOf('/') + 1),
+	// 	ary = link.split('/'),
+	// 	arySplit = ary[ary.length - 1].split('#')
+	// jQuery(document).on('click', '.searchList', function () {})
 })

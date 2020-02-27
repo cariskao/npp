@@ -109,7 +109,7 @@ if (!empty($getTagsList)) {
 											<div class="input-group clockpicker">
 												<input type="text" class="form-control" id="date_start" name="date_start"
 													placeholder="選擇日期" autocomplete="off" readonly>
-												<span class="input-group-addon">
+												<span class="input-group-addon" title="清除">
 													<span class="glyphicon glyphicon-remove"></span>
 												</span>
 											</div>
@@ -121,7 +121,7 @@ if (!empty($getTagsList)) {
 											<div class="input-group clockpicker">
 												<input type="text" class="form-control" id="time_start" name="time_start"
 													placeholder="選擇時間" autocomplete="off" readonly>
-												<span class="input-group-addon">
+												<span class="input-group-addon" title="清除">
 													<span class="glyphicon glyphicon-remove"></span>
 												</span>
 											</div>

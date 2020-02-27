@@ -158,6 +158,7 @@ class BaseController extends CI_Controller
         $config['last_tag_open']   = '<li class="arrow">';
         $config['last_link']       = '最後一頁';
         $config['last_tag_close']  = '</li>';
+        // $config['use_page_numbers'] = true; //使用頁碼方式而非偏移量傳值
 
         $this->pagination->initialize($config);
         $page    = $config['per_page'];

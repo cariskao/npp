@@ -9,7 +9,7 @@
 							<div class="row">
 								<div class="col-xs-12">
 									<div class="form-group">
-										<a class="btn btn-warning" href="<?php echo base_url('website/carouselLists/'); ?>">返回</a>
+										<a class="btn btn-warning" href="<?php echo base_url('members/yearLists/'); ?>">返回</a>
 									</div>
 								</div>
 							</div>
@@ -31,10 +31,10 @@
 								<div class="col-md-12">
 									<div id="sortlist">
 										<?php
-if (!empty($getCarouselList)) {
-    foreach ($getCarouselList as $record) {
+if (!empty($getYearList)) {
+    foreach ($getYearList as $record) {
         ?>
-										<div class="ui-state-default" dbid="<?php echo $record->id; ?>">
+										<div class="ui-state-default" dbid="<?php echo $record->yid; ?>">
 											<?php echo $record->title; ?>
 										</div>
 										<?php
@@ -59,9 +59,8 @@ if (!empty($getCarouselList)) {
 						// jquery UI sortable
 						$("#save").click(function () {
 							var _sort = new Array();
-							var hitURL = baseURL + 'website/carouselSortSend';
+							var hitURL = baseURL + 'members/yearsSortSend';
 
-							// 從上到下遍歷排序後的所有元素,並把dbid放入_sort中,之後就可將dbid當作 WHERE 條件更改sort順序
 							$(".ui-state-default").each(function () {
 								_sort.push($(this).attr('dbid'));
 							});
@@ -77,7 +76,7 @@ if (!empty($getCarouselList)) {
 								success: function (data) {
 									// console.log('ok');
 									// 這裏在controller用$this->carouselSorts()會吃不到成功訊息。
-									window.location.href = baseURL + 'website/carouselSorts';
+									window.location.href = baseURL + 'members/yearsSort';
 								},
 								error: function (jqXHR) {
 									console.log('發生錯誤: ', jqXHR.status);
@@ -125,11 +124,19 @@ if ($success) {
 					<?php echo $success; ?>
 				</div>
 				<?php
-unset($_SESSION['success']);
 }
 ?>
-				<style>
-				</style>
+				<?php
+$error = $this->session->flashdata('error');
+if ($error) {
+    ?>
+				<div id="alert-success" class="alert-absoulte error-width alert alert-danger alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<?php echo $error; ?>
+				</div>
+				<?php
+}
+?>
 				<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 			</div>
 			<!-- row -->

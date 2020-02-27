@@ -1,3 +1,11 @@
+<?php
+$id     = $getYearInfo->yid;
+$show   = $getYearInfo->showup;
+$sort   = $getYearInfo->sort;
+$title  = $getYearInfo->title;
+$dStart = $getYearInfo->date_start;
+$dEnd   = $getYearInfo->date_end;
+?>
 <div class="content-wrapper">
 	<section>
 		<div class="functoin-on-top">
@@ -25,15 +33,15 @@
 					<!-- general form elements -->
 					<div class="box box-primary" style="border:none;">
 						<!-- form start -->
-						<form role="form" action="<?php echo base_url() ?>members/yearsAddSend" method="post" id=""
+						<form role="form" action="<?php echo base_url('members/yearsEditSend/' . $id) ?>" method="post" id=""
 							role="form">
 							<div class="box-body">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="title" class="must">屆期名稱</label>
-											<input type="text" class="form-control must" id="title" name="title" value=""
-												placeholder="必填欄位(前台顯示會將名稱與日期合併)">
+											<input type="text" class="form-control must" id="title" name="title"
+												value="<?php echo $title; ?>" placeholder="必填欄位(前台顯示會將名稱與日期合併)">
 											<?php echo form_error('title'); ?>
 										</div>
 									</div>
@@ -44,9 +52,13 @@
 											<label for="">顯示狀態</label>
 											<div class="input-group">
 												<div id="radioBtn" class="btn-group">
-													<a class="btn btn-primary btn-sm active" data-toggle="happy"
+													<?php
+$active    = $show == 1 ? 'active' : 'notActive';
+$notActive = $show == 0 ? 'active' : 'notActive';
+?>
+													<a class="btn btn-primary btn-sm <?php echo $active; ?>" data-toggle="happy"
 														data-title="Y">顯示</a>
-													<a class="btn btn-primary btn-sm notActive" data-toggle="happy"
+													<a class="btn btn-primary btn-sm <?php echo $notActive; ?>" data-toggle="happy"
 														data-title="N">隱藏</a>
 												</div>
 												<input type="hidden" name="happy" id="happy">
@@ -59,8 +71,9 @@
 										<div class="form-group">
 											<label for="date_start">起始日期</label>
 											<div class="input-group cur">
-												<input type="text" class="form-control" id="date_start" name="date_start"
-													placeholder="選擇起始日期" autocomplete="off" readonly>
+												<input value="<?php echo $dStart; ?>" type="text" class="form-control"
+													id="date_start" name="date_start" placeholder="選擇起始日期" autocomplete="off"
+													readonly>
 												<span class="input-group-addon" title="清除">
 													<span class="glyphicon glyphicon-remove"></span>
 												</span>
@@ -71,8 +84,8 @@
 										<div class="form-group">
 											<label for="date_end">結束日期</label>
 											<div class="input-group cur">
-												<input type="text" class="form-control" id="date_end" name="date_end"
-													placeholder="選擇結束日期" autocomplete="off" readonly>
+												<input value="<?php echo $dEnd; ?>" type="text" class="form-control" id="date_end"
+													name="date_end" placeholder="選擇結束日期" autocomplete="off" readonly>
 												<span class="input-group-addon" title="清除">
 													<span class="glyphicon glyphicon-remove"></span>
 												</span>
@@ -121,15 +134,6 @@
 					onSelect: function (dateText, inst) {
 						// console.log(this.id);
 						$("#date_end").datepicker("option", "minDate", dateText);
-
-						// 起始到結束之間的日期計算
-						// var _dateFrom = '';
-						// var _tDayTimestamp = Date.parse(new Date());
-						// console.log(_tDayTimestamp);
-						// _dateFromTimestamp = Date.parse(dateText);
-						// console.log(_dateFromTimestamp);
-						// var _count = parseInt((_tDayTimestamp - _dateFromTimestamp) / (1000 * 60 * 60 * 24));
-						// console.log(_count);
 					}
 				});
 

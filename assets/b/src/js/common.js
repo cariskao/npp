@@ -43,11 +43,11 @@ $(function () {
       dateFormat: 'yy-mm-dd',
       showMonthAfterYear: true,
    });
-   $('#date_end').datepicker({
-      showButtonPanel: true,
-      dateFormat: 'yy-mm-dd',
-      showMonthAfterYear: true,
-   });
+   // $('#date_end').datepicker({
+   //    showButtonPanel: true,
+   //    dateFormat: 'yy-mm-dd',
+   //    showMonthAfterYear: true,
+   // });
 })
 
 // 各個Lists分頁
@@ -55,9 +55,10 @@ function pagination(url) {
    jQuery('ul.pagination li a').click(function (e) {
       // 當點擊下方頁面時,就獲取以下資料並跳轉
       e.preventDefault();
-      var link = jQuery(this).get(0).href; // http://localhost/npp_ci/news/index/10
+      var link = jQuery(this).get(0).href;
       var value = link.substring(link.lastIndexOf('/') + 1);
-      jQuery("#searchList").attr("action", baseURL + url + value); //注意這裡要加上index
+      // console.log('link', link);
+      jQuery("#searchList").attr("action", baseURL + url + value);
       jQuery("#searchList").submit();
    });
 }
