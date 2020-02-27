@@ -33,10 +33,31 @@ class Members extends BaseController
     ######## ####  ######     ##
      */
 
+    // 黨員
+    public function membersList()
+    {
+        // $this->global['pageTitle'] = '最新新聞管理';
+        $this->global['navTitle'] = '本黨立委 - 立委管理 - 列表';
+
+        $searchText         = $this->security->xss_clean($this->input->post('searchText'));
+        $data['searchText'] = $searchText;
+
+        $count = $this->members_model->listingCount($searchText);
+        // echo ' count: ' . $count;
+
+        $returns = $this->paginationCompress('members/members/', $count, 10, 3); //記得加上「/」
+        // echo ' segment-News: ' . $returns['segment'];
+
+        $data['listItems'] = $this->members_model->listing($searchText, $returns['page'], $returns['segment']);
+        // $data['getTagsChoice'] = $this->members_model->getTagsChoice();
+
+        $this->loadViews('membersList', $this->global, $data, null);
+    }
+
     //  屆期
     public function yearLists()
     {
-        $this->global['navTitle'] = '本黨立委 - 屆期管理';
+        $this->global['navTitle'] = '本黨立委 - 屆期管理 - 列表';
 
         $searchText         = $this->security->xss_clean($this->input->post('searchText'));
         $data['searchText'] = $searchText;
@@ -61,11 +82,26 @@ class Members extends BaseController
 .##.....##.########..########.
  */
 
+    // members
+    public function membersAdd()
+    {
+        // $this->global['pageTitle'] = '新增最新新聞資料';
+        $data = array(
+            'getYearsList'   => $this->members_model->getYearsList(),
+            'getIssuesList'  => $this->members_model->getIssuesList(),
+            'getContactList' => $this->members_model->getContactList(),
+        );
+
+        $this->global['navTitle'] = '本黨立委 - 立委管理 - 新增';
+
+        $this->loadViews("membersAdd", $this->global, $data, null);
+    }
+
     // 屆期
     public function yearsAdd()
     {
         // $this->global['pageTitle'] = '新增標籤';
-        $this->global['navTitle'] = '本黨立委 - 新增屆期';
+        $this->global['navTitle'] = '本黨立委 - 屆期管理  - 新增';
 
         $this->loadViews("yearsAdd", $this->global, null);
     }
@@ -124,7 +160,7 @@ class Members extends BaseController
             redirect('dashboard');
         }
 
-        $this->global['navTitle'] = '本黨立委 - 屆期編輯';
+        $this->global['navTitle'] = '本黨立委 - 屆期管理 - 編輯';
 
         $data['getYearInfo'] = $this->members_model->getYearInfo($yid);
 

@@ -1,0 +1,29 @@
+table.table {
+   thead>tr>th {
+      text-align: center;
+      font-size: 20px;
+      background-color: #E0E0E0;
+   }
+
+   tbody>tr {
+
+      th,
+      td:not(.selectize) {
+         line-height: normal;
+         vertical-align: middle;
+         text-align: center;
+      }
+   }
+
+   span.must {
+      color: red;
+   }
+
+   .form-group {
+      margin-bottom: 0;
+   }
+}
+
+.selectize-input {
+   margin-bottom: -8px;
+}

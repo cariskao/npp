@@ -15,7 +15,7 @@
 								</div>
 								<div class="col-xs-6">
 									<div class="box-tools">
-										<form action="<?php echo base_url('news/lists/' . $type_id) ?>" method="POST"
+										<form action="<?php echo base_url('news/lists/' . $type_id); ?>" method="POST"
 											id="searchList">
 											<!-- input-group讓裏面的元素融合(合併)在一起 -->
 											<div class="input-group">

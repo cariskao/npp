@@ -25,6 +25,25 @@
 	<link href="<?php echo base_url(); ?>assets/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="<?php echo base_url(); ?>assets/b/build/css/all.css" rel="stylesheet" type="text/css" />
 	<style>
+		/* 加上自訂字體中文粗體才有效果 */
+		@font-face {
+			font-family: KozGoPr6N-Light_0;
+			src: url("<?php echo base_url('assets/fonts/KozGoPr6N-Light_0.otf'); ?>");
+		}
+
+		* {
+			font-family: KozGoPr6N-Light_0;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-weight: bolder;
+		}
+
 		.error {
 			color: red;
 			font-weight: normal;
@@ -155,7 +174,7 @@
 							<i class="fa fa-user"></i> <span>本黨立委</span>
 						</a>
 						<ul class="treeview-menu">
-							<li><a href="<?php echo base_url('members'); ?>">立委管理</a></li>
+							<li><a href="<?php echo base_url('members/membersList/'); ?>">立委管理</a></li>
 							<li><a href="<?php echo base_url('members/yearLists/'); ?>">屆期管理</a></li>
 						</ul>
 					</li>

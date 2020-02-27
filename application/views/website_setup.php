@@ -31,7 +31,6 @@ $servicetime = $getSetupInfo->servicetime;
 						id="legislatorEditPage" role="form" enctype="multipart/form-data">
 						<div class="box-body">
 							<div class="row">
-								<!-- <?php echo form_error('name'); ?> -->
 								<div class="col-md-6 contact">
 									<div class="bg-color">
 										<p>頁首設定</p>
@@ -116,10 +115,6 @@ unset($_SESSION['success']);
 
 				.box-body .row>div {
 					margin-bottom: 40px;
-				}
-
-				.success-width {
-					width: 150px;
 				}
 			</style>
 			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->

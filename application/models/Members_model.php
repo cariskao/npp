@@ -14,6 +14,45 @@ class Members_model extends CI_Model
 .##........##..##....##....##....##....##
 .########.####..######.....##.....######.
  */
+
+    // 黨員
+    public function listingCount($searchText = '')
+    {
+        // log_message('error', 'News_model listingCount 有錯誤!');
+        $this->db->select();
+
+        $this->db->from('members as m');
+
+        if (!empty($searchText)) {
+            $likeCriteria = "(m.name  LIKE '%" . $searchText . "%')";
+            $this->db->where($likeCriteria);
+        }
+
+        $query = $this->db->get();
+
+        return $query->num_rows();
+    }
+
+    public function listing($searchText = '', $page, $segment)
+    {
+        $this->db->select();
+
+        $this->db->from('members as m');
+
+        if (!empty($searchText)) {
+            $likeCriteria = "(m.name  LIKE '%" . $searchText . "%')";
+            $this->db->where($likeCriteria);
+        }
+
+        $this->db->order_by('m.sort', 'ASC');
+        $this->db->limit($page, $segment);
+
+        $query  = $this->db->get();
+        $result = $query->result();
+
+        return $result;
+    }
+
     // 屆期
     public function yearsListingCount($searchText = '')
     {
@@ -62,6 +101,7 @@ class Members_model extends CI_Model
 .##.....##.########..########.
  */
 
+    // 屆期
     public function yearsAddSend($userInfo)
     {
         $this->db->trans_start();
@@ -75,6 +115,19 @@ class Members_model extends CI_Model
         $this->db->trans_complete();
 
         return $insert_id;
+    }
+
+    // 聯絡方式列表
+    public function getContactList()
+    {
+        $this->db->select();
+        $this->db->from('contact_list as cl');
+
+        $this->db->order_by('cl.con_id', 'ASC');
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
     }
 
 /*
@@ -214,5 +267,43 @@ class Members_model extends CI_Model
         }
 
         return true;
+    }
+
+/*
+..######..########.##.......########..######..########.####.########.########
+.##....##.##.......##.......##.......##....##....##.....##.......##..##......
+.##.......##.......##.......##.......##..........##.....##......##...##......
+..######..######...##.......######...##..........##.....##.....##....######..
+.......##.##.......##.......##.......##..........##.....##....##.....##......
+.##....##.##.......##.......##.......##....##....##.....##...##......##......
+..######..########.########.########..######.....##....####.########.########
+ */
+
+    // membersAdd
+    public function getYearsList()
+    {
+        $this->db->select();
+        $this->db->from('years as y');
+        $this->db->where('showup', 1);
+
+        // $this->db->order_by('BaseTbl.tags_id', 'DESC');
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
+
+    // membersAdd
+    public function getIssuesList()
+    {
+        $this->db->select();
+        $this->db->from('issues as i');
+        $this->db->where('showup', 1);
+
+        // $this->db->order_by('BaseTbl.tags_id', 'DESC');
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
     }
 }
