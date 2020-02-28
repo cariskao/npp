@@ -82,7 +82,7 @@
 													<th scope="row">
 														<span class="must">*</span>屆期
 													</th>
-													<td class="selectize">
+													<td>
 														<div class="form-group">
 															<!-- name記得加上[],才能以陣列形式回傳 -->
 															<select id="select-years" name="years[]" placeholder="請選擇屆期">
@@ -107,7 +107,7 @@ if (!empty($getYearsList)) {
 													<th scope="row">
 														關注議題
 													</th>
-													<td class="selectize">
+													<td class="">
 														<div class="form-group">
 															<!-- name記得加上[],才能以陣列形式回傳 -->
 															<select id="select-issues" name="issues[]" placeholder="請選擇議題">
@@ -155,10 +155,11 @@ if (!empty($getIssuesList)) {
 											</thead>
 											<tbody>
 												<tr>
-													<th scope="row">學歷</th>
-													<th scope="row">經歷</th>
-													<th scope="row">分區/不分區</th>
-													<th scope="row">各會期委員會</th>
+													<!-- <th>才會自帶粗體 -->
+													<th class="text-center" scope="row">學歷</th>
+													<th class="text-center" scope="row">經歷</th>
+													<th class="text-center" scope="row">分區/不分區</th>
+													<th class="text-center" scope="row">各會期委員會</th>
 												</tr>
 												<tr>
 													<td><textarea class="form-control" name="education" id="education"
@@ -176,21 +177,25 @@ if (!empty($getIssuesList)) {
 								</div>
 								<div class="row">
 									<div class="col-md-6">
-										<table class="table table-bordered">
+										<table class="table table-bordered" id="contact-table">
 											<thead>
 												<tr>
-													<th colspan="2" scope="col">聯絡方式</th>
+													<th colspan="3" scope="col">聯絡方式</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr>
-													<td style="width:180px" scope="row">項目</td>
-													<td scope="row">內容</td>
+													<!-- <th>才會自帶粗體 -->
+													<th class="text-center" style="width:170px;" scope="row">項目<input type="button"
+															class="btn btn-sm btn-info btnAdd" style="margin-left:10px" value="新增" />
+													</th>
+													<th class="text-center" colspan="2" scope="row">內容</th>
 												</tr>
-												<tr>
+												<tr class="contact-item">
 													<th scope="row">
 														<div class="form-group">
-															<select style="padding:0 0 0 10px" class="form-control" name="contactList" id="contactList">
+															<select style="padding:0 0 0 10px" class="form-control"
+																name="contactList[]">
 																<?php
 if (!empty($getContactList)) {
     foreach ($getContactList as $items) {
@@ -208,8 +213,12 @@ if (!empty($getContactList)) {
 													</th>
 													<td>
 														<div class="form-group">
-															<input type="text" class="form-control" id="contact" name="contact"
-																value="">
+															<input type="text" class="form-control" name="contact[]" value="">
+														</div>
+													</td>
+													<td style="width:50px">
+														<div class="form-group">
+															<input type="button" class="btn btn-danger btnRemove" value="移除" />
 														</div>
 													</td>
 												</tr>
@@ -273,6 +282,38 @@ if (!empty($getContactList)) {
 				</div>
 				<input type="submit" class="btn btn-success submit-pos" value="儲存" />
 				</form>
+				<template class="temp">
+					<tr class="contact-item">
+						<th scope="row">
+							<div class="form-group">
+								<select style="padding:0 0 0 10px" class="form-control" name="contactList[]">
+									<?php
+if (!empty($getContactList)) {
+    foreach ($getContactList as $items) {
+        ?>
+									<option value="<?php echo $items->con_id; ?>"
+										<?php if ($items->con_id == 1) {echo 'selected';}?>>
+										<?php echo $items->list; ?>
+									</option>
+									<?php
+}
+}
+?>
+								</select>
+							</div>
+						</th>
+						<td>
+							<div class="form-group">
+								<input type="text" class="form-control" name="contact[]" value="">
+							</div>
+						</td>
+						<td style="width:50px">
+							<div class="form-group">
+								<input type="button" class="btn btn-danger btnRemove" value="移除" />
+							</div>
+						</td>
+					</tr>
+				</template>
 			</div>
 			<!-- <div class="col-md-12"> -->
 		</div>

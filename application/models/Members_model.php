@@ -101,6 +101,37 @@ class Members_model extends CI_Model
 .##.....##.########..########.
  */
 
+    // members新增
+    public function membersAdd($info)
+    {
+        $this->db->trans_start();
+        $this->db->insert('members', $info);
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
+    // 其它members相依新增
+    public function members_mem_add($memInfo, $num)
+    {
+        $this->db->trans_start();
+
+        if ($num == 1) {
+            $this->db->insert_batch('mem_years', $memInfo);
+        } else {
+            $this->db->insert_batch('mem_issues', $memInfo);
+        }
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
     // 屆期
     public function yearsAddSend($userInfo)
     {

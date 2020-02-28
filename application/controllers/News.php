@@ -416,7 +416,7 @@ class News extends BaseController
 
                 $return_insert_id = $this->news_model->pressReleaseAdd($press_release_info);
 
-                // 當回傳press_release成功insert的id(pr_id)時,就將此書籤的資料insert到DB
+                // 當回傳press_release成功insert的id(pr_id)時且有選擇標籤時,就將此標籤的資料insert到DB
                 if ($return_insert_id > 0 && !empty($tags)) {
                     $pr_tags_info = array();
                     $one_array    = array();
@@ -431,7 +431,6 @@ class News extends BaseController
                     $this->news_model->prTagsAdd($pr_tags_info);
                 }
 
-                $data['success_msg'] = '圖片上傳成功';
                 // CodeIgniter支援「快閃資料」(Flashdata), 其為一session資料, 並只對下一次的Server請求有效, 之後就自動清除。
                 $array = array(
                     'success' => '新增成功!',

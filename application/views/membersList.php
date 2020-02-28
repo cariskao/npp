@@ -9,7 +9,8 @@
 							<div class="row">
 								<div class="col-xs-6">
 									<div class="form-group">
-										<a class="btn btn-primary" href="<?php echo base_url('members/membersAdd'); ?>"><i
+										<!-- Add尾端加上「/」selectizejs才會正常顯示 -->
+										<a class="btn btn-primary" href="<?php echo base_url('members/membersAdd/'); ?>"><i
 												class="fa fa-plus"></i> 新增</a>
 										<a class="btn btn-success" href="<?php echo base_url('members/membersSort'); ?>"><i
 												class="fa fa-sort" aria-hidden="true"></i> 排序</a>
@@ -17,6 +18,7 @@
 								</div>
 								<div class="col-xs-6">
 									<div class="box-tools">
+										<!-- 列表尾端加上「/」在下方第一頁分頁才會正常顯示 -->
 										<form action="<?php echo base_url('members/membersList/'); ?>" method="POST"
 											id="searchList">
 											<div class="input-group">

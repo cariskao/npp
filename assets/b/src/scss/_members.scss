@@ -8,10 +8,9 @@ table.table {
    tbody>tr {
 
       th,
-      td:not(.selectize) {
+      td {
          line-height: normal;
          vertical-align: middle;
-         text-align: center;
       }
    }
 
