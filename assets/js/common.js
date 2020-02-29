@@ -131,10 +131,19 @@ jQuery(document).ready(function () {
 	jQuery(document).on('click', '.deleteCarousel', function () {
 		var carouselid = $(this).data('carouselid'),
 			img = $(this).data('img'),
+			lastone = $(this).data('lastone'),
+			count = $(this).data('count'),
 			hitURL = baseURL + 'website/deleteCarousel',
 			currentRow = $(this),
-			link = window.location.href,
-			reDirect = link
+			link = window.location.href
+
+
+
+		// if (carouselid == lastone) {
+		// 	reDirect = link.substring(0, link.lastIndexOf('/'));
+		// } else {
+		// 	reDirect = link;
+		// }
 
 		var confirmation = confirm('確認刪除此輪播項目 ?')
 

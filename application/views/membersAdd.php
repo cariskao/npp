@@ -30,7 +30,7 @@
 					<div class="box box-primary" style="border:none;">
 						<!-- form start -->
 						<!--  enctype="multipart/form-data"記得加 -->
-						<form role="form" action="<?php echo base_url('members/membersAddSend/'); ?>" method="post" id=""
+						<form role="form" action="<?php echo base_url('members/membersAddSend'); ?>" method="post" id=""
 							role="form" enctype="multipart/form-data">
 							<div class="box-body">
 								<div class="row">
@@ -336,7 +336,6 @@ if (!empty($getContactList)) {
 					direction: 'asc' // 升序降序
 				}
 			});
-			// 插件產生的link,在ci無法使用下列語法獲取到最後一個<link>來做改寫,所以先在error的路徑直接放入該檔案解決
 			// console.log($('link:last-of-type').attr('href'));
 			// console.log($('link:last-child').attr('href'));
 			// console.log($('link:last').attr('href'));
@@ -352,7 +351,6 @@ if ($check) {
 			<?php echo $check . '!<br>請修正以下提示錯誤!'; ?>
 		</div>
 		<?php
-unset($_SESSION['check']);
 }
 ?>
 		<?php
@@ -364,7 +362,6 @@ if ($success) {
 			<?php echo $success; ?>
 		</div>
 		<?php
-unset($_SESSION['success']);
 }
 ?>
 		<style>

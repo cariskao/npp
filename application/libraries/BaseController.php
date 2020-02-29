@@ -135,34 +135,36 @@ class BaseController extends CI_Controller
     {
         $this->load->library('pagination');
 
-        $config['base_url']        = base_url() . $link;
-        $config['total_rows']      = $count;
-        $config['uri_segment']     = $segment;
-        $config['per_page']        = $perPage;
-        $config['num_links']       = 5;
-        $config['full_tag_open']   = '<nav><ul class="pagination">';
-        $config['full_tag_close']  = '</ul></nav>';
-        $config['first_tag_open']  = '<li class="arrow">';
-        $config['first_link']      = '第一頁';
-        $config['first_tag_close'] = '</li>';
-        $config['prev_link']       = '上一頁';
-        $config['prev_tag_open']   = '<li class="arrow">';
-        $config['prev_tag_close']  = '</li>';
-        $config['next_link']       = '下一頁';
-        $config['next_tag_open']   = '<li class="arrow">';
-        $config['next_tag_close']  = '</li>';
-        $config['cur_tag_open']    = '<li class="active"><a href="#">';
-        $config['cur_tag_close']   = '</a></li>';
-        $config['num_tag_open']    = '<li>';
-        $config['num_tag_close']   = '</li>';
-        $config['last_tag_open']   = '<li class="arrow">';
-        $config['last_link']       = '最後一頁';
-        $config['last_tag_close']  = '</li>';
-        // $config['use_page_numbers'] = true; //使用頁碼方式而非偏移量傳值
+        $config['base_url']         = base_url() . $link;
+        $config['total_rows']       = $count;
+        $config['uri_segment']      = $segment; // 若使用page_query_string則無效
+        $config['per_page']         = $perPage;
+        $config['num_links']        = 5;
+        $config['full_tag_open']    = '<nav><ul class="pagination">';
+        $config['full_tag_close']   = '</ul></nav>';
+        $config['first_tag_open']   = '<li class="arrow">';
+        $config['first_link']       = '第一頁';
+        $config['first_tag_close']  = '</li>';
+        $config['prev_link']        = '上一頁';
+        $config['prev_tag_open']    = '<li class="arrow">';
+        $config['prev_tag_close']   = '</li>';
+        $config['next_link']        = '下一頁';
+        $config['next_tag_open']    = '<li class="arrow">';
+        $config['next_tag_close']   = '</li>';
+        $config['cur_tag_open']     = '<li class="active"><a href="#">';
+        $config['cur_tag_close']    = '</a></li>';
+        $config['num_tag_open']     = '<li>';
+        $config['num_tag_close']    = '</li>';
+        $config['last_tag_open']    = '<li class="arrow">';
+        $config['last_link']        = '最後一頁';
+        $config['last_tag_close']   = '</li>';
+        $config['use_page_numbers'] = true; //true:使用頁碼方式。false:偏移量傳值
+        // $config['page_query_string'] = true; // 將連結改成有?a=test&b=20的格式
+        // $config['enable_query_strings'] = true; // 啟用，若要使用 'page_query_string'
 
         $this->pagination->initialize($config);
         $page    = $config['per_page'];
-        $segment = $this->uri->segment($segment);
+        $segment = !$config['use_page_numbers'] ? $this->uri->segment($segment) : ($this->uri->segment($segment) != null ? ($this->uri->segment($segment) - 1) * 10 : 0);
         // http://n.sfs.tw/content/index/10846
 
         return array(

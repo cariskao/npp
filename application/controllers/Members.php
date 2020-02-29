@@ -36,6 +36,9 @@ class Members extends BaseController
     // 黨員
     public function membersList()
     {
+        // 參考 segment_helper.php
+        // echo '<script>alert("' . uri_segment() . '")</script>';
+
         // $this->global['pageTitle'] = '最新新聞管理';
         $this->global['navTitle'] = '本黨立委 - 立委管理 - 列表';
 
@@ -49,7 +52,6 @@ class Members extends BaseController
         // echo ' segment-News: ' . $returns['segment'];
 
         $data['listItems'] = $this->members_model->listing($searchText, $returns['page'], $returns['segment']);
-        // $data['getTagsChoice'] = $this->members_model->getTagsChoice();
 
         $this->loadViews('membersList', $this->global, $data, null);
     }
@@ -99,32 +101,33 @@ class Members extends BaseController
 
     public function membersAddSend()
     {
-        $this->form_validation->set_rules('file', '圖片', 'callback_imgNameCheck[]');
+        $this->form_validation->set_rules('file', '圖片', 'callback_img_check');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-        $this->form_validation->set_rules('name', '姓名', 'trim|required|max_length[32]');
-        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-        $this->form_validation->set_rules('name_en', '英文姓名', 'trim|required|max_length[32]');
+        $this->form_validation->set_rules('name', '姓名', 'trim|required|max_length[32]|callback_name_check');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
         // $this->form_validation->set_rules('years', '屆期', 'trim|required');
         // $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+        $this->form_validation->set_rules('name_en', '英文姓名', 'trim|required|max_length[32]');
+        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         if ($this->form_validation->run() == false) {
             $this->session->set_flashdata('check', '驗證失敗');
             $this->membersAdd();
         } else {
-            $n         = $this->security->xss_clean($this->input->post('name'));
-            $n_en      = $this->security->xss_clean($this->input->post('name_en'));
-            $edu       = $this->security->xss_clean($this->input->post('education'));
-            $exp       = $this->security->xss_clean($this->input->post('experience'));
-            $districts = $this->security->xss_clean($this->input->post('districts'));
-            $commit    = $this->security->xss_clean($this->input->post('committee'));
-            $fb        = $this->security->xss_clean($this->input->post('fb'));
-            $ig        = $this->security->xss_clean($this->input->post('ig'));
-            $line      = $this->security->xss_clean($this->input->post('line'));
-            $yt        = $this->security->xss_clean($this->input->post('yt'));
+            $n    = $this->security->xss_clean($this->input->post('name'));
+            $n_en = $this->security->xss_clean($this->input->post('name_en'));
+            // $edu  = $this->security->xss_clean($this->input->post('education'));
+            // $exp       = $this->security->xss_clean($this->input->post('experience'));
+            // $districts = $this->security->xss_clean($this->input->post('districts'));
+            // $commit    = $this->security->xss_clean($this->input->post('committee'));
+            $fb   = $this->security->xss_clean($this->input->post('fb'));
+            $ig   = $this->security->xss_clean($this->input->post('ig'));
+            $line = $this->security->xss_clean($this->input->post('line'));
+            $yt   = $this->security->xss_clean($this->input->post('yt'));
 
-            $years           = $this->security->xss_clean($this->input->post('years'));
-            $issues          = $this->security->xss_clean($this->input->post('issues'));
+            // $years           = $this->security->xss_clean($this->input->post('years'));
+            // $issues          = $this->security->xss_clean($this->input->post('issues'));
             $showStatusCheck = $this->security->xss_clean($this->input->post('happy'));
             $showStatus      = $showStatusCheck != 'N' ? 1 : 0;
 
@@ -132,79 +135,86 @@ class Members extends BaseController
             // $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/members_upload/';
             $uploadPath              = 'assets/uploads/members_upload/';
             $config['upload_path']   = $uploadPath;
-            $config['allowed_types'] = 'jpg|jpeg|png';
+            $config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
             // $config['max_size'] = 1024;
+            // $imgName = $_FILES['file']['name'];
 
             // Load and initialize upload library
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
 
-            // submit後就將檔名放入$uploadedFile
+            // Upload file to server
             if ($this->upload->do_upload('file')) {
-                $uploadData   = $this->upload->data();
-                $uploadedFile = $uploadData['file_name'];
+                $fileData   = $this->upload->data();
+                $uploadData = $fileData['file_name'];
+            } else {
+                // upload debug ,loads the view display.php with error
+                $error = array('error' => $this->upload->display_errors());
+                $this->load->view('upload_debug_form', $error);
             }
+
             // Insert files data into the database
             $membersInfo = array(
-                'showup'     => $showStatus,
-                'img'        => $uploadedFile,
-                'name'       => $n,
-                'name_en'    => $n_en,
-                'education'  => $edu,
-                'experience' => $exp,
-                'districts'  => $districts,
-                'committee'  => $commit,
-                'fb'         => $fb,
-                'ig'         => $ig,
-                'line'       => $line,
-                'yt'         => $yt,
+                'showup'  => $showStatus,
+                // 'img'     => $uploadData,
+                'name'    => $n,
+                'name_en' => $n_en,
+                // 'education'  => $edu,
+                // 'experience' => $exp,
+                // 'districts'  => $districts,
+                // 'committee'  => $commit,
+                'fb'      => $fb,
+                'ig'      => $ig,
+                'line'    => $line,
+                'yt'      => $yt,
             );
 
-            $mem_id = $this->members_model->membersAdd($membersInfo);
+            // $insert_memid = $this->members_model->membersAdd($membersInfo);
 
             // 當回傳press_release成功insert的id(pr_id)時且有選擇標籤時,就將此標籤的資料insert到DB
-            if ($mem_id > 0) {
-                if (!empty($years)) {
-                    $mem_years_info = array();
-                    $one_array      = array();
+            // if ($insert_memid > 0) {
+            //     if (!empty($years)) {
+            //         $mem_years_info = array();
+            //         $one_array      = array();
 
-                    foreach ($years as $k => $v) {
-                        $one_array['memid'] = $mem_id;
-                        $one_array['yid']   = $value;
+            //         foreach ($years as $k => $v) {
+            //             $one_array['memid'] = $insert_memid;
+            //             $one_array['yid']   = $value;
 
-                        $mem_years_info[] = $one_array;
-                    }
-                }
+            //             $mem_years_info[] = $one_array;
+            //         }
+            //     }
 
-                if (!empty($issues)) {
-                    $mem_issues_info = array();
-                    $one_array       = array();
+            //     if (!empty($issues)) {
+            //         $mem_issues_info = array();
+            //         $one_array       = array();
 
-                    foreach ($issues as $k => $v) {
-                        $one_array['memid']    = $mem_id;
-                        $one_array['issue_id'] = $v;
+            //         foreach ($issues as $k => $v) {
+            //             $one_array['memid']    = $insert_memid;
+            //             $one_array['issue_id'] = $v;
 
-                        $mem_issues_info[] = $one_array;
-                    }
-                }
-            }
+            //             $mem_issues_info[] = $one_array;
+            //         }
+            //     }
+            // }
 
-            $inser_years  = $this->members_model->members_mem_add($mem_years_info, 1);
-            $inser_issues = $this->members_model->members_mem_add($mem_issues_info, 2);
+            // $inser_years  = $this->members_model->members_mem_add($mem_years_info, 1);
+            // $inser_issues = $this->members_model->members_mem_add($mem_issues_info, 2);
             // $inser_contact = $this->news_model->prTagsAdd($pr_tags_info);
 
-            if ($mem_id > 0 && $inser_years > 0) {
-                $array = array(
-                    'success' => '更新成功!',
-                );
+            // if ($insert_memid > 0 && $inser_years > 0) {
+            // if ($insert_memid > 0) {
+            //     $array = array(
+            //         'success' => '新增成功!',
+            //     );
 
-                $this->session->set_flashdata($array);
-            } else {
-                $this->session->set_flashdata('error', '更新失敗!');
-                $data['error_msg'] = $this->upload->display_errors();
-            }
+            //     $this->session->set_flashdata($array);
+            // } else {
+            //     $this->session->set_flashdata('error', '新增失敗!');
+            //     // $data['error_msg'] = $this->upload->display_errors();
+            // }
 
-            $this->membersAdd();
+            // $this->membersAdd();
         }
     }
 
@@ -265,7 +275,7 @@ class Members extends BaseController
     public function yearsEdit($yid)
     {
         // $this->global['pageTitle'] = '編輯標籤';
-        $editProtectChcek = $this->members_model->editProtectCheck($yid, true);
+        $editProtectChcek = $this->members_model->editProtectCheck($yid, 'years');
 
         if ($editProtectChcek == 0) {
             redirect('dashboard');
@@ -364,6 +374,74 @@ class Members extends BaseController
             return false;
         } else {
             return true;
+        }
+    }
+
+    public function name_check($str, $id = '')
+    {
+        $name       = $this->security->xss_clean($this->input->post('name'));
+        $nameRepeat = $this->members_model->name_check($name, $id);
+
+        if ($nameRepeat > 0) {
+            $this->form_validation->set_message('name_check', '已有相同姓名：「' . $str . '」!');
+            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function img_check($str, $id = '')
+    {
+        $imgName = $_FILES['file']['name']; //圖片好像不能直接用$str來做
+
+        // 若爲新增功能又沒有選擇圖片或圖片名稱爲空就報錯後離開
+        if ($id == '') {
+            if (!isset($imgName) || $imgName == '') {
+                $this->form_validation->set_message('img_check', '請選擇要上傳的圖片');
+                $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+                return false;
+            }
+        }
+
+        // 如果圖片檔名有空白字元就報錯後離開
+        // \s: 任何空白字元(空白,換行,tab)。\S: 任何非空白字元(空白,換行,tab)。
+        $pattern = "/\s/";
+        if (preg_match($pattern, $imgName)) {
+            // echo 'match';
+            $this->form_validation->set_message('img_check', '圖片名稱不可有空白字元');
+            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+            return false;
+        }
+
+        $nameRepeat = $this->members_model->img_check($imgName);
+
+        if ($nameRepeat > 0) {
+            $this->form_validation->set_message('img_check', '已有同名的圖片名稱：「' . $imgName . '」!');
+            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+            return false;
+        } else {
+
+            // 若在編輯時沒有選圖片
+            if (!($id != '' && $imgName == '')) {
+
+                $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'image/svg+xml');
+                $mime                  = get_mime_by_extension($imgName);
+
+                // 檢查圖片格式。
+                // in_array() 函数搜索数组中是否存在指定的值。
+                if (in_array($mime, $allowed_mime_type_arr)) {
+                    return true;
+                } else {
+                    $this->form_validation->set_message('img_check', '圖片格式不正確!<br>請選擇jpg|jpeg|png|gif|svg');
+                    $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+                    return false;
+                }
+            }
         }
     }
 

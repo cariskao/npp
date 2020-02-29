@@ -27,7 +27,7 @@
 	var _host = window.location.hostname;
 	// var _path = window.location.pathname;
 	// var _activeURL = _host;//下方分頁會有問題
-	var _protocol = window.location.protocol;
+	// var _protocol = window.location.protocol;
 
 	if (_host.indexOf('localhost') != -1) {
 		index = windowURL.indexOf('npp') + 4;

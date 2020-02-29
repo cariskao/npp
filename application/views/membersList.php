@@ -10,7 +10,7 @@
 								<div class="col-xs-6">
 									<div class="form-group">
 										<!-- Add尾端加上「/」selectizejs才會正常顯示 -->
-										<a class="btn btn-primary" href="<?php echo base_url('members/membersAdd/'); ?>"><i
+										<a class="btn btn-primary" href="<?php echo base_url('members/membersAdd'); ?>"><i
 												class="fa fa-plus"></i> 新增</a>
 										<a class="btn btn-success" href="<?php echo base_url('members/membersSort'); ?>"><i
 												class="fa fa-sort" aria-hidden="true"></i> 排序</a>
@@ -70,8 +70,8 @@ if (!empty($listItems)) {
 										<a class="btn btn-sm btn-info"
 											href="<?php echo base_url('members/membersEdit/' . $items->memid); ?>" title="編輯"><i
 												class="fa fa-pencil"></i></a>
-										<a class="btn btn-sm btn-danger newsListDel" data-delid="<?php echo $items->pr_id; ?>"
-											data-memid="<?php echo $items->memid; ?>" title="移除"><i class="fa fa-trash"></i></a>
+										<a class="btn btn-sm btn-danger deleteMembers" data-memid="<?php echo $items->memid; ?>"
+											data-img="<?php echo $items->img; ?>" title="移除"><i class="fa fa-trash"></i></a>
 									</td>
 								</tr>
 								<?php

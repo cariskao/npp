@@ -45,6 +45,9 @@ class News extends BaseController
             redirect('dashboard');
         }
 
+        // 參考 segment_helper.php
+        // echo '<script>alert("' . uri_segment() . '")</script>';
+
         switch ($type_id) {
             case '1':
                 $this->global['navTitle'] = '新聞訊息 - 法案及議事說明 - 列表';
@@ -440,7 +443,6 @@ class News extends BaseController
                 $this->session->set_flashdata($array);
             } else {
                 $this->session->set_flashdata('error', '新增失敗!');
-                $data['error_msg'] = $this->upload->display_errors();
             }
 
             redirect('news/adds/' . $type_id);
@@ -539,6 +541,7 @@ class News extends BaseController
             return false;
         } else {
 
+            // 若在編輯時沒有選圖片
             if (!($mode == 2 && $imgName == '')) {
 
                 $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'image/svg+xml');

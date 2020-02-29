@@ -157,7 +157,6 @@ if (!empty($getTagsList)) {
 					}
 				});
 
-				// 插件產生的link,在ci無法使用下列語法獲取到最後一個<link>來做改寫,所以先在error的路徑直接放入該檔案解決
 				// console.log($('link:last-of-type').attr('href'));
 				// console.log($('link:last-child').attr('href'));
 				// console.log($('link:last').attr('href'));

@@ -41,16 +41,20 @@ class Website extends BaseController
     // 輪播列表
     public function carouselLists()
     {
+        // 參考 segment_helper.php
+        // echo '<script>alert("' . uri_segment() . '")</script>';
         $this->global['navTitle'] = '網站管理 - 輪播管理 - 列表';
 
         $searchText         = $this->security->xss_clean($this->input->post('searchText'));
         $data['searchText'] = $searchText;
 
-        $count = $this->website_model->carouselListCount($searchText); //算出總筆數
-
+        $count   = $this->website_model->carouselListCount($searchText); //算出總筆數
         $returns = $this->paginationCompress("website/carouselList/", $count, 10, 3);
 
         $data['getCarouselList'] = $this->website_model->carouselListing(false, $searchText, $returns["page"], $returns["segment"]);
+
+        $data['lastOne'] = $this->website_model->lastOne('carousel', 'id');
+        $data['counts']  = $count;
 
         $this->loadViews("carouselLists", $this->global, $data, null);
     }

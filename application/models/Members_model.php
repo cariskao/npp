@@ -109,6 +109,9 @@ class Members_model extends CI_Model
 
         $insert_id = $this->db->insert_id();
 
+        $sql   = "UPDATE `members` SET `sort` = (SELECT MAX(sort) FROM `members`)+1 WHERE `memid` = $insert_id";
+        $query = $this->db->query($sql);
+
         $this->db->trans_complete();
 
         return $insert_id;
@@ -218,6 +221,7 @@ class Members_model extends CI_Model
     ..######..##.....##.########..######..##....##
      */
 
+    //  屆期 add edit
     public function years_check($name, $id)
     {
         $this->db->trans_start();
@@ -235,17 +239,52 @@ class Members_model extends CI_Model
         return $query->num_rows();
     }
 
-    // 網址防禦
-    public function editProtectCheck($id, $isYear = false)
+    // members add edit
+    public function name_check($name, $id)
+    {
+        $this->db->trans_start();
+        $this->db->select();
+        $this->db->from('members');
+        $this->db->where('name', $name);
+
+        if ($id != '') {
+            $this->db->where('memid !=', $id);
+        }
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return $query->num_rows();
+    }
+
+    public function img_check($img)
+    {
+        $this->db->trans_start();
+        $this->db->select('img');
+        $this->db->from('members');
+        $this->db->where('img', $img);
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return $query->num_rows();
+    }
+
+    // 編輯網址防禦
+    public function editProtectCheck($id, $item = '')
     {
         $this->db->trans_start();
 
-        if ($isYear) {
+        if ($item == 'years') {
             $this->db->select('yid');
             $this->db->from('years');
             $this->db->where('yid', $id);
-        } else {
+        }
 
+        if ($item == '') {
+            # code...
         }
 
         $query = $this->db->get();
