@@ -86,7 +86,7 @@ if (!empty($yearLists)) {
 } else {
     ?>
 								<tr>
-									<td colspan="3" class="no-data">
+									<td colspan="4" class="no-data">
 										無相關資料!
 									</td>
 								</tr>

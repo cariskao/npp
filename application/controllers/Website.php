@@ -53,9 +53,6 @@ class Website extends BaseController
 
         $data['getCarouselList'] = $this->website_model->carouselListing(false, $searchText, $returns["page"], $returns["segment"]);
 
-        $data['lastOne'] = $this->website_model->lastOne('carousel', 'id');
-        $data['counts']  = $count;
-
         $this->loadViews("carouselLists", $this->global, $data, null);
     }
 
@@ -166,6 +163,10 @@ class Website extends BaseController
             if ($this->upload->do_upload('file')) {
                 $fileData   = $this->upload->data();
                 $uploadData = $fileData['file_name'];
+            } else {
+                // upload debug ,loads the view display.php with error
+                $error = array('error' => $this->upload->display_errors());
+                $this->load->view('upload_debug_form', $error);
             }
 
             $carousel_info = array(
@@ -256,6 +257,10 @@ class Website extends BaseController
             if ($this->upload->do_upload('file')) {
                 $fileData   = $this->upload->data();
                 $uploadData = $fileData['file_name'];
+            } else {
+                // upload debug ,loads the view display.php with error
+                $error = array('error' => $this->upload->display_errors());
+                $this->load->view('upload_debug_form', $error);
             }
 
             $carousel_info = array(

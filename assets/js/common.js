@@ -47,10 +47,16 @@ jQuery(document).ready(function () {
 			img = $(this).data('img'),
 			hitURL = baseURL + 'news/newsListDel',
 			currentRow = $(this),
-			link = window.location.href,
-			reDirect = link
+			link = window.location.href
 
-		// console.log('link', link);
+		var l = $('.table tbody tr').length;
+		// console.log(l); // 含標題
+
+		if (l == 2) {
+			reDirect = link.substring(0, link.lastIndexOf('/') + 1);
+		} else {
+			reDirect = link;
+		}
 
 		switch (type_id) {
 			case 1:
@@ -98,8 +104,16 @@ jQuery(document).ready(function () {
 		var tagid = $(this).data('tagsid'),
 			hitURL = baseURL + 'news/deleteNewsTag',
 			currentRow = $(this),
-			link = window.location.href,
-			reDirect = link
+			link = window.location.href
+
+		var l = $('.table tbody tr').length;
+		// console.log(l); // 含標題
+
+		if (l == 2) {
+			reDirect = link.substring(0, link.lastIndexOf('/') + 1);
+		} else {
+			reDirect = link;
+		}
 
 		var confirmation = confirm('確認刪除此標籤 ?')
 
@@ -131,19 +145,22 @@ jQuery(document).ready(function () {
 	jQuery(document).on('click', '.deleteCarousel', function () {
 		var carouselid = $(this).data('carouselid'),
 			img = $(this).data('img'),
-			lastone = $(this).data('lastone'),
-			count = $(this).data('count'),
+			// count = $(this).data('count'),
 			hitURL = baseURL + 'website/deleteCarousel',
 			currentRow = $(this),
 			link = window.location.href
 
 
+		// var _totalPage = Math.ceil(count / 10); // 從db獲取總數計算出總頁數
+		// var _curPage = link.substring(link.lastIndexOf('/') + 1); //算出當前頁數,若=_totalPage爲最後一頁
+		var l = $('.table tbody tr').length; // 以上解決方案,只要算出該頁面的tr數量即可
+		// console.log(l); // 含標題
 
-		// if (carouselid == lastone) {
-		// 	reDirect = link.substring(0, link.lastIndexOf('/'));
-		// } else {
-		// 	reDirect = link;
-		// }
+		if (l == 2) {
+			reDirect = link.substring(0, link.lastIndexOf('/') + 1);
+		} else {
+			reDirect = link;
+		}
 
 		var confirmation = confirm('確認刪除此輪播項目 ?')
 
@@ -215,8 +232,16 @@ jQuery(document).ready(function () {
 		var yid = $(this).data('yid'),
 			hitURL = baseURL + 'members/deleteYears',
 			currentRow = $(this),
-			link = window.location.href,
-			reDirect = link
+			link = window.location.href
+
+		var l = $('.table tbody tr').length;
+		// console.log(l); // 含標題
+
+		if (l == 2) {
+			reDirect = link.substring(0, link.lastIndexOf('/') + 1);
+		} else {
+			reDirect = link;
+		}
 
 		var confirmation = confirm('確認刪除此屆期 ?')
 

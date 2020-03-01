@@ -188,6 +188,10 @@ class News extends BaseController
             if ($this->upload->do_upload('file')) {
                 $fileData   = $this->upload->data();
                 $uploadData = $fileData['file_name'];
+            } else {
+                // upload debug ,loads the view display.php with error
+                $error = array('error' => $this->upload->display_errors());
+                $this->load->view('upload_debug_form', $error);
             }
 
             $press_release_info = array(
@@ -442,7 +446,9 @@ class News extends BaseController
 
                 $this->session->set_flashdata($array);
             } else {
-                $this->session->set_flashdata('error', '新增失敗!');
+                // upload debug ,loads the view display.php with error
+                $error = array('error' => $this->upload->display_errors());
+                $this->load->view('upload_debug_form', $error);
             }
 
             redirect('news/adds/' . $type_id);

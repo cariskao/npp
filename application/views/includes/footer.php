@@ -41,7 +41,7 @@
 	// console.log('windowURL', windowURL);
 	// console.log('str', str);
 
-	// 進入內頁左方導航也會顯示curent active
+	// 進入內頁左方導航也會顯示current active
 	if (str == 'news') {
 		$('.news-active').addClass('active');
 

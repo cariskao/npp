@@ -65,7 +65,7 @@ if (!empty($getCarouselList)) {
 											</td>
 											<td class=" text-center">
 												<a class="btn btn-sm btn-info" href="<?php echo base_url('website/carouselEdit/' . $record->id); ?>" title="編輯"><i class="fa fa-pencil"></i></a>
-												<a class="btn btn-sm btn-danger deleteCarousel" data-count=<?php echo $counts; ?> data-lastone="<?php echo $lastOne->id; ?>" data-carouselid="<?php echo $record->id; ?>" data-img="<?php echo $record->img; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
+												<a class="btn btn-sm btn-danger deleteCarousel" data-carouselid="<?php echo $record->id; ?>" data-img="<?php echo $record->img; ?>" title="刪除"><i class="fa fa-trash fa-lg"></i></a>
 											</td>
 										</tr>
 									<?php
@@ -73,7 +73,7 @@ if (!empty($getCarouselList)) {
 } else {
     ?>
 								<tr>
-									<td colspan="3" class="no-data">
+									<td colspan="6" class="no-data">
 										無相關資料!
 									</td>
 								</tr>
