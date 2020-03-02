@@ -53,34 +53,43 @@
             </div>
             <div class="col-md-4">
                 <?php
-                $this->load->helper('form');
-                $error = $this->session->flashdata('error');
-                if ($error) {
-                    ?>
+$this->load->helper('form');
+$error = $this->session->flashdata('error');
+if ($error) {
+    ?>
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <?php echo $this->session->flashdata('error'); ?>
                     </div>
-                <?php } ?>
                 <?php
-                $success = $this->session->flashdata('success');
-                if ($success) {
-                    ?>
+unset($_SESSION['error']);
+}
+?>
+                <?php
+$success = $this->session->flashdata('success');
+if ($success) {
+    ?>
                     <div class="alert alert-success alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <?php echo $this->session->flashdata('success'); ?>
                     </div>
-                <?php } ?>
+                <?php
+unset($_SESSION['success']);
+}
+?>
 
                 <?php
-                $noMatch = $this->session->flashdata('nomatch');
-                if ($noMatch) {
-                    ?>
+$noMatch = $this->session->flashdata('nomatch');
+if ($noMatch) {
+    ?>
                     <div class="alert alert-warning alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <?php echo $this->session->flashdata('nomatch'); ?>
                     </div>
-                <?php } ?>
+                <?php
+unset($_SESSION['nomatch']);
+}
+?>
 
                 <div class="row">
                     <div class="col-md-12">

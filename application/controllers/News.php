@@ -189,9 +189,10 @@ class News extends BaseController
                 $fileData   = $this->upload->data();
                 $uploadData = $fileData['file_name'];
             } else {
+                // 在編輯做導引做在同一頁會error,所以完成就註解掉
                 // upload debug ,loads the view display.php with error
-                $error = array('error' => $this->upload->display_errors());
-                $this->load->view('upload_debug_form', $error);
+                // $error = array('error' => $this->upload->display_errors());
+                // $this->load->view('upload_debug_form', $error);
             }
 
             $press_release_info = array(

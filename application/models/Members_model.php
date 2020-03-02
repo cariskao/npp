@@ -124,8 +124,10 @@ class Members_model extends CI_Model
 
         if ($num == 1) {
             $this->db->insert_batch('mem_years', $memInfo);
-        } else {
+        } else if ($num == 2) {
             $this->db->insert_batch('mem_issues', $memInfo);
+        } else {
+            $this->db->insert_batch('mem_cont_records', $memInfo);
         }
 
         $insert_id = $this->db->insert_id();

@@ -113,7 +113,10 @@ if ($error) {
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 					<?php echo $this->session->flashdata('error'); ?>
 				</div>
-				<?php }?>
+				<?php
+unset($_SESSION['error']);
+}
+?>
 				<?php
 $success = $this->session->flashdata('success');
 if ($success) {
@@ -122,7 +125,10 @@ if ($success) {
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 					<?php echo $this->session->flashdata('success'); ?>
 				</div>
-				<?php }?>
+				<?php
+unset($_SESSION['success']);
+}
+?>
 
 				<div class="row">
 					<div class="col-md-12">

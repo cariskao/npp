@@ -124,4 +124,7 @@ if ($success) {
 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 	<?php echo $success; ?>
 </div>
-<?php }?>
+<?php
+unset($_SESSION['success']);
+}
+?>

@@ -1,10 +1,10 @@
 <?php
 $userId = $userInfo->userId;
-$name = $userInfo->name;
-$email = $userInfo->email;
+$name   = $userInfo->name;
+$email  = $userInfo->email;
 $mobile = $userInfo->mobile;
 $roleId = $userInfo->roleId;
-$role = $userInfo->role;
+$role   = $userInfo->role;
 ?>
 
 <div class="content-wrapper">
@@ -27,16 +27,16 @@ $role = $userInfo->role;
                 <div class="box box-warning">
                     <div class="box-body box-profile">
                         <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url(); ?>assets/dist/img/npp-logo.png" alt="User profile picture">
-                        <h3 class="profile-username text-center"><?= $name ?></h3>
+                        <h3 class="profile-username text-center"><?=$name?></h3>
 
-                        <p class="text-muted text-center"><?= $role ?></p>
+                        <p class="text-muted text-center"><?=$role?></p>
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>Email</b> <a class="pull-right"><?= $email ?></a>
+                                <b>Email</b> <a class="pull-right"><?=$email?></a>
                             </li>
                             <li class="list-group-item">
-                                <b>手機</b> <a class="pull-right"><?= $mobile ?></a>
+                                <b>手機</b> <a class="pull-right"><?=$mobile?></a>
                             </li>
                         </ul>
                     </div>
@@ -47,13 +47,13 @@ $role = $userInfo->role;
             <div class="col-md-5">
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
-                        <li class="<?= ($active == "details") ? "active" : "" ?>"><a href="#details" data-toggle="tab">修改資料</a></li>
-                        <li class="<?= ($active == "changepass") ? "active" : "" ?>"><a href="#changepass" data-toggle="tab">更改密碼</a></li>
+                        <li class="<?=($active == "details") ? "active" : ""?>"><a href="#details" data-toggle="tab">修改資料</a></li>
+                        <li class="<?=($active == "changepass") ? "active" : ""?>"><a href="#changepass" data-toggle="tab">更改密碼</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div class="<?= ($active == "details") ? "active" : "" ?> tab-pane" id="details">
+                        <div class="<?=($active == "details") ? "active" : ""?> tab-pane" id="details">
                             <form action="<?php echo base_url() ?>profileUpdate" method="post" id="editProfile" role="form">
-                                <?php $this->load->helper('form'); ?>
+                                <?php $this->load->helper('form');?>
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -87,7 +87,7 @@ $role = $userInfo->role;
                                 </div>
                             </form>
                         </div>
-                        <div class="<?= ($active == "changepass") ? "active" : "" ?> tab-pane" id="changepass">
+                        <div class="<?=($active == "changepass") ? "active" : ""?> tab-pane" id="changepass">
                             <form role="form" action="<?php echo base_url() ?>changePassword" method="post">
                                 <div class="box-body">
                                     <div class="row">
@@ -128,34 +128,43 @@ $role = $userInfo->role;
             </div>
             <div class="col-md-4">
                 <?php
-                $this->load->helper('form');
-                $error = $this->session->flashdata('error');
-                if ($error) {
-                    ?>
+$this->load->helper('form');
+$error = $this->session->flashdata('error');
+if ($error) {
+    ?>
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <?php echo $this->session->flashdata('error'); ?>
                     </div>
-                <?php } ?>
                 <?php
-                $success = $this->session->flashdata('success');
-                if ($success) {
-                    ?>
+unset($_SESSION['error']);
+}
+?>
+                <?php
+$success = $this->session->flashdata('success');
+if ($success) {
+    ?>
                     <div class="alert alert-success alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <?php echo $this->session->flashdata('success'); ?>
                     </div>
-                <?php } ?>
+                <?php
+unset($_SESSION['success']);
+}
+?>
 
                 <?php
-                $noMatch = $this->session->flashdata('nomatch');
-                if ($noMatch) {
-                    ?>
+$noMatch = $this->session->flashdata('nomatch');
+if ($noMatch) {
+    ?>
                     <div class="alert alert-warning alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <?php echo $this->session->flashdata('nomatch'); ?>
                     </div>
-                <?php } ?>
+                <?php
+unset($_SESSION['nomatch']);
+}
+?>
 
                 <div class="row">
                     <div class="col-md-12">

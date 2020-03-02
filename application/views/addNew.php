@@ -104,18 +104,24 @@ if ($error) {
     ?>
 				<div class="alert alert-danger alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<?php echo $this->session->flashdata('error'); ?>
+					<?php echo $error; ?>
 				</div>
-				<?php }?>
+				<?php
+unset($_SESSION['error']);
+}
+?>
 				<?php
 $success = $this->session->flashdata('success');
 if ($success) {
     ?>
 				<div id="alert-success" class="alert alert-success alert-dismissable alert-absoulte">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<?php echo $this->session->flashdata('success'); ?>
+					<?php echo $success; ?>
 				</div>
-				<?php }?>
+				<?php
+unset($_SESSION['success']);
+}
+?>
 
 				<div class="row">
 					<div class="col-md-12">

@@ -213,16 +213,15 @@ unset($_SESSION['check']);
 ?>
 			<?php
 $success = $this->session->flashdata('success');
-// echo $success; //存儲成功!
 if ($success) {
-// if ($success && $check == '驗證成功') {
     ?>
 			<div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 				<?php echo $success; ?>
 			</div>
 			<?php
-unset($_SESSION['success']);
+// unset($_SESSION[])才不會若將success跟error的alert做在同一頁時有問題
+    unset($_SESSION['success']);
 }
 ?>
 			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->

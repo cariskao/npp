@@ -105,8 +105,8 @@ class Members extends BaseController
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
         $this->form_validation->set_rules('name', '姓名', 'trim|required|max_length[32]|callback_name_check');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
-        // $this->form_validation->set_rules('years', '屆期', 'trim|required');
-        // $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+        $this->form_validation->set_rules('years', '屆期', 'callback_yearSelect_check');
+        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
 
         $this->form_validation->set_rules('name_en', '英文姓名', 'trim|required|max_length[32]');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
@@ -115,29 +115,29 @@ class Members extends BaseController
             $this->session->set_flashdata('check', '驗證失敗');
             $this->membersAdd();
         } else {
-            $n    = $this->security->xss_clean($this->input->post('name'));
-            $n_en = $this->security->xss_clean($this->input->post('name_en'));
-            // $edu  = $this->security->xss_clean($this->input->post('education'));
-            // $exp       = $this->security->xss_clean($this->input->post('experience'));
-            // $districts = $this->security->xss_clean($this->input->post('districts'));
-            // $commit    = $this->security->xss_clean($this->input->post('committee'));
-            $fb   = $this->security->xss_clean($this->input->post('fb'));
-            $ig   = $this->security->xss_clean($this->input->post('ig'));
-            $line = $this->security->xss_clean($this->input->post('line'));
-            $yt   = $this->security->xss_clean($this->input->post('yt'));
+            $n         = $this->security->xss_clean($this->input->post('name'));
+            $n_en      = $this->security->xss_clean($this->input->post('name_en'));
+            $edu       = $this->security->xss_clean($this->input->post('education'));
+            $exp       = $this->security->xss_clean($this->input->post('experience'));
+            $districts = $this->security->xss_clean($this->input->post('districts'));
+            $commit    = $this->security->xss_clean($this->input->post('committee'));
+            $fb        = $this->security->xss_clean($this->input->post('fb'));
+            $ig        = $this->security->xss_clean($this->input->post('ig'));
+            $line      = $this->security->xss_clean($this->input->post('line'));
+            $yt        = $this->security->xss_clean($this->input->post('yt'));
 
-            // $years           = $this->security->xss_clean($this->input->post('years'));
-            // $issues          = $this->security->xss_clean($this->input->post('issues'));
+            $years           = $this->security->xss_clean($this->input->post('years'));
+            $issues          = $this->security->xss_clean($this->input->post('issues'));
             $showStatusCheck = $this->security->xss_clean($this->input->post('happy'));
             $showStatus      = $showStatusCheck != 'N' ? 1 : 0;
-
+            $contactList     = $this->security->xss_clean($this->input->post('contactList'));
+            $contact         = $this->security->xss_clean($this->input->post('contact'));
             // File upload configuration
             // $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/members_upload/';
             $uploadPath              = 'assets/uploads/members_upload/';
             $config['upload_path']   = $uploadPath;
             $config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
             // $config['max_size'] = 1024;
-            // $imgName = $_FILES['file']['name'];
 
             // Load and initialize upload library
             $this->load->library('upload', $config);
@@ -155,66 +155,81 @@ class Members extends BaseController
 
             // Insert files data into the database
             $membersInfo = array(
-                'showup'  => $showStatus,
-                // 'img'     => $uploadData,
-                'name'    => $n,
-                'name_en' => $n_en,
-                // 'education'  => $edu,
-                // 'experience' => $exp,
-                // 'districts'  => $districts,
-                // 'committee'  => $commit,
-                'fb'      => $fb,
-                'ig'      => $ig,
-                'line'    => $line,
-                'yt'      => $yt,
+                'showup'     => $showStatus,
+                'img'        => $uploadData,
+                'name'       => $n,
+                'name_en'    => $n_en,
+                'education'  => $edu,
+                'experience' => $exp,
+                'districts'  => $districts,
+                'committee'  => $commit,
+                'fb'         => $fb,
+                'ig'         => $ig,
+                'line'       => $line,
+                'yt'         => $yt,
             );
 
-            // $insert_memid = $this->members_model->membersAdd($membersInfo);
+            $insert_memid = $this->members_model->membersAdd($membersInfo);
 
-            // 當回傳press_release成功insert的id(pr_id)時且有選擇標籤時,就將此標籤的資料insert到DB
-            // if ($insert_memid > 0) {
-            //     if (!empty($years)) {
-            //         $mem_years_info = array();
-            //         $one_array      = array();
+            // 當回傳成功insert的id且有選擇標籤時,就將此標籤的資料insert到DB
+            if ($insert_memid > 0) {
+                if (!empty($years)) {
+                    $mem_years_info = array();
+                    $one_array      = array();
 
-            //         foreach ($years as $k => $v) {
-            //             $one_array['memid'] = $insert_memid;
-            //             $one_array['yid']   = $value;
+                    foreach ($years as $k => $v) {
+                        $one_array['memid'] = $insert_memid;
+                        $one_array['yid']   = $v;
 
-            //             $mem_years_info[] = $one_array;
-            //         }
-            //     }
+                        $mem_years_info[] = $one_array;
+                    }
 
-            //     if (!empty($issues)) {
-            //         $mem_issues_info = array();
-            //         $one_array       = array();
+                    $this->members_model->members_mem_add($mem_years_info, 1);
+                }
 
-            //         foreach ($issues as $k => $v) {
-            //             $one_array['memid']    = $insert_memid;
-            //             $one_array['issue_id'] = $v;
+                if (!empty($issues)) {
+                    $mem_issues_info = array();
+                    $one_array       = array();
 
-            //             $mem_issues_info[] = $one_array;
-            //         }
-            //     }
-            // }
+                    foreach ($issues as $k => $v) {
+                        $one_array['memid']    = $insert_memid;
+                        $one_array['issue_id'] = $v;
 
-            // $inser_years  = $this->members_model->members_mem_add($mem_years_info, 1);
-            // $inser_issues = $this->members_model->members_mem_add($mem_issues_info, 2);
-            // $inser_contact = $this->news_model->prTagsAdd($pr_tags_info);
+                        $mem_issues_info[] = $one_array;
+                    }
 
-            // if ($insert_memid > 0 && $inser_years > 0) {
-            // if ($insert_memid > 0) {
-            //     $array = array(
-            //         'success' => '新增成功!',
-            //     );
+                    $this->members_model->members_mem_add($mem_issues_info, 2);
+                }
 
-            //     $this->session->set_flashdata($array);
-            // } else {
-            //     $this->session->set_flashdata('error', '新增失敗!');
-            //     // $data['error_msg'] = $this->upload->display_errors();
-            // }
+                if (!empty($contact)) {
+                    $mem_cont_records_info = array();
+                    $one_array             = array();
 
-            // $this->membersAdd();
+                    foreach ($contact as $c => $cv) {
+                        $one_array['memid']   = $insert_memid;
+                        $one_array['records'] = $cv;
+                        $one_array['con_id']  = $contactList[$c];
+
+                        $mem_cont_records_info[] = $one_array;
+
+                    }
+
+                    $this->members_model->members_mem_add($mem_cont_records_info, 3);
+                }
+
+            }
+
+            if ($insert_memid > 0) {
+                $array = array(
+                    'success' => '新增成功!',
+                );
+
+                $this->session->set_flashdata($array);
+            } else {
+                $this->session->set_flashdata('error', '新增失敗!');
+            }
+
+            $this->membersAdd();
         }
     }
 
@@ -363,6 +378,22 @@ class Members extends BaseController
 ..............######..##.....##.########..######..##....##
  */
 
+    public function yearSelect_check($str, $id = '')
+    {
+        $years = $this->security->xss_clean($this->input->post('years'));
+
+        $r = !empty($years) ? true : false;
+
+        if (!$r) {
+            $this->form_validation->set_message('yearSelect_check', '屆期欄位不得爲空!');
+            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+            return $r;
+        }
+
+        return $r;
+    }
+
     public function years_check($str, $id = '')
     {
         $name       = $this->security->xss_clean($this->input->post('title'));
@@ -377,6 +408,7 @@ class Members extends BaseController
         }
     }
 
+    // members name
     public function name_check($str, $id = '')
     {
         $name       = $this->security->xss_clean($this->input->post('name'));

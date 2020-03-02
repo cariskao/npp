@@ -351,6 +351,7 @@ if ($check) {
 			<?php echo $check . '!<br>請修正以下提示錯誤!'; ?>
 		</div>
 		<?php
+unset($_SESSION['check']);
 }
 ?>
 		<?php
@@ -362,11 +363,24 @@ if ($success) {
 			<?php echo $success; ?>
 		</div>
 		<?php
+unset($_SESSION['success']);
+}
+?>
+		<?php
+$error = $this->session->flashdata('error');
+if ($error) {
+    ?>
+		<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			<?php echo $error; ?>
+		</div>
+		<?php
+unset($_SESSION['error']);
 }
 ?>
 		<style>
 		</style>
-		<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
+		<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
 </div>
 </section>
 </div>
