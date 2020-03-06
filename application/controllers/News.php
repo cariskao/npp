@@ -74,6 +74,7 @@ class News extends BaseController
         $data['type_id']       = $type_id; //用來帶入newsLists_f中searchText的form action 跟 add
 
         // $this->global['pageTitle'] = '最新新聞管理';
+        $this->global['navActive'] = base_url('news/lists/' . $type_id . '/');
 
         $this->loadViews("newsLists", $this->global, $data, null);
     }
@@ -92,6 +93,7 @@ class News extends BaseController
 
         $data['newsTags'] = $this->news_model->tagsListing($searchText, $returns["page"], $returns["segment"]);
         // $this->global['pageTitle'] = '標籤管理';
+        $this->global['navActive'] = base_url('news/tagLists/');
 
         $this->loadViews("tagLists", $this->global, $data, null);
     }
@@ -128,6 +130,8 @@ class News extends BaseController
                 $type_id = $value;
             }
         }
+
+        $this->global['navActive'] = base_url('news/lists/' . $type_id . '/');
 
         // $this->global['pageTitle'] = '編輯最新新聞資料';
         switch ($type_id) {
@@ -288,7 +292,8 @@ class News extends BaseController
             redirect('dashboard');
         }
 
-        $this->global['navTitle'] = '新聞訊息 - 編輯標籤';
+        $this->global['navTitle']  = '新聞訊息 - 編輯標籤';
+        $this->global['navActive'] = base_url('news/tagLists/');
 
         $data['getTagsEditInfo'] = $this->news_model->getTagsEditInfo($tags_id);
 
@@ -352,6 +357,8 @@ class News extends BaseController
         if ($type_id < 1 || $type_id > 3) {
             redirect('dashboard');
         }
+
+        $this->global['navActive'] = base_url('news/lists/' . $type_id . '/');
 
         $data = array(
             'getTagsList' => $this->news_model->getTagsList(),
@@ -460,7 +467,8 @@ class News extends BaseController
     public function tagsAdd()
     {
         // $this->global['pageTitle'] = '新增標籤';
-        $this->global['navTitle'] = '新聞訊息 - 新增標籤';
+        $this->global['navTitle']  = '新聞訊息 - 新增標籤';
+        $this->global['navActive'] = base_url('news/tagLists/');
 
         $this->loadViews("tagsAdd", $this->global, null);
     }

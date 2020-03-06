@@ -21,70 +21,21 @@
 		position: 'absolute'
 	});
 
-	// 進入其它頁面也會在相關的導航有 current active
+	// 無內頁時的側邊欄導航active
 	var windowURL = window.location.href;
-	var index = '';
-	var _host = window.location.hostname;
-	// var _path = window.location.pathname;
-	// var _activeURL = _host;//下方分頁會有問題
-	// var _protocol = window.location.protocol;
-
-	if (_host.indexOf('localhost') != -1) {
-		index = windowURL.indexOf('npp') + 4;
-		// _activeURL += '/npp';//下方分頁會有問題
-	} else {
-		index = windowURL.indexOf('/', 10) + 1;
-	}
-
-	var str = windowURL.substring(index, windowURL.indexOf('/', index));
-
-	// console.log('windowURL', windowURL);
-	// console.log('str', str);
-
-	// 進入內頁左方導航也會顯示current active
-	if (str == 'news') {
-		$('.news-active').addClass('active');
-
-		// 點擊下方分頁時,左方導航也會出現active
-		var _find = 'lists/';
-		if (windowURL.indexOf(_find) != -1) {
-			_index = windowURL.indexOf(_find) + _find.length;
-			var _type_id = windowURL.substring(_index, _index + 1);
-			$('.news-active .treeview-menu>li:nth-child(' + _type_id + ')').addClass('active');
-			$('.news-active .treeview-menu>li:nth-child(' + _type_id + ') a').addClass('active');
-			// var _2ndActive = _activeURL + '/news/' + _find + _type_id + '/';//下方分頁會有問題
-		}
-
-		// 點擊「新增」時左方導航也會出現active(編輯的部分因爲需要獲取type_id,所以做在編輯頁面裡)
-		if (windowURL.indexOf('adds') != -1) {
-			var _type_id = windowURL.substring(windowURL.lastIndexOf('/') + 1);
-			$('.news-active .treeview-menu>li:nth-child(' + _type_id + ')').addClass('active');
-			$('.news-active .treeview-menu>li:nth-child(' + _type_id + ') a').addClass('active');
-		}
-
-		if (windowURL.indexOf('tag') != -1) {
-			$('.news-active .treeview-menu>li:last-child').addClass('active');
-			$('.news-active .treeview-menu>li:last-child a').addClass('active');
-		}
-
-	} else if (str == 'members') {
-		$('.member-active').addClass('active');
-	} else if (str == 'website') {
-		$('.website-active').addClass('active');
-
-				if (windowURL.indexOf('carousel') != -1) {
-			$('.website-active .treeview-menu>li:first-child').addClass('active');
-			$('.website-active .treeview-menu>li:first-child a').addClass('active');
-		}
-	}
-
-	// 獲取當前頁面url後,就在符合該url的<a></a>上加上.active(對照header)
-	// var _activeLeftnav = $('a[href="' + _protocol + '//' + _2ndActive + '"]');// 下方分頁會error
 	var _activeLeftnav = $('a[href="' + windowURL + '"]');
 	_activeLeftnav.addClass('active');
 	_activeLeftnav.parent().addClass('active');
 	_activeLeftnav.parents('.treeview').addClass('active');
-	// console.log(_activeLeftnav);
+
+	// 進入內頁或下方分頁,側邊欄導航也會active
+	var _navPath = "<?php if (!empty($navActive)) {echo $navActive;}?>";
+	// console.log(_navPath);
+	var _navActive = $('a[href="' + _navPath + '"]');
+	var _myParent = _navActive.parents('.treeview');
+	_myParent.addClass('active');
+	_myParent.find('a[href="' + _navPath + '"]').addClass('active');
+	_myParent.find('a[href="' + _navPath + '"]').parent().addClass('active');
 
 	$(document).ready(function () {
 		// 偵測瀏覽器

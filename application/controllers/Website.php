@@ -43,7 +43,8 @@ class Website extends BaseController
     {
         // 參考 segment_helper.php
         // echo '<script>alert("' . uri_segment() . '")</script>';
-        $this->global['navTitle'] = '網站管理 - 輪播管理 - 列表';
+        $this->global['navTitle']  = '網站管理 - 輪播管理 - 列表';
+        $this->global['navActive'] = base_url('website/carouselLists/');
 
         $searchText         = $this->security->xss_clean($this->input->post('searchText'));
         $data['searchText'] = $searchText;
@@ -126,9 +127,11 @@ class Website extends BaseController
             redirect('dashboard');
         }
 
+        $this->global['navTitle']  = '網站管理 - 輪播管理 - 編輯';
+        $this->global['navActive'] = base_url('website/carouselLists/');
+
         $data['getCarouselInfo'] = $this->website_model->getCarouselInfo($id);
 
-        $this->global['navTitle'] = '網站管理 - 輪播管理 - 編輯';
         $this->loadViews("carouselEdit", $this->global, $data, null);
     }
 
@@ -222,7 +225,9 @@ class Website extends BaseController
     // 輪播
     public function carouselAdds()
     {
-        $this->global['navTitle'] = '網站管理 - 輪播管理 - 新增';
+        $this->global['navTitle']  = '網站管理 - 輪播管理 - 新增';
+        $this->global['navActive'] = base_url('website/carouselLists/');
+
         $this->loadViews("carouselAdds", $this->global, null);
     }
 

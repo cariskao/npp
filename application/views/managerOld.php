@@ -100,7 +100,7 @@ if (!empty($roles)) {
                         <div class="box-footer">
                             <input type="submit" class="btn btn-primary" value="送出" />
                             <input type="reset" class="btn btn-default" value="重置" />
-                            <a class="btn btn-warning" href="<?php echo base_url(); ?>user/managerListing">返回</a>
+                            <a class="btn btn-warning" href="<?php echo base_url(); ?>user/managerListing/">返回</a>
                         </div>
                     </form>
                 </div>

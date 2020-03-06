@@ -1,4 +1,6 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 require APPPATH . '/libraries/BaseController.php';
 
@@ -28,19 +30,19 @@ class User extends BaseController
     public function index()
     {
         // $this->global['pageTitle'] = '控制面板';
-        $this->loadViews("dashboard", $this->global, NULL, NULL);
+        $this->loadViews("dashboard", $this->global, null, null);
     }
 
     /**
      * This function is used to load the user list
      */
-    function userListing()
+    public function userListing()
     {
         // 等同vuejs的導航守衛,可預防直接使用網址進入
-        if ($this->isAdmin() == TRUE) {
+        if ($this->isAdmin() == true) {
             $this->loadThis();
         } else {
-            $searchText = $this->security->xss_clean($this->input->post('searchText'));
+            $searchText         = $this->security->xss_clean($this->input->post('searchText'));
             $data['searchText'] = $searchText;
 
             $count = $this->user_model->userListingCount($searchText); //算出總筆數,有搜尋結果就顯示全部搜尋的結果,否則就顯示全部的結果。
@@ -52,19 +54,20 @@ class User extends BaseController
             $data['userRecords'] = $this->user_model->userListing($searchText, $returns["page"], $returns["segment"]);
 
             // $this->global['pageTitle'] = '人員管理';
-            $this->global['navTitle'] = '人員管理';
+            $this->global['navTitle']  = '人員管理';
+            $this->global['navActive'] = base_url('userListing/');
 
-            $this->loadViews("users", $this->global, $data, NULL);
+            $this->loadViews("users", $this->global, $data, null);
         }
     }
 
-    function managerListing()
+    public function managerListing()
     {
         // 等同vuejs的導航守衛,可預防直接使用網址進入
-        if ($this->isManager() == TRUE) {
+        if ($this->isManager() == true) {
             $this->loadThis();
         } else {
-            $searchText = $this->security->xss_clean($this->input->post('searchText'));
+            $searchText         = $this->security->xss_clean($this->input->post('searchText'));
             $data['searchText'] = $searchText;
 
             $count = $this->user_model->managerListingCount($searchText); //算出總筆數,有搜尋結果就顯示全部搜尋的結果,否則就顯示全部的結果。
@@ -76,38 +79,41 @@ class User extends BaseController
             $data['userRecords'] = $this->user_model->managerListing($searchText, $returns["page"], $returns["segment"]);
 
             $this->global['pageTitle'] = '人員管理(管理員)';
+            $this->global['navActive'] = base_url('user/managerListing/');
 
-            $this->loadViews("managers", $this->global, $data, NULL);
+            $this->loadViews("managers", $this->global, $data, null);
         }
     }
 
     /**
      * This function is used to load the add new form
      */
-    function addNew()
+    public function addNew()
     {
-        if ($this->isAdmin() == TRUE) {
+        if ($this->isAdmin() == true) {
             $this->loadThis();
         } else {
             $data['roles'] = $this->user_model->getUserRoles();
 
             // $this->global['pageTitle'] = '新增人員資料';
-            $this->global['navTitle'] = '新增人員資料';
+            $this->global['navTitle']  = '新增人員資料';
+            $this->global['navActive'] = base_url('userListing/');
 
-            $this->loadViews("addNew", $this->global, $data, NULL);
+            $this->loadViews("addNew", $this->global, $data, null);
         }
     }
 
-    function addManager()
+    public function addManager()
     {
-        if ($this->isManager() == TRUE) {
+        if ($this->isManager() == true) {
             $this->loadThis();
         } else {
             $data['roles'] = $this->user_model->getManagerRoles();
 
             $this->global['pageTitle'] = '新增人員資料';
+            $this->global['navActive'] = base_url('user/managerListing/');
 
-            $this->loadViews("addManager", $this->global, $data, NULL);
+            $this->loadViews("addManager", $this->global, $data, null);
         }
     }
 
@@ -115,10 +121,10 @@ class User extends BaseController
      * This function is used to check whether email already exist or not
      * 從addUser.js和editUser.js傳遞
      */
-    function checkEmailExists()
+    public function checkEmailExists()
     {
         $userId = $this->input->post("userId");
-        $email = $this->input->post("email");
+        $email  = $this->input->post("email");
 
         if (empty($userId)) {
             $result = $this->user_model->checkEmailExists($email);
@@ -136,9 +142,9 @@ class User extends BaseController
     /**
      * This function is used to add new user to the system
      */
-    function addNewUser()
+    public function addNewUser()
     {
-        if ($this->isAdmin() == TRUE) {
+        if ($this->isAdmin() == true) {
             $this->loadThis();
         } else {
             $this->load->library('form_validation');
@@ -150,23 +156,23 @@ class User extends BaseController
             $this->form_validation->set_rules('role', '層級', 'trim|required|numeric');
             $this->form_validation->set_rules('mobile', '手機號碼', 'required|min_length[10]');
 
-            if ($this->form_validation->run() == FALSE) {
+            if ($this->form_validation->run() == false) {
                 $this->addNew();
             } else {
-                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
-                $email = strtolower($this->security->xss_clean($this->input->post('email')));
+                $name     = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
+                $email    = strtolower($this->security->xss_clean($this->input->post('email')));
                 $password = $this->input->post('password');
-                $roleId = $this->input->post('role');
-                $mobile = $this->security->xss_clean($this->input->post('mobile'));
+                $roleId   = $this->input->post('role');
+                $mobile   = $this->security->xss_clean($this->input->post('mobile'));
 
                 $userInfo = array(
-                    'email' => $email,
-                    'password' => getHashedPassword($password),
-                    'roleId' => $roleId,
-                    'name' => $name,
-                    'mobile' => $mobile,
-                    'createdBy' => $this->vendorId,
-                    'createdDtm' => date('Y-m-d H:i:s')
+                    'email'      => $email,
+                    'password'   => getHashedPassword($password),
+                    'roleId'     => $roleId,
+                    'name'       => $name,
+                    'mobile'     => $mobile,
+                    'createdBy'  => $this->vendorId,
+                    'createdDtm' => date('Y-m-d H:i:s'),
                 );
 
                 $result = $this->user_model->addNewUser($userInfo);
@@ -182,9 +188,9 @@ class User extends BaseController
         }
     }
 
-    function addNewManager()
+    public function addNewManager()
     {
-        if ($this->isManager() == TRUE) {
+        if ($this->isManager() == true) {
             $this->loadThis();
         } else {
             $this->load->library('form_validation');
@@ -196,23 +202,23 @@ class User extends BaseController
             $this->form_validation->set_rules('role', '層級', 'trim|required|numeric');
             $this->form_validation->set_rules('mobile', '手機號碼', 'required|min_length[10]');
 
-            if ($this->form_validation->run() == FALSE) {
+            if ($this->form_validation->run() == false) {
                 $this->addManager();
             } else {
-                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
-                $email = strtolower($this->security->xss_clean($this->input->post('email')));
+                $name     = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
+                $email    = strtolower($this->security->xss_clean($this->input->post('email')));
                 $password = $this->input->post('password');
-                $roleId = $this->input->post('role');
-                $mobile = $this->security->xss_clean($this->input->post('mobile'));
+                $roleId   = $this->input->post('role');
+                $mobile   = $this->security->xss_clean($this->input->post('mobile'));
 
                 $userInfo = array(
-                    'email' => $email,
-                    'password' => getHashedPassword($password),
-                    'roleId' => $roleId,
-                    'name' => $name,
-                    'mobile' => $mobile,
-                    'createdBy' => $this->vendorId,
-                    'createdDtm' => date('Y-m-d H:i:s')
+                    'email'      => $email,
+                    'password'   => getHashedPassword($password),
+                    'roleId'     => $roleId,
+                    'name'       => $name,
+                    'mobile'     => $mobile,
+                    'createdBy'  => $this->vendorId,
+                    'createdDtm' => date('Y-m-d H:i:s'),
                 );
 
                 $result = $this->user_model->addNewUser($userInfo);
@@ -232,51 +238,53 @@ class User extends BaseController
      * This function is used load user edit information
      * @param number $userId : Optional : This is user id
      */
-    function editOld($userId = NULL)
+    public function editOld($userId = null)
     {
         // echo $userId;這裡因爲若tbl_users的userId=1是amdin,但admin的欄位不應該出現在人員管理中,所以這算是一個防呆的機制。
-        if ($this->isAdmin() == TRUE || $userId == 1) {
+        if ($this->isAdmin() == true || $userId == 1) {
             $this->loadThis();
         } else {
             if ($userId == null) {
                 redirect('userListing');
             }
 
-            $data['roles'] = $this->user_model->getUserRoles();
+            $data['roles']    = $this->user_model->getUserRoles();
             $data['userInfo'] = $this->user_model->getUserInfo($userId);
 
             // $this->global['pageTitle'] = '編輯人員資料';
-            $this->global['navTitle'] = '編輯人員資料';
+            $this->global['navTitle']  = '編輯人員資料';
+            $this->global['navActive'] = base_url('userListing/');
 
-            $this->loadViews("editOld", $this->global, $data, NULL);
+            $this->loadViews("editOld", $this->global, $data, null);
         }
     }
 
-    function managerOld($userId = NULL)
+    public function managerOld($userId = null)
     {
         // echo $userId;這裡因爲若tbl_users的userId=1是amdin,但admin的欄位不應該出現在人員管理中,所以這算是一個防呆的機制。
-        if ($this->isManager() == TRUE) {
+        if ($this->isManager() == true) {
             $this->loadThis();
         } else {
             if ($userId == null) {
                 redirect('user/managerListing');
             }
 
-            $data['roles'] = $this->user_model->getManagerRoles();
+            $data['roles']    = $this->user_model->getManagerRoles();
             $data['userInfo'] = $this->user_model->getManagerInfo($userId);
 
             $this->global['pageTitle'] = '編輯人員資料';
+            $this->global['navActive'] = base_url('user/managerListing/');
 
-            $this->loadViews("managerOld", $this->global, $data, NULL);
+            $this->loadViews("managerOld", $this->global, $data, null);
         }
     }
 
     /**
      * This function is used to edit the user information
      */
-    function editUser()
+    public function editUser()
     {
-        if ($this->isAdmin() == TRUE) {
+        if ($this->isAdmin() == true) {
             $this->loadThis();
         } else {
             $this->load->library('form_validation');
@@ -290,27 +298,27 @@ class User extends BaseController
             $this->form_validation->set_rules('role', '層級', 'trim|required|numeric');
             $this->form_validation->set_rules('mobile', '手機號碼', 'required|min_length[10]');
 
-            if ($this->form_validation->run() == FALSE) {
+            if ($this->form_validation->run() == false) {
                 $this->editOld($userId);
             } else {
-                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
-                $email = strtolower($this->security->xss_clean($this->input->post('email')));
+                $name     = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
+                $email    = strtolower($this->security->xss_clean($this->input->post('email')));
                 $password = $this->input->post('password');
-                $roleId = $this->input->post('role');
-                $mobile = $this->security->xss_clean($this->input->post('mobile'));
+                $roleId   = $this->input->post('role');
+                $mobile   = $this->security->xss_clean($this->input->post('mobile'));
 
                 $userInfo = array();
 
                 if (empty($password)) {
                     $userInfo = array(
-                        'email' => $email, 'roleId' => $roleId, 'name' => $name,
-                        'mobile' => $mobile, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s')
+                        'email'  => $email, 'roleId'     => $roleId, 'name'               => $name,
+                        'mobile' => $mobile, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'),
                     );
                 } else {
                     $userInfo = array(
-                        'email' => $email, 'password' => getHashedPassword($password), 'roleId' => $roleId,
-                        'name' => ucwords($name), 'mobile' => $mobile, 'updatedBy' => $this->vendorId,
-                        'updatedDtm' => date('Y-m-d H:i:s')
+                        'email'      => $email, 'password'       => getHashedPassword($password), 'roleId' => $roleId,
+                        'name'       => ucwords($name), 'mobile' => $mobile, 'updatedBy'                   => $this->vendorId,
+                        'updatedDtm' => date('Y-m-d H:i:s'),
                     );
                 }
 
@@ -328,9 +336,9 @@ class User extends BaseController
         }
     }
 
-    function editManager()
+    public function editManager()
     {
-        if ($this->isManager() == TRUE) {
+        if ($this->isManager() == true) {
             $this->loadThis();
         } else {
             $this->load->library('form_validation');
@@ -344,27 +352,27 @@ class User extends BaseController
             $this->form_validation->set_rules('role', '層級', 'trim|required|numeric');
             $this->form_validation->set_rules('mobile', '手機號碼', 'required|min_length[10]');
 
-            if ($this->form_validation->run() == FALSE) {
+            if ($this->form_validation->run() == false) {
                 $this->managerOld($userId);
             } else {
-                $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
-                $email = strtolower($this->security->xss_clean($this->input->post('email')));
+                $name     = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
+                $email    = strtolower($this->security->xss_clean($this->input->post('email')));
                 $password = $this->input->post('password');
-                $roleId = $this->input->post('role');
-                $mobile = $this->security->xss_clean($this->input->post('mobile'));
+                $roleId   = $this->input->post('role');
+                $mobile   = $this->security->xss_clean($this->input->post('mobile'));
 
                 $userInfo = array();
 
                 if (empty($password)) {
                     $userInfo = array(
-                        'email' => $email, 'roleId' => $roleId, 'name' => $name,
-                        'mobile' => $mobile, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s')
+                        'email'  => $email, 'roleId'     => $roleId, 'name'               => $name,
+                        'mobile' => $mobile, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'),
                     );
                 } else {
                     $userInfo = array(
-                        'email' => $email, 'password' => getHashedPassword($password), 'roleId' => $roleId,
-                        'name' => ucwords($name), 'mobile' => $mobile, 'updatedBy' => $this->vendorId,
-                        'updatedDtm' => date('Y-m-d H:i:s')
+                        'email'      => $email, 'password'       => getHashedPassword($password), 'roleId' => $roleId,
+                        'name'       => ucwords($name), 'mobile' => $mobile, 'updatedBy'                   => $this->vendorId,
+                        'updatedDtm' => date('Y-m-d H:i:s'),
                     );
                 }
 
@@ -377,7 +385,7 @@ class User extends BaseController
                 }
 
                 $this->managerOld($userId);
-                // redirect('user/managerListing');
+                // redirect('user/managerListing/');
             }
         }
     }
@@ -386,37 +394,37 @@ class User extends BaseController
      * This function is used to delete the user using userId
      * @return boolean $result : TRUE / FALSE
      */
-    function deleteUser()
+    public function deleteUser()
     {
-        if ($this->isAdmin() == TRUE) {
+        if ($this->isAdmin() == true) {
             echo (json_encode(array('status' => 'access')));
         } else {
             //這裏的post('userId')是common.js的jQuery.ajax.data
-            $userId = $this->input->post('userId');
+            $userId   = $this->input->post('userId');
             $userInfo = array('isDeleted' => 1, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
 
             $result = $this->user_model->deleteUser($userId, $userInfo);
 
             if ($result > 0) {
-                echo (json_encode(array('status' => TRUE)));
+                echo (json_encode(array('status' => true)));
             } else {
-                echo (json_encode(array('status' => FALSE)));
+                echo (json_encode(array('status' => false)));
             }
         }
     }
 
-    function deleteManager()
+    public function deleteManager()
     {
-        if ($this->isManager() == TRUE) {
+        if ($this->isManager() == true) {
             echo (json_encode(array('status' => 'access')));
         } else {
             $newsid = $this->input->post('userId');
             $result = $this->user_model->deleteManager($newsid);
 
             if ($result > 0) {
-                echo (json_encode(array('status' => TRUE)));
+                echo (json_encode(array('status' => true)));
             } else {
-                echo (json_encode(array('status' => FALSE)));
+                echo (json_encode(array('status' => false)));
             }
         }
     }
@@ -424,33 +432,33 @@ class User extends BaseController
     /**
      * Page not found : error 404
      */
-    function pageNotFound()
+    public function pageNotFound()
     {
         $this->global['pageTitle'] = 'CodeInsect : 404 - Page Not Found';
 
-        $this->loadViews("404", $this->global, NULL, NULL);
+        $this->loadViews("404", $this->global, null, null);
     }
 
     /**
      * This function used to show login history
      * @param number $userId : This is user id
      */
-    function loginHistoy($userId = NULL)
+    public function loginHistoy($userId = null)
     {
-        if ($this->isAdmin() == TRUE) {
+        if ($this->isAdmin() == true) {
             $this->loadThis();
         } else {
-            $userId = ($userId == NULL ? 0 : $userId);
+            $userId = ($userId == null ? 0 : $userId);
 
             $searchText = $this->input->post('searchText');
-            $fromDate = $this->input->post('fromDate');
-            $toDate = $this->input->post('toDate');
+            $fromDate   = $this->input->post('fromDate');
+            $toDate     = $this->input->post('toDate');
 
             $data["userInfo"] = $this->user_model->getUserInfoById($userId);
 
             $data['searchText'] = $searchText;
-            $data['fromDate'] = $fromDate;
-            $data['toDate'] = $toDate;
+            $data['fromDate']   = $fromDate;
+            $data['toDate']     = $toDate;
 
             $count = $this->user_model->loginHistoryCount($userId, $searchText, $fromDate, $toDate);
 
@@ -460,27 +468,27 @@ class User extends BaseController
 
             $this->global['pageTitle'] = 'CodeInsect : User Login History';
 
-            $this->loadViews("loginHistory", $this->global, $data, NULL);
+            $this->loadViews("loginHistory", $this->global, $data, null);
         }
     }
 
     /**
      * This function is used to show users profile
      */
-    function profile($active = "details")
+    public function profile($active = "details")
     {
         $data["userInfo"] = $this->user_model->getUserInfoWithRole($this->vendorId);
-        $data["active"] = $active;
+        $data["active"]   = $active;
 
         $this->global['pageTitle'] = $active == "details" ? '我的檔案-修改資料' : '我的檔案-更改密碼';
-        $this->loadViews("profile", $this->global, $data, NULL);
+        $this->loadViews("profile", $this->global, $data, null);
     }
 
     /**
      * This function is used to update the user details
      * @param text $active : This is flag to set the active tab
      */
-    function profileUpdate($active = "details")
+    public function profileUpdate($active = "details")
     {
         $this->load->library('form_validation');
 
@@ -488,12 +496,12 @@ class User extends BaseController
         $this->form_validation->set_rules('mobile', '手機號碼', 'required|min_length[10]');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|max_length[128]|callback_emailExists');
 
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == false) {
             $this->profile($active);
         } else {
-            $name = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
+            $name   = ucwords(strtolower($this->security->xss_clean($this->input->post('fname'))));
             $mobile = $this->security->xss_clean($this->input->post('mobile'));
-            $email = strtolower($this->security->xss_clean($this->input->post('email')));
+            $email  = strtolower($this->security->xss_clean($this->input->post('email')));
 
             $userInfo = array('name' => $name, 'email' => $email, 'mobile' => $mobile, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
 
@@ -514,7 +522,7 @@ class User extends BaseController
      * This function is used to change the password of the user
      * @param text $active : This is flag to set the active tab
      */
-    function changePassword($active = "changepass")
+    public function changePassword($active = "changepass")
     {
         $this->load->library('form_validation');
 
@@ -522,7 +530,7 @@ class User extends BaseController
         $this->form_validation->set_rules('newPassword', '新密碼', 'required|max_length[20]');
         $this->form_validation->set_rules('cNewPassword', '密碼確認', 'required|matches[newPassword]|max_length[20]');
 
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == false) {
             $this->profile($active);
         } else {
             $oldPassword = $this->input->post('oldPassword');
@@ -535,8 +543,8 @@ class User extends BaseController
                 redirect('profile/' . $active);
             } else {
                 $usersData = array(
-                    'password' => getHashedPassword($newPassword), 'updatedBy' => $this->vendorId,
-                    'updatedDtm' => date('Y-m-d H:i:s')
+                    'password'   => getHashedPassword($newPassword), 'updatedBy' => $this->vendorId,
+                    'updatedDtm' => date('Y-m-d H:i:s'),
                 );
 
                 $result = $this->user_model->changePassword($this->vendorId, $usersData);
@@ -556,7 +564,7 @@ class User extends BaseController
      * This function is used to check whether email already exist or not
      * @param {string} $email : This is users email
      */
-    function emailExists($email)
+    public function emailExists($email)
     {
         $userId = $this->vendorId;
         $return = false;

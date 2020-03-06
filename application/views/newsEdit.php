@@ -188,14 +188,6 @@ $notActive = $userInfo->showup == 0 ? 'active' : 'notActive';
 				var jsArray = ["<?php echo join("\", \"", $getTagsChoice); ?>"];
 				// console.log('jsArray',jsArray);
 				selectTools.setValue(jsArray, true);
-
-				var windowURL = window.location.href;
-				var _type_id = <?php echo $type_id; ?>;
-
-				if (windowURL.indexOf('newsEdit') != -1) {
-					$('.news-active .treeview-menu>li:nth-child(' + _type_id + ')').addClass('active');
-					$('.news-active .treeview-menu>li:nth-child(' + _type_id + ') a').addClass('active');
-				}
 			</script>
 			<?php
 $this->load->helper('form');

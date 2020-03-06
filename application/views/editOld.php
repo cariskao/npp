@@ -80,7 +80,7 @@ $roleId = $userInfo->roleId;
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="role">層級</label>
-										<select class="form-control" id="role" name="role">
+										<select class="form-control" id="role" name="role" style="padding-top:0;padding-bottom:0">
 											<option value="0">未選擇</option>
 											<?php
 if (!empty($roles)) {

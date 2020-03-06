@@ -40,7 +40,8 @@ class Members extends BaseController
         // echo '<script>alert("' . uri_segment() . '")</script>';
 
         // $this->global['pageTitle'] = '最新新聞管理';
-        $this->global['navTitle'] = '本黨立委 - 立委管理 - 列表';
+        $this->global['navTitle']  = '本黨立委 - 立委管理 - 列表';
+        $this->global['navActive'] = base_url('members/membersList/');
 
         $searchText         = $this->security->xss_clean($this->input->post('searchText'));
         $data['searchText'] = $searchText;
@@ -59,7 +60,8 @@ class Members extends BaseController
     //  屆期
     public function yearLists()
     {
-        $this->global['navTitle'] = '本黨立委 - 屆期管理 - 列表';
+        $this->global['navTitle']  = '本黨立委 - 屆期管理 - 列表';
+        $this->global['navActive'] = base_url('members/yearLists/');
 
         $searchText         = $this->security->xss_clean($this->input->post('searchText'));
         $data['searchText'] = $searchText;
@@ -94,7 +96,8 @@ class Members extends BaseController
             'getContactList' => $this->members_model->getContactList(),
         );
 
-        $this->global['navTitle'] = '本黨立委 - 立委管理 - 新增';
+        $this->global['navTitle']  = '本黨立委 - 立委管理 - 新增';
+        $this->global['navActive'] = base_url('members/membersList/');
 
         $this->loadViews("membersAdd", $this->global, $data, null);
     }
@@ -237,7 +240,8 @@ class Members extends BaseController
     public function yearsAdd()
     {
         // $this->global['pageTitle'] = '新增標籤';
-        $this->global['navTitle'] = '本黨立委 - 屆期管理  - 新增';
+        $this->global['navTitle']  = '本黨立委 - 屆期管理  - 新增';
+        $this->global['navActive'] = base_url('members/yearLists/');
 
         $this->loadViews("yearsAdd", $this->global, null);
     }
@@ -296,7 +300,8 @@ class Members extends BaseController
             redirect('dashboard');
         }
 
-        $this->global['navTitle'] = '本黨立委 - 屆期管理 - 編輯';
+        $this->global['navTitle']  = '本黨立委 - 屆期管理 - 編輯';
+        $this->global['navActive'] = base_url('members/yearLists/');
 
         $data['getYearInfo'] = $this->members_model->getYearInfo($yid);
 

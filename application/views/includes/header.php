@@ -144,7 +144,7 @@
 							<i class="fa fa-dashboard"></i> <span>控制面板</span></i>
 						</a>
 					</li>
-					<li class="treeview news-active">
+					<li class="treeview">
 						<a href="#">
 							<i class="fa fa-globe"></i> <span>新聞訊息</span>
 							<!-- <span class="pull-right-container">
@@ -159,7 +159,7 @@
 							<li><a href="<?php echo base_url(); ?>news/tagLists/">標籤管理</a></li>
 						</ul>
 					</li>
-					<li class="treeview xx-active">
+					<li class="treeview">
 						<a href="#">
 							<i class="fa fa-briefcase"></i> <span>法案管理</span>
 						</a>
@@ -169,16 +169,17 @@
 							<li><a href="#">草案管理</a></li>
 						</ul>
 					</li>
-					<li class="treeview member-active">
+					<li class="treeview">
 						<a href="#">
 							<i class="fa fa-user"></i> <span>本黨立委</span>
 						</a>
 						<ul class="treeview-menu">
 							<li><a href="<?php echo base_url('members/membersList/'); ?>">立委管理</a></li>
 							<li><a href="<?php echo base_url('members/yearLists/'); ?>">屆期管理</a></li>
+							<li><a href="<?php echo base_url('members/issuesList/'); ?>">議題管理</a></li>
 						</ul>
 					</li>
-					<li class="treeview website-active">
+					<li class="treeview">
 						<a href="#">
 							<i class="fa fa-cog"></i> <span>網站管理</span>
 						</a>
@@ -192,20 +193,20 @@
 					<?php
 if ($role == ROLE_ADMIN) {
     ?>
-					<li>
-						<a href="<?php echo base_url(); ?>userListing/">
+					<li class="treeview">
+						<a href="<?php echo base_url(); ?>userListing/" style="cursor:pointer">
 							<i class="fa fa-user-plus"></i>
-							<span>人員管理1</span>
+							<span>系統管理員</span>
 						</a>
 					</li>
 					<?php }?>
 					<?php
 if ($role == ROLE_MANAGER) {
     ?>
-					<li>
-						<a href="<?php echo base_url(); ?>user/managerListing/">
+					<li class="treeview">
+						<a href="<?php echo base_url(); ?>user/managerListing/" style="cursor:pointer">
 							<i class="fa fa-user-plus"></i>
-							<span>人員管理2</span>
+							<span>管理員</span>
 						</a>
 					</li>
 					<?php }?>

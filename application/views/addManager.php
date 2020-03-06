@@ -17,7 +17,7 @@
 						<h3 class="box-title">輸入人員資料</h3>
 					</div><!-- /.box-header -->
 					<!-- form start -->
-					<?php $this->load->helper("form"); ?>
+					<?php $this->load->helper("form");?>
 					<form role="form" id="addUser" action="<?php echo base_url() ?>user/addNewManager" method="post" role="form">
 						<div class="box-body">
 							<div class="row">
@@ -58,20 +58,20 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="role">層級</label>
-										<select class="form-control required" id="role" name="role">
+										<select class="form-control required" id="role" name="role" style="padding-top:0;padding-bottom:0">
 											<option value="0">未選擇</option>
 											<?php
-											if (!empty($roles)) {
-												foreach ($roles as $rl) {
-													?>
+if (!empty($roles)) {
+    foreach ($roles as $rl) {
+        ?>
 													<option value="<?php echo $rl->roleId ?>" <?php if ($rl->roleId == set_value('role')) {
-																												echo "selected=selected";
-																											} ?>>
+            echo "selected=selected";
+        }?>>
 														<?php echo $rl->role ?></option>
 												<?php
-											}
-										}
-										?>
+}
+}
+?>
 										</select>
 									</div>
 								</div>
@@ -81,31 +81,31 @@
 						<div class="box-footer">
 							<input type="submit" class="btn btn-primary" value="送出" />
 							<input type="reset" class="btn btn-default" value="重設" />
-							<a class="btn btn-warning" href="<?php echo base_url(); ?>user/managerListing">返回</a>
+							<a class="btn btn-warning" href="<?php echo base_url(); ?>user/managerListing/">返回</a>
 						</div>
 					</form>
 				</div>
 			</div>
 			<div class="col-md-4">
 				<?php
-				$this->load->helper('form');
-				$error = $this->session->flashdata('error');
-				if ($error) {
-					?>
+$this->load->helper('form');
+$error = $this->session->flashdata('error');
+if ($error) {
+    ?>
 					<div class="alert alert-danger alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 						<?php echo $this->session->flashdata('error'); ?>
 					</div>
-				<?php } ?>
+				<?php }?>
 				<?php
-				$success = $this->session->flashdata('success');
-				if ($success) {
-					?>
+$success = $this->session->flashdata('success');
+if ($success) {
+    ?>
 					<div class="alert alert-success alert-dismissable">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 						<?php echo $this->session->flashdata('success'); ?>
 					</div>
-				<?php } ?>
+				<?php }?>
 
 				<div class="row">
 					<div class="col-md-12">
