@@ -7,18 +7,13 @@ jQuery(document).ready(function () {
 		var userId = $(this).data('delid'),
 			hitURL = baseURL + 'deleteUser',
 			currentRow = $(this),
-			link = jQuery(this).get(0).href,
-			value = link.substring(link.lastIndexOf('/') + 1, link.lastIndexOf('/') + 3),
-			_isNotNum = isNaN(value)
+			l = $('.table tbody tr').length,
+			link = window.location.href
 
-		// console.log('link', link)
-		// console.log('value', value)
-		// console.log('isNotNum', _isNotNum)
-
-		if (_isNotNum) {
-			var reDirect = baseURL + 'user/userListing'
+		if (l == 2) {
+			reDirect = link.substring(0, link.lastIndexOf('/') + 1);
 		} else {
-			var reDirect = baseURL + 'user/userListing/' + value
+			reDirect = link;
 		}
 
 		var confirmation = confirm('確認刪除此人員 ?')
@@ -34,9 +29,16 @@ jQuery(document).ready(function () {
 					},
 				})
 				.done(function (data) {
-					// console.log(data)
-					currentRow.parents('tr').remove()
-					window.location.href = reDirect
+					if (data.status) {
+						alert("成功刪除");
+
+						currentRow.parents('tr').remove()
+						window.location.href = reDirect
+					} else if (!data.status) {
+						alert("刪除失敗!");
+					} else {
+						alert("拒絕訪問..!");
+					}
 				})
 		}
 	})
@@ -47,9 +49,9 @@ jQuery(document).ready(function () {
 			img = $(this).data('img'),
 			hitURL = baseURL + 'news/newsListDel',
 			currentRow = $(this),
+			l = $('.table tbody tr').length,
 			link = window.location.href
 
-		var l = $('.table tbody tr').length;
 		// console.log(l); // 含標題
 
 		if (l == 2) {
@@ -104,11 +106,10 @@ jQuery(document).ready(function () {
 		var tagid = $(this).data('tagsid'),
 			hitURL = baseURL + 'news/deleteNewsTag',
 			currentRow = $(this),
+			l = $('.table tbody tr').length,
 			link = window.location.href
 
-		var l = $('.table tbody tr').length;
 		// console.log(l); // 含標題
-
 		if (l == 2) {
 			reDirect = link.substring(0, link.lastIndexOf('/') + 1);
 		} else {
@@ -191,21 +192,16 @@ jQuery(document).ready(function () {
 	})
 
 	jQuery(document).on('click', '.deleteManager', function () {
-		var userId = $(this).data('userid'),
+		var userId = $(this).data('delid'),
 			hitURL = baseURL + 'user/deleteManager',
 			currentRow = $(this),
-			link = jQuery(this).get(0).href,
-			value = link.substring(link.lastIndexOf('/') + 1, link.lastIndexOf('/') + 3),
-			_isNotNum = isNaN(value)
+			l = $('.table tbody tr').length,
+			link = window.location.href
 
-		// console.log('link', link)
-		// console.log('value', value)
-		// console.log('isNotNum', _isNotNum)
-
-		if (_isNotNum) {
-			var reDirect = baseURL + 'user/userListing'
+		if (l == 2) {
+			reDirect = link.substring(0, link.lastIndexOf('/') + 1);
 		} else {
-			var reDirect = baseURL + 'user/userListing/' + value
+			reDirect = link;
 		}
 
 		var confirmation = confirm('確認刪除此人員 ?')
@@ -221,9 +217,16 @@ jQuery(document).ready(function () {
 					},
 				})
 				.done(function (data) {
-					// console.log(data)
-					currentRow.parents('tr').remove()
-					window.location.href = reDirect
+					if (data.status) {
+						alert("成功刪除");
+
+						currentRow.parents('tr').remove()
+						window.location.href = reDirect
+					} else if (!data.status) {
+						alert("刪除失敗!");
+					} else {
+						alert("拒絕訪問..!");
+					}
 				})
 		}
 	})
@@ -232,9 +235,9 @@ jQuery(document).ready(function () {
 		var yid = $(this).data('yid'),
 			hitURL = baseURL + 'members/deleteYears',
 			currentRow = $(this),
+			l = $('.table tbody tr').length,
 			link = window.location.href
 
-		var l = $('.table tbody tr').length;
 		// console.log(l); // 含標題
 
 		if (l == 2) {

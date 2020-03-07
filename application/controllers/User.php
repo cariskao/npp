@@ -54,7 +54,7 @@ class User extends BaseController
             $data['userRecords'] = $this->user_model->userListing($searchText, $returns["page"], $returns["segment"]);
 
             // $this->global['pageTitle'] = '人員管理';
-            $this->global['navTitle']  = '人員管理';
+            $this->global['navTitle']  = '人員管理列表 - 系統管理員';
             $this->global['navActive'] = base_url('userListing/');
 
             $this->loadViews("users", $this->global, $data, null);
@@ -78,7 +78,7 @@ class User extends BaseController
 
             $data['userRecords'] = $this->user_model->managerListing($searchText, $returns["page"], $returns["segment"]);
 
-            $this->global['pageTitle'] = '人員管理(管理員)';
+            $this->global['navTitle']  = '人員管理列表 - 管理員';
             $this->global['navActive'] = base_url('user/managerListing/');
 
             $this->loadViews("managers", $this->global, $data, null);
@@ -96,7 +96,7 @@ class User extends BaseController
             $data['roles'] = $this->user_model->getUserRoles();
 
             // $this->global['pageTitle'] = '新增人員資料';
-            $this->global['navTitle']  = '新增人員資料';
+            $this->global['navTitle']  = '新增「編輯」 & 「管理員」人員資料';
             $this->global['navActive'] = base_url('userListing/');
 
             $this->loadViews("addNew", $this->global, $data, null);
@@ -110,7 +110,7 @@ class User extends BaseController
         } else {
             $data['roles'] = $this->user_model->getManagerRoles();
 
-            $this->global['pageTitle'] = '新增人員資料';
+            $this->global['navTitle']  = '新增「編輯」人員資料';
             $this->global['navActive'] = base_url('user/managerListing/');
 
             $this->loadViews("addManager", $this->global, $data, null);
@@ -252,7 +252,7 @@ class User extends BaseController
             $data['userInfo'] = $this->user_model->getUserInfo($userId);
 
             // $this->global['pageTitle'] = '編輯人員資料';
-            $this->global['navTitle']  = '編輯人員資料';
+            $this->global['navTitle']  = '更新「編輯」 & 「管理員」人員資料';
             $this->global['navActive'] = base_url('userListing/');
 
             $this->loadViews("editOld", $this->global, $data, null);
@@ -272,7 +272,7 @@ class User extends BaseController
             $data['roles']    = $this->user_model->getManagerRoles();
             $data['userInfo'] = $this->user_model->getManagerInfo($userId);
 
-            $this->global['pageTitle'] = '編輯人員資料';
+            $this->global['navTitle']  = '更新「編輯」人員資料';
             $this->global['navActive'] = base_url('user/managerListing/');
 
             $this->loadViews("managerOld", $this->global, $data, null);

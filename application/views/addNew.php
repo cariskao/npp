@@ -24,11 +24,9 @@
 			<div class="col-md-8">
 				<!-- general form elements -->
 				<div class="box box-primary" style="border:none">
-					<div class="box-header">
-						<h3 class="box-title">輸入人員資料</h3>
-					</div><!-- /.box-header -->
 					<!-- form start -->
 					<?php $this->load->helper("form");?>
+					<!-- helper form已設定 autoload -->
 					<form role="form" id="addUser" action="<?php echo base_url() ?>addNewUser" method="post" role="form">
 						<div class="box-body">
 							<div class="row">
@@ -114,7 +112,7 @@ unset($_SESSION['error']);
 $success = $this->session->flashdata('success');
 if ($success) {
     ?>
-				<div id="alert-success" class="alert alert-success alert-dismissable alert-absoulte">
+				<div id="alert-success" class="alert alert-success alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 					<?php echo $success; ?>
 				</div>
@@ -125,7 +123,7 @@ unset($_SESSION['success']);
 
 				<div class="row">
 					<div class="col-md-12">
-						<?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
+						<!-- <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 					</div>
 				</div>
 			</div>
@@ -135,5 +133,3 @@ unset($_SESSION['success']);
 <style>
 </style>
 <script src="<?php echo base_url(); ?>assets/js/addUser.js" type="text/javascript"></script>
-<script>
-</script>

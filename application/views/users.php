@@ -97,17 +97,10 @@ if (!empty($userRecords)) {
 		jQuery('ul.pagination li a').click(function (e) {
 			e.preventDefault();
 			// alert(jQuery(this)); // 物件
-			var link = jQuery(this).get(0).href; //http://localhost/npp_ci/userListing/10
-			// link爲獲取被點擊的連結,這裡指第一項,所以沒有get(1)
-
-			// var test = link.lastIndexOf('/'); //最後一個「/」的位置爲35
-			// alert(test);
-			var value = link.substring(link.lastIndexOf('/') + 1); //獲取「/」的全部字串
-			// alert(link);
-			// alert(value);
+			var link = jQuery(this).get(0).href;
+			var value = link.substring(link.lastIndexOf('/') + 1);
 			jQuery("#searchList").attr("action", baseURL + "userListing/" + value);
-			// attr,更改form中的action連結
-			jQuery("#searchList").submit(); //更改後送出搜尋
+			jQuery("#searchList").submit();
 		});
 	});
 </script>

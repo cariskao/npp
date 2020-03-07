@@ -71,7 +71,8 @@ class Website extends BaseController
     public function setup($check = false)
     {
         // $this->global['pageTitle'] = '編輯標籤';
-        $data['getSetupInfo'] = $this->website_model->getSetupInfo();
+        $this->global['navTitle'] = '其它設定';
+        $data['getSetupInfo']     = $this->website_model->getSetupInfo();
         $this->loadViews("website_setup", $this->global, $data, null);
     }
 
@@ -404,7 +405,8 @@ class Website extends BaseController
      */
     public function carouselSorts()
     {
-        $this->global['navTitle'] = '網站管理 - 輪播管理 - 排序';
+        $this->global['navTitle']  = '網站管理 - 輪播管理 - 排序';
+        $this->global['navActive'] = base_url('website/carouselLists/');
 
         $data['getCarouselList'] = $this->website_model->carouselListing(true);
 

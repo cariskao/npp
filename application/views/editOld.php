@@ -31,9 +31,6 @@ $roleId = $userInfo->roleId;
 			<div class="col-md-8">
 				<!-- general form elements -->
 				<div class="box box-primary" style="border:none">
-					<div class="box-header">
-						<h3 class="box-title">編輯人員資料</h3>
-					</div><!-- /.box-header -->
 					<!-- form start -->
 					<form role="form" action="<?php echo base_url() ?>editUser" method="post" id="editUser" role="form">
 						<div class="box-body">
@@ -132,7 +129,7 @@ unset($_SESSION['success']);
 
 				<div class="row">
 					<div class="col-md-12">
-						<?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
+						<!-- <?php echo validation_errors('<div class="alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 					</div>
 				</div>
 			</div>
@@ -142,5 +139,3 @@ unset($_SESSION['success']);
 <style>
 </style>
 <script src="<?php echo base_url(); ?>assets/js/editUser.js" type="text/javascript"></script>
-<script>
-</script>
