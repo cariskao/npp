@@ -27,6 +27,7 @@
 					<!-- form start -->
 					<?php $this->load->helper("form");?>
 					<!-- helper form已設定 autoload -->
+					<!-- #addUser對應下方同名js -->
 					<form role="form" id="addUser" action="<?php echo base_url() ?>addNewUser" method="post" role="form">
 						<div class="box-body">
 							<div class="row">

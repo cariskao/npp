@@ -32,6 +32,7 @@ $roleId = $userInfo->roleId;
 				<!-- general form elements -->
 				<div class="box box-primary" style="border:none">
 					<!-- form start -->
+					<!-- #editUser對應下方同名js -->
 					<form role="form" action="<?php echo base_url() ?>editUser" method="post" id="editUser" role="form">
 						<div class="box-body">
 							<div class="row">

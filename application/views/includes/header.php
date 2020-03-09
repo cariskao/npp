@@ -48,6 +48,10 @@
 			color: red;
 			font-weight: normal;
 		}
+
+		.btn {
+			border-radius: 0;
+		}
 	</style>
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.js"></script>
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery-ui/jquery-ui.min.js"></script>
@@ -152,7 +156,7 @@
 							</span> -->
 						</a>
 						<ul class="treeview-menu">
-						<!-- url尾端也要加上/,這樣在在項目列表的第一頁再點擊下方的page1,才不會error -->
+							<!-- url尾端也要加上/,這樣在在項目列表的第一頁再點擊下方的page1,才不會error -->
 							<li><a href="<?php echo base_url(); ?>news/lists/1/">法案及議事說明</a></li>
 							<li><a href="<?php echo base_url(); ?>news/lists/2/">懶人包及議題追追追</a></li>
 							<li><a href="<?php echo base_url(); ?>news/lists/3/">行動紀實</a></li>
@@ -161,12 +165,14 @@
 					</li>
 					<li class="treeview">
 						<a href="#">
-							<i class="fa fa-briefcase"></i> <span>法案管理</span>
+							<i class="fa fa-briefcase"></i> <span>重點法案</span>
 						</a>
 						<ul class="treeview-menu">
-							<li><a href="#">法案狀態</a></li>
-							<li><a href="#">分類管理</a></li>
-							<li><a href="#">草案管理</a></li>
+							<li><a href="#">法案狀態管理</a></li>
+							<li><a href="#">法案類別管理</a></li>
+							<li><a href="#">法案草案管理</a></li>
+							<li><a href="<?php echo base_url('bill/issuesClassList/'); ?>">議題類別管理</a></li>
+							<li><a href="<?php echo base_url('bill/issuesAllList/'); ?>">議題列表管理</a></li>
 						</ul>
 					</li>
 					<li class="treeview">
@@ -176,7 +182,6 @@
 						<ul class="treeview-menu">
 							<li><a href="<?php echo base_url('members/membersList/'); ?>">立委管理</a></li>
 							<li><a href="<?php echo base_url('members/yearLists/'); ?>">屆期管理</a></li>
-							<li><a href="<?php echo base_url('members/issuesList/'); ?>">議題管理</a></li>
 						</ul>
 					</li>
 					<li class="treeview">
@@ -196,7 +201,7 @@ if ($role == ROLE_ADMIN) {
 					<li class="treeview">
 						<a href="<?php echo base_url(); ?>userListing/" style="cursor:pointer">
 							<i class="fa fa-user-plus"></i>
-							<span>系統管理員</span>
+							<span>人員管理</span>
 						</a>
 					</li>
 					<?php }?>
@@ -206,7 +211,7 @@ if ($role == ROLE_MANAGER) {
 					<li class="treeview">
 						<a href="<?php echo base_url(); ?>user/managerListing/" style="cursor:pointer">
 							<i class="fa fa-user-plus"></i>
-							<span>管理員</span>
+							<span>編輯人員管理</span>
 						</a>
 					</li>
 					<?php }?>

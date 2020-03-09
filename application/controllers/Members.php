@@ -293,7 +293,6 @@ class Members extends BaseController
 
     public function yearsEdit($yid)
     {
-        // $this->global['pageTitle'] = '編輯標籤';
         $editProtectChcek = $this->members_model->editProtectCheck($yid, 'years');
 
         if ($editProtectChcek == 0) {

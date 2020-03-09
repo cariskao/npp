@@ -273,6 +273,48 @@ jQuery(document).ready(function () {
 		}
 	})
 
+	jQuery(document).on('click', '.deleteIssuesClass', function () {
+		var id = $(this).data('id'),
+			hitURL = baseURL + 'bill/deleteIssuesClass',
+			currentRow = $(this),
+			l = $('.table tbody tr').length,
+			link = window.location.href
+
+		// console.log(l); // 含標題
+
+		if (l == 2) {
+			reDirect = link.substring(0, link.lastIndexOf('/') + 1);
+		} else {
+			reDirect = link;
+		}
+
+		var confirmation = confirm('確認刪除此議題類別 ?')
+
+		if (confirmation) {
+			jQuery
+				.ajax({
+					type: 'POST',
+					dataType: 'json',
+					url: hitURL,
+					data: {
+						ic_id: id,
+					},
+				})
+				.done(function (data) {
+					if (data.status) {
+						alert("成功刪除");
+
+						currentRow.parents('tr').remove()
+						window.location.href = reDirect
+					} else if (!data.status) {
+						alert("刪除失敗!");
+					} else {
+						alert("拒絕訪問..!");
+					}
+				})
+		}
+	})
+
 	// var link = window.location.href,
 	// 	_lastValue = link.substring(link.lastIndexOf('/') + 1),
 	// 	ary = link.split('/'),
