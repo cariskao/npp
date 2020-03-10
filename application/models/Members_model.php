@@ -123,9 +123,9 @@ class Members_model extends CI_Model
         $this->db->trans_start();
 
         if ($num == 1) {
-            $this->db->insert_batch('mem_years', $memInfo);
+            $this->db->insert_batch('mem_years_b', $memInfo);
         } else if ($num == 2) {
-            $this->db->insert_batch('mem_issuesclass', $memInfo);
+            $this->db->insert_batch('mem_ic_b', $memInfo);
         } else {
             $this->db->insert_batch('mem_cont_records', $memInfo);
         }
@@ -157,9 +157,9 @@ class Members_model extends CI_Model
     public function getContactList()
     {
         $this->db->select();
-        $this->db->from('contact_list as cl');
+        $this->db->from('contacts as c');
 
-        $this->db->order_by('cl.con_id', 'ASC');
+        $this->db->order_by('c.con_id', 'ASC');
         $query = $this->db->get();
 
         $result = $query->result();
@@ -285,8 +285,10 @@ class Members_model extends CI_Model
             $this->db->where('yid', $id);
         }
 
-        if ($item == '') {
-            # code...
+        if ($item == 'members') {
+            $this->db->select('memid');
+            $this->db->from('members');
+            $this->db->where('memid', $id);
         }
 
         $query = $this->db->get();
@@ -343,10 +345,10 @@ class Members_model extends CI_Model
     }
 
     // membersAdd
-    public function getIssuesList()
+    public function getIssuesClassList()
     {
         $this->db->select();
-        $this->db->from('issues as i');
+        $this->db->from('issues_class as ic');
         $this->db->where('showup', 1);
 
         // $this->db->order_by('BaseTbl.tags_id', 'DESC');

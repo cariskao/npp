@@ -91,9 +91,9 @@ class Members extends BaseController
     {
         // $this->global['pageTitle'] = '新增最新新聞資料';
         $data = array(
-            'getYearsList'   => $this->members_model->getYearsList(),
-            'getIssuesList'  => $this->members_model->getIssuesList(),
-            'getContactList' => $this->members_model->getContactList(),
+            'getYearsList'       => $this->members_model->getYearsList(),
+            'getContactList'     => $this->members_model->getContactList(),
+            'getIssuesClassList' => $this->members_model->getIssuesClassList(),
         );
 
         $this->global['navTitle']  = '本黨立委 - 立委管理 - 新增';
@@ -195,8 +195,8 @@ class Members extends BaseController
                     $one_array       = array();
 
                     foreach ($issues as $k => $v) {
-                        $one_array['memid']    = $insert_memid;
-                        $one_array['issue_id'] = $v;
+                        $one_array['memid'] = $insert_memid;
+                        $one_array['ic_id'] = $v;
 
                         $mem_issues_info[] = $one_array;
                     }
@@ -291,6 +291,28 @@ class Members extends BaseController
 .########.########..####....##...
  */
 
+    // members
+    public function membersEdit($id)
+    {
+        $editProtectChcek = $this->members_model->editProtectCheck($yid, 'members');
+
+        if ($editProtectChcek == 0) {
+            redirect('dashboard');
+        }
+
+        $data = array(
+            'getYearsList'       => $this->members_model->getYearsList(),
+            'getContactList'     => $this->members_model->getContactList(),
+            'getIssuesClassList' => $this->members_model->getIssuesClassList(),
+        );
+
+        $this->global['navTitle']  = '本黨立委 - 立委管理 - 編輯';
+        $this->global['navActive'] = base_url('members/membersList/');
+
+        $this->loadViews("membersEdit", $this->global, $data, null);
+    }
+
+    // 屆期
     public function yearsEdit($yid)
     {
         $editProtectChcek = $this->members_model->editProtectCheck($yid, 'years');
@@ -492,7 +514,8 @@ class Members extends BaseController
      */
     public function yearsSort()
     {
-        $this->global['navTitle'] = '本黨立委 - 屆期管理 - 排序';
+        $this->global['navTitle']  = '本黨立委 - 屆期管理 - 排序';
+        $this->global['navActive'] = base_url('members/yearLists/');
 
         $data['getYearList'] = $this->members_model->yearsListing(true);
 

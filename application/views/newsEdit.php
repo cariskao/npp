@@ -22,8 +22,9 @@ $editor     = $userInfo->editor;
 							<div class="row">
 								<div class="col-xs-12">
 									<div class="form-group">
-										<a class="btn btn-warning"
-											href="<?php echo base_url('news/lists/' . $type_id . '/'); ?>">返回</a>
+										<!-- 返回上一頁並重新整理 -->
+										<a class="btn btn-warning" href="javascript:"
+											onclick="self.location=document.referrer;">返回</a>
 									</div>
 								</div>
 							</div>
@@ -185,8 +186,8 @@ $notActive = $userInfo->showup == 0 ? 'active' : 'notActive';
 				});
 
 				var selectTools = $('#select-tools')[0].selectize;
-				var jsArray = ["<?php echo join("\", \"", $getTagsChoice); ?>"];
-				// console.log('jsArray',jsArray);
+				var jsArray = <?php echo json_encode($getTagsChoice); ?>;
+				// console.log('jsArray', jsArray);
 				selectTools.setValue(jsArray, true);
 			</script>
 			<?php

@@ -16,7 +16,9 @@ $roleId = $userInfo->roleId;
 							<div class="row">
 								<div class="col-xs-12">
 									<div class="form-group">
-										<a class="btn btn-warning" href="<?php echo base_url('user/managerListing/'); ?>">返回</a>
+										<!-- 返回上一頁並重新整理 -->
+										<a class="btn btn-warning" href="javascript:"
+											onclick="self.location=document.referrer;">返回</a>
 									</div>
 								</div>
 							</div>
@@ -32,7 +34,8 @@ $roleId = $userInfo->roleId;
 				<!-- general form elements -->
 				<div class="box box-primary" style="border:none">
 					<!-- form start -->
-					<form role="form" action="<?php echo base_url('user/editManager') ?>" method="post" id="editUser" role="form">
+					<form role="form" action="<?php echo base_url('user/editManager') ?>" method="post" id="editUser"
+						role="form">
 						<div class="box-body">
 							<div class="row">
 								<div class="col-md-6">
