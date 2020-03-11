@@ -60,6 +60,8 @@ class News extends BaseController
                 break;
         }
 
+        $this->session->unset_userdata('myRedirect');
+
         $searchText         = $this->security->xss_clean($this->input->post('searchText'));
         $data['searchText'] = $searchText;
 
@@ -73,8 +75,10 @@ class News extends BaseController
         $data['getTagsChoice'] = $this->news_model->getTagsChoice();
         $data['type_id']       = $type_id; //用來帶入newsLists_f中searchText的form action 跟 add
 
-        // $this->global['pageTitle'] = '最新新聞管理';
         $this->global['navActive'] = base_url('news/lists/' . $type_id . '/');
+
+        $myRedirect = str_replace('/npp/', '', $_SERVER['REQUEST_URI']);
+        $this->session->set_userdata('myRedirect', $myRedirect);
 
         $this->loadViews("newsLists", $this->global, $data, null);
     }
@@ -82,6 +86,7 @@ class News extends BaseController
     // 標籤
     public function tagLists()
     {
+        $this->session->unset_userdata('myRedirect');
         $this->global['navTitle'] = '新聞訊息 - 標籤列表';
 
         $searchText         = $this->security->xss_clean($this->input->post('searchText'));
@@ -94,6 +99,9 @@ class News extends BaseController
         $data['newsTags'] = $this->news_model->tagsListing($searchText, $returns["page"], $returns["segment"]);
         // $this->global['pageTitle'] = '標籤管理';
         $this->global['navActive'] = base_url('news/tagLists/');
+
+        $myRedirect = str_replace('/npp/', '', $_SERVER['REQUEST_URI']);
+        $this->session->set_userdata('myRedirect', $myRedirect);
 
         $this->loadViews("tagLists", $this->global, $data, null);
     }
@@ -269,8 +277,9 @@ class News extends BaseController
                 $this->session->set_flashdata('error', '儲存失敗!');
             }
 
-            $this->newsEdit($pr_id);
-            // redirect('news/newsEdit');
+            $myRedirect = $this->session->userdata('myRedirect');
+            redirect($myRedirect);
+            // $this->newsEdit($pr_id);
         }
     }
 
@@ -338,7 +347,9 @@ class News extends BaseController
                 $this->session->set_flashdata('error', '更新失敗!');
             }
 
-            redirect('news/tagLists/');
+            $myRedirect = $this->session->userdata('myRedirect');
+            redirect($myRedirect);
+            // redirect('news/tagLists/');
         }
     }
 
@@ -460,7 +471,7 @@ class News extends BaseController
                 $this->load->view('upload_debug_form', $error);
             }
 
-            redirect('news/adds/' . $type_id);
+            redirect('news/lists/' . $type_id);
         }
     }
 

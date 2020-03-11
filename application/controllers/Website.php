@@ -43,6 +43,8 @@ class Website extends BaseController
     {
         // 參考 segment_helper.php
         // echo '<script>alert("' . uri_segment() . '")</script>';
+        $this->session->unset_userdata('myRedirect');
+
         $this->global['navTitle']  = '網站管理 - 輪播管理 - 列表';
         $this->global['navActive'] = base_url('website/carouselLists/');
 
@@ -53,6 +55,9 @@ class Website extends BaseController
         $returns = $this->paginationCompress("website/carouselList/", $count, 10, 3);
 
         $data['getCarouselList'] = $this->website_model->carouselListing(false, $searchText, $returns["page"], $returns["segment"]);
+
+        $myRedirect = str_replace('/npp/', '', $_SERVER['REQUEST_URI']);
+        $this->session->set_userdata('myRedirect', $myRedirect);
 
         $this->loadViews("carouselLists", $this->global, $data, null);
     }
@@ -209,7 +214,9 @@ class Website extends BaseController
                 $this->session->set_flashdata('error', '儲存失敗!');
             }
 
-            $this->carouselEdit($id);
+            $myRedirect = $this->session->userdata('myRedirect');
+            redirect($myRedirect);
+            // $this->carouselEdit($id);
         }
     }
 
@@ -291,7 +298,8 @@ class Website extends BaseController
                 $this->session->set_flashdata('error', '儲存失敗!');
             }
 
-            $this->carouselAdds();
+            // $this->carouselAdds();
+            redirect('website/carouselLists/');
         }
     }
 /*

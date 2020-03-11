@@ -36,8 +36,10 @@ class Bill extends BaseController
     // 議題
     public function issuesClassList()
     {
+        $this->session->unset_userdata('myRedirect');
+
         $this->global['navTitle']  = '重點法案管理 - 議題類別管理 - 列表';
-        $this->global['navActive'] = base_url('members/issuesClassList/');
+        $this->global['navActive'] = base_url('bill/issuesClassList/');
 
         $searchText         = $this->security->xss_clean($this->input->post('searchText'));
         $data['searchText'] = $searchText;
@@ -47,7 +49,9 @@ class Bill extends BaseController
         $returns = $this->paginationCompress('bill/issuesClassList/', $count, 10, 3);
 
         $data['issuesClassList'] = $this->bill_model->issuesClassListing(false, $searchText, $returns["page"], $returns["segment"]);
-        // $this->global['pageTitle'] = '標籤管理';
+
+        $myRedirect = str_replace('/npp/', '', $_SERVER['REQUEST_URI']);
+        $this->session->set_userdata('myRedirect', $myRedirect);
 
         $this->loadViews('issuesClassList', $this->global, $data, null);
     }
@@ -164,7 +168,9 @@ class Bill extends BaseController
                 $this->session->set_flashdata('error', '更新失敗!');
             }
 
-            redirect('bill/issuesClassList/');
+            $myRedirect = $this->session->userdata('myRedirect');
+            redirect($myRedirect);
+            // redirect('bill/issuesClassList/');
         }
     }
 

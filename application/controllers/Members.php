@@ -60,6 +60,8 @@ class Members extends BaseController
     //  屆期
     public function yearLists()
     {
+        $this->session->unset_userdata('myRedirect');
+
         $this->global['navTitle']  = '本黨立委 - 屆期管理 - 列表';
         $this->global['navActive'] = base_url('members/yearLists/');
 
@@ -72,6 +74,9 @@ class Members extends BaseController
 
         $data['yearLists'] = $this->members_model->yearsListing(false, $searchText, $returns["page"], $returns["segment"]);
         // $this->global['pageTitle'] = '標籤管理';
+
+        $myRedirect = str_replace('/npp/', '', $_SERVER['REQUEST_URI']);
+        $this->session->set_userdata('myRedirect', $myRedirect);
 
         $this->loadViews("yearLists", $this->global, $data, null);
     }
@@ -294,7 +299,7 @@ class Members extends BaseController
     // members
     public function membersEdit($id)
     {
-        $editProtectChcek = $this->members_model->editProtectCheck($yid, 'members');
+        $editProtectChcek = $this->members_model->editProtectCheck($id, 'members');
 
         if ($editProtectChcek == 0) {
             redirect('dashboard');
@@ -368,7 +373,9 @@ class Members extends BaseController
                 $this->session->set_flashdata('error', '更新失敗!');
             }
 
-            redirect('members/yearLists/');
+            $myRedirect = $this->session->userdata('myRedirect');
+            redirect($myRedirect);
+            // redirect('members/yearLists/');
         }
     }
 

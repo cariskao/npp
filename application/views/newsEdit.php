@@ -7,6 +7,8 @@ $s_title    = $userInfo->sub_title;
 $date_start = $userInfo->date_start;
 $time_start = $userInfo->time_start;
 $editor     = $userInfo->editor;
+
+$myRedirect = $this->session->userdata('myRedirect');
 ?>
 <link rel="stylesheet" href="<?php echo base_url('assets/plugins/clockpicker/css/bootstrap-clockpicker.css'); ?>">
 <script src="<?php echo base_url('assets/plugins/clockpicker/js/bootstrap-clockpicker.min.js'); ?>"></script>
@@ -22,9 +24,7 @@ $editor     = $userInfo->editor;
 							<div class="row">
 								<div class="col-xs-12">
 									<div class="form-group">
-										<!-- 返回上一頁並重新整理 -->
-										<a class="btn btn-warning" href="javascript:"
-											onclick="self.location=document.referrer;">返回</a>
+										<a class="btn btn-warning" href="<?php echo base_url($myRedirect); ?>">返回</a>
 									</div>
 								</div>
 							</div>
@@ -202,19 +202,6 @@ if ($check) {
 			</div>
 			<?php
 unset($_SESSION['check']);
-}
-?>
-			<?php
-$success = $this->session->flashdata('success');
-if ($success) {
-    ?>
-			<div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<?php echo $success; ?>
-			</div>
-			<?php
-// unset($_SESSION[])才不會若將success跟error的alert做在同一頁時有問題
-    unset($_SESSION['success']);
 }
 ?>
 			<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->

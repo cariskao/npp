@@ -42,6 +42,8 @@ class User extends BaseController
         if ($this->isAdmin() == true) {
             $this->loadThis();
         } else {
+            $this->session->unset_userdata('myRedirect');
+
             $searchText         = $this->security->xss_clean($this->input->post('searchText'));
             $data['searchText'] = $searchText;
 
@@ -57,6 +59,9 @@ class User extends BaseController
             $this->global['navTitle']  = '人員管理列表 - 系統管理員';
             $this->global['navActive'] = base_url('userListing/');
 
+            $myRedirect = str_replace('/npp/', '', $_SERVER['REQUEST_URI']);
+            $this->session->set_userdata('myRedirect', $myRedirect);
+
             $this->loadViews("users", $this->global, $data, null);
         }
     }
@@ -67,6 +72,8 @@ class User extends BaseController
         if ($this->isManager() == true) {
             $this->loadThis();
         } else {
+            $this->session->unset_userdata('myRedirect');
+
             $searchText         = $this->security->xss_clean($this->input->post('searchText'));
             $data['searchText'] = $searchText;
 
@@ -80,6 +87,9 @@ class User extends BaseController
 
             $this->global['navTitle']  = '人員管理列表 - 管理員';
             $this->global['navActive'] = base_url('user/managerListing/');
+
+            $myRedirect = str_replace('/npp/', '', $_SERVER['REQUEST_URI']);
+            $this->session->set_userdata('myRedirect', $myRedirect);
 
             $this->loadViews("managers", $this->global, $data, null);
         }
@@ -183,7 +193,8 @@ class User extends BaseController
                     $this->session->set_flashdata('error', '新增失敗!');
                 }
 
-                redirect('addNew');
+                redirect('userListing/');
+                // redirect('addNew');
             }
         }
     }
@@ -229,7 +240,7 @@ class User extends BaseController
                     $this->session->set_flashdata('error', '新增失敗!');
                 }
 
-                redirect('user/addManager');
+                redirect('user/managerListing/');
             }
         }
     }
@@ -245,7 +256,7 @@ class User extends BaseController
             $this->loadThis();
         } else {
             if ($userId == null) {
-                redirect('userListing');
+                redirect('userListing/');
             }
 
             $data['roles']    = $this->user_model->getUserRoles();
@@ -266,7 +277,7 @@ class User extends BaseController
             $this->loadThis();
         } else {
             if ($userId == null) {
-                redirect('user/managerListing');
+                redirect('user/managerListing/');
             }
 
             $data['roles']    = $this->user_model->getManagerRoles();
@@ -330,8 +341,9 @@ class User extends BaseController
                     $this->session->set_flashdata('error', '更新失敗!');
                 }
 
-                // redirect('userListing');
-                $this->editOld($userId);
+                // $this->editOld($userId);
+                $myRedirect = $this->session->userdata('myRedirect');
+                redirect($myRedirect);
             }
         }
     }
@@ -384,8 +396,10 @@ class User extends BaseController
                     $this->session->set_flashdata('error', '更新失敗!');
                 }
 
-                $this->managerOld($userId);
+                // $this->managerOld($userId);
                 // redirect('user/managerListing/');
+                $myRedirect = $this->session->userdata('myRedirect');
+                redirect($myRedirect);
             }
         }
     }

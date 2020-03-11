@@ -8,9 +8,7 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <!-- 返回上一頁並重新整理 -->
-                                        <a class="btn btn-warning" href="javascript:"
-                                            onclick="self.location=document.referrer;">返回</a>
+										<a class="btn btn-warning" href="<?php echo base_url($this->session->userdata('myRedirect')); ?>">返回</a>
                                     </div>
                                 </div>
                             </div>
