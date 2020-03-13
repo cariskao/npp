@@ -1,4 +1,20 @@
-<script src="<?php echo base_url('assets/plugins/clockpicker/js/bootstrap-clockpicker.js'); ?>"></script>
+<?php
+$memid      = $getMemberInfo->memid;
+$show       = $getMemberInfo->showup;
+$img        = $getMemberInfo->img;
+$name       = $getMemberInfo->name;
+$name_en    = $getMemberInfo->name_en;
+$education  = $getMemberInfo->education;
+$experience = $getMemberInfo->experience;
+$districts  = $getMemberInfo->districts;
+$committee  = $getMemberInfo->committee;
+$fb         = $getMemberInfo->fb;
+$ig         = $getMemberInfo->ig;
+$line       = $getMemberInfo->line;
+$yt         = $getMemberInfo->yt;
+
+$myRedirect = $this->session->userdata('myRedirect');
+?>
 <script src="<?php echo base_url('assets/plugins/selectizejs/dist/js/standalone/selectize.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/selectizejs/js/index.js'); ?>"></script>
 <div class="content-wrapper">
@@ -11,9 +27,7 @@
 							<div class="row">
 								<div class="col-xs-12">
 									<div class="form-group">
-										<!-- 返回上一頁並重新整理 -->
-										<a class="btn btn-warning" href="javascript:"
-											onclick="self.location=document.referrer;">返回</a>
+										<a class="btn btn-warning" href="<?php echo base_url($myRedirect); ?>">返回</a>
 									</div>
 								</div>
 							</div>
@@ -32,11 +46,11 @@
 					<div class="box box-primary" style="border:none;">
 						<!-- form start -->
 						<!--  enctype="multipart/form-data"記得加 -->
-						<form role="form" action="<?php echo base_url('members/membersAddSend'); ?>" method="post" id=""
-							role="form" enctype="multipart/form-data">
+						<form role="form" action="<?php echo base_url('members/membersEditSend/' . $memid); ?>" method="post"
+							id="" role="form" enctype="multipart/form-data">
 							<div class="box-body">
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-12">
 										<table class="table table-bordered">
 											<thead>
 												<tr>
@@ -46,11 +60,12 @@
 											<tbody>
 												<tr>
 													<th scope="row">
-														<span class="must">*</span>新增照片
+														<label for="img">更換圖片(不換則不用選擇)</label>
 													</th>
-													<!-- <td colspan="2"></td> -->
 													<td>
 														<div class="form-group">
+															<img style="width:100px"
+																src="<?php echo base_url('assets/uploads/members_upload/' . $img); ?>">
 															<input type="file" name="file" />
 															<?php echo form_error('file'); ?>
 														</div>
@@ -62,7 +77,8 @@
 													</th>
 													<td>
 														<div class="form-group">
-															<input type="text" class="form-control" id="name" name="name" value="">
+															<input type="text" class="form-control" name="name"
+																value="<?php echo $name; ?>">
 															<?php echo form_error('name'); ?>
 														</div>
 													</td>
@@ -73,11 +89,10 @@
 													</th>
 													<td>
 														<div class="form-group">
-															<input type="text" class="form-control" id="name_en" name="name_en"
-																value="">
+															<input type="text" class="form-control" name="name_en"
+																value="<?php echo $name_en; ?>">
 															<?php echo form_error('name_en'); ?>
 														</div>
-
 													</td>
 												</tr>
 												<tr>
@@ -86,8 +101,9 @@
 													</th>
 													<td>
 														<div class="form-group">
-															<!-- name記得加上[],才能以陣列形式回傳 -->
-															<select id="select-years" name="years[]" placeholder="請選擇屆期">
+															<!-- name記得加上[],才能以陣列形式回傳。並加上multiple="multiple"才能在一開始就同時顯示selected的全部元素 -->
+															<select id="select-years" name="years[]" placeholder="請選擇屆期"
+																multiple="multiple">
 																<option value="">請選擇屆期</option>
 																<?php
 if (!empty($getYearsList)) {
@@ -136,10 +152,14 @@ if (!empty($getIssuesClassList)) {
 													<td>
 														<div class="input-group">
 															<div id="radioBtn" class="btn-group">
-																<a class="btn btn-primary btn-sm active" data-toggle="happy"
-																	data-title="Y">顯示</a>
-																<a class="btn btn-primary btn-sm notActive" data-toggle="happy"
-																	data-title="N">隱藏</a>
+																<?php
+$active    = $show == 1 ? 'active' : 'notActive';
+$notActive = $show == 0 ? 'active' : 'notActive';
+?>
+																<a class="btn btn-primary btn-sm <?php echo $active; ?>"
+																	data-toggle="happy" data-title="Y">顯示</a>
+																<a class="btn btn-primary btn-sm <?php echo $notActive; ?>"
+																	data-toggle="happy" data-title="N">隱藏</a>
 															</div>
 															<input type="hidden" name="happy" id="happy">
 														</div>
@@ -148,7 +168,9 @@ if (!empty($getIssuesClassList)) {
 											</tbody>
 										</table>
 									</div>
-									<div class="col-md-6">
+								</div>
+								<div class="row">
+									<div class="col-md-12">
 										<table class="table table-bordered">
 											<thead>
 												<tr>
@@ -159,231 +181,305 @@ if (!empty($getIssuesClassList)) {
 												<tr>
 													<!-- <th>才會自帶粗體 -->
 													<th class="text-center" scope="row">學歷</th>
+													<td><textarea onkeyup="autogrow(this);" class="form-control"
+															name="education"><?php echo $education; ?></textarea></td>
+												</tr>
+												<tr>
 													<th class="text-center" scope="row">經歷</th>
+													<td><textarea onkeyup="autogrow(this);" class="form-control"
+															name="experience"><?php echo $experience; ?></textarea></td>
+												</tr>
+												<tr>
 													<th class="text-center" scope="row">分區/不分區</th>
+													<td><textarea onkeyup="autogrow(this);" class="form-control"
+															name="districts"><?php echo $districts; ?></textarea></td>
+												</tr>
+												<tr>
 													<th class="text-center" scope="row">各會期委員會</th>
-												</tr>
-												<tr>
-													<td><textarea class="form-control" name="education" id="education"
-															style="width:100%" rows="10"></textarea></td>
-													<td><textarea class="form-control" name="experience" id="experience"
-															style="width:100%" rows="10"></textarea></td>
-													<td><textarea class="form-control" name="districts" id="districts"
-															style="width:100%" rows="10"></textarea></td>
-													<td><textarea class="form-control" name="committee" id="committee"
-															style="width:100%" rows="10"></textarea></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<table class="table table-bordered" id="contact-table">
-											<thead>
-												<tr>
-													<th colspan="3" scope="col">聯絡方式</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<!-- <th>才會自帶粗體 -->
-													<th class="text-center" style="width:170px;" scope="row">項目<input type="button"
-															class="btn btn-sm btn-info btnAdd" style="margin-left:10px" value="新增" />
-													</th>
-													<th class="text-center" colspan="2" scope="row">內容</th>
-												</tr>
-												<tr class="contact-item">
-													<th scope="row">
-														<div class="form-group">
-															<select style="padding:0 0 0 10px" class="form-control"
-																name="contactList[]">
-																<?php
-if (!empty($getContactList)) {
-    foreach ($getContactList as $items) {
-        ?>
-																<option value="<?php echo $items->con_id; ?>"
-																	<?php if ($items->con_id == 1) {echo 'selected';}?>>
-																	<?php echo $items->contact; ?>
-																</option>
-																<?php
-}
-}
-?>
-															</select>
-														</div>
-													</th>
-													<td>
-														<div class="form-group">
-															<input type="text" class="form-control" name="contact[]" value="">
-														</div>
-													</td>
-													<td style="width:50px">
-														<div class="form-group">
-															<input type="button" class="btn btn-danger btnRemove" value="移除" />
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="col-md-6">
-										<table class="table table-bordered">
-											<thead>
-												<tr>
-													<th colspan="2" scope="col">社群連結</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<th scope="row">
-														Facebook
-													</th>
-													<td>
-														<div class="form-group">
-															<input type="text" class="form-control" id="fb" name="fb" value="">
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<th scope="row">
-														Instagram
-													</th>
-													<td>
-														<div class="form-group">
-															<input type="text" class="form-control" id="ig" name="ig" value="">
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<th scope="row">
-														Line
-													</th>
-													<td>
-														<div class="form-group">
-															<input type="text" class="form-control" id="line" name="line" value="">
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<th scope="row">
-														Youtube
-													</th>
-													<td>
-														<div class="form-group">
-															<input type="text" class="form-control" id="yt" name="yt" value="">
-														</div>
-													</td>
+													<td><textarea onkeyup="autogrow(this);" class="form-control"
+															name="committee"><?php echo $committee; ?></textarea></td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
 								</div>
 							</div>
-					</div><!-- /.box-body -->
+							<div class="row">
+								<div class="col-md-12">
+									<table class="table table-bordered" id="contact-table">
+										<thead>
+											<tr>
+												<th colspan="3" scope="col">聯絡方式</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<!-- <th>才會自帶粗體 -->
+												<th class="text-center" style="width:170px;" scope="row">項目<input type="button"
+														class="btn btn-sm btn-info btnAdd" style="margin-left:10px" value="新增" />
+												</th>
+												<th class="text-center" colspan="2" scope="row">內容</th>
+											</tr>
+											<?php
+if (!empty($getContactChoice)) {
+    foreach ($getContactChoice as $choice) {
+        $getConId   = $choice->con_id;
+        $getContact = $choice->records;
+        ?>
+											<tr class="contact-item">
+												<th scope="row">
+													<div class="form-group">
+														<select style="padding:0 0 0 10px" class="form-control" name="contactList[]">
+															<?php
+if (!empty($getContactList)) {
+            foreach ($getContactList as $items) {
+                $conid   = $items->con_id;
+                $contact = $items->contact;
+                ?>
+															<option value="<?php echo $conid; ?>"
+																<?php if ($conid == $getConId) {echo 'selected';}?>>
+																<?php echo $contact; ?>
+															</option>
+															<?php
+}
+        }
+        ?>
+														</select>
+													</div>
+												</th>
+												<td>
+													<div class="form-group">
+														<input type="text" class="form-control" name="contact[]" value="<?php echo $getContact; ?>">
+													</div>
+												</td>
+												<td style="width:50px">
+													<div class="form-group">
+														<input type="button" class="btn btn-danger btnRemove" value="移除" />
+													</div>
+												</td>
+											</tr>
+											<?php
+}
+} else {
+    ?>
+											<tr class="contact-item">
+												<th scope="row">
+													<div class="form-group">
+														<select style="padding:0 0 0 10px" class="form-control" name="contactList[]">
+															<?php
+if (!empty($getContactList)) {
+        foreach ($getContactList as $items) {
+            ?>
+															<option value="<?php echo $items->con_id; ?>"
+																<?php if ($items->con_id == 1) {echo 'selected';}?>>
+																<?php echo $items->contact; ?>
+															</option>
+															<?php
+}
+    }
+    ?>
+														</select>
+													</div>
+												</th>
+												<td>
+													<div class="form-group">
+														<input type="text" class="form-control" name="contact[]" value="">
+													</div>
+												</td>
+												<td style="width:50px">
+													<div class="form-group">
+														<input type="button" class="btn btn-danger btnRemove" value="移除" />
+													</div>
+												</td>
+											</tr>
+											<?php
+}
+?>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th colspan="2" scope="col">社群連結</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row">
+													Facebook
+												</th>
+												<td>
+													<div class="form-group">
+														<input type="text" class="form-control" id="fb" name="fb"
+															value="<?php echo $fb; ?>">
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row">
+													Instagram
+												</th>
+												<td>
+													<div class="form-group">
+														<input type="text" class="form-control" id="ig" name="ig"
+															value="<?php echo $ig; ?>">
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row">
+													Line
+												</th>
+												<td>
+													<div class="form-group">
+														<input type="text" class="form-control" id="line" name="line"
+															value="<?php echo $line; ?>">
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row">
+													Youtube
+												</th>
+												<td>
+													<div class="form-group">
+														<input type="text" class="form-control" id="yt" name="yt"
+															value="<?php echo $yt; ?>">
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+					</div>
 				</div>
-				<input type="submit" class="btn btn-success submit-pos" value="儲存" />
-				</form>
-				<!-- 聯絡方式模板 -->
-				<template class="temp">
-					<tr class="contact-item">
-						<th scope="row">
-							<div class="form-group">
-								<select style="padding:0 0 0 10px" class="form-control" name="contactList[]">
-									<?php
+			</div><!-- /.box-body -->
+		</div>
+		<input type="submit" class="btn btn-success submit-pos" value="儲存" />
+		</form>
+		<!-- 聯絡方式模板 -->
+		<template class="temp">
+			<tr class="contact-item">
+				<th scope="row">
+					<div class="form-group">
+						<select style="padding:0 0 0 10px" class="form-control" name="contactList[]">
+							<?php
 if (!empty($getContactList)) {
     foreach ($getContactList as $items) {
         ?>
-									<option value="<?php echo $items->con_id; ?>"
-										<?php if ($items->con_id == 1) {echo 'selected';}?>>
-										<?php echo $items->contact; ?>
-									</option>
-									<?php
+							<option value="<?php echo $items->con_id; ?>" <?php if ($items->con_id == 1) {echo 'selected';}?>>
+								<?php echo $items->contact; ?>
+							</option>
+							<?php
 }
 }
 ?>
-								</select>
-							</div>
-						</th>
-						<td>
-							<div class="form-group">
-								<input type="text" class="form-control" name="contact[]" value="">
-							</div>
-						</td>
-						<td style="width:50px">
-							<div class="form-group">
-								<input type="button" class="btn btn-danger btnRemove" value="移除" />
-							</div>
-						</td>
-					</tr>
-				</template>
-			</div>
-			<!-- <div class="col-md-12"> -->
-		</div>
+						</select>
+					</div>
+				</th>
+				<td>
+					<div class="form-group">
+						<input type="text" class="form-control" name="contact[]" value="">
+					</div>
+				</td>
+				<td style="width:50px">
+					<div class="form-group">
+						<input type="button" class="btn btn-danger btnRemove" value="移除" />
+					</div>
+				</td>
+			</tr>
+		</template>
+</div>
+<!-- <div class="col-md-12"> -->
+</div>
 
-		<script language='javascript' type='text/javascript'>
-			$('#select-issues').selectize({
-				maxItems: 5,
-				plugins: ['remove_button'],
-				sortField: { //排序
-					field: 'id', // text:依據文本排序，id：依據value排序
-					direction: 'asc' // 升序降序
-				}
-			});
+<script language='javascript' type='text/javascript'>
+	// textarea自動依照內容增加高度
+	function autogrow(textarea) {
+		var adjustedHeight = textarea.clientHeight;
 
-			$('#select-years').selectize({
-				maxItems: 5,
-				plugins: ['remove_button'],
-				sortField: { //排序
-					field: 'id', // text:依據文本排序，id：依據value排序
-					direction: 'asc' // 升序降序
-				}
-			});
-			// console.log($('link:last-of-type').attr('href'));
-			// console.log($('link:last-child').attr('href'));
-			// console.log($('link:last').attr('href'));
-			// console.log($('link').last().attr('href'));
-		</script>
-		<?php
+		adjustedHeight = Math.max(textarea.scrollHeight, adjustedHeight);
+		if (adjustedHeight > textarea.clientHeight) {
+			textarea.style.height = adjustedHeight + 'px';
+		}
+	}
+
+	$('#select-issues').selectize({
+		maxItems: null,
+		plugins: ['remove_button'],
+		sortField: { //排序
+			field: 'id', // text:依據文本排序，id：依據value排序
+			direction: 'asc' // 升序降序
+		}
+	});
+
+	$('#select-years').selectize({
+		maxItems: null,
+		plugins: ['remove_button'],
+		sortField: { //排序
+			field: 'id', // text:依據文本排序，id：依據value排序
+			direction: 'asc' // 升序降序
+		}
+	});
+
+	var $selectYears = $('#select-years')[0].selectize;
+	var yearArray = <?php echo json_encode($getYearsID); ?>;
+	$selectYears.setValue(yearArray, true);
+
+	var $selectIssues = $('#select-issues')[0].selectize;
+	var issuesArray = <?php echo json_encode($getIssuesClassID); ?>;
+	$selectIssues.setValue(issuesArray, true);
+
+	// console.log($('link:last-of-type').attr('href'));
+	// console.log($('link:last-child').attr('href'));
+	// console.log($('link:last').attr('href'));
+	// console.log($('link').last().attr('href'));
+</script>
+<?php
 $this->load->helper('form');
 $check = $this->session->flashdata('check');
 if ($check) {
     ?>
-		<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-			<?php echo $check . '!<br>請修正以下提示錯誤!'; ?>
-		</div>
-		<?php
+<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<?php echo $check . '!<br>請修正以下提示錯誤!'; ?>
+</div>
+<?php
 unset($_SESSION['check']);
 }
 ?>
-		<?php
+<?php
 $success = $this->session->flashdata('success');
 if ($success) {
     ?>
-		<div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-			<?php echo $success; ?>
-		</div>
-		<?php
+<div id="alert-success" class="alert-absoulte success-width alert alert-success alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<?php echo $success; ?>
+</div>
+<?php
 unset($_SESSION['success']);
 }
 ?>
-		<?php
+<?php
 $error = $this->session->flashdata('error');
 if ($error) {
     ?>
-		<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-			<?php echo $error; ?>
-		</div>
-		<?php
+<div id="alert-error" class="alert-absoulte error-width alert alert-danger alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<?php echo $error; ?>
+</div>
+<?php
 unset($_SESSION['error']);
 }
 ?>
-		<style>
-		</style>
-		<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
+<style>
+</style>
+<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
 </div>
 </section>
 </div>

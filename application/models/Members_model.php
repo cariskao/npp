@@ -176,6 +176,18 @@ class Members_model extends CI_Model
 .########.########..####....##...
  */
 
+    // members info
+    public function getMemberInfo($id)
+    {
+        $this->db->select();
+        $this->db->from('members');
+        $this->db->where('memid', $id);
+
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
     public function getYearInfo($id)
     {
         $this->db->select();
@@ -330,7 +342,6 @@ class Members_model extends CI_Model
 ..######..########.########.########..######.....##....####.########.########
  */
 
-    // membersAdd
     public function getYearsList()
     {
         $this->db->select();
@@ -344,7 +355,6 @@ class Members_model extends CI_Model
         return $result;
     }
 
-    // membersAdd
     public function getIssuesClassList()
     {
         $this->db->select();
@@ -352,6 +362,51 @@ class Members_model extends CI_Model
         $this->db->where('showup', 1);
 
         // $this->db->order_by('BaseTbl.tags_id', 'DESC');
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
+
+    public function getYearsChoice($id)
+    {
+        $this->db->select();
+        $this->db->from('mem_years_b as my');
+        $this->db->join('years as y', 'my.yid = y.yid', 'inner');
+        $this->db->join('members as m', 'm.memid = my.memid', 'inner');
+
+        $this->db->where('m.memid', $id);
+
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
+
+    public function getIssuesClassChoice($id)
+    {
+        $this->db->select();
+        $this->db->from('mem_ic_b as mi');
+        $this->db->join('issues_class as ic', 'ic.ic_id = mi.ic_id', 'inner');
+        $this->db->join('members as m', 'm.memid = mi.memid', 'inner');
+
+        $this->db->where('m.memid', $id);
+
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
+    }
+
+    public function getContactChoice($id)
+    {
+        $this->db->select();
+        $this->db->from('mem_cont_records as mcr');
+        $this->db->join('contacts as c', 'c.con_id = mcr.con_id', 'inner');
+        $this->db->join('members as m', 'm.memid = mcr.memid', 'inner');
+
+        $this->db->where('m.memid', $id);
+
         $query = $this->db->get();
 
         $result = $query->result();

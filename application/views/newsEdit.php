@@ -58,7 +58,7 @@ $myRedirect = $this->session->userdata('myRedirect');
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="img">更換圖片(不換則不填)</label>
+											<label for="img">更換圖片(不換則不用選擇)</label>
 											<input class="form-control" id="img" type="file" name="file" size="20" />
 											<?php echo form_error('file'); ?>
 										</div>
@@ -186,7 +186,7 @@ $notActive = $userInfo->showup == 0 ? 'active' : 'notActive';
 				});
 
 				var selectTools = $('#select-tools')[0].selectize;
-				var jsArray = <?php echo json_encode($getTagsChoice); ?>;
+				var jsArray = <?php echo json_encode($getTagsID); ?>;
 				// console.log('jsArray', jsArray);
 				selectTools.setValue(jsArray, true);
 			</script>

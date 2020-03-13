@@ -126,9 +126,9 @@ class News extends BaseController
 
         // $data['roles'] = $this->news_model->getUserRoles();
         $data = array(
-            'userInfo'        => $this->news_model->getPressReleaseInfo($pr_id),
-            'getTagsChoiceDB' => $this->news_model->getTagsChoice($pr_id),
-            'getTagsList'     => $this->news_model->getTagsList(),
+            'userInfo'      => $this->news_model->getPressReleaseInfo($pr_id),
+            'getTagsChoice' => $this->news_model->getTagsChoice($pr_id),
+            'getTagsList'   => $this->news_model->getTagsList(),
             // 'error' => '',
         );
 
@@ -155,12 +155,12 @@ class News extends BaseController
         }
 
         $getTagsId = [];
-        foreach ($data['getTagsChoiceDB'] as $key => $value) {
+        foreach ($data['getTagsChoice'] as $key => $value) {
             // Cannot use object of type stdClass as array 解決方案
             array_push($getTagsId, $value->tags_id);
         }
 
-        $data['getTagsChoice'] = $getTagsId;
+        $data['getTagsID'] = $getTagsId;
 
         $this->loadViews("newsEdit", $this->global, $data, null);
     }

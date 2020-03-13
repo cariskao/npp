@@ -39,7 +39,8 @@ class Members extends BaseController
         // 參考 segment_helper.php
         // echo '<script>alert("' . uri_segment() . '")</script>';
 
-        // $this->global['pageTitle'] = '最新新聞管理';
+        $this->session->unset_userdata('myRedirect');
+
         $this->global['navTitle']  = '本黨立委 - 立委管理 - 列表';
         $this->global['navActive'] = base_url('members/membersList/');
 
@@ -53,6 +54,9 @@ class Members extends BaseController
         // echo ' segment-News: ' . $returns['segment'];
 
         $data['listItems'] = $this->members_model->listing($searchText, $returns['page'], $returns['segment']);
+
+        $myRedirect = str_replace('/npp/', '', $_SERVER['REQUEST_URI']);
+        $this->session->set_userdata('myRedirect', $myRedirect);
 
         $this->loadViews('membersList', $this->global, $data, null);
     }
@@ -306,10 +310,29 @@ class Members extends BaseController
         }
 
         $data = array(
-            'getYearsList'       => $this->members_model->getYearsList(),
-            'getContactList'     => $this->members_model->getContactList(),
-            'getIssuesClassList' => $this->members_model->getIssuesClassList(),
+            'getMemberInfo'        => $this->members_model->getMemberInfo($id),
+            'getYearsChoice'       => $this->members_model->getYearsChoice($id),
+            'getIssuesClassChoice' => $this->members_model->getIssuesClassChoice($id),
+            'getContactChoice'     => $this->members_model->getContactChoice($id),
+            'getYearsList'         => $this->members_model->getYearsList(),
+            'getContactList'       => $this->members_model->getContactList(),
+            'getIssuesClassList'   => $this->members_model->getIssuesClassList(),
         );
+
+        $getYearsId       = [];
+        $getIssuesClassId = [];
+
+        foreach ($data['getYearsChoice'] as $k => $v) {
+            // Cannot use object of type stdClass as array 解決方案
+            array_push($getYearsId, $v->yid);
+        }
+
+        foreach ($data['getIssuesClassChoice'] as $k => $v) {
+            array_push($getIssuesClassId, $v->ic_id);
+        }
+
+        $data['getYearsID']       = $getYearsId;
+        $data['getIssuesClassID'] = $getIssuesClassId;
 
         $this->global['navTitle']  = '本黨立委 - 立委管理 - 編輯';
         $this->global['navActive'] = base_url('members/membersList/');

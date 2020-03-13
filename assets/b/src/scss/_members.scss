@@ -12,6 +12,15 @@ table.table {
          line-height: normal;
          vertical-align: middle;
       }
+
+      th {
+         width: 200px;
+      }
+
+      textarea {
+         resize: vertical;
+         height: 150px;
+      }
    }
 
    span.must {
