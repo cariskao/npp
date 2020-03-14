@@ -102,3 +102,15 @@ if (!empty($listItems)) {
 		pagination('members/membersList/');
 	});
 </script>
+<?php
+$success = $this->session->flashdata('success');
+if ($success) {
+    ?>
+<div id="alert-success" class="alert-absoulte alert success-width alert-success alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<?php echo $success; ?>
+</div>
+<?php
+unset($_SESSION['success']);
+}
+?>

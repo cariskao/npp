@@ -228,7 +228,6 @@ class Members extends BaseController
 
                     $this->members_model->members_mem_add($mem_cont_records_info, 3);
                 }
-
             }
 
             if ($insert_memid > 0) {
@@ -241,7 +240,9 @@ class Members extends BaseController
                 $this->session->set_flashdata('error', '新增失敗!');
             }
 
-            $this->membersAdd();
+            // $this->membersAdd();
+            $myRedirect = $this->session->userdata('myRedirect');
+            redirect($myRedirect);
         }
     }
 
@@ -286,7 +287,9 @@ class Members extends BaseController
                 $this->session->set_flashdata('error', '新增失敗!');
             }
 
-            redirect('members/yearLists');
+            // redirect('members/yearLists');
+            $myRedirect = $this->session->userdata('myRedirect');
+            redirect($myRedirect);
         }
     }
 
@@ -338,6 +341,152 @@ class Members extends BaseController
         $this->global['navActive'] = base_url('members/membersList/');
 
         $this->loadViews("membersEdit", $this->global, $data, null);
+    }
+
+    public function membersEditSend($id)
+    {
+        $this->form_validation->set_rules('file', '圖片', 'callback_img_check[' . $id . ']');
+        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+        $this->form_validation->set_rules('name', '姓名', 'trim|required|max_length[32]|callback_name_check[' . $id . ']');
+        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+        $this->form_validation->set_rules('years', '屆期', 'callback_yearSelect_check');
+        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+        $this->form_validation->set_rules('name_en', '英文姓名', 'trim|required|max_length[32]');
+        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('check', '驗證失敗');
+            $this->membersEdit($id);
+        } else {
+            $n         = $this->security->xss_clean($this->input->post('name'));
+            $n_en      = $this->security->xss_clean($this->input->post('name_en'));
+            $edu       = $this->security->xss_clean($this->input->post('education'));
+            $exp       = $this->security->xss_clean($this->input->post('experience'));
+            $districts = $this->security->xss_clean($this->input->post('districts'));
+            $commit    = $this->security->xss_clean($this->input->post('committee'));
+            $fb        = $this->security->xss_clean($this->input->post('fb'));
+            $ig        = $this->security->xss_clean($this->input->post('ig'));
+            $line      = $this->security->xss_clean($this->input->post('line'));
+            $yt        = $this->security->xss_clean($this->input->post('yt'));
+            $oldImg    = $this->security->xss_clean($this->input->post('img_name'));
+
+            $years           = $this->security->xss_clean($this->input->post('years'));
+            $issues          = $this->security->xss_clean($this->input->post('issues'));
+            $showStatusCheck = $this->security->xss_clean($this->input->post('happy'));
+            $showStatus      = $showStatusCheck != 'N' ? 1 : 0;
+            $contactList     = $this->security->xss_clean($this->input->post('contactList'));
+            $contact         = $this->security->xss_clean($this->input->post('contact'));
+            // File upload configuration
+            // $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/members_upload/';
+            $uploadPath              = 'assets/uploads/members_upload/';
+            $config['upload_path']   = $uploadPath;
+            $config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
+            // $config['max_size'] = 1024;
+
+            // Load and initialize upload library
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            // Upload file to server
+            if ($this->upload->do_upload('file')) {
+                $fileData   = $this->upload->data();
+                $uploadData = $fileData['file_name'];
+            } else {
+                // 這裏沒註解也沒事
+                // upload debug ,loads the view display.php with error
+                $error = array('error' => $this->upload->display_errors());
+                $this->load->view('upload_debug_form', $error);
+            }
+
+            // Insert files data into the database
+            $membersInfo = array(
+                'showup'     => $showStatus,
+                'name'       => $n,
+                'name_en'    => $n_en,
+                'education'  => $edu,
+                'experience' => $exp,
+                'districts'  => $districts,
+                'committee'  => $commit,
+                'fb'         => $fb,
+                'ig'         => $ig,
+                'line'       => $line,
+                'yt'         => $yt,
+            );
+
+            // 當新圖片成功上傳時就刪除舊的圖片
+            if (!empty($uploadData)) {
+                unlink(dirname(dirname(__DIR__)) . '/assets/uploads/members_upload/' . $oldImg);
+                // https://blog.longwin.com.tw/2009/01/php-get-directory-file-path-dirname-2008/
+                // https://www.awaimai.com/408.html
+
+                $membersInfo['img'] = $uploadData;
+            }
+
+            // 更新資料庫
+            $result = $this->members_model->membersUpdate($membersInfo, $id);
+
+            // 當回傳成功insert的id且有選擇標籤時,就將此標籤的資料insert到DB
+            if ($result) {
+                if (!empty($years)) {
+                    $mem_years_info = array();
+                    $one_array      = array();
+
+                    foreach ($years as $k => $v) {
+                        $one_array['memid'] = $id;
+                        $one_array['yid']   = $v;
+
+                        $mem_years_info[] = $one_array;
+                    }
+
+                    $this->members_model->members_mem_add($mem_years_info, 1);
+                }
+
+                if (!empty($issues)) {
+                    $mem_issues_info = array();
+                    $one_array       = array();
+
+                    foreach ($issues as $k => $v) {
+                        $one_array['memid'] = $id;
+                        $one_array['ic_id'] = $v;
+
+                        $mem_issues_info[] = $one_array;
+                    }
+
+                    $this->members_model->members_mem_add($mem_issues_info, 2);
+                }
+
+                if (!empty($contact)) {
+                    $mem_cont_records_info = array();
+                    $one_array             = array();
+
+                    foreach ($contact as $c => $cv) {
+                        $one_array['memid']   = $id;
+                        $one_array['records'] = $cv;
+                        $one_array['con_id']  = $contactList[$c];
+
+                        $mem_cont_records_info[] = $one_array;
+
+                    }
+
+                    $this->members_model->members_mem_add($mem_cont_records_info, 3);
+                }
+            }
+
+            if ($result > 0) {
+                $array = array(
+                    'success' => '新增成功!',
+                );
+
+                $this->session->set_flashdata($array);
+            } else {
+                $this->session->set_flashdata('error', '新增失敗!');
+            }
+
+            // $this->membersEdit($id);
+            $myRedirect = $this->session->userdata('myRedirect');
+            redirect($myRedirect);
+        }
     }
 
     // 屆期
@@ -513,7 +662,7 @@ class Members extends BaseController
             return false;
         } else {
 
-            // 若在編輯時沒有選圖片
+            // 若爲編輯並且沒有選圖片就爲false離開,否則就檢查圖片格式
             if (!($id != '' && $imgName == '')) {
 
                 $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'image/svg+xml');

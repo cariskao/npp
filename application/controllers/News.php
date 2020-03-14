@@ -184,7 +184,9 @@ class News extends BaseController
             $time_start      = $this->security->xss_clean($this->input->post('time_start'));
             $editor          = $this->input->post('editor1');
             $tags            = $this->security->xss_clean($this->input->post('tags'));
-            $showStatusCheck = $this->input->post('happy');
+            $showStatusCheck = $this->security->xss_clean($this->input->post('happy'));
+            $showStatus      = $showStatusCheck != 'N' ? 1 : 0;
+            $oldImg          = $this->security->xss_clean($this->input->post('img_name'));
 
             // File upload configuration
             // $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/' . $type_id . '/';
@@ -209,6 +211,7 @@ class News extends BaseController
             }
 
             $press_release_info = array(
+                'showup'     => $showStatus,
                 'main_title' => $m_title,
                 'sub_title'  => $s_title,
                 'date_start' => $date_start,
@@ -216,17 +219,9 @@ class News extends BaseController
                 'editor'     => $editor,
             );
 
-            if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
-                $showStatus                   = $showStatusCheck == 'Y' ? 1 : 0;
-                $press_release_info['showup'] = $showStatus;
-            }
-
-            // 當有選擇圖片時
+            // 當新圖片成功上傳時就刪除舊的圖片
             if (!empty($uploadData)) {
-                // 就上傳新圖片並馬上刪除舊圖片
-                $imgDelete  = $this->news_model->imgNameRepeatDel($pr_id);
-                $imgDelName = $imgDelete->img;
-                unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/' . $type_id . '/' . $imgDelName);
+                unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/' . $type_id . '/' . $oldImg);
                 // https://blog.longwin.com.tw/2009/01/php-get-directory-file-path-dirname-2008/
                 // https://www.awaimai.com/408.html
                 /*
@@ -568,7 +563,7 @@ class News extends BaseController
             return false;
         } else {
 
-            // 若在編輯時沒有選圖片
+            // 若爲編輯並且沒有選圖片就爲false離開,否則就檢查圖片格式
             if (!($mode == 2 && $imgName == '')) {
 
                 $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'image/svg+xml');

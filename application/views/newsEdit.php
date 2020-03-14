@@ -59,8 +59,9 @@ $myRedirect = $this->session->userdata('myRedirect');
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="img">更換圖片(不換則不用選擇)</label>
-											<input class="form-control" id="img" type="file" name="file" size="20" />
+											<input style="border:none" class="form-control" id="img" type="file" name="file" size="20" />
 											<?php echo form_error('file'); ?>
+											<input type="hidden" name="img_name" value="<?php echo $img; ?>">
 										</div>
 									</div>
 								</div>

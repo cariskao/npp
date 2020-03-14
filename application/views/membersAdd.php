@@ -46,10 +46,10 @@
 													<th scope="row">
 														<span class="must">*</span>新增照片
 													</th>
-													<!-- <td colspan="2"></td> -->
 													<td>
 														<div class="form-group">
-															<input type="file" name="file" />
+															<!-- 沒加form-control上下會不平均 -->
+															<input style="border:none"  type="file" name="file" class="form-control" />
 															<?php echo form_error('file'); ?>
 														</div>
 													</td>

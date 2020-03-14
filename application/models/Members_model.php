@@ -130,11 +130,12 @@ class Members_model extends CI_Model
             $this->db->insert_batch('mem_cont_records', $memInfo);
         }
 
-        $insert_id = $this->db->insert_id();
+        // $insert_id = $this->db->insert_id();
 
         $this->db->trans_complete();
 
-        return $insert_id;
+        // return $insert_id;
+        return true;
     }
 
     // 屆期
@@ -176,7 +177,24 @@ class Members_model extends CI_Model
 .########.########..####....##...
  */
 
-    // members info
+    public function membersUpdate($info, $id)
+    {
+        $this->db->where('memid', $id);
+        $this->db->update('members', $info);
+
+        $this->db->where('memid', $id);
+        $this->db->delete('mem_years_b');
+
+        $this->db->where('memid', $id);
+        $this->db->delete('mem_ic_b');
+
+        $this->db->where('memid', $id);
+        $this->db->delete('mem_cont_records');
+
+        return true;
+    }
+
+    // get members info
     public function getMemberInfo($id)
     {
         $this->db->select();

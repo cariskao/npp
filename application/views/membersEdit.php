@@ -66,8 +66,10 @@ $myRedirect = $this->session->userdata('myRedirect');
 														<div class="form-group">
 															<img style="width:100px"
 																src="<?php echo base_url('assets/uploads/members_upload/' . $img); ?>">
-															<input type="file" name="file" />
+																<!-- 沒加form-control上下會不平均 -->
+															<input style="border:none"  type="file" name="file" class="form-control" />
 															<?php echo form_error('file'); ?>
+															<input type="hidden" name="img_name" value="<?php echo $img; ?>">
 														</div>
 													</td>
 												</tr>
@@ -249,7 +251,8 @@ if (!empty($getContactList)) {
 												</th>
 												<td>
 													<div class="form-group">
-														<input type="text" class="form-control" name="contact[]" value="<?php echo $getContact; ?>">
+														<input type="text" class="form-control" name="contact[]"
+															value="<?php echo $getContact; ?>">
 													</div>
 												</td>
 												<td style="width:50px">
@@ -399,46 +402,48 @@ if (!empty($getContactList)) {
 </div>
 
 <script language='javascript' type='text/javascript'>
-	// textarea自動依照內容增加高度
-	function autogrow(textarea) {
-		var adjustedHeight = textarea.clientHeight;
+	jQuery(document).ready(function () {
+		// textarea自動依照內容增加高度
+		function autogrow(textarea) {
+			var adjustedHeight = textarea.clientHeight;
 
-		adjustedHeight = Math.max(textarea.scrollHeight, adjustedHeight);
-		if (adjustedHeight > textarea.clientHeight) {
-			textarea.style.height = adjustedHeight + 'px';
+			adjustedHeight = Math.max(textarea.scrollHeight, adjustedHeight);
+			if (adjustedHeight > textarea.clientHeight) {
+				textarea.style.height = adjustedHeight + 'px';
+			}
 		}
-	}
 
-	$('#select-issues').selectize({
-		maxItems: null,
-		plugins: ['remove_button'],
-		sortField: { //排序
-			field: 'id', // text:依據文本排序，id：依據value排序
-			direction: 'asc' // 升序降序
-		}
+		$('#select-issues').selectize({
+			maxItems: null,
+			plugins: ['remove_button'],
+			sortField: { //排序
+				field: 'id', // text:依據文本排序，id：依據value排序
+				direction: 'asc' // 升序降序
+			}
+		});
+
+		$('#select-years').selectize({
+			maxItems: null,
+			plugins: ['remove_button'],
+			sortField: { //排序
+				field: 'id', // text:依據文本排序，id：依據value排序
+				direction: 'asc' // 升序降序
+			}
+		});
+
+		var $selectYears = $('#select-years')[0].selectize;
+		var yearArray = <?php echo json_encode($getYearsID); ?>;
+		$selectYears.setValue(yearArray, true);
+
+		var $selectIssues = $('#select-issues')[0].selectize;
+		var issuesArray = <?php echo json_encode($getIssuesClassID); ?>;
+		$selectIssues.setValue(issuesArray, true);
+
+		// console.log($('link:last-of-type').attr('href'));
+		// console.log($('link:last-child').attr('href'));
+		// console.log($('link:last').attr('href'));
+		// console.log($('link').last().attr('href'));
 	});
-
-	$('#select-years').selectize({
-		maxItems: null,
-		plugins: ['remove_button'],
-		sortField: { //排序
-			field: 'id', // text:依據文本排序，id：依據value排序
-			direction: 'asc' // 升序降序
-		}
-	});
-
-	var $selectYears = $('#select-years')[0].selectize;
-	var yearArray = <?php echo json_encode($getYearsID); ?>;
-	$selectYears.setValue(yearArray, true);
-
-	var $selectIssues = $('#select-issues')[0].selectize;
-	var issuesArray = <?php echo json_encode($getIssuesClassID); ?>;
-	$selectIssues.setValue(issuesArray, true);
-
-	// console.log($('link:last-of-type').attr('href'));
-	// console.log($('link:last-child').attr('href'));
-	// console.log($('link:last').attr('href'));
-	// console.log($('link').last().attr('href'));
 </script>
 <?php
 $this->load->helper('form');
