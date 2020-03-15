@@ -33,10 +33,9 @@ class Members_model extends CI_Model
         return $query->num_rows();
     }
 
-    public function listing($searchText = '', $page, $segment)
+    public function listing($isSort, $searchText = '', $page = 0, $segment = 0)
     {
         $this->db->select();
-
         $this->db->from('members as m');
 
         if (!empty($searchText)) {
@@ -45,7 +44,10 @@ class Members_model extends CI_Model
         }
 
         $this->db->order_by('m.sort', 'ASC');
-        $this->db->limit($page, $segment);
+
+        if (!$isSort) {
+            $this->db->limit($page, $segment);
+        }
 
         $query  = $this->db->get();
         $result = $query->result();
@@ -339,11 +341,13 @@ class Members_model extends CI_Model
      */
 
     // 屆期排序update
-    public function sort($sort)
+    public function sort($sort, $who)
     {
+        $id = $who == 'members' ? 'memid' : 'yid';
+
         foreach ($sort as $k => $v) {
             $k++;
-            $sql   = "UPDATE `years` SET `sort` = $k WHERE `yid` = $v";
+            $sql   = "UPDATE $who SET `sort` = $k WHERE $id = $v";
             $query = $this->db->query($sql);
         }
 

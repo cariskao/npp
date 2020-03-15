@@ -53,7 +53,7 @@ class Members extends BaseController
         $returns = $this->paginationCompress('members/members/', $count, 10, 3); //記得加上「/」
         // echo ' segment-News: ' . $returns['segment'];
 
-        $data['listItems'] = $this->members_model->listing($searchText, $returns['page'], $returns['segment']);
+        $data['listItems'] = $this->members_model->listing(false, $searchText, $returns['page'], $returns['segment']);
 
         $myRedirect = str_replace('/npp/', '', $_SERVER['REQUEST_URI']);
         $this->session->set_userdata('myRedirect', $myRedirect);
@@ -240,9 +240,7 @@ class Members extends BaseController
                 $this->session->set_flashdata('error', '新增失敗!');
             }
 
-            // $this->membersAdd();
-            $myRedirect = $this->session->userdata('myRedirect');
-            redirect($myRedirect);
+            redirect('members/membersList/');
         }
     }
 
@@ -287,9 +285,7 @@ class Members extends BaseController
                 $this->session->set_flashdata('error', '新增失敗!');
             }
 
-            // redirect('members/yearLists');
-            $myRedirect = $this->session->userdata('myRedirect');
-            redirect($myRedirect);
+            redirect('members/yearLists/');
         }
     }
 
@@ -393,7 +389,6 @@ class Members extends BaseController
                 $fileData   = $this->upload->data();
                 $uploadData = $fileData['file_name'];
             } else {
-                // 這裏沒註解也沒事
                 // upload debug ,loads the view display.php with error
                 $error = array('error' => $this->upload->display_errors());
                 $this->load->view('upload_debug_form', $error);
@@ -691,6 +686,17 @@ class Members extends BaseController
     .##....##.##.....##.##....##.....##...
     ..######...#######..##.....##....##...
      */
+
+    public function membersSort()
+    {
+        $this->global['navTitle']  = '本黨立委 - 立委管理 - 排序';
+        $this->global['navActive'] = base_url('members/membersList/');
+
+        $data['getMembersList'] = $this->members_model->listing(true);
+
+        $this->loadViews("membersSort", $this->global, $data, null);
+    }
+
     public function yearsSort()
     {
         $this->global['navTitle']  = '本黨立委 - 屆期管理 - 排序';
@@ -701,10 +707,12 @@ class Members extends BaseController
         $this->loadViews("yearsSort", $this->global, $data, null);
     }
 
-    public function yearsSortSend()
+    public function sortSend()
     {
-        $sort   = $this->security->xss_clean($this->input->post('newSort'));
-        $result = $this->members_model->sort($sort);
+        $sort = $this->security->xss_clean($this->input->post('newSort'));
+        $who  = $this->security->xss_clean($this->input->post('who'));
+
+        $result = $this->members_model->sort($sort, $who);
 
         if ($result > 0) {
             $this->session->set_flashdata('success', '排序已更新!');

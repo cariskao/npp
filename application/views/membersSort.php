@@ -32,11 +32,11 @@
 								<div class="col-md-12">
 									<div id="sortlist">
 										<?php
-if (!empty($getYearList)) {
-    foreach ($getYearList as $record) {
+if (!empty($getMembersList)) {
+    foreach ($getMembersList as $record) {
         ?>
-										<div class="ui-state-default" dbid="<?php echo $record->yid; ?>">
-											<?php echo $record->title; ?>
+										<div class="ui-state-default" dbid="<?php echo $record->memid; ?>">
+											<?php echo $record->name; ?>
 										</div>
 										<?php
 }
@@ -73,12 +73,12 @@ if (!empty($getYearList)) {
 								dataType: "text",
 								data: {
 									newSort: _sort,
-									who: 'years'
+									who: 'members'
 								},
 								success: function (data) {
 									// console.log('ok');
-									// 這裏在controller用$this->carouselSorts()會吃不到成功訊息。
-									window.location.href = baseURL + 'members/yearLists/';
+									// 這裏在controller用$this->xx()會吃不到成功訊息。
+									window.location.href = baseURL + 'members/membersList/';
 								},
 								error: function (jqXHR) {
 									console.log('發生錯誤: ', jqXHR.status);
