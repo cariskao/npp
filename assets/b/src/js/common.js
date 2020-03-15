@@ -1,4 +1,6 @@
 $(function () {
+   $('#loader').hide(0);
+
    // 訊息彈出3秒後消失
    setTimeout(function () {
       $("#alert-success").hide();
@@ -77,7 +79,3 @@ $('#radioBtn a').on('click', function () {
    // 當點擊爲Y,就把爲Y的元素移除notActive並加上active
    $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
 })
-
-$(window).on('load', function () {
-   $('#loader').hide(0);
-});
