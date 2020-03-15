@@ -77,3 +77,7 @@ $('#radioBtn a').on('click', function () {
    // 當點擊爲Y,就把爲Y的元素移除notActive並加上active
    $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
 })
+
+$(window).on('load', function () {
+   $('#loader').hide(0);
+});

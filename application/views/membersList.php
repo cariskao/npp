@@ -70,7 +70,7 @@ if (!empty($listItems)) {
 										<a class="btn btn-sm btn-info"
 											href="<?php echo base_url('members/membersEdit/' . $items->memid); ?>" title="編輯"><i
 												class="fa fa-pencil"></i></a>
-										<a class="btn btn-sm btn-danger deleteMembers" data-memid="<?php echo $items->memid; ?>"
+<a class="btn btn-sm btn-danger deleteMembers" data-id="<?php echo $items->memid; ?>"
 											data-img="<?php echo $items->img; ?>" title="移除"><i class="fa fa-trash"></i></a>
 									</td>
 								</tr>

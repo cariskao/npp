@@ -17,6 +17,7 @@ $myRedirect = $this->session->userdata('myRedirect');
 ?>
 <script src="<?php echo base_url('assets/plugins/selectizejs/dist/js/standalone/selectize.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/selectizejs/js/index.js'); ?>"></script>
+<div id="loader"><div class="loader"></div></div>
 <div class="content-wrapper">
 	<section>
 		<div class="functoin-on-top">
@@ -400,7 +401,6 @@ if (!empty($getContactList)) {
 </div>
 <!-- <div class="col-md-12"> -->
 </div>
-
 <script language='javascript' type='text/javascript'>
 	jQuery(document).ready(function () {
 		// textarea自動依照內容增加高度
@@ -484,7 +484,7 @@ unset($_SESSION['error']);
 ?>
 <style>
 </style>
-<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?>
+<!-- <?php echo validation_errors('<div id="alert-error" class="alert-absoulte alert alert-danger alert-dismissable">', ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>'); ?> -->
 </div>
 </section>
 </div>

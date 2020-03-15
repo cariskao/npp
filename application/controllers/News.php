@@ -623,17 +623,13 @@ class News extends BaseController
     ##     ## ##       ##       ##          ##    ##
     ########  ######## ######## ########    ##    ########
      */
-    /**
-     * This function is used to delete the user using userId
-     * @return boolean $result : TRUE / FALSE
-     * 刪除 新聞訊息裡項目的列表
-     */
+    
     public function newsListDel()
     {
         //這裏的post('pr_id')是common.js的jQuery.ajax.data
-        $pr_id   = $this->input->post('pr_id');
-        $type_id = $this->input->post('type_id');
-        $img     = $this->input->post('img');
+        $pr_id   = $this->security->xss_clean($this->input->post('pr_id'));
+        $type_id = $this->security->xss_clean($this->input->post('type_id'));
+        $img     = $this->security->xss_clean($this->input->post('img'));
 
         unlink(dirname(dirname(__DIR__)) . '/assets/uploads/news_upload/' . $type_id . '/' . $img);
 

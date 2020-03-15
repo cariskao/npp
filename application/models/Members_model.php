@@ -129,7 +129,10 @@ class Members_model extends CI_Model
         } else if ($num == 2) {
             $this->db->insert_batch('mem_ic_b', $memInfo);
         } else {
-            $this->db->insert_batch('mem_cont_records', $memInfo);
+            // 若$memInfo不爲空才執行insert
+            if (count($memInfo) > 0) {
+                $this->db->insert_batch('mem_cont_records', $memInfo);
+            }
         }
 
         // $insert_id = $this->db->insert_id();
@@ -179,10 +182,15 @@ class Members_model extends CI_Model
 .########.########..####....##...
  */
 
-    public function membersUpdate($info, $id)
+    public function membersUpdate($who, $id, $info = '')
     {
         $this->db->where('memid', $id);
-        $this->db->update('members', $info);
+
+        if ($who == 'edit') {
+            $this->db->update('members', $info);
+        } else {
+            $this->db->delete('members');
+        }
 
         $this->db->where('memid', $id);
         $this->db->delete('mem_years_b');

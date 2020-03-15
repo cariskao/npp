@@ -213,19 +213,23 @@ class Members extends BaseController
                     $this->members_model->members_mem_add($mem_issues_info, 2);
                 }
 
-                if (!empty($contact)) {
+                // $contact !=''表示項目不爲全都被移除狀態。
+                // || 後面爲當只有一個項目且爲空值時
+                if ($contact != '' || !(count($contact) == 1 && $contact[0] == '')) {
                     $mem_cont_records_info = array();
-                    $one_array             = array();
+                    $oneArray              = array();
 
-                    foreach ($contact as $c => $cv) {
-                        $one_array['memid']   = $insert_memid;
-                        $one_array['records'] = $cv;
-                        $one_array['con_id']  = $contactList[$c];
+                    foreach ($contact as $k => $v) {
+                        if ($v != '') {
+                            $oneArray['memid']   = $insert_memid;
+                            $oneArray['records'] = $v;
+                            $oneArray['con_id']  = $contactList[$k];
 
-                        $mem_cont_records_info[] = $one_array;
-
+                            $mem_cont_records_info[] = $oneArray;
+                        }
                     }
 
+                    // model好像會無視if照常執行,所以在model加一個if,否則一直出現insert_batch爲空值error
                     $this->members_model->members_mem_add($mem_cont_records_info, 3);
                 }
             }
@@ -419,7 +423,7 @@ class Members extends BaseController
             }
 
             // 更新資料庫
-            $result = $this->members_model->membersUpdate($membersInfo, $id);
+            $result = $this->members_model->membersUpdate('edit', $id, $membersInfo);
 
             // 當回傳成功insert的id且有選擇標籤時,就將此標籤的資料insert到DB
             if ($result) {
@@ -451,31 +455,35 @@ class Members extends BaseController
                     $this->members_model->members_mem_add($mem_issues_info, 2);
                 }
 
-                if (!empty($contact)) {
+                // $contact !=''表示項目不爲全都被移除狀態。
+                // || 後面爲當只有一個項目且爲空值時
+                if ($contact != '' || !(count($contact) == 1 && $contact[0] == '')) {
                     $mem_cont_records_info = array();
-                    $one_array             = array();
+                    $oneArray              = array();
 
-                    foreach ($contact as $c => $cv) {
-                        $one_array['memid']   = $id;
-                        $one_array['records'] = $cv;
-                        $one_array['con_id']  = $contactList[$c];
+                    foreach ($contact as $k => $v) {
+                        if ($v != '') {
+                            $oneArray['memid']   = $id;
+                            $oneArray['records'] = $v;
+                            $oneArray['con_id']  = $contactList[$k];
 
-                        $mem_cont_records_info[] = $one_array;
-
+                            $mem_cont_records_info[] = $oneArray;
+                        }
                     }
 
+                    // model好像會無視if照常執行,所以在model加一個if,否則一直出現insert_batch爲空值error
                     $this->members_model->members_mem_add($mem_cont_records_info, 3);
                 }
             }
 
             if ($result > 0) {
                 $array = array(
-                    'success' => '新增成功!',
+                    'success' => '編輯成功!',
                 );
 
                 $this->session->set_flashdata($array);
             } else {
-                $this->session->set_flashdata('error', '新增失敗!');
+                $this->session->set_flashdata('error', '編輯失敗!');
             }
 
             // $this->membersEdit($id);
@@ -555,6 +563,23 @@ class Members extends BaseController
     .##.....##.##.......##.......##..........##....##......
     .########..########.########.########....##....########
      */
+
+    public function deleteMembers()
+    {
+        $id  = $this->security->xss_clean($this->input->post('id'));
+        $img = $this->security->xss_clean($this->input->post('img'));
+
+        unlink(dirname(dirname(__DIR__)) . '/assets/uploads/members_upload/' . $img);
+
+        // $userInfo = array('isDeleted' => 1, 'updatedBy' => $this->vendorId, 'updatedDtm' => date('Y-m-d H:i:s'));
+        $result = $this->members_model->membersUpdate('del', $id); //刪除資料庫數據
+
+        if ($result) {
+            echo (json_encode(array('status' => true)));
+        } else {
+            echo (json_encode(array('status' => false)));
+        }
+    }
 
     public function deleteYears()
     {

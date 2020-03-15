@@ -14,6 +14,7 @@ $myRedirect = $this->session->userdata('myRedirect');
 <script src="<?php echo base_url('assets/plugins/clockpicker/js/bootstrap-clockpicker.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/selectizejs/dist/js/standalone/selectize.js'); ?>"></script>
 <script src="<?php echo base_url('assets/plugins/selectizejs/js/index.js'); ?>"></script>
+<div id="loader"><div class="loader"></div></div>
 <div class="content-wrapper">
 	<section>
 		<div class="functoin-on-top">
