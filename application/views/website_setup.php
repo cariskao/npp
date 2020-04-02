@@ -6,8 +6,7 @@ $num         = $getSetupInfo->num;
 $fax         = $getSetupInfo->fax;
 $servicetime = $getSetupInfo->servicetime;
 ?>
-<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
-<!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">

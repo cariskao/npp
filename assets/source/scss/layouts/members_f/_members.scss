@@ -1,0 +1,32 @@
+// 屆期列表
+.pretty-select {
+   background-image: url('../../../assets/f_imgs/members/angle-down.png');
+   background-repeat: no-repeat;
+   background-position: 95% center;
+   background-size: 30px;
+
+   padding-left: 20px;
+   min-width: auto;
+   margin: 30px auto;
+   border-radius: 50px;
+   height: 54px;
+   font-size: 20px;
+   cursor: pointer;
+   appearance: none;
+   -moz-appearance: none;
+   -webkit-appearance: none;
+}
+
+// members-info
+a.members-card {
+   text-decoration: none;
+
+   img {
+      width: 100%;
+   }
+
+   h3 {
+      text-align: center;
+      color: black;
+   }
+}

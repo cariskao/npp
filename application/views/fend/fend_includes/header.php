@@ -28,6 +28,7 @@ $fb   = $getSetupInfo->fb;
 	<script src="<?php echo base_url(); ?>assets/bower_components/bootstrap4/dist/js/bootstrap.min.js"></script>
 	<!-- <link href="<?php echo base_url(); ?>assets/bower_components/animate.css/animate.min.css" rel="stylesheet" type="text/css" /> -->
 	<script src="<?php echo base_url(); ?>assets/bower_components/vue/dist/vue.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/node_modules/axios/dist/axios.min.js"></script>
 	<script type="text/javascript">
 		var baseURL = "<?php echo base_url(); ?>";
 	</script>
@@ -76,7 +77,7 @@ $fb   = $getSetupInfo->fb;
 }?>" href="<?php echo base_url('fend/'); ?>">法案議題</a></li>
 				<li class="nav-item"><a class="nav-link" style="<?php if ($navActive == 3) {
     echo 'color: #ffc107';
-}?>" href="<?php echo base_url('fend/'); ?>">本黨立委</a></li>
+}?>" href="<?php echo base_url('fend/members_f'); ?>">本黨立委</a></li>
 				<li class="nav-item"><a class="nav-link" style="<?php if ($navActive == 4) {
     echo 'color: #ffc107';
 }?>" href="<?php echo base_url('fend/'); ?>">聯絡陳情</a></li>

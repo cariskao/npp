@@ -40,6 +40,9 @@ jQuery(document).ready(function () {
 						alert("拒絕訪問..!");
 					}
 				})
+				.fail(function (jqXHR, textStatus, errorThrown) {
+					// serrorFunction();
+				});
 		}
 	})
 

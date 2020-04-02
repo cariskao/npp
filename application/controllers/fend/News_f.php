@@ -26,11 +26,6 @@ class News_f extends FendBaseController
     // 新聞訊息首頁
     public function index()
     {
-        $check = $this->input->get('b');
-        if ($check) {
-            echo '<script>alert("找不到此資料")</script>';
-        }
-
         $this->global['pageTitle'] = '新聞訊息 - 時代力量立法院黨團';
 
         $data = array(
