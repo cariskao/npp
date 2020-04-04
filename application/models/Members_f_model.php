@@ -19,6 +19,23 @@ class Members_f_model extends CI_Model
     //     }
     // }
 
+    public function getDate($id)
+    {
+        $this->db->select();
+        // $this->db->select('date_start', 'date_end');
+        $this->db->from('years as y');
+        $this->db->where('y.yid', $id);
+
+        // $sql   = "SELECT `date_start`,`date_end` FROM `years` WHERE `yid`=$id";
+        // $query = $this->db->query($sql);
+
+        $query = $this->db->get();
+
+        $result = $query->result();
+
+        return $result;
+    }
+
     public function getYearsList()
     {
         $this->db->select();
@@ -39,6 +56,7 @@ class Members_f_model extends CI_Model
         $this->db->from('mem_years_b as my');
         $this->db->join('years as y', 'my.yid = y.yid', 'inner');
         $this->db->join('members as m', 'm.memid = my.memid', 'inner');
+        $this->db->where('m.showup', 1);
         $this->db->where('y.yid', $id);
 
         $query = $this->db->get();

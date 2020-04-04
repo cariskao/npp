@@ -54,7 +54,7 @@ class Members_f extends FendBaseController
         $this->loadViews("fend/members/members", $this->global, $data, null);
     }
 
-    public function yearChange()
+    public function getMembersInfo()
     {
         $id         = $this->security->xss_clean($this->input->post('yid'));
         $memberInfo = $this->members_f_model->getMembersInfo($id);
@@ -64,10 +64,27 @@ class Members_f extends FendBaseController
             $res .= "
       <div class='col-md-3'>
          <a class='m-1 members-card' href='" . base_url('membersInner/' . $v->memid) . "'>
-            <img src='" . base_url('assets/uploads/members_upload/' . $v->img) . "'" . " alt='NOT FOUND' class='border'>
+            <div class='overflow-h'>
+                <img src='" . base_url('assets/uploads/members_upload/' . $v->img) . "'" . " alt='NOT FOUND' class='border'>
+            </div>
             <h3>{$v->name}</h3>
          </a>
       </div>
+    ";
+        }
+
+        echo $res;
+    }
+
+    public function dateShow()
+    {
+        $id      = $this->security->xss_clean($this->input->post('yid'));
+        $getDate = $this->members_f_model->getDate($id);
+        $res     = '';
+
+        foreach ($getDate as $k => $v) {
+            $res .= "
+    <p>從 " . $v->date_start . " 到 " . $v->date_end . " </p>
     ";
         }
 

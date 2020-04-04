@@ -19,13 +19,13 @@
 if (!empty($getYearsList)) {
     foreach ($getYearsList as $item) {
         ?>
-      <option value="<?php echo $item->yid; ?>">
-         <?php echo $item->title . '(' . $item->date_start . '~' . $item->date_end . ')'; ?></option>
+      <option value="<?php echo $item->yid; ?>"><?php echo $item->title; ?></option>
       <?php
 }
 }
 ?>
    </select>
+   <div id="year-show"></div>
    <!-- members-info -->
    <div class="row mt-5" id="member-info"></div>
 </div>
@@ -36,15 +36,17 @@ if (!empty($getYearsList)) {
    $(function () {
       let $this = $(this),
          text = $this.find('option:selected').text(),
+         hitURL = baseURL + 'fend/members_f/',
          _l = text.length,
-         _w = _l * 4 + 300,
-         hitURL = baseURL + 'fend/members_f/yearChange',
          yid = $('#year-select :selected').val()
+
+      let _w = _l <= 7 ? 200 : _l * 27;
 
       $('#year-select').css('width', _w + 'px');
 
+      // memberinfo
       $.ajax({
-         url: hitURL,
+         url: hitURL + 'getMembersInfo',
          method: "POST",
          data: {
             yid: yid
@@ -53,26 +55,53 @@ if (!empty($getYearsList)) {
             $('#member-info').html(res);
          }
       })
+
+      // date
+      $.ajax({
+         url: hitURL + 'dateShow',
+         method: "POST",
+         data: {
+            yid: yid
+         },
+         success: function (res) {
+            // console.log(res)
+            $('#year-show').html(res);
+         }
+      })
    });
 
    $(document).on('change', '#year-select', function () {
       let $this = $(this),
-         hitURL = baseURL + 'fend/members_f/yearChange',
+         hitURL = baseURL + 'fend/members_f/',
          text = $this.find('option:selected').text(),
          _l = text.length,
-         _w = _l * 4 + 300,
          yid = $('#year-select :selected').val(); //注意:selected前面有個空格！
 
+      let _w = _l <= 7 ? 200 : _l * 27;
       $('#year-select').css('width', _w + 'px');
 
+      // memberinfo
       $.ajax({
-         url: hitURL,
+         url: hitURL + 'getMembersInfo',
          method: "POST",
          data: {
             yid: yid
          },
          success: function (res) {
             $('#member-info').html(res);
+         }
+      })
+
+      // date
+      $.ajax({
+         url: hitURL + 'dateShow',
+         method: "POST",
+         data: {
+            yid: yid
+         },
+         success: function (res) {
+            // console.log(res)
+            $('#year-show').html(res);
          }
       })
    });
