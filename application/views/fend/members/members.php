@@ -46,7 +46,7 @@ if (!empty($getYearsList)) {
 
       // memberinfo
       $.ajax({
-         url: hitURL + 'getMembersInfo',
+         url: hitURL + 'getYearMembers',
          method: "POST",
          data: {
             yid: yid
@@ -82,7 +82,7 @@ if (!empty($getYearsList)) {
 
       // memberinfo
       $.ajax({
-         url: hitURL + 'getMembersInfo',
+         url: hitURL + 'getYearMembers',
          method: "POST",
          data: {
             yid: yid

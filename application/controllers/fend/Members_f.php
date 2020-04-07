@@ -54,16 +54,16 @@ class Members_f extends FendBaseController
         $this->loadViews("fend/members/members", $this->global, $data, null);
     }
 
-    public function getMembersInfo()
+    public function getYearMembers()
     {
         $id         = $this->security->xss_clean($this->input->post('yid'));
-        $memberInfo = $this->members_f_model->getMembersInfo($id);
+        $memberInfo = $this->members_f_model->getYearMembers($id);
         $res        = ''; //沒先宣告的話會error
 
         foreach ($memberInfo as $k => $v) {
             $res .= "
       <div class='col-md-3'>
-         <a class='m-1 members-card' href='" . base_url('membersInner/' . $v->memid) . "'>
+         <a class='m-1 members-card' href='" . base_url('fend/members_f/membersInner/' . $v->memid) . "'>
             <div class='overflow-h'>
                 <img src='" . base_url('assets/uploads/members_upload/' . $v->img) . "'" . " alt='NOT FOUND' class='border'>
             </div>
@@ -89,5 +89,20 @@ class Members_f extends FendBaseController
         }
 
         echo $res;
+    }
+
+    public function membersInner($id)
+    {
+        $data = array(
+            'getMemberInfo'   => $this->members_f_model->getMemberInfo($id),
+            'getIssuesChoice' => $this->members_f_model->getIssuesChoice($id),
+            'getConID1'       => $this->members_f_model->getContacts($id, 1),
+            'getConID2'       => $this->members_f_model->getContacts($id, 2),
+            'getConID3'       => $this->members_f_model->getContacts($id, 3),
+            'getConID4'       => $this->members_f_model->getContacts($id, 4),
+            'getConID5'       => $this->members_f_model->getContacts($id, 5),
+        );
+
+        $this->loadViews("fend/members/inner", $this->global, $data, null);
     }
 }
