@@ -31,30 +31,34 @@ $yt         = $getMemberInfo->yt;
 <div class="container">
    <div class="row mt-5">
       <div class="col-lg-4 col-md-12 text-center">
-         <div class="photo">
-            <img style="width:250px;margin-bottom:20px"
-               src="<?php echo base_url('assets/uploads/members_upload/' . $img); ?>" alt="IMG NOT FOUND!">
-            <h3><?php echo $name; ?></h3>
-            <h6><?php echo $name_en; ?></h6>
-         </div>
-         <?php if (!empty($getIssuesChoice)): ?>
-         <div style="margin-top:40px" class="members-bar">關注議題</div>
-         <?php endif;?>
-         <nav class="members-issues">
-            <ul>
+         <div class="row">
+            <div class="col-lg-12 col-md-6 col-sm-12">
+               <img style="width:250px;margin-bottom:20px"
+                  src="<?php echo base_url('assets/uploads/members_upload/' . $img); ?>" alt="IMG NOT FOUND!">
+               <h3><?php echo $name; ?></h3>
+               <h6><?php echo $name_en; ?></h6>
+            </div>
+            <div class="col-lg-12 col-md-6 col-sm-12">
                <?php if (!empty($getIssuesChoice)): ?>
-               <?php foreach ($getIssuesChoice as $item): ?>
-               <?php
+               <div style="margin-top:40px" class="members-bar">關注議題</div>
+               <?php endif;?>
+               <nav class="members-issues">
+                  <ul>
+                     <?php if (!empty($getIssuesChoice)): ?>
+                     <?php foreach ($getIssuesChoice as $item): ?>
+                     <?php
 $id   = $item->ic_id;
 $name = $item->name;
 ?>
-               <li>
-                  <a href="<?php echo base_url('fend/bill_f/' . $id); ?>"><?=$name;?></a>
-               </li>
-               <?php endforeach;?>
-               <?php endif;?>
-            </ul>
-         </nav>
+                     <li>
+                        <a href="<?php echo base_url('fend/bill_f/' . $id); ?>"><?=$name;?></a>
+                     </li>
+                     <?php endforeach;?>
+                     <?php endif;?>
+                  </ul>
+               </nav>
+            </div>
+         </div>
       </div>
       <div class="col-lg-8 col-md-12">
          <div class="members-bar">基本資料</div>
@@ -133,17 +137,6 @@ foreach ($getConID2 as $item) {
     $arr1 = explode('：', $r);
     $arr2 = explode('號', $arr1[1]);
     $map  = $arr2[0] . '號';
-    $aa   = 1;
-    //  $s1     = substr($r, strpos($r, '：') + 3);
-    //  $s1_len = strlen($s1);
-    //  因爲：爲全形,所以要從substr(str,start,end)3的位置開始找
-
-    //  $aa  = strpos($r, '0808');
-    //  $bb  = strpos($r, '號');
-    //  $map = substr($r, strpos($r, '：') + 3, strpos($r, '號') + 2);
-    //  $a   = 1;
-    //  $mapAddress = substr(strrchr($item->records, '：'), 3);
-    //  $mapAddress = substr(strchr($item->records, '：'), 3, strrchr($item->records, '號'));
     ?>
                   <a class="content" href="https://www.google.com.tw/maps/place/<?php echo $map; ?>"
                      target="_blank"><?php echo $item->records; ?></a>
@@ -205,19 +198,19 @@ foreach ($getConID2 as $item) {
                <div class="col-md-8">
                   <div class="member-link">
                      <?php if (!empty($fb)): ?>
-                     <a href="<?php echo $fb; ?>"><img
+                     <a target="_blank" href="<?php echo $fb; ?>"><img
                            src="<?php echo base_url('assets/f_imgs/members/facebook.png'); ?>" alt="img not found"></a>
                      <?php endif;?>
                      <?php if (!empty($ig)): ?>
-                     <a href="<?php echo $ig; ?>"><img
+                     <a target="_blank" href="<?php echo $ig; ?>"><img
                            src="<?php echo base_url('assets/f_imgs/members/instagram.png'); ?>" alt="img not found"></a>
                      <?php endif;?>
                      <?php if (!empty($line)): ?>
-                     <a href="<?php echo $line; ?>"><img src="<?php echo base_url('assets/f_imgs/members/line.png'); ?>"
-                           alt="img not found"></a>
+                     <a target="_blank" href="<?php echo $line; ?>"><img
+                           src="<?php echo base_url('assets/f_imgs/members/line.png'); ?>" alt="img not found"></a>
                      <?php endif;?>
                      <?php if (!empty($yt)): ?>
-                     <a href="<?php echo $yt; ?>"><img
+                     <a target="_blank" href="<?php echo $yt; ?>"><img
                            src="<?php echo base_url('assets/f_imgs/members/youtube.png'); ?>" alt="img not found"></a>
                      <?php endif;?>
                   </div>
