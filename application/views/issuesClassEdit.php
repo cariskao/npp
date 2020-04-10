@@ -3,6 +3,7 @@ $id   = $getIssuesClassInfo->ic_id;
 $show = $getIssuesClassInfo->showup;
 $sort = $getIssuesClassInfo->sort;
 $name = $getIssuesClassInfo->name;
+$img  = $getIssuesClassInfo->img;
 
 $myRedirect = $this->session->userdata('myRedirect');
 ?>
@@ -34,12 +35,32 @@ $myRedirect = $this->session->userdata('myRedirect');
 					<div class="box box-primary" style="border:none;">
 						<!-- form start -->
 						<form role="form" action="<?php echo base_url('bill/issuesClassEditSend/' . $id) ?>" method="post"
-							id="" role="form">
+							id="" role="form" enctype="multipart/form-data">
 							<div class="box-body">
+								<div class="row">
+									<div class="col-md-6 col-xs-12">
+										<div class="form-group">
+											<div class="row">
+												<img class="col-md-12 col-xs-12"
+													src="<?php echo base_url('assets/uploads/issuesClass_uplaod/' . $img); ?>">
+											</div>
+										</div>
+									</div>
+								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="name" class="must">議題名稱</label>
+											<label for="img">更換圖片(不換則不用選擇)</label>
+											<input style="border:none" class="form-control" id="img" type="file" name="file" size="20" />
+											<?php echo form_error('file'); ?>
+											<input type="hidden" name="img_name" value="<?php echo $img; ?>">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="name" class="must">議題類別名稱</label>
 											<input type="text" class="form-control must" id="name" name="name"
 												value="<?php echo $name; ?>" placeholder="必填欄位">
 											<?php echo form_error('name'); ?>

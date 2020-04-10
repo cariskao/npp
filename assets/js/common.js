@@ -278,6 +278,7 @@ jQuery(document).ready(function () {
 
 	jQuery(document).on('click', '.deleteIssuesClass', function () {
 		var id = $(this).data('id'),
+			img = $(this).data('img'),
 			hitURL = baseURL + 'bill/deleteIssuesClass',
 			currentRow = $(this),
 			l = $('.table tbody tr').length,
@@ -301,6 +302,7 @@ jQuery(document).ready(function () {
 					url: hitURL,
 					data: {
 						ic_id: id,
+						img: img,
 					},
 				})
 				.done(function (data) {

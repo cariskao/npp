@@ -14,14 +14,48 @@ class Bill_model extends CI_Model
     ######## ####  ######     ##
      */
 
-    // 議題
+    // 議題列表
+    public function issuesAllListingCount($searchText = '')
+    {
+        $this->db->select();
+        $this->db->from('issues_all as ia');
+
+        if (!empty($searchText)) {
+            $likeCriteria = "(ia.title LIKE '%" . $searchText . "%')";
+            $this->db->where($likeCriteria);
+        }
+
+        $query = $this->db->get();
+
+        return $query->num_rows();
+    }
+
+    public function issuesAllListing($searchText = '', $page = 0, $segment = 0)
+    {
+        $this->db->select();
+        $this->db->from('issues_all as ia');
+
+        if (!empty($searchText)) {
+            $likeCriteria = "(ia.title LIKE '%" . $searchText . "%')";
+            $this->db->where($likeCriteria);
+        }
+
+        $this->db->limit($page, $segment);
+
+        $query  = $this->db->get();
+        $result = $query->result();
+
+        return $result;
+    }
+
+    // 議題類別
     public function issuesClassListingCount($searchText = '')
     {
         $this->db->select();
-        $this->db->from('issues_class as BaseTbl');
+        $this->db->from('issues_class as ic');
 
         if (!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.name LIKE '%" . $searchText . "%')";
+            $likeCriteria = "(ic.name LIKE '%" . $searchText . "%')";
             $this->db->where($likeCriteria);
         }
 
@@ -114,6 +148,18 @@ class Bill_model extends CI_Model
     .##.....##.########..########.
      */
 
+    public function issuesAllAddSend($userInfo, $ic)
+    {
+        $this->db->trans_start();
+        $this->db->insert('issues_all', $userInfo);
+
+        $insert_id = $this->db->insert_id();
+
+        $this->db->trans_complete();
+
+        return $insert_id;
+    }
+
     public function issuesClassAddSend($userInfo)
     {
         $this->db->trans_start();
@@ -157,6 +203,21 @@ class Bill_model extends CI_Model
     ..######..##.....##.########..######..##....##
      */
 
+    //  議題封面圖
+    public function img_check($img)
+    {
+        $this->db->trans_start();
+        $this->db->select('img');
+        $this->db->from('issues_class');
+        $this->db->where('img', $img);
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return $query->num_rows();
+    }
+
     // 編輯網址防禦
     public function editProtectCheck($id, $item = '')
     {
@@ -179,7 +240,25 @@ class Bill_model extends CI_Model
         return $query->num_rows();
     }
 
-    // 議題 add edit
+    // 議題列表
+    public function issuesAll_check($title, $id)
+    {
+        $this->db->trans_start();
+        $this->db->select();
+        $this->db->from('issues_all as ia');
+        $this->db->where('ia.title', $title);
+        if ($id != '') {
+            $this->db->where('ia_id !=', $id);
+        }
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return $query->num_rows();
+    }
+
+    // 議題類別 add edit
     public function issuesClass_check($name, $id)
     {
         $this->db->trans_start();

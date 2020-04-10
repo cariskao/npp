@@ -88,7 +88,7 @@ $myRedirect = $this->session->userdata('myRedirect');
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="select-tools">標籤:</label>
+											<label for="select-tools">標籤</label>
 											<!-- name記得加上[],才能以陣列形式回傳。並加上multiple="multiple"才能在一開始就同時顯示selected的全部元素 -->
 											<select id="select-tools" name="tags[]" placeholder="請選取標籤" multiple="multiple">
 												<option value="">請選取標籤</option>
@@ -151,6 +151,7 @@ $notActive = $userInfo->showup == 0 ? 'active' : 'notActive';
 								</div>
 								<div class="row">
 									<div class="col-md-12">
+										<label for="editor1">內文</label>
 										<textarea name="editor1" id="editor1"><?php echo $editor; ?></textarea>
 										<script>
 											CKEDITOR.replace("editor1", {

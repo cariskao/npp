@@ -63,7 +63,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="select-tools">標籤:</label>
+											<label for="select-tools">標籤</label>
 											<!-- name記得加上[],才能以陣列形式回傳 -->
 											<select id="select-tools" name="tags[]" placeholder="請選取標籤">
 												<option value="">請選取標籤</option>
@@ -121,6 +121,7 @@ if (!empty($getTagsList)) {
 								</div>
 								<div class="row">
 									<div class="col-md-12">
+										<label for="editor1">內文</label>
 										<textarea name="editor1" id="editor1"></textarea>
 										<script>
 											CKEDITOR.replace("editor1", {

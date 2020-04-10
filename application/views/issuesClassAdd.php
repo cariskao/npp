@@ -8,7 +8,8 @@
 							<div class="row">
 								<div class="col-xs-12">
 									<div class="form-group">
-										<a class="btn btn-warning" href="<?php echo base_url($this->session->userdata('myRedirect')); ?>">返回</a>
+										<a class="btn btn-warning"
+											href="<?php echo base_url($this->session->userdata('myRedirect')); ?>">返回</a>
 									</div>
 								</div>
 							</div>
@@ -26,13 +27,23 @@
 					<div class="box box-primary" style="border:none;">
 						<!-- form start -->
 						<form role="form" action="<?php echo base_url() ?>bill/issuesClassAddSend" method="post" id=""
-							role="form">
+							role="form" enctype="multipart/form-data">
 							<div class="box-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="img" class="must">新增圖片</label>
+											<input type="file" name="file" />
+											<?php echo form_error('file'); ?>
+										</div>
+									</div>
+								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="name" class="must">議題名稱</label>
-											<input type="text" class="form-control must" id="name" name="name" value="" placeholder="輸入名稱">
+											<label for="name" class="must">議題類別名稱</label>
+											<input type="text" class="form-control must" id="name" name="name" value=""
+												placeholder="輸入名稱">
 											<?php echo form_error('name'); ?>
 										</div>
 									</div>
