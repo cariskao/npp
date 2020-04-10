@@ -74,8 +74,14 @@ class Bill_model extends CI_Model
             $this->db->where($likeCriteria);
         }
 
+        // $isSort=true,select下拉選單使用,所以只撈出showup=1的值
+        if ($isSort) {
+            $this->db->where('ic.showup', 1);
+        }
+
         $this->db->order_by('ic.sort', 'ASC');
 
+        // $isSort=true,不產生分頁,select下拉選單使用
         if (!$isSort) {
             $this->db->limit($page, $segment);
         }
@@ -96,7 +102,27 @@ class Bill_model extends CI_Model
     .########.########..####....##...
      */
 
-    // 議題
+    // 議題列表
+    public function getIssuesAllInfo($id)
+    {
+        $this->db->select();
+        $this->db->from('issues_all');
+        $this->db->where('ia_id', $id);
+
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
+    public function issuesAllEditSend($userInfo, $id)
+    {
+        $this->db->where('ia_id', $id);
+        $this->db->update('issues_all', $userInfo);
+
+        return true;
+    }
+
+    // 議題類別
     public function getIssuesClassInfo($id)
     {
         $this->db->select();
@@ -148,7 +174,7 @@ class Bill_model extends CI_Model
     .##.....##.########..########.
      */
 
-    public function issuesAllAddSend($userInfo, $ic)
+    public function issuesAllAddSend($userInfo)
     {
         $this->db->trans_start();
         $this->db->insert('issues_all', $userInfo);
@@ -185,10 +211,17 @@ class Bill_model extends CI_Model
     ########  ######## ######## ########    ##    ########
      */
 
-    public function deleteIssuesClass($id)
+    public function deleteIssues($id, $str)
     {
-        $this->db->where('ic_id', $id);
-        $this->db->delete('issues_class');
+        if ($str == 'class') {
+            $this->db->where('ic_id', $id);
+            $this->db->delete('issues_class');
+        }
+        if ($str == 'all') {
+            $this->db->where('ia_id', $id);
+            $this->db->delete('issues_all');
+
+        }
 
         return $this->db->affected_rows();
     }
@@ -228,9 +261,10 @@ class Bill_model extends CI_Model
             $this->db->from('issues_class');
             $this->db->where('ic_id', $id);
         }
-
-        if ($item == '') {
-            # code...
+        if ($item == 'issues-all') {
+            $this->db->select('ia_id');
+            $this->db->from('issues_all');
+            $this->db->where('ia_id', $id);
         }
 
         $query = $this->db->get();

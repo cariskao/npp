@@ -96,7 +96,7 @@ class Bill extends BaseController
         $this->global['navActive'] = base_url('bill/issuesAllList/');
 
         $data = array(
-            'getIssuesAllList' => $this->bill_model->issuesClassListing(true),
+            'getIssuesClassList' => $this->bill_model->issuesClassListing(true),
         );
 
         $this->loadViews('issuesAllAdd', $this->global, $data, null);
@@ -129,7 +129,7 @@ class Bill extends BaseController
                 'editor'       => $e,
             );
 
-            $insert_id = $this->bill_model->issuesAllAddSend($userInfo, $ic);
+            $insert_id = $this->bill_model->issuesAllAddSend($userInfo);
 
             if ($insert_id > 0) {
                 $this->session->set_flashdata('success', '新增成功!');
@@ -215,6 +215,69 @@ class Bill extends BaseController
 .########.########..####....##...
  */
 
+    // 議題列表
+    public function issuesAllEdit($id)
+    {
+        $editProtectChcek = $this->bill_model->editProtectCheck($id, 'issues-all');
+
+        if ($editProtectChcek == 0) {
+            redirect('dashboard');
+        }
+
+        $this->global['navTitle']  = '重點法案 - 議題類別管理 - 編輯';
+        $this->global['navActive'] = base_url('bill/issuesAllList/');
+
+        $data = array(
+            'getIssuesAllInfo'   => $this->bill_model->getIssuesAllInfo($id),
+            'getIssuesClassList' => $this->bill_model->issuesClassListing(true),
+        );
+
+        $this->loadViews("issuesAllEdit", $this->global, $data, null);
+    }
+
+    public function issuesAllEditSend($id)
+    {
+        $this->form_validation->set_rules('title', '標題', 'trim|required|max_length[128]|callback_issuesAll_check[' . $id . ']');
+        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+        $this->form_validation->set_rules('ic', '類別', 'required|max_length[128]|callback_issuesSelect_check');
+        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('check', '驗證失敗');
+            $this->issuesAllEdit($id);
+        } else {
+            $title           = $this->security->xss_clean($this->input->post('title'));
+            $ic              = $this->security->xss_clean($this->input->post('ic'));
+            $introduction    = $this->security->xss_clean($this->input->post('introduction'));
+            $e               = $this->input->post('editor1');
+            $showStatusCheck = $this->input->post('happy');
+
+            $userInfo = array(
+                'ic_id'        => $ic,
+                'title'        => $title,
+                'introduction' => $introduction,
+                'editor'       => $e,
+            );
+
+            if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
+
+                $showStatus         = $showStatusCheck == 'Y' ? 1 : 0;
+                $userInfo['showup'] = $showStatus;
+            }
+
+            $result = $this->bill_model->issuesAllEditSend($userInfo, $id);
+
+            if ($result > 0) {
+                $this->session->set_flashdata('success', '新增成功!');
+            } else {
+                $this->session->set_flashdata('error', '新增失敗!');
+            }
+
+            $myRedirect = $this->session->userdata('myRedirect');
+            redirect($myRedirect);
+        }
+    }
+
     //  議題類別
     public function issuesClassEdit($id)
     {
@@ -245,7 +308,6 @@ class Bill extends BaseController
         } else {
             $name            = $this->security->xss_clean($this->input->post('name'));
             $showStatusCheck = $this->input->post('happy');
-            $showStatus      = $showStatusCheck != 'N' ? 1 : 0;
             $oldImg          = $this->security->xss_clean($this->input->post('img_name'));
 
             // File upload configuration
@@ -270,9 +332,13 @@ class Bill extends BaseController
             }
 
             $userInfo = array(
-                'name'   => $name,
-                'showup' => $showStatus,
+                'name' => $name,
             );
+
+            if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
+                $showStatus         = $showStatusCheck == 'Y' ? 1 : 0;
+                $userInfo['showup'] = $showStatus;
+            }
 
             // 當新圖片成功上傳時就刪除舊的圖片
             if (!empty($uploadData)) {
@@ -310,15 +376,27 @@ class Bill extends BaseController
     .########..########.########.########....##....########
      */
 
+    public function deleteIssuesAll()
+    {
+        $id = $this->security->xss_clean($this->input->post('id'));
+
+        $result = $this->bill_model->deleteIssues($id,'all');
+
+        if ($result > 0) {
+            echo (json_encode(array('status' => true)));
+        } else {
+            echo (json_encode(array('status' => false)));
+        }
+    }
+
     public function deleteIssuesClass()
     {
         $id  = $this->security->xss_clean($this->input->post('ic_id'));
         $img = $this->security->xss_clean($this->input->post('img'));
 
-        // unlink('/assets/uploads/issuesClass_uplaod/' . $img);
         unlink(dirname(dirname(__DIR__)) . '/assets/uploads/issuesClass_uplaod/' . $img);
 
-        $result = $this->bill_model->deleteIssuesClass($id);
+        $result = $this->bill_model->deleteIssues($id,'class');
 
         if ($result > 0) {
             echo (json_encode(array('status' => true)));
@@ -397,7 +475,7 @@ class Bill extends BaseController
         $ic = $this->security->xss_clean($this->input->post('ic'));
 
         if ($ic == 0) {
-            $this->form_validation->set_message('issuesSelect_check', '類別名稱不得爲空!');
+            $this->form_validation->set_message('issuesSelect_check', '請選擇一個類別');
             $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
             return false;
         } else {

@@ -374,7 +374,6 @@ class Members extends BaseController
             $years           = $this->security->xss_clean($this->input->post('years'));
             $issues          = $this->security->xss_clean($this->input->post('issues'));
             $showStatusCheck = $this->security->xss_clean($this->input->post('happy'));
-            $showStatus      = $showStatusCheck != 'N' ? 1 : 0;
             $contactList     = $this->security->xss_clean($this->input->post('contactList'));
             $contact         = $this->security->xss_clean($this->input->post('contact'));
             // File upload configuration
@@ -400,7 +399,6 @@ class Members extends BaseController
 
             // Insert files data into the database
             $membersInfo = array(
-                'showup'     => $showStatus,
                 'name'       => $n,
                 'name_en'    => $n_en,
                 'education'  => $edu,
@@ -412,6 +410,11 @@ class Members extends BaseController
                 'line'       => $line,
                 'yt'         => $yt,
             );
+
+            if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
+                $showStatus            = $showStatusCheck == 'Y' ? 1 : 0;
+                $membersInfo['showup'] = $showStatus;
+            }
 
             // 當新圖片成功上傳時就刪除舊的圖片
             if (!empty($uploadData)) {

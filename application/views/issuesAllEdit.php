@@ -1,3 +1,11 @@
+<?php
+$ia_id  = $getIssuesAllInfo->ia_id;
+$ic_id  = $getIssuesAllInfo->ic_id;
+$show   = $getIssuesAllInfo->showup;
+$title  = $getIssuesAllInfo->title;
+$intro  = $getIssuesAllInfo->introduction;
+$editor = $getIssuesAllInfo->editor;
+?>
 <div class="content-wrapper">
 	<section>
 		<div class="functoin-on-top">
@@ -28,14 +36,14 @@
 					<div class="box box-primary" style="border:none;">
 						<!-- form start -->
 						<!--  enctype="multipart/form-data"記得加 -->
-						<form role="form" action="<?php echo base_url('bill/issuesAllAddSend/'); ?>" method="post" id=""
+						<form role="form" action="<?php echo base_url('bill/issuesAllEditSend/' . $ia_id); ?>" method="post" id=""
 							role="form" enctype="multipart/form-data">
 							<div class="box-body">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="title" class="must">標題</label>
-											<input type="text" class="form-control" id="title" name="title" value="">
+											<input type="text" class="form-control" id="title" name="title" value="<?php echo $title; ?>">
 											<?php echo form_error('title'); ?>
 										</div>
 									</div>
@@ -49,7 +57,7 @@
 if (!empty($getIssuesClassList)) {
     foreach ($getIssuesClassList as $item) {
         ?>
-												<option value="<?php echo $item->ic_id; ?>"><?php echo $item->name; ?></option>
+												<option value="<?php echo $item->ic_id; ?>" <?php if ($item->ic_id == $ic_id) {echo 'selected';}?>><?php echo $item->name; ?></option>
 												<?php
 }
 }
@@ -63,9 +71,13 @@ if (!empty($getIssuesClassList)) {
 											<label for="">顯示狀態</label>
 											<div class="input-group">
 												<div id="radioBtn" class="btn-group">
-													<a class="btn btn-primary btn-sm active" data-toggle="happy"
+													<?php
+$active    = $show == 1 ? 'active' : 'notActive';
+$notActive = $show == 0 ? 'active' : 'notActive';
+?>
+													<a class="btn btn-primary btn-sm <?php echo $active; ?>" data-toggle="happy"
 														data-title="Y">顯示</a>
-													<a class="btn btn-primary btn-sm notActive" data-toggle="happy"
+													<a class="btn btn-primary btn-sm <?php echo $notActive; ?>" data-toggle="happy"
 														data-title="N">隱藏</a>
 												</div>
 												<input type="hidden" name="happy" id="happy">
@@ -77,14 +89,14 @@ if (!empty($getIssuesClassList)) {
 									<div class="col-md-12">
 										<div class="form-group">
 											<label for="introduction">簡介</label>
-											<input type="text" class="form-control" id="introduction" name="introduction" value="">
+											<input type="text" class="form-control" id="introduction" name="introduction" value="<?php echo $intro; ?>">
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-12">
 										<label for="editor1">內文</label>
-										<textarea name="editor1" id="editor1"></textarea>
+										<textarea name="editor1" id="editor1"><?php echo $editor; ?></textarea>
 										<script>
 											CKEDITOR.replace("editor1", {
 												filebrowserBrowseUrl: "<?php echo base_url('assets/plugins/ckeditor4/filemanager/dialog.php?type=2&editor=ckeditor&fldr='); ?>",

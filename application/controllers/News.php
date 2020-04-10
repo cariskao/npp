@@ -185,7 +185,6 @@ class News extends BaseController
             $editor          = $this->input->post('editor1');
             $tags            = $this->security->xss_clean($this->input->post('tags'));
             $showStatusCheck = $this->security->xss_clean($this->input->post('happy'));
-            $showStatus      = $showStatusCheck != 'N' ? 1 : 0;
             $oldImg          = $this->security->xss_clean($this->input->post('img_name'));
 
             // File upload configuration
@@ -210,13 +209,17 @@ class News extends BaseController
             }
 
             $press_release_info = array(
-                'showup'     => $showStatus,
                 'main_title' => $m_title,
                 'sub_title'  => $s_title,
                 'date_start' => $date_start,
                 'time_start' => $time_start,
                 'editor'     => $editor,
             );
+
+            if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
+                $showStatus         = $showStatusCheck == 'Y' ? 1 : 0;
+                $press_release_info['showup'] = $showStatus;
+            }
 
             // 當新圖片成功上傳時就刪除舊的圖片
             if (!empty($uploadData)) {
@@ -323,7 +326,6 @@ class News extends BaseController
             );
 
             if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
-
                 $showStatus         = $showStatusCheck == 'Y' ? 1 : 0;
                 $userInfo['showup'] = $showStatus;
             }
@@ -623,7 +625,7 @@ class News extends BaseController
     ##     ## ##       ##       ##          ##    ##
     ########  ######## ######## ########    ##    ########
      */
-    
+
     public function newsListDel()
     {
         //這裏的post('pr_id')是common.js的jQuery.ajax.data
