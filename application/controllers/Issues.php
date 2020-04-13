@@ -4,14 +4,14 @@
 
 require APPPATH . '/libraries/BaseController.php';
 
-class Bill extends BaseController
+class Issues extends BaseController
 {
     public function __construct()
     {
         parent::__construct();
         // $this->load->library('ftp');
         // $this->load->library('session');
-        $this->load->model('bill_model');
+        $this->load->model('issues_model');
         $this->isLoggedIn();
         $this->global['pageTitle'] = '時代力量後台管理';
     }
@@ -39,16 +39,16 @@ class Bill extends BaseController
         $this->session->unset_userdata('myRedirect');
 
         $this->global['navTitle']  = '重點法案 - 議題列表管理 - 列表';
-        $this->global['navActive'] = base_url('bill/issuesAllList/');
+        $this->global['navActive'] = base_url('issues/issuesAllList/');
 
         $searchText         = $this->security->xss_clean($this->input->post('searchText'));
         $data['searchText'] = $searchText;
 
-        $count = $this->bill_model->issuesAllListingCount($searchText);
+        $count = $this->issues_model->issuesAllListingCount($searchText);
 
-        $returns = $this->paginationCompress('bill/issuesAllList/', $count, 10, 3);
+        $returns = $this->paginationCompress('issues/issuesAllList/', $count, 10, 3);
 
-        $data['issuesAllList'] = $this->bill_model->issuesAllListing($searchText, $returns["page"], $returns["segment"]);
+        $data['issuesAllList'] = $this->issues_model->issuesAllListing($searchText, $returns["page"], $returns["segment"]);
 
         $myRedirect = str_replace('/npp/', '', $_SERVER['REQUEST_URI']);
         $this->session->set_userdata('myRedirect', $myRedirect);
@@ -62,16 +62,16 @@ class Bill extends BaseController
         $this->session->unset_userdata('myRedirect');
 
         $this->global['navTitle']  = '重點法案 - 議題類別管理 - 列表';
-        $this->global['navActive'] = base_url('bill/issuesClassList/');
+        $this->global['navActive'] = base_url('issues/issuesClassList/');
 
         $searchText         = $this->security->xss_clean($this->input->post('searchText'));
         $data['searchText'] = $searchText;
 
-        $count = $this->bill_model->issuesClassListingCount($searchText);
+        $count = $this->issues_model->issuesClassListingCount($searchText);
 
-        $returns = $this->paginationCompress('bill/issuesClassList/', $count, 10, 3);
+        $returns = $this->paginationCompress('issues/issuesClassList/', $count, 10, 3);
 
-        $data['issuesClassList'] = $this->bill_model->issuesClassListing(false, $searchText, $returns["page"], $returns["segment"]);
+        $data['issuesClassList'] = $this->issues_model->issuesClassListing(false, $searchText, $returns["page"], $returns["segment"]);
 
         $myRedirect = str_replace('/npp/', '', $_SERVER['REQUEST_URI']);
         $this->session->set_userdata('myRedirect', $myRedirect);
@@ -93,10 +93,10 @@ class Bill extends BaseController
     public function issuesAllAdd()
     {
         $this->global['navTitle']  = '重點法案 - 議題列表管理 - 新增';
-        $this->global['navActive'] = base_url('bill/issuesAllList/');
+        $this->global['navActive'] = base_url('issues/issuesAllList/');
 
         $data = array(
-            'getIssuesClassList' => $this->bill_model->issuesClassListing(true),
+            'getIssuesClassList' => $this->issues_model->issuesClassListing(true),
         );
 
         $this->loadViews('issuesAllAdd', $this->global, $data, null);
@@ -129,7 +129,7 @@ class Bill extends BaseController
                 'editor'       => $e,
             );
 
-            $insert_id = $this->bill_model->issuesAllAddSend($userInfo);
+            $insert_id = $this->issues_model->issuesAllAddSend($userInfo);
 
             if ($insert_id > 0) {
                 $this->session->set_flashdata('success', '新增成功!');
@@ -137,7 +137,7 @@ class Bill extends BaseController
                 $this->session->set_flashdata('error', '新增失敗!');
             }
 
-            redirect('bill/issuesAllList/');
+            redirect('issues/issuesAllList/');
         }
     }
 
@@ -145,7 +145,7 @@ class Bill extends BaseController
     public function issuesClassAdd()
     {
         $this->global['navTitle']  = '重點法案 - 議題類別管理 - 新增';
-        $this->global['navActive'] = base_url('bill/issuesClassList/');
+        $this->global['navActive'] = base_url('issues/issuesClassList/');
 
         $this->loadViews("issuesClassAdd", $this->global, null);
     }
@@ -193,7 +193,7 @@ class Bill extends BaseController
                 'img'    => $uploadData,
             );
 
-            $result = $this->bill_model->issuesClassAddSend($userInfo);
+            $result = $this->issues_model->issuesClassAddSend($userInfo);
 
             if ($result > 0) {
                 $this->session->set_flashdata('success', '新增成功!');
@@ -201,7 +201,7 @@ class Bill extends BaseController
                 $this->session->set_flashdata('error', '新增失敗!');
             }
 
-            redirect('bill/issuesClassList/');
+            redirect('issues/issuesClassList/');
         }
     }
 
@@ -218,18 +218,18 @@ class Bill extends BaseController
     // 議題列表
     public function issuesAllEdit($id)
     {
-        $editProtectChcek = $this->bill_model->editProtectCheck($id, 'issues-all');
+        $editProtectChcek = $this->issues_model->editProtectCheck($id, 'issues-all');
 
         if ($editProtectChcek == 0) {
             redirect('dashboard');
         }
 
         $this->global['navTitle']  = '重點法案 - 議題類別管理 - 編輯';
-        $this->global['navActive'] = base_url('bill/issuesAllList/');
+        $this->global['navActive'] = base_url('issues/issuesAllList/');
 
         $data = array(
-            'getIssuesAllInfo'   => $this->bill_model->getIssuesAllInfo($id),
-            'getIssuesClassList' => $this->bill_model->issuesClassListing(true),
+            'getIssuesAllInfo'   => $this->issues_model->getIssuesAllInfo($id),
+            'getIssuesClassList' => $this->issues_model->issuesClassListing(true),
         );
 
         $this->loadViews("issuesAllEdit", $this->global, $data, null);
@@ -265,7 +265,7 @@ class Bill extends BaseController
                 $userInfo['showup'] = $showStatus;
             }
 
-            $result = $this->bill_model->issuesAllEditSend($userInfo, $id);
+            $result = $this->issues_model->issuesAllEditSend($userInfo, $id);
 
             if ($result > 0) {
                 $this->session->set_flashdata('success', '新增成功!');
@@ -281,16 +281,16 @@ class Bill extends BaseController
     //  議題類別
     public function issuesClassEdit($id)
     {
-        $editProtectChcek = $this->bill_model->editProtectCheck($id, 'issues-class');
+        $editProtectChcek = $this->issues_model->editProtectCheck($id, 'issues-class');
 
         if ($editProtectChcek == 0) {
             redirect('dashboard');
         }
 
         $this->global['navTitle']  = '重點法案 - 議題類別管理 - 編輯';
-        $this->global['navActive'] = base_url('bill/issuesClassList/');
+        $this->global['navActive'] = base_url('issues/issuesClassList/');
 
-        $data['getIssuesClassInfo'] = $this->bill_model->getIssuesClassInfo($id);
+        $data['getIssuesClassInfo'] = $this->issues_model->getIssuesClassInfo($id);
 
         $this->loadViews("issuesClassEdit", $this->global, $data, null);
     }
@@ -347,7 +347,7 @@ class Bill extends BaseController
                 $userInfo['img'] = $uploadData;
             }
 
-            $result = $this->bill_model->issuesClassEditSend($userInfo, $id);
+            $result = $this->issues_model->issuesClassEditSend($userInfo, $id);
 
             if ($result > 0) {
                 // CodeIgniter支援「快閃資料」(Flashdata), 其為一session資料, 並只對下一次的Server請求有效, 之後就自動清除。
@@ -362,7 +362,7 @@ class Bill extends BaseController
 
             $myRedirect = $this->session->userdata('myRedirect');
             redirect($myRedirect);
-            // redirect('bill/issuesClassList/');
+            // redirect('issues/issuesClassList/');
         }
     }
 
@@ -380,7 +380,7 @@ class Bill extends BaseController
     {
         $id = $this->security->xss_clean($this->input->post('id'));
 
-        $result = $this->bill_model->deleteIssues($id, 'all');
+        $result = $this->issues_model->deleteIssues($id, 'all');
 
         if ($result > 0) {
             echo (json_encode(array('status' => true)));
@@ -396,7 +396,7 @@ class Bill extends BaseController
 
         unlink(dirname(dirname(__DIR__)) . '/assets/uploads/issuesClass_uplaod/' . $img);
 
-        $result = $this->bill_model->deleteIssues($id, 'class');
+        $result = $this->issues_model->deleteIssues($id, 'class');
 
         if ($result > 0) {
             echo (json_encode(array('status' => true)));
@@ -441,7 +441,7 @@ class Bill extends BaseController
             return false;
         }
 
-        $nameRepeat = $this->bill_model->img_check($imgName);
+        $nameRepeat = $this->issues_model->img_check($imgName);
 
         if ($nameRepeat > 0) {
             $this->form_validation->set_message('img_check', '已有同名的圖片名稱：「' . $imgName . '」!');
@@ -486,7 +486,7 @@ class Bill extends BaseController
     public function issuesAll_check($str, $id = '')
     {
         $title      = $this->security->xss_clean($this->input->post('title'));
-        $nameRepeat = $this->bill_model->issuesAll_check($title, $id);
+        $nameRepeat = $this->issues_model->issuesAll_check($title, $id);
 
         if ($nameRepeat > 0) {
             $this->form_validation->set_message('issuesAll_check', '已有同名的議題列表名稱：「' . $str . '」!');
@@ -500,7 +500,7 @@ class Bill extends BaseController
     public function issuesClass_check($str, $id = '')
     {
         $name       = $this->security->xss_clean($this->input->post('name'));
-        $nameRepeat = $this->bill_model->issuesClass_check($name, $id);
+        $nameRepeat = $this->issues_model->issuesClass_check($name, $id);
 
         if ($nameRepeat > 0) {
             $this->form_validation->set_message('issuesClass_check', '已有同名的議題類別名稱：「' . $str . '」!');
@@ -524,9 +524,9 @@ class Bill extends BaseController
     {
 
         $this->global['navTitle']  = '重點法案 - 議題類別管理 - 排序';
-        $this->global['navActive'] = base_url('bill/issuesClassList/');
+        $this->global['navActive'] = base_url('issues/issuesClassList/');
 
-        $data['issuesClassListing'] = $this->bill_model->issuesClassListing(true);
+        $data['issuesClassListing'] = $this->issues_model->sortList();
 
         $this->loadViews("issuesClassSort", $this->global, $data, null);
     }
@@ -534,7 +534,7 @@ class Bill extends BaseController
     public function issuesClassSortSend()
     {
         $sort   = $this->security->xss_clean($this->input->post('newSort'));
-        $result = $this->bill_model->sort($sort);
+        $result = $this->issues_model->sort($sort);
 
         if ($result > 0) {
             $this->session->set_flashdata('success', '排序已更新!');

@@ -174,8 +174,8 @@
 							<li><a href="#">法案狀態管理</a></li>
 							<li><a href="#">法案類別管理</a></li>
 							<li><a href="#">法案草案管理</a></li>
-							<li><a href="<?php echo base_url('bill/issuesClassList/'); ?>">議題類別管理</a></li>
-							<li><a href="<?php echo base_url('bill/issuesAllList/'); ?>">議題列表管理</a></li>
+							<li><a href="<?php echo base_url('issues/issuesClassList/'); ?>">議題類別管理</a></li>
+							<li><a href="<?php echo base_url('issues/issuesAllList/'); ?>">議題列表管理</a></li>
 						</ul>
 					</li>
 					<li class="treeview">

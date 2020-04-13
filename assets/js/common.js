@@ -278,7 +278,7 @@ jQuery(document).ready(function () {
 
 	jQuery(document).on('click', '.deleteIssuesAll', function () {
 		var id = $(this).data('id'),
-			hitURL = baseURL + 'bill/deleteIssuesAll',
+			hitURL = baseURL + 'issues/deleteIssuesAll',
 			currentRow = $(this),
 			l = $('.table tbody tr').length,
 			link = window.location.href
@@ -321,7 +321,7 @@ jQuery(document).ready(function () {
 	jQuery(document).on('click', '.deleteIssuesClass', function () {
 		var id = $(this).data('id'),
 			img = $(this).data('img'),
-			hitURL = baseURL + 'bill/deleteIssuesClass',
+			hitURL = baseURL + 'issues/deleteIssuesClass',
 			currentRow = $(this),
 			l = $('.table tbody tr').length,
 			link = window.location.href

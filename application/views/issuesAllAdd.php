@@ -28,7 +28,7 @@
 					<div class="box box-primary" style="border:none;">
 						<!-- form start -->
 						<!--  enctype="multipart/form-data"記得加 -->
-						<form role="form" action="<?php echo base_url('bill/issuesAllAddSend/'); ?>" method="post" id=""
+						<form role="form" action="<?php echo base_url('issues/issuesAllAddSend/'); ?>" method="post" id=""
 							role="form" enctype="multipart/form-data">
 							<div class="box-body">
 								<div class="row">

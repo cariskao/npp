@@ -9,13 +9,13 @@
 							<div class="row">
 								<div class="col-xs-6">
 									<div class="form-group">
-										<a class="btn btn-primary" href="<?php echo base_url('bill/issuesAllAdd'); ?>"><i
+										<a class="btn btn-primary" href="<?php echo base_url('issues/issuesAllAdd'); ?>"><i
 												class="fa fa-plus"></i> 新增</a>
 									</div>
 								</div>
 								<div class="col-xs-6">
 									<div class="box-tools">
-										<form action="<?php echo base_url('bill/issuesAllList'); ?>" method="POST"
+										<form action="<?php echo base_url('issues/issuesAllList'); ?>" method="POST"
 											id="searchList">
 											<!-- input-group可讓icon跟input合併 -->
 											<div class="input-group">
@@ -45,8 +45,9 @@
 							<table class="table table-hover title-center">
 								<tr class="title-center">
 									<th>議題列表名稱</th>
-									<th>狀態</th>
-									<th class="text-center">可執行動作</th>
+									<th>類別</th>
+									<th style="width:50px">狀態</th>
+									<th style="width:100px" class="text-center">可執行動作</th>
 								</tr>
 								<?php
 if (!empty($issuesAllList)) {
@@ -54,9 +55,11 @@ if (!empty($issuesAllList)) {
         $id    = $item->ia_id;
         $show  = $item->showup;
         $title = $item->title;
+        $name  = $item->name;
         ?>
 								<tr class="tr-css">
 									<td><?php echo $title; ?></td>
+									<td><?php echo $name; ?></td>
 									<td>
 										<?php if ($show == 1) {?>
 										<img style="background-color:green" src="<?php echo base_url(); ?>assets/images/show.png"
@@ -66,9 +69,9 @@ if (!empty($issuesAllList)) {
 											alt="">
 										<?php }?>
 									</td>
-									<td class=" text-center" style="width:30%">
+									<td class=" text-center">
 										<a class="btn btn-sm btn-info"
-											href="<?php echo base_url() . 'bill/issuesAllEdit/' . $id; ?>" title="編輯"><i
+											href="<?php echo base_url() . 'issues/issuesAllEdit/' . $id; ?>" title="編輯"><i
 												class="fa fa-pencil"></i></a>
 										<a class="btn btn-sm btn-danger deleteIssuesAll" data-id="<?php echo $id; ?>"
 											title="刪除"><i class="fa fa-trash fa-lg"></i></a>
@@ -104,7 +107,7 @@ if (!empty($issuesAllList)) {
 <script>
 	// 分頁
 	jQuery(document).ready(function () {
-		pagination('bill/issuesAllList/');
+		pagination('issues/issuesAllList/');
 	});
 </script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js" charset="utf-8"></script>

@@ -2,7 +2,7 @@
     exit('No direct script access allowed');
 }
 
-class Bill_model extends CI_Model
+class Issues_model extends CI_Model
 {
     /*
     ##       ####  ######  ########
@@ -19,6 +19,7 @@ class Bill_model extends CI_Model
     {
         $this->db->select();
         $this->db->from('issues_all as ia');
+        $this->db->join('issues_class as ic', 'ic.ic_id = ia.ic_id', 'inner');
 
         if (!empty($searchText)) {
             $likeCriteria = "(ia.title LIKE '%" . $searchText . "%')";
@@ -32,8 +33,9 @@ class Bill_model extends CI_Model
 
     public function issuesAllListing($searchText = '', $page = 0, $segment = 0)
     {
-        $this->db->select();
+        $this->db->select('ia.ia_id,ia.showup,ia.title,ic.name');
         $this->db->from('issues_all as ia');
+        $this->db->join('issues_class as ic', 'ic.ic_id = ia.ic_id', 'inner');
 
         if (!empty($searchText)) {
             $likeCriteria = "(ia.title LIKE '%" . $searchText . "%')";
@@ -74,7 +76,7 @@ class Bill_model extends CI_Model
             $this->db->where($likeCriteria);
         }
 
-        // $isSort=true,select下拉選單使用,所以只撈出showup=1的值
+        // $isSort=true,select下拉選單使用,所以只撈出showup=1的值(但是這樣排序不會顯示,所以排序獨自再做一個)
         if ($isSort) {
             $this->db->where('ic.showup', 1);
         }
@@ -152,7 +154,20 @@ class Bill_model extends CI_Model
     ..######...#######..##.....##....##...
      */
 
-    // 輪播 - sort
+    //  獲得議題類別排序列表
+    public function sortList()
+    {
+        $this->db->select();
+        $this->db->from('issues_class as ic');
+        $this->db->order_by('ic.sort', 'ASC');
+
+        $query  = $this->db->get();
+        $result = $query->result();
+
+        return $result;
+    }
+
+    // 議題類別排序存入
     public function sort($sort)
     {
         foreach ($sort as $k => $v) {

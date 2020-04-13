@@ -59,7 +59,7 @@ if (!empty($issuesClassListing)) {
 						// jquery UI sortable
 						$("#save").click(function () {
 							var _sort = new Array();
-							var hitURL = baseURL + 'bill/issuesClassSortSend';
+							var hitURL = baseURL + 'issues/issuesClassSortSend';
 
 							$(".ui-state-default").each(function () {
 								_sort.push($(this).attr('dbid'));
@@ -76,7 +76,7 @@ if (!empty($issuesClassListing)) {
 								success: function (data) {
 									// console.log('ok');
 									// 這裏在controller用$this->carouselSorts()會吃不到成功訊息。
-									window.location.href = baseURL + 'bill/issuesClassSort';
+									window.location.href = baseURL + 'issues/issuesClassSort';
 								},
 								error: function (jqXHR) {
 									console.log('發生錯誤: ', jqXHR.status);

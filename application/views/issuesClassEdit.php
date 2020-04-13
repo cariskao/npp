@@ -34,7 +34,7 @@ $myRedirect = $this->session->userdata('myRedirect');
 					<!-- general form elements -->
 					<div class="box box-primary" style="border:none;">
 						<!-- form start -->
-						<form role="form" action="<?php echo base_url('bill/issuesClassEditSend/' . $id) ?>" method="post"
+						<form role="form" action="<?php echo base_url('issues/issuesClassEditSend/' . $id) ?>" method="post"
 							id="" role="form" enctype="multipart/form-data">
 							<div class="box-body">
 								<div class="row">

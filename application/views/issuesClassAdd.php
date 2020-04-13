@@ -26,7 +26,7 @@
 					<!-- general form elements -->
 					<div class="box box-primary" style="border:none;">
 						<!-- form start -->
-						<form role="form" action="<?php echo base_url() ?>bill/issuesClassAddSend" method="post" id=""
+						<form role="form" action="<?php echo base_url() ?>issues/issuesClassAddSend" method="post" id=""
 							role="form" enctype="multipart/form-data">
 							<div class="box-body">
 								<div class="row">
