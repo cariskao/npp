@@ -49,7 +49,7 @@
 													<td>
 														<div class="form-group">
 															<!-- 沒加form-control上下會不平均 -->
-															<input style="border:none"  type="file" name="file" class="form-control" />
+															<input style="border:none"  type="file" name="file" class="form-control" />支援格式：jpg png gif
 															<?php echo form_error('file'); ?>
 														</div>
 													</td>

@@ -380,7 +380,7 @@ class Bill extends BaseController
     {
         $id = $this->security->xss_clean($this->input->post('id'));
 
-        $result = $this->bill_model->deleteIssues($id,'all');
+        $result = $this->bill_model->deleteIssues($id, 'all');
 
         if ($result > 0) {
             echo (json_encode(array('status' => true)));
@@ -396,7 +396,7 @@ class Bill extends BaseController
 
         unlink(dirname(dirname(__DIR__)) . '/assets/uploads/issuesClass_uplaod/' . $img);
 
-        $result = $this->bill_model->deleteIssues($id,'class');
+        $result = $this->bill_model->deleteIssues($id, 'class');
 
         if ($result > 0) {
             echo (json_encode(array('status' => true)));
@@ -442,7 +442,7 @@ class Bill extends BaseController
         }
 
         $nameRepeat = $this->bill_model->img_check($imgName);
-        $a          = 1;
+
         if ($nameRepeat > 0) {
             $this->form_validation->set_message('img_check', '已有同名的圖片名稱：「' . $imgName . '」!');
             $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');

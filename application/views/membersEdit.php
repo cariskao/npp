@@ -68,7 +68,7 @@ $myRedirect = $this->session->userdata('myRedirect');
 															<img style="width:100px"
 																src="<?php echo base_url('assets/uploads/members_upload/' . $img); ?>">
 																<!-- 沒加form-control上下會不平均 -->
-															<input style="border:none"  type="file" name="file" class="form-control" />
+															<input style="border:none"  type="file" name="file" class="form-control" />支援格式：jpg png gif
 															<?php echo form_error('file'); ?>
 															<input type="hidden" name="img_name" value="<?php echo $img; ?>">
 														</div>

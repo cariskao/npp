@@ -52,7 +52,7 @@ $myRedirect = $this->session->userdata('myRedirect');
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="img">更換圖片(不換則不填)</label>
+											<label for="img">更換圖片(不換則不填 支援格式：jpg png gif)</label>
 											<input class="form-control" id="img" type="file" name="file" size="20" />
 											<?php echo form_error('file'); ?>
 										</div>

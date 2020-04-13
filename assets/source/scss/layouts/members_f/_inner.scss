@@ -54,7 +54,10 @@
 
       li,
       a {
-         width: 130px;
+         display: inline-block; // 自適應條件
+         min-width: 130px; // 自適應條件(或是 auto)
+         padding-left: 10px;
+         padding-right: 10px;
          border-radius: 30px;
          font-size: 20px;
          line-height: 40px;

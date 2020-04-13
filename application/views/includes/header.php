@@ -56,6 +56,9 @@
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.js"></script>
 	<script src="<?php echo base_url(); ?>assets/bower_components/jquery-ui/jquery-ui.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/plugins/ckeditor4/ckeditor/ckeditor.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/jquery.validate.js" type="text/javascript"></script>
+	<script src="<?php echo base_url(); ?>assets/js/validation.js" type="text/javascript"></script>
+	<script src="<?php echo base_url(); ?>assets/js/additional-methods.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		var baseURL = "<?php echo base_url(); ?>";
 	</script>
