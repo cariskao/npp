@@ -74,7 +74,7 @@ $fb   = $getSetupInfo->fb;
 }?>" href="<?php echo base_url('fend/news_f'); ?>">新聞訊息</a></li>
 				<li class="nav-item"><a class="nav-link" style="<?php if ($navActive == 2) {
     echo 'color: #ffc107';
-}?>" href="<?php echo base_url('fend/bill_issues_f/index'); ?>">法案議題</a></li>
+}?>" href="<?php echo base_url('fend/bill_issues_f'); ?>">法案議題</a></li>
 				<li class="nav-item"><a class="nav-link" style="<?php if ($navActive == 3) {
     echo 'color: #ffc107';
 }?>" href="<?php echo base_url('fend/members_f'); ?>">本黨立委</a></li>
