@@ -6,12 +6,24 @@ $fb   = $getSetupInfo->fb;
 <html>
 
 <head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163667720-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-163667720-1');
+	</script>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title><?php echo $pageTitle; ?></title>
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 	<!-- addthis分享列加入預覽圖 -->
-	<meta property="og:image" content="<?php echo base_url('assets/f_imgs/safe_image.png'); ?>"/>
+	<meta property="og:image" content="<?php echo base_url('assets/f_imgs/safe_image.png'); ?>" />
 	<!-- addthis分享列加入描述 -->
 	<meta property="og:description" content="時代力量立法院黨團網站，提供最新的黨團法案及議事說明、關注重點議題、黨團提出的法案進度，以及本黨立委介紹" />
 	<!-- FontAwesome 4.3.0 -->
