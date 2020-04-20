@@ -10,14 +10,68 @@
    </div>
 </div>
 <div id="gotop">^</div>
-<div id="loader">
-   <div class="loader"></div>
-</div>
+<div id="loader"><div class="loader"></div></div>
 <div class="container">
-   <div class="title">關注議題</div>
-   <div class="more"><a href="<?php echo base_url('fend/bill_f/billLists/'); ?>">更多內容</a></div>
+   <h3 class="bill-issues-title">關注議題</h3>
+   <div class="issues-list-home">
+      <div class="row">
+         <?php
+if (!empty($getIssuesClass)) {
+    foreach ($getIssuesClass as $k => $v) {
+        ?>
+         <?php if ($k % 5 == 0): ?>
+         <div class="col-md-8"><a href="<?php echo base_url('fend/issuesClass_f/' . $v->ic_id . '/'); ?>"
+               class="issues-<?php echo $k + 1; ?>">
+               <h2><?php echo $v->name; ?></h2>
+               <div class="mask"></div>
+            </a></div>
+         <?php elseif ($k % 5 == 1): ?>
+         <div class="col-md-4"><a href="<?php echo base_url('fend/issuesClass_f/' . $v->ic_id . '/'); ?>"
+               class="issues-<?php echo $k + 1; ?>">
+               <h2><?php echo $v->name; ?></h2>
+               <div class="mask"></div>
+            </a></div>
+         <?php elseif ($k % 5 == 2): ?>
+         <div class="col-md-3"><a href="<?php echo base_url('fend/issuesClass_f/' . $v->ic_id . '/'); ?>"
+               class="issues-<?php echo $k + 1; ?>">
+               <h2><?php echo $v->name; ?></h2>
+               <div class="mask"></div>
+            </a></div>
+         <?php elseif ($k % 5 == 3): ?>
+         <div class="col-md-4"><a href="<?php echo base_url('fend/issuesClass_f/' . $v->ic_id . '/'); ?>"
+               class="issues-<?php echo $k + 1; ?>">
+               <h2><?php echo $v->name; ?></h2>
+               <div class="mask"></div>
+            </a></div>
+         <?php elseif ($k % 5 == 4): ?>
+         <div class="col-md-5"><a href="<?php echo base_url('fend/issuesClass_f/' . $v->ic_id . '/'); ?>"
+               class="issues-<?php echo $k + 1; ?>">
+               <h2><?php echo $v->name; ?></h2>
+               <div class="mask"></div>
+            </a></div>
+         <?php endif;?>
+         <?php
+}
+}
+?>
+      </div>
+   </div>
+   <div style="margin-top:30px" class="more"><a href="<?php echo base_url('fend/issuesClass_f/'); ?>">更多內容</a></div>
 </div>
 <style>
+   .issues-1,
+   .issues-2 {
+      background-image: url(<?php echo base_url('assets/uploads/issuesClass_uplaod/再生能源.jpg');
+?>);
+   }
 </style>
 <script>
+   $(function () {
+      var _getIssuesClass = <?php echo json_encode($getIssuesClass); ?>;
+
+      _getIssuesClass.forEach((v, k) => {
+         $('.issues-' + (k + 1)).css('background-image', 'url(' + baseURL +
+            'assets/uploads/issuesClass_uplaod/' + v.img + ')');
+      });
+   });
 </script>

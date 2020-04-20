@@ -84,6 +84,7 @@ $next = !empty($innerNextNews) ? $innerNextNews->pr_id : '';
 	</nav>
 </div>
 <div id="gotop">^</div>
+<div id="loader"><div class="loader"></div></div>
 <script type="text/javascript">
 	function CopyTextToClipboard(id) {
 		document.getElementById(id).style.display = "inline-block";
