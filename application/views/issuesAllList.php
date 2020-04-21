@@ -56,6 +56,7 @@ if (!empty($issuesAllList)) {
         $show  = $item->showup;
         $title = $item->title;
         $name  = $item->name;
+        $img   = $item->img;
         ?>
 								<tr class="tr-css">
 									<td><?php echo $title; ?></td>
@@ -73,7 +74,7 @@ if (!empty($issuesAllList)) {
 										<a class="btn btn-sm btn-info"
 											href="<?php echo base_url() . 'issues/issuesAllEdit/' . $id; ?>" title="編輯"><i
 												class="fa fa-pencil"></i></a>
-										<a class="btn btn-sm btn-danger deleteIssuesAll" data-id="<?php echo $id; ?>"
+										<a class="btn btn-sm btn-danger deleteIssuesAll" data-img=<?php echo $img; ?> data-id="<?php echo $id; ?>"
 											title="刪除"><i class="fa fa-trash fa-lg"></i></a>
 									</td>
 								</tr>

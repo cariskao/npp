@@ -31,6 +31,15 @@
 						<form role="form" action="<?php echo base_url('issues/issuesAllAddSend/'); ?>" method="post" id=""
 							role="form" enctype="multipart/form-data">
 							<div class="box-body">
+							<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="img" class="must">新增圖片(支援格式：jpg png gif)</label>
+											<input type="file" name="file"/>
+											<?php echo form_error('file'); ?>
+										</div>
+									</div>
+								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">

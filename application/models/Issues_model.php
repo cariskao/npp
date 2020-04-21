@@ -33,7 +33,7 @@ class Issues_model extends CI_Model
 
     public function issuesAllListing($searchText = '', $page = 0, $segment = 0)
     {
-        $this->db->select('ia.ia_id,ia.showup,ia.title,ic.name');
+        $this->db->select('ia.ia_id,ia.showup,ia.title,ic.name,ia.img');
         $this->db->from('issues_all as ia');
         $this->db->join('issues_class as ic', 'ic.ic_id = ia.ic_id', 'inner');
 
@@ -251,7 +251,22 @@ class Issues_model extends CI_Model
     ..######..##.....##.########..######..##....##
      */
 
-    //  議題封面圖
+    //  議題列表大圖
+    public function imgAll_check($img)
+    {
+        $this->db->trans_start();
+        $this->db->select('img');
+        $this->db->from('issues_all');
+        $this->db->where('img', $img);
+
+        $query = $this->db->get();
+
+        $this->db->trans_complete();
+
+        return $query->num_rows();
+    }
+
+    //  議題類別封面圖
     public function img_check($img)
     {
         $this->db->trans_start();

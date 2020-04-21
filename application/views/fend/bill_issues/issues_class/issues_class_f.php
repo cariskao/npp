@@ -4,7 +4,9 @@
          <ol class="breadcrumb">
             <li style="" class="breadcrumb-item"><a href="<?php echo base_url('fend/home'); ?>">首頁</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">法案議題</li>
+            <li style="" class="breadcrumb-item"><a href="<?php echo base_url('fend/bill_issues_f'); ?>">法案議題</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">關注議題</li>
          </ol>
       </nav>
    </div>
@@ -56,7 +58,6 @@ if (!empty($getIssuesClass)) {
 ?>
       </div>
    </div>
-   <div style="margin-top:30px" class="more"><a href="<?php echo base_url('fend/Issues_class_f/'); ?>">更多內容</a></div>
 </div>
 <style>
 </style>

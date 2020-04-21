@@ -104,6 +104,8 @@ class Issues extends BaseController
 
     public function issuesAllAddSend()
     {
+        $this->form_validation->set_rules('file', '圖片', 'callback_imgAll_check');
+        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
         $this->form_validation->set_rules('title', '標題', 'trim|required|max_length[128]|callback_issuesAll_check');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
         $this->form_validation->set_rules('ic', '類別', 'required|max_length[128]|callback_issuesSelect_check');
@@ -121,9 +123,31 @@ class Issues extends BaseController
 
             $showStatus = $showStatusCheck != 'N' ? 1 : 0;
 
+            // File upload configuration
+            // $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/members_upload/';
+            $uploadPath              = 'assets/uploads/issuesAll_uplaod/';
+            $config['upload_path']   = $uploadPath;
+            $config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
+            // $config['max_size'] = 1024;
+
+            // Load and initialize upload library
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            // Upload file to server
+            if ($this->upload->do_upload('file')) {
+                $fileData   = $this->upload->data();
+                $uploadData = $fileData['file_name'];
+            } else {
+                // upload debug ,loads the view display.php with error
+                $error = array('error' => $this->upload->display_errors());
+                $this->load->view('upload_debug_form', $error);
+            }
+
             $userInfo = array(
                 'ic_id'        => $ic,
                 'showup'       => $showStatus,
+                'img'          => $uploadData,
                 'title'        => $title,
                 'introduction' => $introduction,
                 'editor'       => $e,
@@ -237,6 +261,8 @@ class Issues extends BaseController
 
     public function issuesAllEditSend($id)
     {
+        $this->form_validation->set_rules('file', '圖片', 'callback_imgAll_check[' . $id . ']');
+        $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
         $this->form_validation->set_rules('title', '標題', 'trim|required|max_length[128]|callback_issuesAll_check[' . $id . ']');
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
         $this->form_validation->set_rules('ic', '類別', 'required|max_length[128]|callback_issuesSelect_check');
@@ -251,6 +277,28 @@ class Issues extends BaseController
             $introduction    = $this->security->xss_clean($this->input->post('introduction'));
             $e               = $this->input->post('editor1');
             $showStatusCheck = $this->input->post('happy');
+            $oldImg          = $this->security->xss_clean($this->input->post('img_name'));
+
+            // File upload configuration
+            // $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/members_upload/';
+            $uploadPath              = 'assets/uploads/issuesAll_uplaod/';
+            $config['upload_path']   = $uploadPath;
+            $config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
+            // $config['max_size'] = 1024;
+
+            // Load and initialize upload library
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            // Upload file to server
+            if ($this->upload->do_upload('file')) {
+                $fileData   = $this->upload->data();
+                $uploadData = $fileData['file_name'];
+            } else {
+                // upload debug ,loads the view display.php with error
+                $error = array('error' => $this->upload->display_errors());
+                $this->load->view('upload_debug_form', $error);
+            }
 
             $userInfo = array(
                 'ic_id'        => $ic,
@@ -260,9 +308,15 @@ class Issues extends BaseController
             );
 
             if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
-
                 $showStatus         = $showStatusCheck == 'Y' ? 1 : 0;
                 $userInfo['showup'] = $showStatus;
+            }
+
+            // 當新圖片成功上傳時就刪除舊的圖片
+            if (!empty($uploadData)) {
+                unlink(dirname(dirname(__DIR__)) . '/assets/uploads/issuesAll_uplaod/' . $oldImg);
+
+                $userInfo['img'] = $uploadData;
             }
 
             $result = $this->issues_model->issuesAllEditSend($userInfo, $id);
@@ -378,7 +432,10 @@ class Issues extends BaseController
 
     public function deleteIssuesAll()
     {
-        $id = $this->security->xss_clean($this->input->post('id'));
+        $id  = $this->security->xss_clean($this->input->post('id'));
+        $img = $this->security->xss_clean($this->input->post('img'));
+
+        unlink(dirname(dirname(__DIR__)) . '/assets/uploads/issuesAll_uplaod/' . $img);
 
         $result = $this->issues_model->deleteIssues($id, 'all');
 
@@ -415,7 +472,61 @@ class Issues extends BaseController
 ..............######..##.....##.########..######..##....##
  */
 
-    // 封面圖
+    // 議題列表大圖
+    public function imgAll_check($str, $id = '')
+    {
+        $imgName = $_FILES['file']['name']; //圖片好像不能直接用$str來做
+
+        // 若爲新增功能又沒有選擇圖片或圖片名稱爲空就報錯後離開
+        if ($id == '') {
+            if (!isset($imgName) || $imgName == '') {
+                $this->form_validation->set_message('imgAll_check', '請選擇要上傳的圖片');
+                $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+                return false;
+            }
+        }
+
+        // 如果圖片檔名有空白字元就報錯後離開
+        // \s: 任何空白字元(空白,換行,tab)。\S: 任何非空白字元(空白,換行,tab)。
+        $pattern = "/\s/";
+        if (preg_match($pattern, $imgName)) {
+            // echo 'match';
+            $this->form_validation->set_message('imgAll_check', '圖片名稱不可有空白字元');
+            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+            return false;
+        }
+
+        $nameRepeat = $this->issues_model->imgAll_check($imgName);
+
+        if ($nameRepeat > 0) {
+            $this->form_validation->set_message('imgAll_check', '已有同名的圖片名稱：「' . $imgName . '」!');
+            $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+            return false;
+        } else {
+
+            // 若爲編輯並且沒有選圖片就爲false離開,否則就檢查圖片格式
+            if (!($id != '' && $imgName == '')) {
+
+                $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'image/svg+xml');
+                $mime                  = get_mime_by_extension($imgName);
+
+                // 檢查圖片格式。
+                // in_array() 函数搜索数组中是否存在指定的值。
+                if (in_array($mime, $allowed_mime_type_arr)) {
+                    return true;
+                } else {
+                    $this->form_validation->set_message('imgAll_check', '圖片格式不正確!<br>請選擇jpg|jpeg|png|gif|svg');
+                    $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
+
+                    return false;
+                }
+            }
+        }
+    }
+
+    // 議題類別封面圖
     public function img_check($str, $id = '')
     {
         $imgName = $_FILES['file']['name']; //圖片好像不能直接用$str來做
