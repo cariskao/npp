@@ -11,9 +11,6 @@
 </div>
 <div class="container" style="margin-bottom:20px">
 	<div class="row" style="border-bottom: solid 1px gray;">
-		<div class="col-sm-12" style="display:none;">
-			<form id="searchList"></form>
-		</div>
 		<div class="col-md-12">
 			<div class="newsTags-title"><span><?php echo $breadcrumbTag; ?></span></div>
 		</div>
@@ -62,26 +59,6 @@
 				$('.prev-page a').text('前一頁');
 				$('.next-page a').text('下一頁');
 			}
-		});
-
-		// pagination
-		jQuery('ul.pagination li a').click(function (e) {
-			// 當點擊下方頁面時,就獲取以下資料並跳轉
-			e.preventDefault();
-			var link = jQuery(this).get(0).href;
-			var value = link.substring(link.lastIndexOf('/') + 1);
-			var url = link.substr(link.lastIndexOf('/', link.lastIndexOf('/') - 1) + 1);
-			var site = url.lastIndexOf("\/");
-			var tag_id = url.substring(0, site);
-
-			// console.log('link: ' + link);
-			// console.log('value: ' + value);
-			// console.log('url: ' + url);
-			// console.log('site: ' + site);
-			// console.log('tag_id: ' + tag_id);
-
-			jQuery("#searchList").attr("action", baseURL + "fend/news_f/tagsList/" + tag_id + '/' + value);
-			jQuery("#searchList").submit();
 		});
 	});
 </script>

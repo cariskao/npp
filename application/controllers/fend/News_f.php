@@ -103,9 +103,7 @@ class News_f extends FendBaseController
         $data['tagsList'] = $this->news_f_model->tagsListing($tag_id, $returns["page"], $returns["segment"]);
 
         foreach ($data['tagsList'] as $k => $v) {
-            foreach ($v as $k => $i) {
-                $name = $i;
-            }
+            $name = $v->name;
         }
 
         $this->global['pageTitle']     = $name . ' - 新聞訊息 - 時代力量立法院黨團';

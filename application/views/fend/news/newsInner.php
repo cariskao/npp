@@ -19,6 +19,7 @@ $next = !empty($innerNextNews) ? $innerNextNews->pr_id : '';
 				<li style="" class="breadcrumb-item"><a
 						href="<?php echo base_url('fend/news_f/newsFlists/' . $type_id); ?>"><?php echo $breadcrumbTag; ?></a>
 				</li>
+				<!-- 讓連結不會出現藍字 -->
 				<li style="display:none" class="breadcrumb-item active" aria-current="page"></a></li>
 			</ol>
 		</nav>
