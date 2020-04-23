@@ -146,11 +146,11 @@
 			<section class="sidebar">
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu" data-widget="tree">
-					<li>
+					<!-- <li>
 						<a href="<?php echo base_url(); ?>dashboard">
 							<i class="fa fa-dashboard"></i> <span>控制面板</span></i>
 						</a>
-					</li>
+					</li> -->
 					<li class="treeview">
 						<a href="#">
 							<i class="fa fa-globe"></i> <span>新聞訊息</span>

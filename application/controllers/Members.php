@@ -309,7 +309,7 @@ class Members extends BaseController
         $editProtectChcek = $this->members_model->editProtectCheck($id, 'members');
 
         if ($editProtectChcek == 0) {
-            redirect('dashboard');
+            redirect('members/membersList/');
         }
 
         $data = array(
@@ -501,7 +501,7 @@ class Members extends BaseController
         $editProtectChcek = $this->members_model->editProtectCheck($yid, 'years');
 
         if ($editProtectChcek == 0) {
-            redirect('dashboard');
+            redirect('members/yearLists/');
         }
 
         $this->global['navTitle']  = '本黨立委 - 屆期管理 - 編輯';

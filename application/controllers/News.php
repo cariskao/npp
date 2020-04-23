@@ -42,7 +42,7 @@ class News extends BaseController
     public function lists($type_id)
     {
         if ($type_id < 1 || $type_id > 3) {
-            redirect('dashboard');
+            redirect('news/lists/1');
         }
 
         // 參考 segment_helper.php
@@ -121,7 +121,7 @@ class News extends BaseController
         $editProtectChcek = $this->news_model->editProtectCheck($pr_id);
 
         if ($editProtectChcek == 0) {
-            redirect('dashboard');
+            redirect('news/lists/1');
         }
 
         // $data['roles'] = $this->news_model->getUserRoles();
@@ -217,7 +217,7 @@ class News extends BaseController
             );
 
             if ($showStatusCheck != null || $showStatusCheck != '' || !empty($showStatusCheck)) {
-                $showStatus         = $showStatusCheck == 'Y' ? 1 : 0;
+                $showStatus                   = $showStatusCheck == 'Y' ? 1 : 0;
                 $press_release_info['showup'] = $showStatus;
             }
 
@@ -296,7 +296,7 @@ class News extends BaseController
         $editProtectChcek = $this->news_model->editProtectCheck($tags_id, true);
 
         if ($editProtectChcek == 0) {
-            redirect('dashboard');
+            redirect('news/tagLists/');
         }
 
         $this->global['navTitle']  = '新聞訊息 - 編輯標籤';
@@ -363,7 +363,7 @@ class News extends BaseController
     public function adds($type_id)
     {
         if ($type_id < 1 || $type_id > 3) {
-            redirect('dashboard');
+            redirect('news/lists/1');
         }
 
         $this->global['navActive'] = base_url('news/lists/' . $type_id . '/');
@@ -467,7 +467,7 @@ class News extends BaseController
                 $this->load->view('upload_debug_form', $error);
             }
 
-            redirect('news/lists/' . $type_id);
+            redirect('news/lists/' . $type_id . '/');
         }
     }
 

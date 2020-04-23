@@ -50,6 +50,7 @@ class Issues extends BaseController
 
         $data['issuesAllList'] = $this->issues_model->issuesAllListing($searchText, $returns["page"], $returns["segment"]);
 
+        // 進入列表就先將網址儲存起來,到時候編輯的完成後就可導航回原本的列表頁面
         $myRedirect = str_replace('/npp/', '', $_SERVER['REQUEST_URI']);
         $this->session->set_userdata('myRedirect', $myRedirect);
 
@@ -245,7 +246,7 @@ class Issues extends BaseController
         $editProtectChcek = $this->issues_model->editProtectCheck($id, 'issues-all');
 
         if ($editProtectChcek == 0) {
-            redirect('dashboard');
+            redirect('issues/issuesAllList/');
         }
 
         $this->global['navTitle']  = '重點法案 - 議題類別管理 - 編輯';
@@ -338,7 +339,7 @@ class Issues extends BaseController
         $editProtectChcek = $this->issues_model->editProtectCheck($id, 'issues-class');
 
         if ($editProtectChcek == 0) {
-            redirect('dashboard');
+            redirect('issues/issuesClassList/');
         }
 
         $this->global['navTitle']  = '重點法案 - 議題類別管理 - 編輯';

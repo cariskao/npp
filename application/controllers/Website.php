@@ -130,7 +130,7 @@ class Website extends BaseController
         $editProtectChcek = $this->website_model->editProtectCheck($id);
 
         if ($editProtectChcek == 0) {
-            redirect('dashboard');
+            redirect('website/carouselLists/');
         }
 
         $this->global['navTitle']  = '網站管理 - 輪播管理 - 編輯';

@@ -30,7 +30,9 @@ class User extends BaseController
     public function index()
     {
         // $this->global['pageTitle'] = '控制面板';
-        $this->loadViews("dashboard", $this->global, null, null);
+        // $this->loadViews("dashboard", $this->global, null, null);
+        // $this->userListing();
+        redirect('news/lists/1/');
     }
 
     /**

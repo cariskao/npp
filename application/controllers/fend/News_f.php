@@ -126,7 +126,6 @@ class News_f extends FendBaseController
         // 在views使用?xx=xx
         // $id      = $this->input->get('d');
         // $type_id = $this->input->get('t');
-        $this->session->set_flashdata('defense', '');
 
         $data = array(
             'getInnerInfo'  => $this->news_f_model->getInnerInfo($id),
