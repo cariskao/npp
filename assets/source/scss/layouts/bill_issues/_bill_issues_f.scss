@@ -6,11 +6,11 @@
 }
 
 .issues-list-home {
-   @for $i from 1 through 5 {
-      .r#{$i} {
-         @include rand_bg;
-      }
-   }
+   // @for $i from 1 through 5 {
+   //    .r#{$i} {
+   //       @include rand_bg;
+   //    }
+   // }
 
    a {
       display: block;

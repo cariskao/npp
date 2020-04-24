@@ -193,7 +193,7 @@
 						</a>
 						<ul class="treeview-menu">
 							<li><a href="<?php echo base_url('website/carouselLists/'); ?>">輪播管理</a></li>
-							<li><a href="#">陳情須知內容編輯</a></li>
+							<li><a href="<?php echo base_url('website/petition'); ?>">陳情須知內容編輯</a></li>
 							<li><a href="<?php echo base_url('website/setup/' . true); ?>">其它設定</a></li>
 						</ul>
 					</li>

@@ -1,0 +1,60 @@
+.form-title {
+   font-size: 30px;
+   margin-top: 30px;
+   margin-bottom: 15px;
+
+   .must {
+      color: red;
+      font-size: 10px;
+      margin-left: 5px;
+   }
+}
+
+.petition-f {
+   font-size: 20px;
+
+   .row>div {
+      margin-bottom: 60px;
+   }
+
+   .form-group {
+      label.must:before {
+         content: '*';
+         color: red;
+      }
+   }
+
+   .form-control {
+      font-size: 20px;
+   }
+
+   .custom-control {
+      line-height: 24px;
+   }
+
+   $fileBG:#343A40;
+
+   .file {
+      position: relative;
+      display: inline-block;
+      background: $fileBG;
+      border: 1px solid darken($fileBG, 10%);
+      border-radius: 10px;
+      padding: 4px 12px;
+      overflow: hidden;
+      color: white;
+      text-decoration: none;
+      text-indent: 0;
+      line-height: 20px;
+      padding: 20px; //要跟input的padding一樣
+   }
+
+   .file input {
+      position: absolute;
+      font-size: 100px;
+      right: 0;
+      top: 0;
+      opacity: 0;
+      padding: 20px;
+   }
+}

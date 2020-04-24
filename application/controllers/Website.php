@@ -72,11 +72,45 @@ class Website extends BaseController
     ######## ########  ####    ##
      */
 
+    // 陳情內容編輯
+    public function petition()
+    {
+        $this->global['navTitle'] = '網站管理 - 陳情內容編輯';
+
+        $data['getPetition'] = $this->website_model->getPetition();
+
+        $this->loadViews("petition", $this->global, $data, null);
+    }
+
+    public function petitionSend()
+    {
+        $e = $this->input->post('editor1');
+
+        $updateInfo = array(
+            'editor' => $e,
+        );
+
+        $result = $this->website_model->petitionUpdate($updateInfo);
+
+        if ($result) {
+            $array = array(
+                'success' => '更新成功!',
+            );
+
+            $this->session->set_flashdata($array);
+        } else {
+            $this->session->set_flashdata('error', '更新失敗!');
+        }
+
+        $this->petition();
+        // redirect('website/setup');
+    }
+
     // 其它設定
     public function setup($check = false)
     {
         // $this->global['pageTitle'] = '編輯標籤';
-        $this->global['navTitle'] = '其它設定';
+        $this->global['navTitle'] = '網站管理 - 其它設定';
         $data['getSetupInfo']     = $this->website_model->getSetupInfo();
         $this->loadViews("website_setup", $this->global, $data, null);
     }
@@ -108,7 +142,7 @@ class Website extends BaseController
 
             $result = $this->website_model->setupUpdate($updateInfo);
 
-            if ($result > 0) {
+            if ($result) {
                 // CodeIgniter支援「快閃資料」(Flashdata), 其為一session資料, 並只對下一次的Server請求有效, 之後就自動清除。
                 $array = array(
                     'success' => '更新成功!',

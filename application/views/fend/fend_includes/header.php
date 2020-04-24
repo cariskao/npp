@@ -92,7 +92,7 @@ $fb   = $getSetupInfo->fb;
 }?>" href="<?php echo base_url('fend/members_f'); ?>">本黨立委</a></li>
 				<li class="nav-item"><a class="nav-link" style="<?php if ($navActive == 4) {
     echo 'color: #ffc107';
-}?>" href="<?php echo base_url('fend/'); ?>">聯絡陳情</a></li>
+}?>" href="<?php echo base_url('fend/petition_f'); ?>">聯絡陳情</a></li>
 				<li class="nav-item"><a class="nav-link" href="#"><img
 							src="<?php echo base_url(); ?>assets/f_imgs/header/header_search.png" style="width:18px"
 							alt="圖片不存在"></a></li>

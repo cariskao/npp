@@ -65,12 +65,33 @@ class Website_model extends CI_Model
     .########.########..####....##...
      */
 
+    // 陳情內容編輯
+    public function getPetition()
+    {
+        $this->db->select();
+        $this->db->from('petition');
+        $this->db->where('petid', 1);
+
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
+    public function petitionUpdate($userInfo)
+    {
+        $this->db->where('petid', 1);
+        $this->db->update('petition', $userInfo);
+
+        return true;
+    }
+
     // 其它設定
     public function getSetupInfo()
     {
         $this->db->select();
         $this->db->from('setup');
         $this->db->where('set_id', 1);
+
         $query = $this->db->get();
 
         return $query->row();
