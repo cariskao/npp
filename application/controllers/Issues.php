@@ -125,7 +125,7 @@ class Issues extends BaseController
             $showStatus = $showStatusCheck != 'N' ? 1 : 0;
 
             // File upload configuration
-            // $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/members_upload/';
+            // $uploadPath = dirname(dirname(__DIR__)) . '/assets/uploads/issuesAll_uplaod/';
             $uploadPath              = 'assets/uploads/issuesAll_uplaod/';
             $config['upload_path']   = $uploadPath;
             $config['allowed_types'] = 'jpg|jpeg|png|gif|svg';
@@ -141,8 +141,8 @@ class Issues extends BaseController
                 $uploadData = $fileData['file_name'];
             } else {
                 // upload debug ,loads the view display.php with error
-                // $error = array('error' => $this->upload->display_errors());
-                // $this->load->view('upload_debug_form', $error);
+                $error = array('error' => $this->upload->display_errors());
+                $this->load->view('upload_debug_form', $error);
             }
 
             $userInfo = array(
@@ -208,8 +208,8 @@ class Issues extends BaseController
                 $uploadData = $fileData['file_name'];
             } else {
                 // upload debug ,loads the view display.php with error
-                // $error = array('error' => $this->upload->display_errors());
-                // $this->load->view('upload_debug_form', $error);
+                $error = array('error' => $this->upload->display_errors());
+                $this->load->view('upload_debug_form', $error);
             }
 
             $userInfo = array(

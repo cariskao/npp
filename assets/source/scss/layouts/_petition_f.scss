@@ -1,3 +1,15 @@
+// 附件的水平位置
+.ajax-file-upload-container {
+   .ajax-file-upload-statusbar {
+      margin: auto;
+   }
+}
+
+// 上傳檔案按鈕
+#fileuploader:after {
+   content: "相關附件";
+}
+
 .form-title {
    font-size: 30px;
    margin-top: 30px;

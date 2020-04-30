@@ -39,8 +39,8 @@ $fb   = $getSetupInfo->fb;
 	<script src="<?php echo base_url(); ?>assets/bower_components/popper.js/dist/umd/popper.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/bower_components/bootstrap4/dist/js/bootstrap.min.js"></script>
 	<!-- <link href="<?php echo base_url(); ?>assets/bower_components/animate.css/animate.min.css" rel="stylesheet" type="text/css" /> -->
-	<script src="<?php echo base_url(); ?>assets/bower_components/vue/dist/vue.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/node_modules/axios/dist/axios.min.js"></script>
+	<!-- <script src="<?php echo base_url(); ?>assets/bower_components/vue/dist/vue.min.js"></script> -->
+	<!-- <script src="<?php echo base_url(); ?>assets/node_modules/axios/dist/axios.min.js"></script> -->
 	<script type="text/javascript">
 		var baseURL = "<?php echo base_url(); ?>";
 	</script>

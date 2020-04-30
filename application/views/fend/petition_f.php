@@ -2,6 +2,12 @@
 $e = $getPetition->editor;
 ?>
 
+<link rel="stylesheet" href="<?php echo base_url('assets/plugins/jquery-upload-file/dist/jquery-file-upload.css'); ?>">
+<script src="<?php echo base_url('assets/plugins/jquery-upload-file/dist/jquery-file-upload.js'); ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
+
+<style>
+</style>
 <div class="breadcrumb-bg">
    <div class="container">
       <nav aria-label="breadcrumb">
@@ -16,6 +22,9 @@ $e = $getPetition->editor;
    </div>
 </div>
 <div id="gotop">^</div>
+<!-- <div id="loader">
+   <div class="loader"></div>
+</div> -->
 <div class="container">
    <div class="row">
       <div class="col-md-12">
@@ -27,7 +36,7 @@ $e = $getPetition->editor;
       </div>
       <div class="col-md-12">
          <form action="<?php echo base_url('issues/issuesAllAddSend/'); ?>" method="post" enctype="multipart/form-data"
-            class="petition-f">
+            class="petition-f" name="petition_form">
             <div class="row">
                <div class="col-md-6">
                   <div class="form-group">
@@ -79,10 +88,7 @@ $e = $getPetition->editor;
                </div>
                <div class="col-md-12">
                   <div class="form-group">
-                     <div style="margin-bottom:15px">相關附件</div>
-                     <a href="javascript:;" class="file">上傳檔案
-                        <input type="file" name="file" id="file" />
-                     </a>
+                     <div id="fileuploader">上傳檔案</div>
                   </div>
                   <p>*若您陳情的事項有相關文件或照片、圖片等，也歡迎您一併上傳提供。</p>
                   <p>*上傳檔案大小限制5MB。</p>
@@ -93,4 +99,106 @@ $e = $getPetition->editor;
    </div>
 </div>
 <script>
+   // sweetalert
+   swal.setDefaults({
+      confirmButtonText: "確定",
+      cancelButtonText: "取消"
+   });
+
+   function IsEmail(email) {
+      var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      // console.log(!regex.test(email));
+      if (!regex.test(email)) {
+         return false;
+      } else {
+         return true;
+      }
+   }
+
+   $(document).ready(function () {
+      let arr = [];
+      let _mail = '';
+
+      $("#fileuploader").uploadFile({
+         url: baseURL + 'assets/plugins/jquery-upload-file/php/myUpload.php',
+         fileName: 'myfile',
+         // returnType: "json", //回傳JSON格式
+         // showPreview: true, //能否預覽上傳圖片 預設FALSE
+         previewHeight: '50px', //預覽圖片高度
+         previewWidth: '50px', //預覽圖片寬度
+         // allowedTypes: 'jpg,png,gif', //限制上傳的格式
+         // statusBarWidth: 500, //狀態欄寬 用於顯示上傳的圖片名稱+檔案大小
+         maxFileSize: 5 * 1024 * 1024, //限制上傳檔案大小
+         // maxFileCount: 1, //每次可上傳的檔案總數,也就是總共可以傳幾個
+         multiple: false, //是否可多檔案上傳,也就是一次可以選幾個檔案上傳
+         dragDrop: false, //是否可拖拉檔案,預設true
+         showDelete: true, //是否顯示刪除鈕 預設FALSE
+         fileCounterStyle: ' - ', // 顯示的格式
+         uploadStr: '上傳檔案',
+         abortStr: '終止',
+         deleteStr: '刪除',
+         dynamicFormData: function () {
+            var data = {
+               mail: _mail,
+            }
+            return data;
+         },
+         onSelect: function (files) {
+            // let _size = files[0].size;
+            let _file = files[0].name;
+
+            _mail = $('#mail').val();
+
+            if (_mail != '') {
+               let _r = IsEmail(_mail);
+
+               if (_r) {
+                  $('#mail').css('border-color', '#ced4da');
+                  return true;
+               } else {
+                  $('#mail').css('border-color', 'red');
+                  document.petition_form.mail.focus();
+                  swal("格式錯誤!", "請檢查您的信箱格式", "warning");
+                  // alert('mail格式不對!');
+                  return false;
+               }
+            } else {
+               $('#mail').css('border-color', 'red');
+               document.petition_form.mail.focus();
+               swal("信箱欄位不可空白", "上傳檔案前請先輸入email", "warning");
+               // alert('上傳檔案前請先輸入email');
+               return false;
+            }
+         },
+         onSuccess: function (files, data, xhr, pd) {
+            // console.log(files);
+            arr.push(files);
+            $('#hidden').val(arr);
+         },
+         //利用AJAX CALL 刪除的API 將檔名與OP送過去可處理
+         deleteCallback: function (data, pd) {
+            let img = data.replace('["', '');
+            img = img.replace('"]', '');
+
+            $.ajax({
+               type: 'POST',
+               url: baseURL + 'assets/plugins/jquery-upload-file/php/myDelete.php',
+               data: {
+                  img: img,
+                  mail: _mail
+               },
+               dataType: 'JSON',
+               success: function (response) {
+                  // console.log('deleteCallback-response', response);
+               }
+            });
+         },
+         onSubmit: function (files, xhr) {
+            // console.log('onSubmit');
+         },
+         onCancel: function (files, pd) {},
+         onError: function (files, status, errMsg) {},
+         afterUploadAll: function (e) {},
+      });
+   });
 </script>
