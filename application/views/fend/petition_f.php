@@ -35,13 +35,13 @@ $e = $getPetition->editor;
          <div class="form-title">陳情表單<span class="must">*為必填</span></div>
       </div>
       <div class="col-md-12">
-         <form action="<?php echo base_url('issues/issuesAllAddSend/'); ?>" method="post" enctype="multipart/form-data"
-            class="petition-f" name="petition_form">
+         <form action="" method="post" enctype="multipart/form-data" class="petition-f" name="petition_form"
+            id="petition_form">
             <div class="row">
                <div class="col-md-6">
                   <div class="form-group">
-                     <label for="title" class="must">姓名</label>
-                     <input type="text" class="form-control" id="title" name="title" value="" placeholder="請輸入姓名">
+                     <label for="username" class="must">姓名</label>
+                     <input type="text" class="form-control" id="username" name="username" value="" placeholder="請輸入姓名">
                   </div>
                </div>
                <div class="col-md-6">
@@ -88,12 +88,17 @@ $e = $getPetition->editor;
                </div>
                <div class="col-md-12">
                   <div class="form-group">
+                     <p>(上傳檔案前請先填入信箱欄位)</p>
                      <div id="fileuploader">上傳檔案</div>
                   </div>
                   <p>*若您陳情的事項有相關文件或照片、圖片等，也歡迎您一併上傳提供。</p>
-                  <p>*上傳檔案大小限制5MB。</p>
+                  <p>*上傳檔案大小限制5MB(5000KB)。</p>
                </div>
-            </div>
+               <div class="col-md-12">
+                  <div class="form-group">
+                     <input type="submit" class="form-control" value="送出" style="background-color:#ffc107">
+                  </div>
+               </div>
          </form>
       </div>
    </div>
@@ -106,7 +111,7 @@ $e = $getPetition->editor;
    });
 
    function IsEmail(email) {
-      var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})$/;
       // console.log(!regex.test(email));
       if (!regex.test(email)) {
          return false;
@@ -127,7 +132,7 @@ $e = $getPetition->editor;
          previewHeight: '50px', //預覽圖片高度
          previewWidth: '50px', //預覽圖片寬度
          // allowedTypes: 'jpg,png,gif', //限制上傳的格式
-         // statusBarWidth: 500, //狀態欄寬 用於顯示上傳的圖片名稱+檔案大小
+         // statusBarWidth: 1000, //狀態欄寬 用於顯示上傳的圖片名稱+檔案大小
          maxFileSize: 5 * 1024 * 1024, //限制上傳檔案大小
          // maxFileCount: 1, //每次可上傳的檔案總數,也就是總共可以傳幾個
          multiple: false, //是否可多檔案上傳,也就是一次可以選幾個檔案上傳
@@ -199,6 +204,59 @@ $e = $getPetition->editor;
          onCancel: function (files, pd) {},
          onError: function (files, status, errMsg) {},
          afterUploadAll: function (e) {},
+      });
+
+      $.validator.setDefaults({
+         errorClass: 'has-error',
+         highlight: function (element) {
+            // 在input加入form-group會有紅方框,但是error message也會有
+            $(element).closest('.form-group').addClass('has-error');
+         },
+         unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+         },
+      })
+
+      $('#petition_form').validate({
+         onkeyup: function (element, event) {
+            //去除左側空白
+            var value = this.elementValue(element).replace(/^\s+/g, "");
+            $(element).val(value);
+         },
+         // 好像mail也是要加入
+         rules: {
+            mail: {
+               required: true,
+               email: true
+            },
+            username: {
+               required: true,
+            },
+            phone: {
+               required: true,
+               number: true,
+               minlength: 8,
+            },
+            textarea: 'required',
+         },
+         messages: {
+            mail: {
+               required: '必填',
+               email: '請輸入有效的email'
+            },
+            username: {
+               required: '必填',
+            },
+            phone: {
+               required: '必填',
+               number: '電話需為數字',
+               minlength: '不得少於8位',
+            },
+            textarea: '必填',
+         },
+         submitHandler: function (form) {
+            form.submit();
+         }
       });
    });
 </script>

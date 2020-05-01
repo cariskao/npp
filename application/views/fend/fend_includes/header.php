@@ -34,6 +34,8 @@ $fb   = $getSetupInfo->fb;
 		type="text/css" />
 	<!-- Bootstrap 4.1.3 -->
 	<link href="<?php echo base_url(); ?>assets/public/css/all.css" rel="stylesheet" type="text/css" />
+	<!-- title logo -->
+	<link rel="icon" href="<?php echo base_url('assets/f_imgs/titleLogo.png'); ?>" type="image/ico" />
 	<script src="<?php echo base_url(); ?>assets/node_modules/jquery/dist/jquery.min.js"></script>
 	<!-- 如果是 <script type="text/javascript"> 的載入方式，可以直接使用umd目錄下的popper.js -->
 	<script src="<?php echo base_url(); ?>assets/bower_components/popper.js/dist/umd/popper.min.js"></script>

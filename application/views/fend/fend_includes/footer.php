@@ -47,8 +47,9 @@ $servicetime = $getSetupInfo->servicetime;
 	</div>
 </footer>
 
-<script src="<?php echo base_url(); ?>assets/js/jquery.validate.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/validation.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery.validate-1.17.1-pre.js" type="text/javascript"></script>
+<!-- 前台使用舊版會error -->
+<!-- <script src="<?php echo base_url(); ?>assets/js/jquery.validate.js" type="text/javascript"></script> -->
 <script src="<?php echo base_url(); ?>assets/public/js/all.js" type="text/javascript"></script>
 <script type="text/javascript">
 	var windowURL = window.location.href;
