@@ -88,7 +88,8 @@ $e = $getPetition->editor;
                </div>
                <div class="col-md-12">
                   <div class="form-group">
-                     <p>(上傳檔案前請先填入信箱欄位)</p>
+                     <p>(上傳檔案前請先填入聯絡電話)</p>
+                     <p>(上傳後電話號碼請勿隨意更改)</p>
                      <div id="fileuploader">上傳檔案</div>
                   </div>
                   <p>*若您陳情的事項有相關文件或照片、圖片等，也歡迎您一併上傳提供。</p>
@@ -111,7 +112,10 @@ $e = $getPetition->editor;
    });
 
    function IsEmail(email) {
-      var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})$/;
+      // var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      // 配合jquery.validate的一起,才不會有問題
+      var regex =
+         /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
       // console.log(!regex.test(email));
       if (!regex.test(email)) {
          return false;
@@ -122,7 +126,7 @@ $e = $getPetition->editor;
 
    $(document).ready(function () {
       let arr = [];
-      let _mail = '';
+      let phone = '';
 
       $("#fileuploader").uploadFile({
          url: baseURL + 'assets/plugins/jquery-upload-file/php/myUpload.php',
@@ -144,7 +148,7 @@ $e = $getPetition->editor;
          deleteStr: '刪除',
          dynamicFormData: function () {
             var data = {
-               mail: _mail,
+               phone: phone,
             }
             return data;
          },
@@ -152,27 +156,32 @@ $e = $getPetition->editor;
             // let _size = files[0].size;
             let _file = files[0].name;
 
-            _mail = $('#mail').val();
+            phone = $('#phone').val();
 
-            if (_mail != '') {
-               let _r = IsEmail(_mail);
+            if (phone == '') {
+               $('#phone').parent('.form-group').addClass('has-error');
+               document.petition_form.phone.focus();
+               swal("聯絡電話不可空白", "上傳檔案前請先填入聯絡電話", "warning");
 
-               if (_r) {
-                  $('#mail').css('border-color', '#ced4da');
-                  return true;
-               } else {
-                  $('#mail').css('border-color', 'red');
-                  document.petition_form.mail.focus();
-                  swal("格式錯誤!", "請檢查您的信箱格式", "warning");
-                  // alert('mail格式不對!');
-                  return false;
-               }
-            } else {
-               $('#mail').css('border-color', 'red');
-               document.petition_form.mail.focus();
-               swal("信箱欄位不可空白", "上傳檔案前請先輸入email", "warning");
-               // alert('上傳檔案前請先輸入email');
                return false;
+            } else {
+               if (phone.length < 8) {
+                  $('#phone').parent('.form-group').addClass('has-error');
+                  document.petition_form.phone.focus();
+                  swal("聯絡電話位數錯誤", "電話號碼不可少於8位", "warning");
+
+                  return false;
+               } else {
+                  if (isNaN(phone)) {
+                     $('#phone').parent('.form-group').addClass('has-error');
+                     document.petition_form.phone.focus();
+                     swal("電話需為數字");
+
+                     return false;
+                  } else {
+                     return true;
+                  }
+               }
             }
          },
          onSuccess: function (files, data, xhr, pd) {
@@ -190,7 +199,7 @@ $e = $getPetition->editor;
                url: baseURL + 'assets/plugins/jquery-upload-file/php/myDelete.php',
                data: {
                   img: img,
-                  mail: _mail
+                  phone: phone
                },
                dataType: 'JSON',
                success: function (response) {

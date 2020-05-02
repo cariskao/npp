@@ -1,7 +1,7 @@
 <?php
-$mail       = $_POST['mail'];
+$phone      = $_POST['phone'];
 $path       = '../../../../assets/uploads/jquery-upload-file/';
-$dir        = $path . $mail;
+$dir        = $path . $phone;
 $output_dir = $dir . '/';
 
 if (isset($_POST['img'])) {

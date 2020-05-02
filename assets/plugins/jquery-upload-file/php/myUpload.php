@@ -1,8 +1,8 @@
 <?php
-$mail = $_POST['mail'];
-$path = '../../../../assets/uploads/jquery-upload-file/';
+$phone = $_POST['phone'];
+$path  = '../../../../assets/uploads/jquery-upload-file/';
 
-$dir = $path . $mail;
+$dir = $path . $phone;
 
 create_folders($dir);
 
