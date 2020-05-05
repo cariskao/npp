@@ -35,7 +35,7 @@ $e = $getPetition->editor;
          <div class="form-title">陳情表單<span class="must">*為必填</span></div>
       </div>
       <div class="col-md-12">
-         <form action="" method="post" enctype="multipart/form-data" class="petition-f" name="petition_form"
+         <form action="<?php echo base_url('fend/petition_f/emailSend'); ?>" method="post" enctype="multipart/form-data" class="petition-f" name="petition_form"
             id="petition_form">
             <div class="row">
                <div class="col-md-6">
@@ -110,19 +110,6 @@ $e = $getPetition->editor;
       confirmButtonText: "確定",
       cancelButtonText: "取消"
    });
-
-   function IsEmail(email) {
-      // var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-      // 配合jquery.validate的一起,才不會有問題
-      var regex =
-         /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-      // console.log(!regex.test(email));
-      if (!regex.test(email)) {
-         return false;
-      } else {
-         return true;
-      }
-   }
 
    $(document).ready(function () {
       let arr = [];
