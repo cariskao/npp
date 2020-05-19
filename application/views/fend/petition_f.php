@@ -49,19 +49,19 @@ $e = $getPetition->editor;
                      <label for="title" class="must">性別 (請讓我們知道後續聯絡時該如何稱呼您)</label><br>
                      <!-- Default inline 1-->
                      <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="male" name="sex" checked>
+                        <input value="1" type="radio" class="custom-control-input" id="male" name="sex" checked>
                         <label class="custom-control-label" for="male">先生</label>
                      </div>
 
                      <!-- Default inline 2-->
                      <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="female" name="sex">
+                        <input value="0" type="radio" class="custom-control-input" id="female" name="sex">
                         <label class="custom-control-label" for="female">女士</label>
                      </div>
 
                      <!-- Default inline 3-->
                      <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="other" name="sex">
+                        <input value="2" type="radio" class="custom-control-input" id="other" name="sex">
                         <label class="custom-control-label" for="other">其它</label>
                      </div>
                   </div>

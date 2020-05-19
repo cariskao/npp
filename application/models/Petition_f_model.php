@@ -14,4 +14,15 @@ class Petition_f_model extends CI_Model
 
         return $query->row();
     }
+
+    public function getToMail()
+    {
+        $this->db->select('mail');
+        $this->db->from('setup');
+        $this->db->where('set_id', 1);
+
+        $query = $this->db->get();
+
+        return $query->row();
+    }
 }
