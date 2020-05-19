@@ -35,8 +35,8 @@ $e = $getPetition->editor;
          <div class="form-title">陳情表單<span class="must">*為必填</span></div>
       </div>
       <div class="col-md-12">
-         <form action="<?php echo base_url('fend/petition_f/emailSend'); ?>" method="post" enctype="multipart/form-data" class="petition-f" name="petition_form"
-            id="petition_form">
+         <form action="<?php echo base_url('fend/petition_f/emailSend'); ?>" method="post" enctype="multipart/form-data"
+            class="petition-f" name="petition_form" id="petition_form">
             <div class="row">
                <div class="col-md-6">
                   <div class="form-group">
@@ -104,6 +104,13 @@ $e = $getPetition->editor;
       </div>
    </div>
 </div>
+<?php
+$this->load->helper('form');
+$check = $this->session->flashdata('petition_user');
+if ($check) {
+    echo '<script>swal("陳情內容已送出!");</script>';
+}
+?>
 <script>
    // sweetalert
    swal.setDefaults({

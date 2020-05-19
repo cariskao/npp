@@ -107,6 +107,8 @@ class Petition_f extends FendBaseController
             rmdir($path . $phone);
         }
 
+        $this->session->set_flashdata('petition_user', true);
+
         redirect('fend/petition_f');
     }
 }
