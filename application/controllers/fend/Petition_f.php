@@ -22,6 +22,31 @@ class Petition_f extends FendBaseController
         $this->loadViews("404", $this->global, null, null);
     }
 
+    public function deldir($path)
+    {
+        //如果是目錄則繼續
+        if (is_dir($path)) {
+            //掃描一個資料夾內的所有資料夾和檔案並返回陣列
+            $p = scandir($path);
+
+            foreach ($p as $val) {
+                //排除目錄中的.和..
+                if ($val != "." && $val != "..") {
+                    //如果是目錄則遞迴子目錄，繼續操作
+                    if (is_dir($path . $val)) {
+                        //子目錄中操作刪除資料夾和檔案
+                        $this->deldir($path . $val . '/');
+                        //目錄清空後刪除空資料夾
+                        rmdir($path . $val . '/');
+                    } else {
+                        //如果是檔案直接刪除
+                        unlink($path . $val);
+                    }
+                }
+            }
+        }
+    }
+
     // 新聞訊息首頁
     public function index()
     {
@@ -31,6 +56,20 @@ class Petition_f extends FendBaseController
         $data = array(
             'getPetition' => $this->petition_f_model->getPetition(),
         );
+
+        $getOver1Hr = $this->petition_f_model->getOver1Hr();
+
+        if (!empty($getOver1Hr)) {
+            foreach ($getOver1Hr as $folder) {
+                $path = 'assets/uploads/jquery-upload-file/' . $folder . '/';
+
+                $this->deldir($path);
+
+                if (count(scandir($path)) == 2) {
+                    rmdir($path);
+                }
+            }
+        }
 
         $this->loadViews("fend/petition_f", $this->global, $data, null);
     }
@@ -59,6 +98,7 @@ class Petition_f extends FendBaseController
         $from     = $this->security->xss_clean($this->input->post('mail'));
         $phone    = $this->security->xss_clean($this->input->post('phone'));
         $textarea = $this->security->xss_clean($this->input->post('textarea'));
+        $folder   = $this->security->xss_clean($this->input->post('folder'));
 
         // 獲取目前設定的mail
         $to = $this->petition_f_model->getToMail();
@@ -77,7 +117,7 @@ class Petition_f extends FendBaseController
         $emailContent .= "</table>";
 
         $path = 'assets/uploads/jquery-upload-file/';
-        $file = glob($path . $phone . '/*');
+        $file = glob($path . $folder . '/*');
 
         // 以下設置Email內容
         $this->email->initialize($config);
@@ -103,8 +143,10 @@ class Petition_f extends FendBaseController
             }
         }
 
-        if (count(scandir($path . $phone)) == 2) {
-            rmdir($path . $phone);
+        if (count(scandir($path . $folder)) == 2) {
+            rmdir($path . $folder);
+
+            $delPath = $this->petition_f_model->delPath($folder);
         }
 
         $this->session->set_flashdata('petition_user', true);

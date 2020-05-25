@@ -1,7 +1,12 @@
 <?php
-$phone      = $_POST['phone'];
+include 'connMysql.php';
+
+// $phone      = $_POST['phone'];
+// $dir        = $path . $phone;
+
+$random     = $_POST['_r'];
 $path       = '../../../../assets/uploads/jquery-upload-file/';
-$dir        = $path . $phone;
+$dir        = $path . $random;
 $output_dir = $dir . '/';
 
 if (isset($_POST['img'])) {
@@ -15,6 +20,9 @@ if (isset($_POST['img'])) {
 
     if (count(scandir($dir)) == 2) {
         rmdir($dir);
+
+        $sql = "DELETE FROM petition_f WHERE my_path = '" . $random . "'";
+        mysqli_query($con, $sql) or die("失敗！" . mysqli_error($con));
     }
 
     echo json_encode("Deleted File " . $fileName);

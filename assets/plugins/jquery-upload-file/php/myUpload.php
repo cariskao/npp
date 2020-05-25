@@ -1,8 +1,26 @@
 <?php
-$phone = $_POST['phone'];
-$path  = '../../../../assets/uploads/jquery-upload-file/';
+include 'connMysql.php';
+session_start();
 
-$dir = $path . $phone;
+// $phone = $_POST['phone'];
+// $dir = $path . $phone;
+
+$random = $_POST['_r'];
+$path   = '../../../../assets/uploads/jquery-upload-file/';
+$dir    = $path . $random;
+
+// $_SESSION['random_folder'] = $random; // Petition_f收不到
+
+$check = "SELECT `my_path` FROM petition_f WHERE my_path = '" . $random . "'";
+
+if ($result = mysqli_query($con, $check)) {
+    $rowcount = mysqli_num_rows($result);
+
+    if ($rowcount == 0) {
+        $sql = "INSERT INTO petition_f (my_path) VALUES ('" . $random . "')";
+        mysqli_query($con, $sql) or die("失敗！" . mysqli_error($con));
+    }
+}
 
 create_folders($dir);
 

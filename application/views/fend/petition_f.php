@@ -88,8 +88,6 @@ $e = $getPetition->editor;
                </div>
                <div class="col-md-12">
                   <div class="form-group">
-                     <p>(上傳檔案前請先填入聯絡電話)</p>
-                     <p>(上傳後電話號碼請勿隨意更改)</p>
                      <div id="fileuploader">上傳檔案</div>
                   </div>
                   <p>*若您陳情的事項有相關文件或照片、圖片等，也歡迎您一併上傳提供。</p>
@@ -98,8 +96,10 @@ $e = $getPetition->editor;
                <div class="col-md-12">
                   <div class="form-group">
                      <input type="submit" class="form-control" value="送出" style="background-color:#ffc107">
+                     <input type="hidden" name="folder" value="" id="folder">
                   </div>
                </div>
+            </div>
          </form>
       </div>
    </div>
@@ -112,6 +112,16 @@ if ($check) {
 }
 ?>
 <script>
+   function makeid(length) {
+      var result = '';
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var charactersLength = characters.length;
+      for (var i = 0; i < length; i++) {
+         result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+   }
+
    // sweetalert
    swal.setDefaults({
       confirmButtonText: "確定",
@@ -119,8 +129,10 @@ if ($check) {
    });
 
    $(document).ready(function () {
-      let arr = [];
-      let phone = '';
+      // let arr = [];
+      // let phone = '';
+      let _random = makeid(30);
+      $('#folder').val(_random);
 
       $("#fileuploader").uploadFile({
          url: baseURL + 'assets/plugins/jquery-upload-file/php/myUpload.php',
@@ -142,46 +154,47 @@ if ($check) {
          deleteStr: '刪除',
          dynamicFormData: function () {
             var data = {
-               phone: phone,
+               // phone: phone,
+               _r: _random,
             }
             return data;
          },
          onSelect: function (files) {
             // let _size = files[0].size;
-            let _file = files[0].name;
+            // let _file = files[0].name;
 
-            phone = $('#phone').val();
+            // phone = $('#phone').val();
 
-            if (phone == '') {
-               $('#phone').parent('.form-group').addClass('has-error');
-               document.petition_form.phone.focus();
-               swal("聯絡電話不可空白", "上傳檔案前請先填入聯絡電話", "warning");
+            // if (phone == '') {
+            //    $('#phone').parent('.form-group').addClass('has-error');
+            //    document.petition_form.phone.focus();
+            //    swal("聯絡電話不可空白", "上傳檔案前請先填入聯絡電話", "warning");
 
-               return false;
-            } else {
-               if (phone.length < 8) {
-                  $('#phone').parent('.form-group').addClass('has-error');
-                  document.petition_form.phone.focus();
-                  swal("聯絡電話位數錯誤", "電話號碼不可少於8位", "warning");
+            //    return false;
+            // } else {
+            //    if (phone.length < 8) {
+            //       $('#phone').parent('.form-group').addClass('has-error');
+            //       document.petition_form.phone.focus();
+            //       swal("聯絡電話位數錯誤", "電話號碼不可少於8位", "warning");
 
-                  return false;
-               } else {
-                  if (isNaN(phone)) {
-                     $('#phone').parent('.form-group').addClass('has-error');
-                     document.petition_form.phone.focus();
-                     swal("電話需為數字");
+            //       return false;
+            //    } else {
+            //       if (isNaN(phone)) {
+            //          $('#phone').parent('.form-group').addClass('has-error');
+            //          document.petition_form.phone.focus();
+            //          swal("電話需為數字");
 
-                     return false;
-                  } else {
-                     return true;
-                  }
-               }
-            }
+            //          return false;
+            //       } else {
+            //          return true;
+            //       }
+            //    }
+            // }
          },
          onSuccess: function (files, data, xhr, pd) {
             // console.log(files);
-            arr.push(files);
-            $('#hidden').val(arr);
+            // arr.push(files);
+            // $('#hidden').val(arr);
          },
          //利用AJAX CALL 刪除的API 將檔名與OP送過去可處理
          deleteCallback: function (data, pd) {
@@ -192,8 +205,9 @@ if ($check) {
                type: 'POST',
                url: baseURL + 'assets/plugins/jquery-upload-file/php/myDelete.php',
                data: {
+                  // phone: phone
                   img: img,
-                  phone: phone
+                  _r: _random
                },
                dataType: 'JSON',
                success: function (response) {
