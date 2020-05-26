@@ -6,8 +6,10 @@ $fb   = $getSetupInfo->fb;
 <html>
 
 <head>
+	<!-- 我不是機器人 -->
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163667720-1"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167481041-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 
@@ -16,8 +18,9 @@ $fb   = $getSetupInfo->fb;
 		}
 		gtag('js', new Date());
 
-		gtag('config', 'UA-163667720-1');
+		gtag('config', 'UA-167481041-1');
 	</script>
+
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title><?php echo $pageTitle; ?></title>

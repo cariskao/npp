@@ -5,8 +5,10 @@ $e = $getPetition->editor;
 <link rel="stylesheet" href="<?php echo base_url('assets/plugins/jquery-upload-file/dist/jquery-file-upload.css'); ?>">
 <script src="<?php echo base_url('assets/plugins/jquery-upload-file/dist/jquery-file-upload.js'); ?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.0/sweetalert2.all.js"></script>
-
 <style>
+   .g-recaptcha>div {
+      margin: auto;
+   }
 </style>
 <div class="breadcrumb-bg">
    <div class="container">
@@ -94,8 +96,12 @@ $e = $getPetition->editor;
                   <p>*上傳檔案大小限制5MB(5000KB)。</p>
                </div>
                <div class="col-md-12">
+                  <div class="g-recaptcha" data-sitekey="6LdY2vsUAAAAAC1ZvVjCrKlOMKo7qtrf15eBwlNI">
+                  </div>
+               </div>
+               <div class="col-md-12">
                   <div class="form-group">
-                     <input type="submit" class="form-control" value="送出" style="background-color:#ffc107">
+                     <input type="submit" class="form-control" value="送出陳情" style="background-color:#ffc107">
                      <input type="hidden" name="folder" value="" id="folder">
                   </div>
                </div>
@@ -104,6 +110,7 @@ $e = $getPetition->editor;
       </div>
    </div>
 </div>
+
 <?php
 $this->load->helper('form');
 $check = $this->session->flashdata('petition_user');
@@ -129,6 +136,15 @@ if ($check) {
    });
 
    $(document).ready(function () {
+      $("form[name=petition_form]").submit(function (ev) {
+         if (grecaptcha.getResponse() != '') {
+            return true;
+         }
+
+         swal('請勾選下方「我不是機器人」完成驗證作業，謝謝您的配合');
+         return false;
+      })
+
       // let arr = [];
       // let phone = '';
       let _random = makeid(30);
@@ -271,8 +287,15 @@ if ($check) {
             },
             textarea: '必填',
          },
+         // jquery驗證 & google驗證
          submitHandler: function (form) {
-            form.submit();
+            if (grecaptcha.getResponse() == '') {
+               swal('請勾選下方「我不是機器人」完成驗證作業，謝謝您的配合');
+               return false;
+            }
+
+            swal('正在準備送出...');
+            form.submit(); //没有這一句表單不會提交
          }
       });
    });
